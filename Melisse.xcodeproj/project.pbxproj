@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		51F8B9011CD78DF70029C1E0 /* Mice.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B9001CD78DF70029C1E0 /* Mice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		51F8B9011CD78DF70029C1E0 /* Melisse.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B9001CD78DF70029C1E0 /* Melisse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51F8B9321CD7B0E40029C1E0 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90A1CD7B0E40029C1E0 /* Animation.swift */; };
-		51F8B9331CD7B0E40029C1E0 /* Audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B90B1CD7B0E40029C1E0 /* Audio.h */; };
+		51F8B9331CD7B0E40029C1E0 /*  in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B90B1CD7B0E40029C1E0 /*  */; };
 		51F8B9341CD7B0E40029C1E0 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90C1CD7B0E40029C1E0 /* Audio.m */; };
 		51F8B9351CD7B0E40029C1E0 /* Backdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */; };
 		51F8B9361CD7B0E40029C1E0 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90E1CD7B0E40029C1E0 /* Camera.swift */; };
@@ -48,58 +48,56 @@
 		51F8B9571CD7B0E40029C1E0 /* Surfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */; };
 		51F8B9581CD7B0E40029C1E0 /* TouchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9301CD7B0E40029C1E0 /* TouchController.swift */; };
 		51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
-		51F8B95B1CD7B1120029C1E0 /* Mice-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B95A1CD7B1120029C1E0 /* Mice-Bridging-Header.h */; };
 		51F8B95E1CD7B15B0029C1E0 /* Draws.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B95C1CD7B15B0029C1E0 /* Draws.swift */; };
 		51F8B95F1CD7B15B0029C1E0 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		51F8B8FD1CD78DF70029C1E0 /* Mice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Mice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		51F8B9001CD78DF70029C1E0 /* Mice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mice.h; sourceTree = "<group>"; };
+		51F8B8FD1CD78DF70029C1E0 /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51F8B9001CD78DF70029C1E0 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Melisse.h; sourceTree = "<group>"; };
 		51F8B9021CD78DF70029C1E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		51F8B90A1CD7B0E40029C1E0 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animation.swift; path = ../../mice/Mice/Animation.swift; sourceTree = "<group>"; };
-		51F8B90B1CD7B0E40029C1E0 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Audio.h; path = ../../mice/Mice/Audio.h; sourceTree = "<group>"; };
-		51F8B90C1CD7B0E40029C1E0 /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Audio.m; path = ../../mice/Mice/Audio.m; sourceTree = "<group>"; };
-		51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Backdrop.swift; path = ../../mice/Mice/Backdrop.swift; sourceTree = "<group>"; };
-		51F8B90E1CD7B0E40029C1E0 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Camera.swift; path = ../../mice/Mice/Camera.swift; sourceTree = "<group>"; };
-		51F8B90F1CD7B0E40029C1E0 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Color.swift; path = ../../mice/Mice/Color.swift; sourceTree = "<group>"; };
-		51F8B9101CD7B0E40029C1E0 /* Counter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Counter.swift; path = ../../mice/Mice/Counter.swift; sourceTree = "<group>"; };
-		51F8B9111CD7B0E40029C1E0 /* Definition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Definition.swift; path = ../../mice/Mice/Definition.swift; sourceTree = "<group>"; };
-		51F8B9121CD7B0E40029C1E0 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Direction.swift; path = ../../mice/Mice/Direction.swift; sourceTree = "<group>"; };
-		51F8B9131CD7B0E40029C1E0 /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Director.swift; path = ../../mice/Mice/Director.swift; sourceTree = "<group>"; };
-		51F8B9141CD7B0E40029C1E0 /* FadeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FadeScene.swift; path = ../../mice/Mice/FadeScene.swift; sourceTree = "<group>"; };
-		51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GamepadController.swift; path = ../../mice/Mice/GamepadController.swift; sourceTree = "<group>"; };
-		51F8B9161CD7B0E40029C1E0 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Grid.swift; path = ../../mice/Mice/Grid.swift; sourceTree = "<group>"; };
-		51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hitbox.swift; path = ../../mice/Mice/Hitbox.swift; sourceTree = "<group>"; };
-		51F8B9181CD7B0E40029C1E0 /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Input.swift; path = ../../mice/Mice/Input.swift; sourceTree = "<group>"; };
-		51F8B9191CD7B0E40029C1E0 /* Layer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Layer.swift; path = ../../mice/Mice/Layer.swift; sourceTree = "<group>"; };
-		51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LayerStructure.swift; path = ../../mice/Mice/LayerStructure.swift; sourceTree = "<group>"; };
-		51F8B91B1CD7B0E40029C1E0 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Map.swift; path = ../../mice/Mice/Map.swift; sourceTree = "<group>"; };
-		51F8B91C1CD7B0E40029C1E0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = ../../mice/Mice/Math.swift; sourceTree = "<group>"; };
-		51F8B91D1CD7B0E40029C1E0 /* Motion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Motion.swift; path = ../../mice/Mice/Motion.swift; sourceTree = "<group>"; };
-		51F8B91E1CD7B0E40029C1E0 /* NoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoController.swift; path = ../../mice/Mice/NoController.swift; sourceTree = "<group>"; };
-		51F8B91F1CD7B0E40029C1E0 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Operation.swift; path = ../../mice/Mice/Operation.swift; sourceTree = "<group>"; };
-		51F8B9201CD7B0E40029C1E0 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Palette.swift; path = ../../mice/Mice/Palette.swift; sourceTree = "<group>"; };
-		51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PerspectiveEffect.swift; path = ../../mice/Mice/PerspectiveEffect.swift; sourceTree = "<group>"; };
-		51F8B9221CD7B0E40029C1E0 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plane.swift; path = ../../mice/Mice/Plane.swift; sourceTree = "<group>"; };
-		51F8B9231CD7B0E40029C1E0 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Point.swift; path = ../../mice/Mice/Point.swift; sourceTree = "<group>"; };
-		51F8B9241CD7B0E40029C1E0 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Random.swift; path = ../../mice/Mice/Random.swift; sourceTree = "<group>"; };
-		51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReferencePool.swift; path = ../../mice/Mice/ReferencePool.swift; sourceTree = "<group>"; };
-		51F8B9261CD7B0E40029C1E0 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resources.swift; path = ../../mice/Mice/Resources.swift; sourceTree = "<group>"; };
-		51F8B9271CD7B0E40029C1E0 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scene.swift; path = ../../mice/Mice/Scene.swift; sourceTree = "<group>"; };
-		51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundSet.swift; path = ../../mice/Mice/SoundSet.swift; sourceTree = "<group>"; };
-		51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpriteFactory.swift; path = ../../mice/Mice/SpriteFactory.swift; sourceTree = "<group>"; };
-		51F8B92A1CD7B0E40029C1E0 /* Streams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Streams.swift; path = ../../mice/Mice/Streams.swift; sourceTree = "<group>"; };
-		51F8B92B1CD7B0E40029C1E0 /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Surface.h; path = ../../mice/Mice/Surface.h; sourceTree = "<group>"; };
-		51F8B92C1CD7B0E40029C1E0 /* Surface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Surface.m; path = ../../mice/Mice/Surface.m; sourceTree = "<group>"; };
-		51F8B92D1CD7B0E40029C1E0 /* SurfaceArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SurfaceArray.h; path = ../../mice/Mice/SurfaceArray.h; sourceTree = "<group>"; };
-		51F8B92E1CD7B0E40029C1E0 /* SurfaceArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SurfaceArray.m; path = ../../mice/Mice/SurfaceArray.m; sourceTree = "<group>"; };
-		51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Surfaces.swift; path = ../../mice/Mice/Surfaces.swift; sourceTree = "<group>"; };
-		51F8B9301CD7B0E40029C1E0 /* TouchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchController.swift; path = ../../mice/Mice/TouchController.swift; sourceTree = "<group>"; };
-		51F8B9311CD7B0E40029C1E0 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = ../../mice/Mice/View.swift; sourceTree = "<group>"; };
-		51F8B95A1CD7B1120029C1E0 /* Mice-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mice-Bridging-Header.h"; sourceTree = "<group>"; };
-		51F8B95C1CD7B15B0029C1E0 /* Draws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Draws.swift; path = ../../mice/Mice/Draws.swift; sourceTree = "<group>"; };
-		51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeyboardListener.swift; path = ../../mice/Mice/KeyboardListener.swift; sourceTree = "<group>"; };
+		51F8B90A1CD7B0E40029C1E0 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		51F8B90B1CD7B0E40029C1E0 /*  */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ""; sourceTree = "<group>"; };
+		51F8B90C1CD7B0E40029C1E0 /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
+		51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backdrop.swift; sourceTree = "<group>"; };
+		51F8B90E1CD7B0E40029C1E0 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		51F8B90F1CD7B0E40029C1E0 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		51F8B9101CD7B0E40029C1E0 /* Counter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		51F8B9111CD7B0E40029C1E0 /* Definition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
+		51F8B9121CD7B0E40029C1E0 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+		51F8B9131CD7B0E40029C1E0 /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
+		51F8B9141CD7B0E40029C1E0 /* FadeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeScene.swift; sourceTree = "<group>"; };
+		51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamepadController.swift; sourceTree = "<group>"; };
+		51F8B9161CD7B0E40029C1E0 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hitbox.swift; sourceTree = "<group>"; };
+		51F8B9181CD7B0E40029C1E0 /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		51F8B9191CD7B0E40029C1E0 /* Layer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerStructure.swift; sourceTree = "<group>"; };
+		51F8B91B1CD7B0E40029C1E0 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		51F8B91C1CD7B0E40029C1E0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		51F8B91D1CD7B0E40029C1E0 /* Motion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
+		51F8B91E1CD7B0E40029C1E0 /* NoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoController.swift; sourceTree = "<group>"; };
+		51F8B91F1CD7B0E40029C1E0 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		51F8B9201CD7B0E40029C1E0 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerspectiveEffect.swift; sourceTree = "<group>"; };
+		51F8B9221CD7B0E40029C1E0 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		51F8B9231CD7B0E40029C1E0 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		51F8B9241CD7B0E40029C1E0 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReferencePool.swift; sourceTree = "<group>"; };
+		51F8B9261CD7B0E40029C1E0 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		51F8B9271CD7B0E40029C1E0 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSet.swift; sourceTree = "<group>"; };
+		51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteFactory.swift; sourceTree = "<group>"; };
+		51F8B92A1CD7B0E40029C1E0 /* Streams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
+		51F8B92B1CD7B0E40029C1E0 /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
+		51F8B92C1CD7B0E40029C1E0 /* Surface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Surface.m; sourceTree = "<group>"; };
+		51F8B92D1CD7B0E40029C1E0 /* SurfaceArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurfaceArray.h; sourceTree = "<group>"; };
+		51F8B92E1CD7B0E40029C1E0 /* SurfaceArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurfaceArray.m; sourceTree = "<group>"; };
+		51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Surfaces.swift; sourceTree = "<group>"; };
+		51F8B9301CD7B0E40029C1E0 /* TouchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchController.swift; sourceTree = "<group>"; };
+		51F8B9311CD7B0E40029C1E0 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		51F8B95C1CD7B15B0029C1E0 /* Draws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Draws.swift; sourceTree = "<group>"; };
+		51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +114,7 @@
 		51F8B8F31CD78DF70029C1E0 = {
 			isa = PBXGroup;
 			children = (
-				51F8B8FF1CD78DF70029C1E0 /* Mice */,
+				51F8B8FF1CD78DF70029C1E0 /* Melisse */,
 				51F8B8FE1CD78DF70029C1E0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,16 +122,16 @@
 		51F8B8FE1CD78DF70029C1E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				51F8B8FD1CD78DF70029C1E0 /* Mice.framework */,
+				51F8B8FD1CD78DF70029C1E0 /* Melisse.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		51F8B8FF1CD78DF70029C1E0 /* Mice */ = {
+		51F8B8FF1CD78DF70029C1E0 /* Melisse */ = {
 			isa = PBXGroup;
 			children = (
 				51F8B90A1CD7B0E40029C1E0 /* Animation.swift */,
-				51F8B90B1CD7B0E40029C1E0 /* Audio.h */,
+				51F8B90B1CD7B0E40029C1E0 /*  */,
 				51F8B90C1CD7B0E40029C1E0 /* Audio.m */,
 				51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */,
 				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
@@ -174,27 +172,10 @@
 				51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */,
 				51F8B9301CD7B0E40029C1E0 /* TouchController.swift */,
 				51F8B9311CD7B0E40029C1E0 /* View.swift */,
-				51F8B9081CD78E400029C1E0 /* Scene */,
-				51F8B9091CD78E780029C1E0 /* Layer */,
-				51F8B9001CD78DF70029C1E0 /* Mice.h */,
+				51F8B9001CD78DF70029C1E0 /* Melisse.h */,
 				51F8B9021CD78DF70029C1E0 /* Info.plist */,
-				51F8B95A1CD7B1120029C1E0 /* Mice-Bridging-Header.h */,
 			);
-			path = Mice;
-			sourceTree = "<group>";
-		};
-		51F8B9081CD78E400029C1E0 /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Scene;
-			sourceTree = "<group>";
-		};
-		51F8B9091CD78E780029C1E0 /* Layer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Layer;
+			path = Melisse;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,9 +186,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				51F8B9551CD7B0E40029C1E0 /* SurfaceArray.h in Headers */,
-				51F8B9011CD78DF70029C1E0 /* Mice.h in Headers */,
-				51F8B95B1CD7B1120029C1E0 /* Mice-Bridging-Header.h in Headers */,
-				51F8B9331CD7B0E40029C1E0 /* Audio.h in Headers */,
+				51F8B9011CD78DF70029C1E0 /* Melisse.h in Headers */,
+				51F8B9331CD7B0E40029C1E0 /*  in Headers */,
 				51F8B9531CD7B0E40029C1E0 /* Surface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,9 +195,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		51F8B8FC1CD78DF70029C1E0 /* Mice */ = {
+		51F8B8FC1CD78DF70029C1E0 /* Melisse */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 51F8B9051CD78DF70029C1E0 /* Build configuration list for PBXNativeTarget "Mice" */;
+			buildConfigurationList = 51F8B9051CD78DF70029C1E0 /* Build configuration list for PBXNativeTarget "Melisse" */;
 			buildPhases = (
 				51F8B8F81CD78DF70029C1E0 /* Sources */,
 				51F8B8F91CD78DF70029C1E0 /* Frameworks */,
@@ -228,9 +208,9 @@
 			);
 			dependencies = (
 			);
-			name = Mice;
+			name = Melisse;
 			productName = Mice;
-			productReference = 51F8B8FD1CD78DF70029C1E0 /* Mice.framework */;
+			productReference = 51F8B8FD1CD78DF70029C1E0 /* Melisse.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -247,7 +227,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 51F8B8F71CD78DF70029C1E0 /* Build configuration list for PBXProject "Mice" */;
+			buildConfigurationList = 51F8B8F71CD78DF70029C1E0 /* Build configuration list for PBXProject "Melisse" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -259,7 +239,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				51F8B8FC1CD78DF70029C1E0 /* Mice */,
+				51F8B8FC1CD78DF70029C1E0 /* Melisse */,
 			);
 		};
 /* End PBXProject section */
@@ -423,13 +403,12 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Mice/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Melisse/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Mice;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -442,20 +421,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Mice/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Melisse/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Mice;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		51F8B8F71CD78DF70029C1E0 /* Build configuration list for PBXProject "Mice" */ = {
+		51F8B8F71CD78DF70029C1E0 /* Build configuration list for PBXProject "Melisse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				51F8B9031CD78DF70029C1E0 /* Debug */,
@@ -464,13 +442,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		51F8B9051CD78DF70029C1E0 /* Build configuration list for PBXNativeTarget "Mice" */ = {
+		51F8B9051CD78DF70029C1E0 /* Build configuration list for PBXNativeTarget "Melisse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				51F8B9061CD78DF70029C1E0 /* Debug */,
 				51F8B9071CD78DF70029C1E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

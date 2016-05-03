@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "51F8B8FC1CD78DF70029C1E0"
-               BuildableName = "Mice.framework"
-               BlueprintName = "Mice"
-               ReferencedContainer = "container:Mice.xcodeproj">
+               BuildableName = "Melisse.framework"
+               BlueprintName = "Melisse"
+               ReferencedContainer = "container:Melisse.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "51F8B8FC1CD78DF70029C1E0"
-            BuildableName = "Mice.framework"
-            BlueprintName = "Mice"
-            ReferencedContainer = "container:Mice.xcodeproj">
+            BuildableName = "Melisse.framework"
+            BlueprintName = "Melisse"
+            ReferencedContainer = "container:Melisse.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "51F8B8FC1CD78DF70029C1E0"
-            BuildableName = "Mice.framework"
-            BlueprintName = "Mice"
-            ReferencedContainer = "container:Mice.xcodeproj">
+            BuildableName = "Melisse.framework"
+            BlueprintName = "Melisse"
+            ReferencedContainer = "container:Melisse.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
