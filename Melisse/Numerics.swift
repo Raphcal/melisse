@@ -33,25 +33,10 @@ protocol Integer {
 }
 
 extension GLfloat : Numeric, Signed, FloatingPoint {
-    
-    init(value: Int, range: Int) {
-        self.init(GLfloat(value) / GLfloat(range))
-    }
-    
 }
 
 extension GLshort : Numeric, Signed, Integer {
-    
-    init(value: Int, range: Int) {
-        self.init(GLshort(value))
-    }
-    
 }
 
 extension GLubyte : Numeric, Integer {
-    
-    init(value: Int, range: Int) {
-        self.init(GLubyte(value))
-    }
-    
 }
