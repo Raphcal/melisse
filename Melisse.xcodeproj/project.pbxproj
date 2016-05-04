@@ -154,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				51F8B90F1CD7B0E40029C1E0 /* Color.swift */,
-				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
 				51D9F5921CDA0CA3000AB096 /* Surface.swift */,
 				51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */,
 				51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */,
@@ -181,6 +180,7 @@
 		51F8B8FF1CD78DF70029C1E0 /* Melisse */ = {
 			isa = PBXGroup;
 			children = (
+				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
 				51D9F5941CDA17CE000AB096 /* Geometry */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
 				51D9F5761CD9E242000AB096 /* Audio */,

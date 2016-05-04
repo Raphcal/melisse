@@ -8,48 +8,48 @@
 
 import GLKit
 
-struct Square {
+struct Square<Coordinate where Coordinate : Numeric> {
     
-    var center: Point
-    var size: Size
+    var center: Point<Coordinate>
+    var size: Size<Coordinate>
     
-    var x: GLfloat {
+    var x: Coordinate {
         get { center.x }
     }
     
-    var y: GLfloat {
+    var y: Coordinate {
         get { center.y }
     }
     
-    var width: GLfloat {
+    var width: Coordinate {
         get { size.width }
     }
     
-    var height: GLfloat {
+    var height: Coordinate {
         get { size.height }
     }
     
-    var top: GLfloat {
+    var top: Coordinate {
         get {
-            return y - height / 2
+            return y - height.half
         }
     }
     
-    var bottom: GLfloat {
+    var bottom: Coordinate {
         get {
-            return y + height / 2
+            return y + height.half
         }
     }
     
-    var left: GLfloat {
+    var left: Coordinate {
         get {
-            return x - width / 2
+            return x - width.half
         }
     }
     
-    var right: GLfloat {
+    var right: Coordinate {
         get {
-            return x + width / 2
+            return x + width.half
         }
     }
     
@@ -63,31 +63,35 @@ struct Square {
         self.size = square.size
     }
     
-    init(x: GLfloat, y: GLfloat, width: GLfloat, height: GLfloat) {
+    init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: x, y: y)
         self.size = Size(width: width, height: height)
     }
     
-    init(left: GLfloat, top: GLfloat, width: GLfloat, height: GLfloat) {
-        self.center = Point(x: left + width / 2, y: top + height / 2)
+    init(left: Coordinate, top: Coordinate, width: Coordinate, height: Coordinate) {
+        self.center = Point(x: left + width.half, y: top + height.half)
         self.size = Size(width: width, height: height)
     }
     
-    init(top: GLfloat, bottom: GLfloat, left: GLfloat, right: GLfloat) {
-        self.center = Point(x: left + width / 2, y: top + height / 2)
+    init(top: Coordinate, bottom: Coordinate, left: Coordinate, right: Coordinate) {
+        self.center = Point(x: (left + right).half, y: (top + bottom).half)
         self.size = Size(width: right - left, height: bottom - top)
     }
+
+}
+
+extension Square where Coordinate : FloatingPoint {
     
-    func rotate(rotation: GLfloat) -> Quadrilateral {
+    func rotate(rotation: Coordinate) -> Quadrilateral {
         return rotate(rotation, withPivot: center)
     }
     
-    func rotate(rotation: GLfloat, withPivot pivot: Point) -> Quadrilateral {
-        var vertices = [Point]()
-        let reference = float2(pivot.x, pivot.y)
-        for vertex in [float2(left, top), float2(right, top), float2(left, bottom), float2(right, bottom)] {
-            let length = distance(vertex, reference)
-            let angle : GLfloat = atan2(vertex.y - reference.y, vertex.x - reference.x)
+    func rotate(rotation: Coordinate, withPivot pivot: Point<Coordinate>) -> Quadrilateral {
+        var vertices = [Point<Coordinate>]()
+        let reference = Point<Coordinate>(x: pivot.x, y: pivot.y)
+        for vertex in [Point<Coordinate>(x: left, y: top), Point<Coordinate>(x: right, y: top), Point<Coordinate>(x: left, y: bottom), Point<Coordinate>(x: right, y: bottom)] {
+            let length = vertex.distanceTo(reference)
+            let angle: GLfloat = atan2(vertex.y - reference.y, vertex.x - reference.x)
             vertices.append(Point(x: pivot.x + cos(angle + rotation) * length, y: pivot.y + sin(angle + rotation) * length))
         }
         return Quadrilateral(vertices: vertices)

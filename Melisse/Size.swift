@@ -8,9 +8,19 @@
 
 import Foundation
 
-struct Size {
+struct Size<Coordinate where Coordinate : Numeric> {
     
-    var width: GLfloat = 0
-    var height: GLfloat = 0
+    var width: Coordinate
+    var height: Coordinate
+    
+    init() {
+        self.width = Coordinate(0)
+        self.height = Coordinate(0)
+    }
+    
+    init(width: Coordinate, height: Coordinate) {
+        self.width = width
+        self.height = height
+    }
     
 }

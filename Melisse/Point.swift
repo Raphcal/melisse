@@ -8,17 +8,17 @@
 
 import GLKit
 
-struct Point {
+struct Point<Coordinate where Coordinate : Numeric> {
     
-    var x: GLfloat
-    var y: GLfloat
+    var x: Coordinate
+    var y: Coordinate
     
     init() {
-        self.x = 0
-        self.y = 0
+        self.x = Coordinate(0)
+        self.y = Coordinate(0)
     }
     
-    init(x: GLfloat, y: GLfloat) {
+    init(x: Coordinate, y: Coordinate) {
         self.x = x
         self.y = y
     }
@@ -28,39 +28,47 @@ struct Point {
         self.y = point.y
     }
     
-    init(bottomOfSquare square: Square) {
+    init(bottomOfSquare square: Square<Coordinate>) {
         self.x = square.x
         self.y = square.bottom
     }
     
 }
 
-func * (left: Point, right: GLfloat) -> Point {
+extension Point where Coordinate : FloatingPoint {
+    
+    func distanceTo(other: Point<Coordinate>) -> Coordinate {
+        return Coordinate(distance(float2(x.floatValue, y.floatValue), float2(other.x.floatValue, other.y.floatValue)))
+    }
+    
+}
+
+func *<Coordinate where Coordinate: FloatingPoint>(left: Point<Coordinate>, right: GLfloat) -> Point<Coordinate> {
     return Point(x: left.x * right, y: left.y * right)
 }
 
-func * (left: Point, right: Point) -> Point {
+func *<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x * right.x, y: left.y * right.y)
 }
 
-func + (left: Point, right: Point) -> Point {
+func +<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x + right.x, y: left.y + right.y)
 }
 
-func - (left: Point, right: Point) -> Point {
+func -<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x - right.x, y: left.y - right.y)
 }
 
-prefix func -(point: Point) -> Point {
+prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: -point.x, y: -point.y)
 }
 
-func += (inout left: Point, right: Point) {
+func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
     left.x += right.x
     left.y += right.y
 }
 
-func += (inout left: Sprite, right: Point) {
-    left.x += right.x
-    left.y += right.y
-}
+//func += (inout left: Sprite, right: Point) {
+//    left.x += right.x
+//    left.y += right.y
+//}
