@@ -8,6 +8,44 @@
 
 import GLKit
 
+protocol Rectangle {
+    associatedtype Coordinate : Numeric
+    
+    var center: Point<Coordinate> { get set }
+    var size: Size<Coordinate> { get set }
+    
+    var x: Coordinate { get }
+    
+    var y: Coordinate { get }
+    
+    var width: Coordinate { get }
+    
+    var height: Coordinate {
+        get { size.height }
+    }
+    
+    var top: Coordinate {
+        get {
+        return y - height.half
+        }
+    }
+    
+    var bottom: Coordinate {
+        get {
+        return y + height.half
+        }
+    }
+    
+    var left: Coordinate {
+        get {
+        return x - width.half
+        }
+    }
+    
+    var right: Coordinate
+    
+}
+
 struct Square<Coordinate where Coordinate : Numeric> {
     
     var center: Point<Coordinate>
