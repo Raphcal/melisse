@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51D9F5731CD9E1CE000AB096 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
+		51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
+		51D9F57B1CD9E48E000AB096 /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
+		51D9F57D1CD9E504000AB096 /* Numerics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57C1CD9E504000AB096 /* Numerics.swift */; };
+		51D9F5891CD9FE16000AB096 /* Surface.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D9F5851CD9FE16000AB096 /* Surface.h */; };
+		51D9F58B1CD9FE16000AB096 /* SurfaceArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 51D9F5871CD9FE16000AB096 /* SurfaceArray.h */; };
+		51D9F5931CDA0CA3000AB096 /* Surface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5921CDA0CA3000AB096 /* Surface.swift */; };
+		51D9F5961CDA17DE000AB096 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5951CDA17DE000AB096 /* Shape.swift */; };
+		51D9F5981CDA17F6000AB096 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5971CDA17F6000AB096 /* Square.swift */; };
+		51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5991CDA194F000AB096 /* Quadrilateral.swift */; };
 		51F8B9011CD78DF70029C1E0 /* Melisse.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B9001CD78DF70029C1E0 /* Melisse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51F8B9321CD7B0E40029C1E0 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90A1CD7B0E40029C1E0 /* Animation.swift */; };
-		51F8B9331CD7B0E40029C1E0 /*  in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B90B1CD7B0E40029C1E0 /*  */; };
-		51F8B9341CD7B0E40029C1E0 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90C1CD7B0E40029C1E0 /* Audio.m */; };
 		51F8B9351CD7B0E40029C1E0 /* Backdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */; };
 		51F8B9361CD7B0E40029C1E0 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90E1CD7B0E40029C1E0 /* Camera.swift */; };
 		51F8B9371CD7B0E40029C1E0 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90F1CD7B0E40029C1E0 /* Color.swift */; };
@@ -41,10 +49,6 @@
 		51F8B9501CD7B0E40029C1E0 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
 		51F8B9511CD7B0E40029C1E0 /* SpriteFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */; };
 		51F8B9521CD7B0E40029C1E0 /* Streams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92A1CD7B0E40029C1E0 /* Streams.swift */; };
-		51F8B9531CD7B0E40029C1E0 /* Surface.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B92B1CD7B0E40029C1E0 /* Surface.h */; };
-		51F8B9541CD7B0E40029C1E0 /* Surface.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92C1CD7B0E40029C1E0 /* Surface.m */; };
-		51F8B9551CD7B0E40029C1E0 /* SurfaceArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 51F8B92D1CD7B0E40029C1E0 /* SurfaceArray.h */; };
-		51F8B9561CD7B0E40029C1E0 /* SurfaceArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92E1CD7B0E40029C1E0 /* SurfaceArray.m */; };
 		51F8B9571CD7B0E40029C1E0 /* Surfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */; };
 		51F8B9581CD7B0E40029C1E0 /* TouchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9301CD7B0E40029C1E0 /* TouchController.swift */; };
 		51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
@@ -53,12 +57,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51D9F5721CD9E1CE000AB096 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		51D9F5771CD9E257000AB096 /* OpenALAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenALAudio.swift; sourceTree = "<group>"; };
+		51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurfaceArray.swift; sourceTree = "<group>"; };
+		51D9F57C1CD9E504000AB096 /* Numerics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Numerics.swift; sourceTree = "<group>"; };
+		51D9F5851CD9FE16000AB096 /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
+		51D9F5861CD9FE16000AB096 /* Surface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Surface.m; sourceTree = "<group>"; };
+		51D9F5871CD9FE16000AB096 /* SurfaceArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurfaceArray.h; sourceTree = "<group>"; };
+		51D9F5881CD9FE16000AB096 /* SurfaceArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurfaceArray.m; sourceTree = "<group>"; };
+		51D9F5921CDA0CA3000AB096 /* Surface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Surface.swift; sourceTree = "<group>"; };
+		51D9F5951CDA17DE000AB096 /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
+		51D9F5971CDA17F6000AB096 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
+		51D9F5991CDA194F000AB096 /* Quadrilateral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quadrilateral.swift; sourceTree = "<group>"; };
 		51F8B8FD1CD78DF70029C1E0 /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51F8B9001CD78DF70029C1E0 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Melisse.h; sourceTree = "<group>"; };
 		51F8B9021CD78DF70029C1E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51F8B90A1CD7B0E40029C1E0 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
-		51F8B90B1CD7B0E40029C1E0 /*  */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ""; sourceTree = "<group>"; };
-		51F8B90C1CD7B0E40029C1E0 /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
 		51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backdrop.swift; sourceTree = "<group>"; };
 		51F8B90E1CD7B0E40029C1E0 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		51F8B90F1CD7B0E40029C1E0 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -89,10 +103,6 @@
 		51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSet.swift; sourceTree = "<group>"; };
 		51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteFactory.swift; sourceTree = "<group>"; };
 		51F8B92A1CD7B0E40029C1E0 /* Streams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
-		51F8B92B1CD7B0E40029C1E0 /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
-		51F8B92C1CD7B0E40029C1E0 /* Surface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Surface.m; sourceTree = "<group>"; };
-		51F8B92D1CD7B0E40029C1E0 /* SurfaceArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurfaceArray.h; sourceTree = "<group>"; };
-		51F8B92E1CD7B0E40029C1E0 /* SurfaceArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurfaceArray.m; sourceTree = "<group>"; };
 		51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Surfaces.swift; sourceTree = "<group>"; };
 		51F8B9301CD7B0E40029C1E0 /* TouchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchController.swift; sourceTree = "<group>"; };
 		51F8B9311CD7B0E40029C1E0 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -111,6 +121,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51D9F5761CD9E242000AB096 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				51D9F5721CD9E1CE000AB096 /* Audio.swift */,
+				51D9F5771CD9E257000AB096 /* OpenALAudio.swift */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		51D9F5791CD9E3FD000AB096 /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B9181CD7B0E40029C1E0 /* Input.swift */,
+				51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */,
+				51F8B9301CD7B0E40029C1E0 /* TouchController.swift */,
+				51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */,
+				51F8B91E1CD7B0E40029C1E0 /* NoController.swift */,
+			);
+			name = Input;
+			sourceTree = "<group>";
+		};
+		51D9F5941CDA17CE000AB096 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B9231CD7B0E40029C1E0 /* Point.swift */,
+				51D9F5971CDA17F6000AB096 /* Square.swift */,
+				51D9F5951CDA17DE000AB096 /* Shape.swift */,
+				51D9F5991CDA194F000AB096 /* Quadrilateral.swift */,
+			);
+			name = Geometry;
+			sourceTree = "<group>";
+		};
 		51F8B8F31CD78DF70029C1E0 = {
 			isa = PBXGroup;
 			children = (
@@ -130,34 +172,37 @@
 		51F8B8FF1CD78DF70029C1E0 /* Melisse */ = {
 			isa = PBXGroup;
 			children = (
+				51D9F5941CDA17CE000AB096 /* Geometry */,
+				51D9F5851CD9FE16000AB096 /* Surface.h */,
+				51D9F5861CD9FE16000AB096 /* Surface.m */,
+				51D9F5921CDA0CA3000AB096 /* Surface.swift */,
+				51D9F5871CD9FE16000AB096 /* SurfaceArray.h */,
+				51D9F5881CD9FE16000AB096 /* SurfaceArray.m */,
+				51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */,
+				51F8B90F1CD7B0E40029C1E0 /* Color.swift */,
+				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
+				51D9F5761CD9E242000AB096 /* Audio */,
+				51D9F5791CD9E3FD000AB096 /* Input */,
 				51F8B90A1CD7B0E40029C1E0 /* Animation.swift */,
-				51F8B90B1CD7B0E40029C1E0 /*  */,
-				51F8B90C1CD7B0E40029C1E0 /* Audio.m */,
 				51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */,
 				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
-				51F8B90F1CD7B0E40029C1E0 /* Color.swift */,
 				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
 				51F8B9111CD7B0E40029C1E0 /* Definition.swift */,
 				51F8B9121CD7B0E40029C1E0 /* Direction.swift */,
 				51F8B9131CD7B0E40029C1E0 /* Director.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
 				51F8B9141CD7B0E40029C1E0 /* FadeScene.swift */,
-				51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */,
 				51F8B9161CD7B0E40029C1E0 /* Grid.swift */,
 				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
-				51F8B9181CD7B0E40029C1E0 /* Input.swift */,
-				51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */,
 				51F8B9191CD7B0E40029C1E0 /* Layer.swift */,
 				51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */,
 				51F8B91B1CD7B0E40029C1E0 /* Map.swift */,
 				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
 				51F8B91D1CD7B0E40029C1E0 /* Motion.swift */,
-				51F8B91E1CD7B0E40029C1E0 /* NoController.swift */,
 				51F8B91F1CD7B0E40029C1E0 /* Operation.swift */,
 				51F8B9201CD7B0E40029C1E0 /* Palette.swift */,
 				51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */,
 				51F8B9221CD7B0E40029C1E0 /* Plane.swift */,
-				51F8B9231CD7B0E40029C1E0 /* Point.swift */,
 				51F8B9241CD7B0E40029C1E0 /* Random.swift */,
 				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
 				51F8B9261CD7B0E40029C1E0 /* Resources.swift */,
@@ -165,12 +210,7 @@
 				51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */,
 				51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */,
 				51F8B92A1CD7B0E40029C1E0 /* Streams.swift */,
-				51F8B92B1CD7B0E40029C1E0 /* Surface.h */,
-				51F8B92C1CD7B0E40029C1E0 /* Surface.m */,
-				51F8B92D1CD7B0E40029C1E0 /* SurfaceArray.h */,
-				51F8B92E1CD7B0E40029C1E0 /* SurfaceArray.m */,
 				51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */,
-				51F8B9301CD7B0E40029C1E0 /* TouchController.swift */,
 				51F8B9311CD7B0E40029C1E0 /* View.swift */,
 				51F8B9001CD78DF70029C1E0 /* Melisse.h */,
 				51F8B9021CD78DF70029C1E0 /* Info.plist */,
@@ -185,10 +225,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51F8B9551CD7B0E40029C1E0 /* SurfaceArray.h in Headers */,
+				51D9F58B1CD9FE16000AB096 /* SurfaceArray.h in Headers */,
+				51D9F5891CD9FE16000AB096 /* Surface.h in Headers */,
 				51F8B9011CD78DF70029C1E0 /* Melisse.h in Headers */,
-				51F8B9331CD7B0E40029C1E0 /*  in Headers */,
-				51F8B9531CD7B0E40029C1E0 /* Surface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,35 +299,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				51F8B9401CD7B0E40029C1E0 /* Input.swift in Sources */,
+				51D9F5981CDA17F6000AB096 /* Square.swift in Sources */,
 				51F8B9481CD7B0E40029C1E0 /* Palette.swift in Sources */,
 				51F8B94C1CD7B0E40029C1E0 /* Random.swift in Sources */,
 				51F8B9361CD7B0E40029C1E0 /* Camera.swift in Sources */,
 				51F8B94D1CD7B0E40029C1E0 /* ReferencePool.swift in Sources */,
+				51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */,
 				51F8B9461CD7B0E40029C1E0 /* NoController.swift in Sources */,
 				51F8B9351CD7B0E40029C1E0 /* Backdrop.swift in Sources */,
 				51F8B9521CD7B0E40029C1E0 /* Streams.swift in Sources */,
 				51F8B9511CD7B0E40029C1E0 /* SpriteFactory.swift in Sources */,
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,
 				51F8B9381CD7B0E40029C1E0 /* Counter.swift in Sources */,
+				51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */,
 				51F8B9431CD7B0E40029C1E0 /* Map.swift in Sources */,
 				51F8B94E1CD7B0E40029C1E0 /* Resources.swift in Sources */,
 				51F8B93A1CD7B0E40029C1E0 /* Direction.swift in Sources */,
 				51F8B9451CD7B0E40029C1E0 /* Motion.swift in Sources */,
 				51F8B95E1CD7B15B0029C1E0 /* Draws.swift in Sources */,
+				51D9F57B1CD9E48E000AB096 /* SurfaceArray.swift in Sources */,
 				51F8B9471CD7B0E40029C1E0 /* Operation.swift in Sources */,
-				51F8B9341CD7B0E40029C1E0 /* Audio.m in Sources */,
 				51F8B9501CD7B0E40029C1E0 /* SoundSet.swift in Sources */,
-				51F8B9561CD7B0E40029C1E0 /* SurfaceArray.m in Sources */,
 				51F8B9391CD7B0E40029C1E0 /* Definition.swift in Sources */,
 				51F8B9371CD7B0E40029C1E0 /* Color.swift in Sources */,
 				51F8B93B1CD7B0E40029C1E0 /* Director.swift in Sources */,
 				51F8B9491CD7B0E40029C1E0 /* PerspectiveEffect.swift in Sources */,
+				51D9F5931CDA0CA3000AB096 /* Surface.swift in Sources */,
+				51D9F5731CD9E1CE000AB096 /* Audio.swift in Sources */,
 				51F8B93C1CD7B0E40029C1E0 /* FadeScene.swift in Sources */,
 				51F8B9441CD7B0E40029C1E0 /* Math.swift in Sources */,
 				51F8B94F1CD7B0E40029C1E0 /* Scene.swift in Sources */,
 				51F8B9321CD7B0E40029C1E0 /* Animation.swift in Sources */,
 				51F8B93D1CD7B0E40029C1E0 /* GamepadController.swift in Sources */,
-				51F8B9541CD7B0E40029C1E0 /* Surface.m in Sources */,
+				51D9F5961CDA17DE000AB096 /* Shape.swift in Sources */,
 				51F8B9411CD7B0E40029C1E0 /* Layer.swift in Sources */,
 				51F8B9571CD7B0E40029C1E0 /* Surfaces.swift in Sources */,
 				51F8B9421CD7B0E40029C1E0 /* LayerStructure.swift in Sources */,
@@ -298,6 +341,7 @@
 				51F8B93F1CD7B0E40029C1E0 /* Hitbox.swift in Sources */,
 				51F8B95F1CD7B15B0029C1E0 /* KeyboardListener.swift in Sources */,
 				51F8B9581CD7B0E40029C1E0 /* TouchController.swift in Sources */,
+				51D9F57D1CD9E504000AB096 /* Numerics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +450,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Melisse/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Mice;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Melisse;
 				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -424,7 +468,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Melisse/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Mice;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Melisse;
 				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
 			};
