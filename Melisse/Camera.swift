@@ -21,7 +21,7 @@ class Camera : Square {
     
     var motion : CameraMotion = NoCameraMotion()
     
-    var target : Spot? {
+    var target : Point? {
         didSet {
             if let target = self.target {
                 self.motion = motion.to(LockedCameraMotion(target: target))
@@ -52,15 +52,15 @@ class Camera : Square {
         self.y = height / 2
     }
     
-    func moveTo(target: Spot) {
+    func moveTo(target: Point) {
         moveTo(target, time: Camera.defaultMoveTime, onLock: nil);
     }
     
-    func moveTo(target: Spot, onLock : () -> Void) {
+    func moveTo(target: Point, onLock : () -> Void) {
         moveTo(target, time: Camera.defaultMoveTime, onLock: onLock);
     }
     
-    func moveTo(target: Spot, time: NSTimeInterval, onLock: (() -> Void)?) {
+    func moveTo(target: Point, time: NSTimeInterval, onLock: (() -> Void)?) {
         self.motion = motion.to(MovingToTargetCameraMotion(origin: Camera.instance, target: target, onLock: onLock))
     }
     
@@ -78,7 +78,7 @@ class Camera : Square {
 
 protocol CameraMotion {
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point
  
     func to(other: CameraMotion) -> CameraMotion
     
@@ -86,7 +86,7 @@ protocol CameraMotion {
 
 class NoCameraMotion : CameraMotion {
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         return Camera.instance
     }
     
@@ -98,13 +98,13 @@ class NoCameraMotion : CameraMotion {
 
 class LockedCameraMotion : CameraMotion {
     
-    let target : Spot
+    let target : Point
     
-    init(target: Spot) {
+    init(target: Point) {
         self.target = target
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         return target
     }
     
@@ -116,19 +116,19 @@ class LockedCameraMotion : CameraMotion {
 
 class MovingToTargetCameraMotion : CameraMotion {
     
-    let origin : Spot
-    let target : Spot
+    let origin : Point
+    let target : Point
     let duration : NSTimeInterval = 1
     var elapsed : NSTimeInterval = 0
     var onLock : (() -> Void)?
     
-    init(origin: Spot, target: Spot, onLock: (() -> Void)?) {
-        self.origin = Spot(point: origin)
+    init(origin: Point, target: Point, onLock: (() -> Void)?) {
+        self.origin = Point(point: origin)
         self.target = target
         self.onLock = onLock
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         self.elapsed += timeSinceLastUpdate
         
         if elapsed >= duration {
@@ -140,7 +140,7 @@ class MovingToTargetCameraMotion : CameraMotion {
         }
         
         let ratio = GLfloat(elapsed / duration)
-        return Spot(x: target.x * ratio + origin.x * (1 - ratio), y: target.y * ratio + origin.y * (1 - ratio))
+        return Point(x: target.x * ratio + origin.x * (1 - ratio), y: target.y * ratio + origin.y * (1 - ratio))
     }
     
     func to(other: CameraMotion) -> CameraMotion {
@@ -159,9 +159,9 @@ class EarthquakeCameraMotion : CameraMotion {
         self.motion = Camera.instance.motion
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         let center = motion.locationWithTimeSinceLastUpdate(timeSinceLastUpdate)
-        return Spot(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
     func to(other: CameraMotion) -> CameraMotion {
@@ -183,7 +183,7 @@ class TimedEarthquakeCameraMotion : CameraMotion {
         self.motion = Camera.instance.motion
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         self.time += timeSinceLastUpdate
         
         if time >= duration {
@@ -192,7 +192,7 @@ class TimedEarthquakeCameraMotion : CameraMotion {
         
         let center = motion.locationWithTimeSinceLastUpdate(timeSinceLastUpdate)
         let amplitude = smoothStep(0, to: duration, value: time) * 4
-        return Spot(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
     func to(other: CameraMotion) -> CameraMotion {
@@ -213,7 +213,7 @@ class QuakeCameraMotion : CameraMotion {
         self.motion = Camera.instance.motion
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         self.amplitude = max(amplitude - GLfloat(timeSinceLastUpdate * 10), 0)
         
         if amplitude == 0 {
@@ -221,7 +221,7 @@ class QuakeCameraMotion : CameraMotion {
         }
         
         let center = motion.locationWithTimeSinceLastUpdate(timeSinceLastUpdate)
-        return Spot(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
     func to(other: CameraMotion) -> CameraMotion {
@@ -233,15 +233,15 @@ class QuakeCameraMotion : CameraMotion {
 
 class TwoPlayerCameraMotion : CameraMotion {
     
-    let first : Spot
-    let second : Spot
+    let first : Point
+    let second : Point
     
-    init(first: Spot, second: Spot) {
+    init(first: Point, second: Point) {
         self.first = first
         self.second = second
     }
     
-    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Spot {
+    func locationWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) -> Point {
         let minX, maxX : GLfloat
         if first.x < second.x {
             minX = first.x
@@ -254,7 +254,7 @@ class TwoPlayerCameraMotion : CameraMotion {
         let width = View.instance.width
         
         // TODO: MOINS ZOOMER !
-        let center = Spot(x: (first.x + second.x) / 2, y: (first.y + second.y) / 2)
+        let center = Point(x: (first.x + second.x) / 2, y: (first.y + second.y) / 2)
         let left = max(min(minX - width / 4, center.x - width / 2), center.x - width * 0.75)
         let right = min(max(maxX + width / 4, center.x + width / 2), center.x + width * 0.75)
         

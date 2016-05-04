@@ -10,42 +10,42 @@ import Foundation
 
 struct Quadrilateral {
     
-    var topLeft : Spot
-    var topRight : Spot
-    var bottomLeft : Spot
-    var bottomRight : Spot
+    var topLeft: Point
+    var topRight: Point
+    var bottomLeft: Point
+    var bottomRight: Point
     
-    var left : GLfloat {
+    var left: GLfloat {
         return min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
     }
     
-    var right : GLfloat {
+    var right: GLfloat {
         return max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
     }
     
-    var top : GLfloat {
+    var top: GLfloat {
         return min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y)
     }
     
-    var bottom : GLfloat {
+    var bottom: GLfloat {
         return max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y)
     }
     
     init(square: Square) {
-        self.topLeft = Spot(x: square.left, y: square.top)
-        self.topRight = Spot(x: square.right, y: square.top)
-        self.bottomLeft = Spot(x: square.left, y: square.bottom)
-        self.bottomRight = Spot(x: square.right, y: square.bottom)
+        self.topLeft = Point(x: square.left, y: square.top)
+        self.topRight = Point(x: square.right, y: square.top)
+        self.bottomLeft = Point(x: square.left, y: square.bottom)
+        self.bottomRight = Point(x: square.right, y: square.bottom)
     }
     
-    init(vertices: [Spot]) {
+    init(vertices: [Point]) {
         self.topLeft = vertices[0]
         self.topRight = vertices[1]
         self.bottomLeft = vertices[2]
         self.bottomRight = vertices[3]
     }
     
-    init(topLeft: Spot, topRight: Spot, bottomLeft: Spot, bottomRight: Spot) {
+    init(topLeft: Point, topRight: Point, bottomLeft: Point, bottomRight: Point) {
         self.topLeft = topLeft
         self.topRight = topRight
         self.bottomLeft = bottomLeft
@@ -58,6 +58,6 @@ struct Quadrilateral {
     
 }
 
-func +(left: Quadrilateral, right: Spot) -> Quadrilateral {
+func +(left: Quadrilateral, right: Point) -> Quadrilateral {
     return Quadrilateral(topLeft: left.topLeft + right, topRight: left.topRight + right, bottomLeft: left.bottomLeft + right, bottomRight: left.bottomRight + right)
 }

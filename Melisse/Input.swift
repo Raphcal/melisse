@@ -21,7 +21,7 @@ protocol Controller {
     func pressed(button: GamePadButton) -> Bool
     func pressing(button: GamePadButton) -> Bool
     func draw()
-    func updateWithTouches(touches: [Int:Spot])
+    func updateWithTouches(touches: [Int:Point])
     
 }
 
@@ -29,7 +29,7 @@ class Input : NSObject, Controller {
     
     static let instance = Input()
     
-    var touches = [Int:Spot]()
+    var touches = [Int:Point]()
     var controller : Controller
     
     var direction : GLfloat {
@@ -53,7 +53,7 @@ class Input : NSObject, Controller {
         return touchCount > previousTouchCount
     }
     
-    func updateWithTouches(touches: [Int:Spot]) {
+    func updateWithTouches(touches: [Int:Point]) {
         self.touches = touches
         self.previousTouchCount = touchCount
         self.touchCount = touches.count

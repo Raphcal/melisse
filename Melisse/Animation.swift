@@ -45,7 +45,7 @@ class Frame {
         self.y = 0
         self.width = 0
         self.height = 0
-        self.hitbox = Square.empty
+        self.hitbox = Square()
     }
     
     init(width: Int, height: Int) {
@@ -53,7 +53,7 @@ class Frame {
         self.y = 0
         self.width = width
         self.height = height
-        self.hitbox = Square.empty
+        self.hitbox = Square()
     }
     
     init(x: Int, y: Int, width: Int, height: Int) {
@@ -61,7 +61,7 @@ class Frame {
         self.y = y
         self.width = width
         self.height = height
-        self.hitbox = Square.empty
+        self.hitbox = Square()
     }
     
     init(inputStream : NSInputStream) {
@@ -78,7 +78,7 @@ class Frame {
             
             self.hitbox = Square(left: left, top: top, width: width, height: height)
         } else {
-            self.hitbox = Square.empty
+            self.hitbox = Square()
         }
     }
     

@@ -27,7 +27,7 @@ class NoController : Controller {
         // Pas de vue.
     }
     
-    func updateWithTouches(touches: [Int:Spot]) {
+    func updateWithTouches(touches: [Int:Point]) {
         // Pas de traitement.
     }
     

@@ -101,7 +101,7 @@ class Grid : NSObject {
     
     // MARK: Fonctions publiques.
     
-    func angleAtPoint(point: Spot, forDirection direction: Direction) -> GLfloat {
+    func angleAtPoint(point: Point, forDirection direction: Direction) -> GLfloat {
         if let tile = ground.tileAtPoint(point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAtPoint(point)
             
@@ -114,7 +114,7 @@ class Grid : NSObject {
         }
     }
     
-    func angleForVerticalRunAtPoint(point: Spot, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
+    func angleForVerticalRunAtPoint(point: Point, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
         if let x = xInTileAtPoint(point, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
@@ -123,12 +123,12 @@ class Grid : NSObject {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    func xInTileAtPoint(point: Spot, direction: Direction) -> GLfloat? {
-        if let tile = ground.tileAtPoint(Spot(x: point.x + direction.value * Surfaces.tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
+    func xInTileAtPoint(point: Point, direction: Direction) -> GLfloat? {
+        if let tile = ground.tileAtPoint(Point(x: point.x + direction.value * Surfaces.tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(Surfaces.tileSize / 2)
             for index in 0 ..< halfTileSize {
                 let x = point.x + GLfloat(index) * direction.value
-                let pixel = Layer.pointInTileAtPoint(Spot(x: x, y: point.y))
+                let pixel = Layer.pointInTileAtPoint(Point(x: x, y: point.y))
                 
                 let y = Operation.execute(tileHitbox, x: pixel.x)
                 if (pixel.y > y) {

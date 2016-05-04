@@ -29,7 +29,7 @@ extension Hitbox {
             y >= self.top && y < self.bottom
     }
     
-    func collidesWith(point: Spot) -> Bool {
+    func collidesWith(point: Point) -> Bool {
         return point.x >= self.left && point.x < self.right &&
             point.y >= self.top && point.y < self.bottom
     }
@@ -86,10 +86,10 @@ class StaticHitbox : Hitbox {
 class SimpleHitbox : Hitbox {
     
     /// Référence vers l'objet représentant le centre de la hitbox.
-    let center : Spot
+    let center : Point
     
     /// Décalage par rapport au centre du sprite. Un centre de [0, 2] aura les coordonées sprite.x, sprite.y + 2.
-    let offset : Spot
+    let offset : Point
     
     var x : GLfloat {
         return center.x + offset.x
@@ -130,27 +130,27 @@ class SimpleHitbox : Hitbox {
     }
     
     init() {
-        self.center = Spot()
-        self.offset = Spot()
+        self.center = Point()
+        self.offset = Point()
         self.width = 0
         self.height = 0
     }
     
     init(square: Square) {
         self.center = square
-        self.offset = Spot()
+        self.offset = Point()
         self.width = square.width
         self.height = square.height
     }
     
-    init(center: Spot, width: GLfloat, height: GLfloat) {
+    init(center: Point, width: GLfloat, height: GLfloat) {
         self.center = center
-        self.offset = Spot()
+        self.offset = Point()
         self.width = width
         self.height = height
     }
     
-    init(center: Spot, offset: Spot, width: GLfloat, height: GLfloat) {
+    init(center: Point, offset: Point, width: GLfloat, height: GLfloat) {
         self.center = center
         self.offset = offset
         self.width = width
@@ -250,7 +250,7 @@ class RotatedHitbox : Hitbox {
         self.hitbox = hitbox
     }
     
-    func rotate(rotation: GLfloat, withPivot pivot: Spot) {
+    func rotate(rotation: GLfloat, withPivot pivot: Point) {
         let left = hitbox.left
         let top = hitbox.top
         let square = Square(left: left, top: top, width: hitbox.right - left, height: hitbox.bottom - top)

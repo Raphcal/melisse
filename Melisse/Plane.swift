@@ -23,7 +23,7 @@ class Plane {
         self.colorPointer = SurfaceArray(capacity: vertices, coordinates: Surfaces.coordinatesByColor)
     }
     
-    func draw(at point: Spot = Spot()) {
+    func draw(at point: Point = Point()) {
         Draws.translateTo(point)
         Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * Surfaces.vertexesByQuad))
     }

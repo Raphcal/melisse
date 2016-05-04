@@ -29,7 +29,7 @@ class Backdrop {
         createVerticesAndTextureCoordinates()
     }
     
-    func update(offset offset: GLfloat = 0, tilt: Spot = Spot()) {
+    func update(offset offset: GLfloat = 0, tilt: Point = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
@@ -57,7 +57,7 @@ class Backdrop {
     
     func draw() {
         Draws.bindTexture(palette.texture)
-        Draws.translateTo(Spot())
+        Draws.translateTo(Point())
         
         for index in 0 ..< map.layers.count {
             let vertexPointer = vertexPointers[index]

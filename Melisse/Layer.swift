@@ -14,7 +14,7 @@ class Layer {
     let width : Int
     let height : Int
     let tiles : [Int?]
-    let scrollRate : Spot
+    let scrollRate : Point
     let length : Int
     let topLeft : (x: Int, y: Int)
     
@@ -23,12 +23,12 @@ class Layer {
         self.width = 0
         self.height = 0
         self.tiles = []
-        self.scrollRate = Spot()
+        self.scrollRate = Point()
         self.length = 0
         self.topLeft = (x: 0, y: 0)
     }
     
-    init(name: String, width: Int, height: Int, tiles: [Int?], length: Int, scrollRate: Spot, topLeft: (x: Int, y: Int)) {
+    init(name: String, width: Int, height: Int, tiles: [Int?], length: Int, scrollRate: Point, topLeft: (x: Int, y: Int)) {
         self.name = name
         self.width = width
         self.height = height
@@ -43,7 +43,7 @@ class Layer {
         self.width = width
         self.height = height
         self.tiles = tiles
-        self.scrollRate = Spot(x: scrollRateX, y: scrollRateY)
+        self.scrollRate = Point(x: scrollRateX, y: scrollRateY)
         
         var length = 0
         for tile in tiles {
@@ -62,7 +62,7 @@ class Layer {
         
         let scrollRateX = Streams.readFloat(inputStream)
         let scrollRateY = Streams.readFloat(inputStream)
-        self.scrollRate = Spot(x: scrollRateX, y: scrollRateY)
+        self.scrollRate = Point(x: scrollRateX, y: scrollRateY)
         
         let count = Streams.readInt(inputStream)
         var tiles : [Int?] = []
@@ -92,23 +92,23 @@ class Layer {
         }
     }
     
-    func tileAtPoint(point: Spot) -> Int? {
+    func tileAtPoint(point: Point) -> Int? {
         return tileAtX(Int(point.x / Surfaces.tileSize), y: Int(point.y / Surfaces.tileSize))
     }
     
-    static func pointInTileAtPoint(point: Spot) -> Spot {
-        return Spot(x: point.x % Surfaces.tileSize, y: point.y % Surfaces.tileSize)
+    static func pointInTileAtPoint(point: Point) -> Point {
+        return Point(x: point.x % Surfaces.tileSize, y: point.y % Surfaces.tileSize)
     }
     
-    static func tileTop(point: Spot) -> GLfloat {
+    static func tileTop(point: Point) -> GLfloat {
         return GLfloat(Int(point.y / Surfaces.tileSize)) * Surfaces.tileSize
     }
     
-    static func tileBottom(point: Spot) -> GLfloat {
+    static func tileBottom(point: Point) -> GLfloat {
         return GLfloat(Int(point.y / Surfaces.tileSize) + 1) * Surfaces.tileSize
     }
     
-    static func tileBorder(point: Spot, direction: Direction) -> GLfloat {
+    static func tileBorder(point: Point, direction: Direction) -> GLfloat {
         return GLfloat(Int(point.x / Surfaces.tileSize) + direction.rawValue) * Surfaces.tileSize
     }
     

@@ -31,7 +31,7 @@ class LayerStructure {
     
     let tiles : [Tile] = []
     
-    func topAtPoint(point: Spot) {
+    func topAtPoint(point: Point) {
         // TODO: voir Map#tileTop et renvoyer ça + tile.top()
     }
     

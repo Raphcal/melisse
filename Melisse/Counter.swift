@@ -9,7 +9,7 @@
 import GLKit
 
 /// Compteur affichant une valeur alignée en haut à droite en utilisant un sprite par chiffre.
-class Counter : Spot {
+class Counter : Point {
     
     let factory : SpriteFactory
     var digits : [Int] = []
@@ -52,7 +52,7 @@ class Counter : Spot {
             let sprite = sprites[index]
             
             // Pour l'alignement à gauche, utiliser "+ index * sprite.width".
-            sprite.topLeft = Spot(x: self.x - GLfloat(index) * sprite.width, y: self.y)
+            sprite.topLeft = Point(x: self.x - GLfloat(index) * sprite.width, y: self.y)
             
             // Pour l'alignement à gauche, utiliser "digits.count - index - 1".
             sprite.animation.frameIndex = digits[index]

@@ -70,7 +70,7 @@ class GamepadController : Controller {
         // Pas d'affichage quand une manette est branchée.
     }
     
-    func updateWithTouches(touches: [Int : Spot]) {
+    func updateWithTouches(touches: [Int : Point]) {
         // Pas de prise en compte de l'écran tactile.
     }
     

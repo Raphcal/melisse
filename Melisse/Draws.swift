@@ -10,7 +10,7 @@ import GLKit
 
 class Draws {
     
-    static var lastTranslation = Spot()
+    static var lastTranslation = Point()
     
     static func bindTexture(texture: GLKTextureInfo) {
         glBindTexture(texture.target, texture.name)
@@ -49,7 +49,7 @@ class Draws {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT) | GLbitfield(GL_DEPTH_BUFFER_BIT))
     }
     
-    static func translateTo(topLeft: Spot) {
+    static func translateTo(topLeft: Point) {
         let translation = topLeft - lastTranslation
         glTranslatef(-translation.x, translation.y, 0)
         lastTranslation = topLeft

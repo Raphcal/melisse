@@ -33,8 +33,8 @@ struct MotionMetric {
 
 struct PerspectiveEffect {
     
-    var backgroundTilt = Spot()
-    var foregroundTilt = Spot()
+    var backgroundTilt = Point()
+    var foregroundTilt = Point()
     
     #if os(iOS)
     let motionManager = CMMotionManager()
@@ -59,18 +59,18 @@ struct PerspectiveEffect {
     
     mutating func update() {
         #if os(iOS)
-            let tilt: Spot
+            let tilt: Point
             if let motion = motionManager.deviceMotion {
                 let orientation = UIApplication.sharedApplication().statusBarOrientation
                 let horizontalMetric = horizontalMetrics[orientation]!
                 let verticalMetric = verticalMetrics[orientation]!
-                tilt = Spot(x: horizontalMetric.valueFor(motion.attitude.pitch), y: verticalMetric.valueFor(motion.attitude.roll))
+                tilt = Point(x: horizontalMetric.valueFor(motion.attitude.pitch), y: verticalMetric.valueFor(motion.attitude.roll))
             } else {
-                tilt = Spot()
+                tilt = Point()
             }
             
             self.backgroundTilt = tilt
-            self.foregroundTilt = Spot(x: -tilt.x * Surfaces.tileSize / 2, y: -tilt.y * Surfaces.tileSize / 4)
+            self.foregroundTilt = Point(x: -tilt.x * Surfaces.tileSize / 2, y: -tilt.y * Surfaces.tileSize / 4)
         #endif
     }
     

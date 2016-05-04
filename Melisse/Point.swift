@@ -1,5 +1,5 @@
 //
-//  Spot.swift
+//  Point.swift
 //  MeltedIce
 //
 //  Created by Raphaël Calabro on 28/06/2015.
@@ -8,7 +8,7 @@
 
 import GLKit
 
-struct Spot {
+struct Point {
     
     var x: GLfloat
     var y: GLfloat
@@ -23,7 +23,7 @@ struct Spot {
         self.y = y
     }
     
-    init(point: Spot) {
+    init(point: Point) {
         self.x = point.x
         self.y = point.y
     }
@@ -35,32 +35,32 @@ struct Spot {
     
 }
 
-func * (left: Spot, right: GLfloat) -> Spot {
-    return Spot(x: left.x * right, y: left.y * right)
+func * (left: Point, right: GLfloat) -> Point {
+    return Point(x: left.x * right, y: left.y * right)
 }
 
-func * (left: Spot, right: Spot) -> Spot {
-    return Spot(x: left.x * right.x, y: left.y * right.y)
+func * (left: Point, right: Point) -> Point {
+    return Point(x: left.x * right.x, y: left.y * right.y)
 }
 
-func + (left: Spot, right: Spot) -> Spot {
-    return Spot(x: left.x + right.x, y: left.y + right.y)
+func + (left: Point, right: Point) -> Point {
+    return Point(x: left.x + right.x, y: left.y + right.y)
 }
 
-func - (left: Spot, right: Spot) -> Spot {
-    return Spot(x: left.x - right.x, y: left.y - right.y)
+func - (left: Point, right: Point) -> Point {
+    return Point(x: left.x - right.x, y: left.y - right.y)
 }
 
-prefix func -(point: Spot) -> Spot {
-    return Spot(x: -point.x, y: -point.y)
+prefix func -(point: Point) -> Point {
+    return Point(x: -point.x, y: -point.y)
 }
 
-func += (inout left: Spot, right: Spot) {
+func += (inout left: Point, right: Point) {
     left.x += right.x
     left.y += right.y
 }
 
-func += (inout left: Sprite, right: Spot) {
+func += (inout left: Sprite, right: Point) {
     left.x += right.x
     left.y += right.y
 }

@@ -35,9 +35,9 @@ class TouchController : Controller {
         let defaultSize = 48 * zoom
         let padY = View.instance.height - 64 * zoom
         
-        leftButton.sprite!.center = Spot(x: 40 * zoom, y: padY)
-        rightButton.sprite!.center = Spot(x: 120 * zoom, y: padY)
-        jumpButton.sprite!.center = Spot(x: View.instance.width - defaultSize, y: padY)
+        leftButton.sprite!.center = Point(x: 40 * zoom, y: padY)
+        rightButton.sprite!.center = Point(x: 120 * zoom, y: padY)
+        jumpButton.sprite!.center = Point(x: View.instance.width - defaultSize, y: padY)
         
         buttons[.Left] = leftButton
         buttons[.Right] = rightButton
@@ -69,7 +69,7 @@ class TouchController : Controller {
         factory.drawUntranslated()
     }
     
-    func updateWithTouches(touches: [Int:Spot]) {
+    func updateWithTouches(touches: [Int:Point]) {
         for button in buttons.values {
             button.updateWithTouches(touches)
         }
@@ -119,14 +119,14 @@ class Button {
         self.sprite = nil
         self.frame = 0
         self.zoom = zoom
-        self.hitbox = SimpleHitbox(center: Spot(x: left + width / 2, y: top + width / 2), width: width, height: height)
+        self.hitbox = SimpleHitbox(center: Point(x: left + width / 2, y: top + width / 2), width: width, height: height)
     }
     
     deinit {
         sprite?.destroy()
     }
     
-    func updateWithTouches(touches: [Int:Spot]) {
+    func updateWithTouches(touches: [Int:Point]) {
         self.previousState = state
         self.state = false
         

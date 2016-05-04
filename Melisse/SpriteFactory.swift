@@ -95,7 +95,7 @@ class SpriteFactory {
     // MARK: Gestion de l'affichage
     
     /// Dessine les sprites de cette factory.
-    func draw(at translation: Spot = Camera.instance.topLeft) {
+    func draw(at translation: Point = Camera.instance.topLeft) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * Surfaces.vertexesByQuad))
@@ -115,7 +115,7 @@ class SpriteFactory {
     
     func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
         let sprite = self.sprite(definitions[definition])
-        sprite.topLeft = Spot(x: x, y: y)
+        sprite.topLeft = Point(x: x, y: y)
         return sprite
     }
     

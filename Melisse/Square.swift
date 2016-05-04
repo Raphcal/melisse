@@ -6,139 +6,89 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
 struct Square {
     
-    var x: GLfloat
-    var y: GLfloat
-    var width: GLfloat
-    var height: GLfloat
+    var center: Point
+    var size: Size
     
-    var center: Spot {
-        get {
-            return Spot(x: x, y: y)
-        }
-        set {
-            self.x = newValue.x
-            self.y = newValue.y
-        }
+    var x: GLfloat {
+        get { center.x }
     }
     
-    var topLeft : Spot {
-        get {
-            return Spot(x: x - width / 2, y: y - height / 2)
-        }
-        set {
-            self.x = newValue.x + width / 2
-            self.y = newValue.y + height / 2
-        }
+    var y: GLfloat {
+        get { center.y }
     }
     
-    var bottomRight : Spot {
-        get {
-            return Spot(x: x + width / 2, y: y + height / 2)
-        }
-        set {
-            self.x = newValue.x - width / 2
-            self.y = newValue.y - height / 2
-        }
+    var width: GLfloat {
+        get { size.width }
     }
     
-    var size : Spot {
-        get {
-            return Spot(x: width, y: height)
-        }
-        set {
-            self.width = newValue.x
-            self.height = newValue.y
-        }
+    var height: GLfloat {
+        get { size.height }
     }
     
-    var top : GLfloat {
+    var top: GLfloat {
         get {
             return y - height / 2
         }
     }
     
-    var bottom : GLfloat {
+    var bottom: GLfloat {
         get {
             return y + height / 2
         }
     }
     
-    var left : GLfloat {
+    var left: GLfloat {
         get {
             return x - width / 2
         }
     }
     
-    var right : GLfloat {
+    var right: GLfloat {
         get {
             return x + width / 2
         }
     }
     
     init() {
-        self.x = 0
-        self.y = 0
-        self.width = 0
-        self.height = 0
+        self.center = Point()
+        self.size = Size()
     }
     
     init(square: Square) {
-        self.width = square.width
-        self.height = square.height
-        
-        super.init(point: square)
+        self.center = square.center
+        self.size = square.size
     }
     
-    init(centerX: GLfloat, centerY: GLfloat, width: GLfloat, height: GLfloat) {
-        self.width = width
-        self.height = height
-        
-        super.init(x: centerX, y: centerY)
+    init(x: GLfloat, y: GLfloat, width: GLfloat, height: GLfloat) {
+        self.center = Point(x: x, y: y)
+        self.size = Size(width: width, height: height)
     }
     
     init(left: GLfloat, top: GLfloat, width: GLfloat, height: GLfloat) {
-        self.width = width
-        self.height = height
-        
-        super.init(x: left + width / 2, y: top + height / 2)
+        self.center = Point(x: left + width / 2, y: top + height / 2)
+        self.size = Size(width: width, height: height)
     }
     
     init(top: GLfloat, bottom: GLfloat, left: GLfloat, right: GLfloat) {
-        self.width = right - left
-        self.height = bottom - top
-        
-        super.init(x: left + width / 2, y: top + height / 2)
-    }
-    
-    /// Calcule la rotation à appliquer pour l'angle donné.
-    static func rotationForAngle(angle: GLfloat, direction: Direction) -> GLfloat {
-        var degree = angle * 180 / GLfloat(M_PI)
-        if direction == .Left {
-            degree -= 180
-        }
-        while degree < 0 {
-            degree += 360
-        }
-        let step : GLfloat = 22.5
-        degree = nearbyint(degree / step) * step
-        return degree * GLfloat(M_PI) / 180
+        self.center = Point(x: left + width / 2, y: top + height / 2)
+        self.size = Size(width: right - left, height: bottom - top)
     }
     
     func rotate(rotation: GLfloat) -> Quadrilateral {
-        return rotate(rotation, withPivot: self)
+        return rotate(rotation, withPivot: center)
     }
     
-    func rotate(rotation: GLfloat, withPivot pivot: Spot) -> Quadrilateral {
-        var vertices = [Spot]()
+    func rotate(rotation: GLfloat, withPivot pivot: Point) -> Quadrilateral {
+        var vertices = [Point]()
         let reference = float2(pivot.x, pivot.y)
         for vertex in [float2(left, top), float2(right, top), float2(left, bottom), float2(right, bottom)] {
             let length = distance(vertex, reference)
             let angle : GLfloat = atan2(vertex.y - reference.y, vertex.x - reference.x)
-            vertices.append(Spot(x: pivot.x + cos(angle + rotation) * length, y: pivot.y + sin(angle + rotation) * length))
+            vertices.append(Point(x: pivot.x + cos(angle + rotation) * length, y: pivot.y + sin(angle + rotation) * length))
         }
         return Quadrilateral(vertices: vertices)
     }

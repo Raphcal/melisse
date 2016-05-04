@@ -83,8 +83,8 @@ class Palette : NSObject {
         }
     }
     
-    func tileLocation(tile : Int) -> Spot {
-        return Spot(x: GLfloat(tile % columns), y: GLfloat(tile / columns))
+    func tileLocation(tile : Int) -> Point {
+        return Point(x: GLfloat(tile % columns), y: GLfloat(tile / columns))
     }
     
 }
