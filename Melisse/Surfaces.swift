@@ -8,26 +8,8 @@
 
 import GLKit
 
-/// Méthodes de gestion des surfaces OpenGL.
-class Surfaces : NSObject {
-    
-    // 384 x 224
-    
-    static let vertexesByQuad = 6
-    static let coordinatesByVertice = 2
-    static let coordinatesByTexture = 2
-    static let coordinatesByColor = 4
-    static let tileSize : Float = 32
-    
-}
-
-extension Surface {
-    
-    func setQuadWithLeft(left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
-        setQuadWithLeft((GLfloat(left) + GLfloat(width) * direction.mirror) / GLfloat(texture.width),
-                        top: GLfloat(top) / GLfloat(texture.height),
-                        width: GLfloat(width) * direction.value / GLfloat(texture.width),
-                        height: GLfloat(height) / GLfloat(texture.height))
-    }
-    
-}
+let vertexesByQuad = 6
+let coordinatesByVertice = 2
+let coordinatesByTexture = 2
+let coordinatesByColor = 4
+let tileSize : Float = 32
