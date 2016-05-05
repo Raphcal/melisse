@@ -72,7 +72,7 @@ struct Surface<Element : Numeric> {
     
 }
 
-extension Surface where Element: FloatingPoint {
+extension Surface where Element: FloatingPoint, Element: Signed {
     
     func setQuadWith(left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
         setQuadWith(left: (Element(left) + Element(width) * direction.mirror) / Element(texture.width),
@@ -81,33 +81,33 @@ extension Surface where Element: FloatingPoint {
                     height: Element(height) / Element(texture.height))
     }
     
-    func setQuadWith(rectangle: Rectangle) {
-        setQuadWith(left: Element(rectangle.left), right: Element(rectangle.right), top: Element(rectangle.top), bottom: Element(rectangle.bottom))
+    func setQuadWith(rectangle: Rectangle<Element>) {
+        setQuadWith(left: rectangle.left, right: rectangle.right, top: rectangle.top, bottom: rectangle.bottom)
     }
     
-    func setQuadWith(quadrilateral: Quadrilateral) {
-        memory[cursor] = Element(quadrilateral.bottomLeft.x)
-        memory[cursor + 1] = Element(-quadrilateral.bottomLeft.y)
+    func setQuadWith(quadrilateral: Quadrilateral<Element>) {
+        memory[cursor] = quadrilateral.bottomLeft.x
+        memory[cursor + 1] = -quadrilateral.bottomLeft.y
         
         // (idem)
-        memory[cursor + 2] = Element(quadrilateral.bottomLeft.x)
-        memory[cursor + 3] = Element(-quadrilateral.bottomLeft.y)
+        memory[cursor + 2] = quadrilateral.bottomLeft.x
+        memory[cursor + 3] = -quadrilateral.bottomLeft.y
         
         // bas droite
-        memory[cursor + 4] = Element(quadrilateral.bottomRight.x)
-        memory[cursor + 5] = Element(-quadrilateral.bottomRight.y)
+        memory[cursor + 4] = quadrilateral.bottomRight.x
+        memory[cursor + 5] = -quadrilateral.bottomRight.y
         
         // haut gauche
-        memory[cursor + 6] = Element(quadrilateral.topLeft.x)
-        memory[cursor + 7] = Element(-quadrilateral.topLeft.y)
+        memory[cursor + 6] = quadrilateral.topLeft.x
+        memory[cursor + 7] = -quadrilateral.topLeft.y
         
         // haut droite
-        memory[cursor + 8] = Element(quadrilateral.topRight.x)
-        memory[cursor + 9] = Element(-quadrilateral.topRight.y)
+        memory[cursor + 8] = quadrilateral.topRight.x
+        memory[cursor + 9] = -quadrilateral.topRight.y
         
         // (idem)
-        memory[cursor + 10] = Element(quadrilateral.topRight.x)
-        memory[cursor + 11] = Element(-quadrilateral.topRight.y)
+        memory[cursor + 10] = quadrilateral.topRight.x
+        memory[cursor + 11] = -quadrilateral.topRight.y
     }
     
 }

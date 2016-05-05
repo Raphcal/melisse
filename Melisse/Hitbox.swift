@@ -8,78 +8,41 @@
 
 import GLKit
 
-protocol Hitbox : Shape {
+protocol Hitbox {
     
-    var x : GLfloat { get }
-    var y : GLfloat { get }
-    var width : GLfloat { get }
-    var height : GLfloat { get }
+    associatedtype Coordinate : Numeric
     
-    var top : GLfloat { get }
-    var bottom : GLfloat { get }
-    var left : GLfloat { get }
-    var right : GLfloat { get }
+    var x: Coordinate { get set }
+    var y: Coordinate { get set }
+    
+    var width: Coordinate { get set }
+    var height: Coordinate { get set }
+    
+    var top: Coordinate { get set }
+    var bottom: Coordinate { get set }
+    var left: Coordinate { get set }
+    var right: Coordinate { get set }
+    
+    func collidesWith(point: Point<Coordinate>) -> Bool
+    func collidesWith<Other where Other : Hitbox, Self.Coordinate == Other.Coordinate>(other: Other) -> Bool
     
 }
 
 extension Hitbox {
     
-    func collidesWith(x: GLfloat, y: GLfloat) -> Bool {
-        return x >= self.left && x < self.right &&
-            y >= self.top && y < self.bottom
-    }
-    
-    func collidesWith(point: Point) -> Bool {
+    func collidesWith(point: Point<Coordinate>) -> Bool {
         return point.x >= self.left && point.x < self.right &&
             point.y >= self.top && point.y < self.bottom
     }
     
-    func collidesWith(rectangle: Rectangle) -> Bool {
-        return collidesWith(SimpleHitbox(center: rectangle, width: rectangle.width, height: rectangle.height))
-    }
-    
-    func collidesWith(other: Hitbox) -> Bool {
-        // Sinon trouver les 1ères et 2èmes plus petites coordonnées x et y et si elles appartiennent respectivement chacune à une hitbox différente, alors il y a collision.
-        return abs(x - other.x) <= (width + other.width) / 2 && abs(y - other.y) <= (height + other.height) / 2
-    }
-    
-    func collidesWith(sprite: Sprite) -> Bool {
-        return collidesWith(sprite.hitbox)
-    }
-    
-    func bottomHitbox() -> Hitbox {
-        let bottom = self.bottom
-        return SimpleHitbox(rectangle: Rectangle(top: bottom - 1, bottom: bottom, left: left, right: right))
-    }
-    
-    func rectangle() -> Rectangle {
-        return Rectangle(left: left, top: top, width: width, height: height)
+    func collidesWith<Other where Other : Hitbox, Other.Coordinate == Self.Coordinate>(other: Other) -> Bool {
+        return (x - other.x).absolute <= (width + other.width).half
+            && (y - other.y).absolute <= (height + other.height).half
     }
     
 }
 
-class StaticHitbox : Hitbox {
-    
-    let x : GLfloat
-    let y : GLfloat
-    let width : GLfloat
-    let height : GLfloat
-    let top :  GLfloat
-    let bottom :  GLfloat
-    let left : GLfloat
-    let right : GLfloat
-    
-    init(shape: Shape) {
-        self.x = shape.x
-        self.y = shape.y
-        self.width = shape.width
-        self.height = shape.height
-        self.top = shape.top
-        self.bottom = shape.bottom
-        self.left = shape.left
-        self.right = shape.right
-    }
-    
+extension Rectangle : Hitbox {
 }
 
 /// Zone de collision.

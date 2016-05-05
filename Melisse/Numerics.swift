@@ -16,7 +16,14 @@ protocol Numeric {
     
     func +=(inout lhs: Self, rhs: Self)
     
+    func >(lhs: Self, rhs: Self) -> Bool
+    func >=(lhs: Self, rhs: Self) -> Bool
+    func <(lhs: Self, rhs: Self) -> Bool
+    func <=(lhs: Self, rhs: Self) -> Bool
+    func ==(lhs: Self, rhs: Self) -> Bool
+    
     var half: Self { get }
+    var absolute: Self { get }
     
     init(_: Int)
     init(_: GLuint)
@@ -50,6 +57,10 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
     
     var half: GLfloat {
         return self / 2
+    }
+    
+    var absolute: GLfloat {
+        return abs(self)
     }
     
     var squareRoot: GLfloat {
@@ -88,6 +99,10 @@ extension GLshort : Numeric, Signed, Integer {
         return self / 2
     }
     
+    var absolute: GLshort {
+        return abs(self)
+    }
+    
     static func min(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
         return Swift.min(a, b, c, d)
     }
@@ -102,6 +117,10 @@ extension GLubyte : Numeric, Integer {
     
     var half: GLubyte {
         return self / 2
+    }
+    
+    var absolute: GLubyte {
+        return self
     }
     
     static func min(a: GLubyte, _ b: GLubyte, _ c: GLubyte, _ d: GLubyte) -> GLubyte {
