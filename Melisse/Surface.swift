@@ -81,8 +81,8 @@ extension Surface where Element: FloatingPoint {
                     height: Element(height) / Element(texture.height))
     }
     
-    func setQuadWith(square: Square) {
-        setQuadWith(left: Element(square.left), right: Element(square.right), top: Element(square.top), bottom: Element(square.bottom))
+    func setQuadWith(rectangle: Rectangle) {
+        setQuadWith(left: Element(rectangle.left), right: Element(rectangle.right), top: Element(rectangle.top), bottom: Element(rectangle.bottom))
     }
     
     func setQuadWith(quadrilateral: Quadrilateral) {

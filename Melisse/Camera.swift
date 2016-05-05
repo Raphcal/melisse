@@ -8,13 +8,13 @@
 
 import GLKit
 
-class Camera : Square {
+class Camera : Rectangle {
     
     static let instance = Camera()
     static let defaultMoveTime : NSTimeInterval = 1
     
     /// Cadre dans lequel se déplace la caméra.
-    var frame : Square
+    var frame : Rectangle
     
     /// Décalage vertical causé par les zoom.
     var offsetY : GLfloat = 0
@@ -35,7 +35,7 @@ class Camera : Square {
     override init() {
         let width = View.instance.width
         let height = View.instance.height
-        self.frame = Square(left: 0, top: 0, width: width, height: height)
+        self.frame = Rectangle(left: 0, top: 0, width: width, height: height)
         
         super.init(left: 0, top: 0, width: width, height: height)
     }

@@ -34,8 +34,8 @@ extension Hitbox {
             point.y >= self.top && point.y < self.bottom
     }
     
-    func collidesWith(square: Square) -> Bool {
-        return collidesWith(SimpleHitbox(center: square, width: square.width, height: square.height))
+    func collidesWith(rectangle: Rectangle) -> Bool {
+        return collidesWith(SimpleHitbox(center: rectangle, width: rectangle.width, height: rectangle.height))
     }
     
     func collidesWith(other: Hitbox) -> Bool {
@@ -49,11 +49,11 @@ extension Hitbox {
     
     func bottomHitbox() -> Hitbox {
         let bottom = self.bottom
-        return SimpleHitbox(square: Square(top: bottom - 1, bottom: bottom, left: left, right: right))
+        return SimpleHitbox(rectangle: Rectangle(top: bottom - 1, bottom: bottom, left: left, right: right))
     }
     
-    func square() -> Square {
-        return Square(left: left, top: top, width: width, height: height)
+    func rectangle() -> Rectangle {
+        return Rectangle(left: left, top: top, width: width, height: height)
     }
     
 }
@@ -136,11 +136,11 @@ class SimpleHitbox : Hitbox {
         self.height = 0
     }
     
-    init(square: Square) {
-        self.center = square
+    init(rectangle: Rectangle) {
+        self.center = rectangle
         self.offset = Point()
-        self.width = square.width
-        self.height = square.height
+        self.width = rectangle.width
+        self.height = rectangle.height
     }
     
     init(center: Point, width: GLfloat, height: GLfloat) {
@@ -253,18 +253,18 @@ class RotatedHitbox : Hitbox {
     func rotate(rotation: GLfloat, withPivot pivot: Point) {
         let left = hitbox.left
         let top = hitbox.top
-        let square = Square(left: left, top: top, width: hitbox.right - left, height: hitbox.bottom - top)
+        let rectangle = Rectangle(left: left, top: top, width: hitbox.right - left, height: hitbox.bottom - top)
         
-        let rotatedSquare = square.rotate(rotation, withPivot: pivot).enclosingSquare()
+        let rotatedRectangle = rectangle.rotate(rotation, withPivot: pivot).enclosingRectangle()
         
-        self.x = rotatedSquare.x
-        self.y = rotatedSquare.y
-        self.width = rotatedSquare.width
-        self.height = rotatedSquare.height
-        self.top = rotatedSquare.top
-        self.bottom = rotatedSquare.bottom
-        self.left = rotatedSquare.left
-        self.right = rotatedSquare.right
+        self.x = rotatedRectangle.x
+        self.y = rotatedRectangle.y
+        self.width = rotatedRectangle.width
+        self.height = rotatedRectangle.height
+        self.top = rotatedRectangle.top
+        self.bottom = rotatedRectangle.bottom
+        self.left = rotatedRectangle.left
+        self.right = rotatedRectangle.right
     }
     
     func restore() {

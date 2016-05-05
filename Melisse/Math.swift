@@ -16,7 +16,7 @@ func smoothStep(from: NSTimeInterval, to: NSTimeInterval, value: NSTimeInterval)
     return GLfloat(pow(sin(NSTimeInterval(M_PI / 2) * min(max(value - from, 0) / to, 1)), 2))
 }
     
-func square(value: GLfloat) -> GLfloat {
+func rectangle(value: GLfloat) -> GLfloat {
     return value * value
 }
 	

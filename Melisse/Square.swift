@@ -1,5 +1,5 @@
 //
-//  Square.swift
+//  Rectangle.swift
 //  Melisse
 //
 //  Created by Raphaël Calabro on 04/05/2016.
@@ -8,97 +8,87 @@
 
 import GLKit
 
-protocol Rectangle {
+protocol Rectangular {
     associatedtype Coordinate : Numeric
     
     var center: Point<Coordinate> { get set }
     var size: Size<Coordinate> { get set }
     
-    var x: Coordinate { get }
+    var x: Coordinate { get set }
     
-    var y: Coordinate { get }
+    var y: Coordinate { get set }
     
-    var width: Coordinate { get }
+    var width: Coordinate { get set }
     
-    var height: Coordinate {
-        get { size.height }
-    }
+    var height: Coordinate { get set }
     
-    var top: Coordinate {
-        get {
-        return y - height.half
-        }
-    }
+    var top: Coordinate { get set }
     
-    var bottom: Coordinate {
-        get {
-        return y + height.half
-        }
-    }
+    var bottom: Coordinate { get set }
     
-    var left: Coordinate {
-        get {
-        return x - width.half
-        }
-    }
+    var left: Coordinate { get set }
     
-    var right: Coordinate
+    var right: Coordinate { get set }
     
 }
 
-struct Square<Coordinate where Coordinate : Numeric> {
-    
-    var center: Point<Coordinate>
-    var size: Size<Coordinate>
+extension Rectangular {
     
     var x: Coordinate {
         get { center.x }
+        set { center.x = newValue }
     }
     
     var y: Coordinate {
         get { center.y }
+        set { center.y = newValue }
     }
     
     var width: Coordinate {
         get { size.width }
+        set { size.width = newValue }
     }
     
     var height: Coordinate {
         get { size.height }
+        set { size.height = newValue }
     }
     
     var top: Coordinate {
-        get {
-            return y - height.half
-        }
+        get { return center.y - height.half }
+        set { center.y = newValue + height.half }
     }
     
     var bottom: Coordinate {
-        get {
-            return y + height.half
-        }
+        get { return center.y + height.half }
+        set { center.y = newValue - height.half }
     }
     
     var left: Coordinate {
-        get {
-            return x - width.half
-        }
+        get { return center.x - width.half }
+        set { center.x = newValue + width.half }
     }
     
     var right: Coordinate {
-        get {
-            return x + width.half
-        }
+        get { return center.x + width.half }
+        set { center.x = newValue - width.half }
     }
+    
+}
+
+struct Rectangle<Coordinate where Coordinate : Numeric> : Rectangular {
+    
+    var center: Point<Coordinate>
+    var size: Size<Coordinate>
     
     init() {
         self.center = Point()
         self.size = Size()
     }
     
-    init(square: Square) {
-        self.center = square.center
-        self.size = square.size
+    init(rectangle: Rectangle) {
+        self.center = rectangle.center
+        self.size = rectangle.size
     }
     
     init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
@@ -118,7 +108,7 @@ struct Square<Coordinate where Coordinate : Numeric> {
 
 }
 
-extension Square where Coordinate : FloatingPoint {
+extension Rectangle where Coordinate : FloatingPoint {
     
     func rotate(rotation: Coordinate) -> Quadrilateral {
         return rotate(rotation, withPivot: center)
@@ -129,10 +119,10 @@ extension Square where Coordinate : FloatingPoint {
         let reference = Point<Coordinate>(x: pivot.x, y: pivot.y)
         for vertex in [Point<Coordinate>(x: left, y: top), Point<Coordinate>(x: right, y: top), Point<Coordinate>(x: left, y: bottom), Point<Coordinate>(x: right, y: bottom)] {
             let length = vertex.distanceTo(reference)
-            let angle: GLfloat = atan2(vertex.y - reference.y, vertex.x - reference.x)
-            vertices.append(Point(x: pivot.x + cos(angle + rotation) * length, y: pivot.y + sin(angle + rotation) * length))
+            let angle = vertex.angleTo(reference)
+            vertices.append(Point(x: pivot.x + (angle + rotation).cosinus * length, y: pivot.y + (angle + rotation).sinus * length))
         }
-        return Quadrilateral(vertices: vertices)
+        return Quadrilateral<Coordinate>(vertices: vertices)
     }
     
 }

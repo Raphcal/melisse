@@ -28,7 +28,7 @@ class FadeScene : NSObject, Fade {
     
     override init() {
         let mask = plane.coloredQuadrilateral()
-        mask.quadrilateral = Quadrilateral(square: Square(left: 0, top: 0, width: View.instance.width, height: View.instance.height))
+        mask.quadrilateral = Quadrilateral(rectangle: Rectangle(left: 0, top: 0, width: View.instance.width, height: View.instance.height))
     }
     
     func load() {

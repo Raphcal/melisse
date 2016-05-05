@@ -34,7 +34,7 @@ class Backdrop {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             
-            let cameraLeft = (Camera.instance.left + offset) * layer.scrollRate.x + square((1 - layer.scrollRate.x) * tilt.x * Surfaces.tileSize / 4)
+            let cameraLeft = (Camera.instance.left + offset) * layer.scrollRate.x + rectangle((1 - layer.scrollRate.x) * tilt.x * Surfaces.tileSize / 4)
             
             let cameraTop = Camera.instance.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * Surfaces.tileSize / 2
             

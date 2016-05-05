@@ -22,7 +22,7 @@ enum ByteCode : UInt8 {
     case Maximum = 0x4d
     case Cosinus = 0x63
     case Sinus = 0x73
-    case SquareRoot = 0x53
+    case RectangleRoot = 0x53
     case Zoom = 0x7a
     case SpriteVariable = 0x76
     case SpriteDirection = 0x64
@@ -98,7 +98,7 @@ class Operation {
                 case .Sinus:
                     stack.append(sin(stack.removeLast()))
                     
-                case .SquareRoot:
+                case .RectangleRoot:
                     let last = stack.removeLast()
                     if last >= 0 {
                         stack.append(sqrt(last))
@@ -187,7 +187,7 @@ class Operation {
                     case .Sinus:
                         stack.append("sin(\(stack.removeLast()))")
                         
-                    case .SquareRoot:
+                    case .RectangleRoot:
                         stack.append("sqrt(\(stack.removeLast()))")
                         
                     case .Zoom:

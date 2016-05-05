@@ -6,7 +6,7 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
 protocol Numeric {
     func +(lhs: Self, rhs: Self) -> Self
@@ -20,6 +20,9 @@ protocol Numeric {
     
     init(_: Int)
     init(_: GLuint)
+    
+    static func min(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self
+    static func max(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self
 }
 
 protocol Signed {
@@ -30,9 +33,14 @@ protocol FloatingPoint {
     func *(lhs: Self, rhs: GLfloat) -> Self
     func /(lhs: Self, rhs: GLfloat) -> Self
     
-    var floatValue: GLfloat { get }
+    var squareRoot: Self { get }
+    var cosinus: Self { get }
+    var sinus: Self { get }
     
     init(_: GLfloat)
+    
+    static func atan2(lhs: Self, _ rhs: Self) -> Self
+    static func distance(x1: Self, y1: Self, x2: Self, y2: Self) -> Self
 }
 
 protocol Integer {
@@ -44,9 +52,32 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
         return self / 2
     }
     
-    // FIXME: Faire mieux.
-    var floatValue: GLfloat {
-        return self
+    var squareRoot: GLfloat {
+        return sqrt(self)
+    }
+    
+    var cosinus: GLfloat {
+        return cos(self)
+    }
+    
+    var sinus: GLfloat {
+        return sin(self)
+    }
+    
+    static func atan2(lhs: GLfloat, _ rhs: GLfloat) -> GLfloat {
+        return Darwin.atan2(lhs, rhs)
+    }
+    
+    static func distance(x1: GLfloat, y1: GLfloat, x2: GLfloat, y2: GLfloat) -> GLfloat {
+        return simd.distance(float2(x1, y1), float2(x2, y2))
+    }
+    
+    static func min(a: GLfloat, _ b: GLfloat, _ c: GLfloat, _ d: GLfloat) -> GLfloat {
+        return Swift.min(a, b, c, d)
+    }
+    
+    static func max(a: GLfloat, _ b: GLfloat, _ c: GLfloat, _ d: GLfloat) -> GLfloat {
+        return Swift.max(a, b, c, d)
     }
     
 }
@@ -57,12 +88,28 @@ extension GLshort : Numeric, Signed, Integer {
         return self / 2
     }
     
+    static func min(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
+        return Swift.min(a, b, c, d)
+    }
+    
+    static func max(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
+        return Swift.max(a, b, c, d)
+    }
+    
 }
 
 extension GLubyte : Numeric, Integer {
     
     var half: GLubyte {
         return self / 2
+    }
+    
+    static func min(a: GLubyte, _ b: GLubyte, _ c: GLubyte, _ d: GLubyte) -> GLubyte {
+        return Swift.min(a, b, c, d)
+    }
+    
+    static func max(a: GLubyte, _ b: GLubyte, _ c: GLubyte, _ d: GLubyte) -> GLubyte {
+        return Swift.max(a, b, c, d)
     }
     
 }

@@ -28,9 +28,9 @@ struct Point<Coordinate where Coordinate : Numeric> {
         self.y = point.y
     }
     
-    init(bottomOfSquare square: Square<Coordinate>) {
-        self.x = square.x
-        self.y = square.bottom
+    init(bottomOfRectangle rectangle: Rectangle<Coordinate>) {
+        self.x = rectangle.x
+        self.y = rectangle.bottom
     }
     
 }
@@ -38,7 +38,11 @@ struct Point<Coordinate where Coordinate : Numeric> {
 extension Point where Coordinate : FloatingPoint {
     
     func distanceTo(other: Point<Coordinate>) -> Coordinate {
-        return Coordinate(distance(float2(x.floatValue, y.floatValue), float2(other.x.floatValue, other.y.floatValue)))
+        return Coordinate.distance(x, y1: y, x2: other.x, y2: other.y)
+    }
+    
+    func angleTo(other: Point<Coordinate>) -> Coordinate {
+        return Coordinate.atan2(y - other.y, x - other.x)
     }
     
 }
@@ -67,8 +71,3 @@ func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
     left.x += right.x
     left.y += right.y
 }
-
-//func += (inout left: Sprite, right: Point) {
-//    left.x += right.x
-//    left.y += right.y
-//}

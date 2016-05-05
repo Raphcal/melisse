@@ -38,14 +38,14 @@ class Frame {
     /// Hauteur de l'image.
     let height : Int
     /// Zone de collision.
-    let hitbox : Square
+    let hitbox : Rectangle
     
     init() {
         self.x = 0
         self.y = 0
         self.width = 0
         self.height = 0
-        self.hitbox = Square()
+        self.hitbox = Rectangle()
     }
     
     init(width: Int, height: Int) {
@@ -53,7 +53,7 @@ class Frame {
         self.y = 0
         self.width = width
         self.height = height
-        self.hitbox = Square()
+        self.hitbox = Rectangle()
     }
     
     init(x: Int, y: Int, width: Int, height: Int) {
@@ -61,7 +61,7 @@ class Frame {
         self.y = y
         self.width = width
         self.height = height
-        self.hitbox = Square()
+        self.hitbox = Rectangle()
     }
     
     init(inputStream : NSInputStream) {
@@ -76,9 +76,9 @@ class Frame {
             let width = GLfloat(Streams.readInt(inputStream))
             let height = GLfloat(Streams.readInt(inputStream))
             
-            self.hitbox = Square(left: left, top: top, width: width, height: height)
+            self.hitbox = Rectangle(left: left, top: top, width: width, height: height)
         } else {
-            self.hitbox = Square()
+            self.hitbox = Rectangle()
         }
     }
     
