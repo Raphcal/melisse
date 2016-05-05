@@ -8,7 +8,7 @@
 
 import GLKit
 
-class Sprite : Rectangular {
+class Sprite<FloatHitbox where FloatHitbox : Hitbox, FloatHitbox.Coordinate == GLfloat> : Rectangular {
     
     var center: Point<GLfloat>
     var size: Size<GLfloat>
@@ -18,7 +18,7 @@ class Sprite : Rectangular {
     let vertexSurface: Surface<GLfloat>
     let texCoordSurface: Surface<GLshort>
     
-    var hitbox: Hitbox
+    var hitbox: FloatHitbox
     var motion: Motion = NoMotion.instance
     
     var currentAnimation: AnimationName?
@@ -50,7 +50,7 @@ class Sprite : Rectangular {
         vertexSurface.setQuadWith(self)
     }
     
-    func isLookingTowardPoint(point: Point) -> Bool {
+    func isLookingTowardPoint(point: Point<GLfloat>) -> Bool {
         return direction.isSameValue(point.x - self.x)
     }
     
