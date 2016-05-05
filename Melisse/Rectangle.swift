@@ -15,19 +15,14 @@ protocol Rectangular {
     var size: Size<Coordinate> { get set }
     
     var x: Coordinate { get set }
-    
     var y: Coordinate { get set }
     
     var width: Coordinate { get set }
-    
     var height: Coordinate { get set }
     
     var top: Coordinate { get set }
-    
     var bottom: Coordinate { get set }
-    
     var left: Coordinate { get set }
-    
     var right: Coordinate { get set }
     
 }
@@ -74,21 +69,14 @@ extension Rectangular {
         set { center.x = newValue - width.half }
     }
     
-}
-
-struct Rectangle<Coordinate where Coordinate : Numeric> : Rectangular {
-    
-    var center: Point<Coordinate>
-    var size: Size<Coordinate>
-    
     init() {
         self.center = Point()
         self.size = Size()
     }
     
-    init(rectangle: Rectangle) {
-        self.center = rectangle.center
-        self.size = rectangle.size
+    init<Other where Other : Rectangular, Other.Coordinate == Self.Coordinate>(other: Other) {
+        self.center = other.center
+        self.size = other.size
     }
     
     init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
@@ -105,6 +93,13 @@ struct Rectangle<Coordinate where Coordinate : Numeric> : Rectangular {
         self.center = Point(x: (left + right).half, y: (top + bottom).half)
         self.size = Size(width: right - left, height: bottom - top)
     }
+    
+}
+
+struct Rectangle<Coordinate where Coordinate : Numeric> : Rectangular {
+    
+    var center: Point<Coordinate>
+    var size: Size<Coordinate>
 
 }
 

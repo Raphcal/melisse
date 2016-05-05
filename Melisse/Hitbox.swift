@@ -45,79 +45,55 @@ extension Hitbox {
 extension Rectangle : Hitbox {
 }
 
-/// Zone de collision.
-class SimpleHitbox : Hitbox {
+protocol OffsetRectangular : Rectangular {
     
-    /// Référence vers l'objet représentant le centre de la hitbox.
-    let center : Point
+    var offset: Point<Coordinate> { get set }
     
-    /// Décalage par rapport au centre du sprite. Un centre de [0, 2] aura les coordonées sprite.x, sprite.y + 2.
-    let offset : Point
+}
+
+extension OffsetRectangular {
     
-    var x : GLfloat {
+    var x: Coordinate {
         return center.x + offset.x
     }
     
-    var y : GLfloat {
+    var y: Coordinate {
         return center.y + offset.y
     }
     
-    /// Largeur de la hitbox.
-    var width : GLfloat
-    
-    /// Hauteur de la hitbox.
-    var height : GLfloat
-    
-    var top : GLfloat {
-        get {
-            return center.y + offset.y - height / 2
-        }
-    }
-    
-    var bottom : GLfloat {
-        get {
-            return center.y + offset.y + height / 2
-        }
-    }
-    
-    var left : GLfloat {
-        get {
-            return center.x + offset.x - width / 2
-        }
-    }
-    
-    var right : GLfloat {
-        get {
-            return center.x + offset.x + width / 2
-        }
-    }
-    
-    init() {
-        self.center = Point()
-        self.offset = Point()
-        self.width = 0
-        self.height = 0
-    }
-    
-    init(rectangle: Rectangle) {
-        self.center = rectangle
-        self.offset = Point()
-        self.width = rectangle.width
-        self.height = rectangle.height
-    }
-    
-    init(center: Point, width: GLfloat, height: GLfloat) {
-        self.center = center
-        self.offset = Point()
-        self.width = width
-        self.height = height
-    }
-    
-    init(center: Point, offset: Point, width: GLfloat, height: GLfloat) {
+    init(center: Point<Coordinate>, offset: Point<Coordinate>, size: Size<Coordinate>) {
         self.center = center
         self.offset = offset
-        self.width = width
-        self.height = height
+        self.size = size
+    }
+    
+}
+
+struct OffsetHitbox : OffsetRectangular, Hitbox {
+    
+    /// Référence vers l'objet représentant le centre de la hitbox.
+    var center: Point<GLfloat>
+    
+    /// Décalage par rapport au centre du sprite. Un centre de [0, 2] aura les coordonées sprite.x, sprite.y + 2.
+    var offset: Point<GLfloat>
+    
+    /// Taille de la hitbox.
+    var size: Size<GLfloat>
+    
+}
+
+struct SpriteHitbox : Rectangular, Hitbox {
+    
+    var sprite: Sprite
+    var offset: Point<GLfloat>
+    var size: Size<GLfloat>
+    
+    var x: GLfloat {
+        return center.x + offset.x
+    }
+    
+    var y: GLfloat {
+        return center.y + offset.y
     }
     
 }
