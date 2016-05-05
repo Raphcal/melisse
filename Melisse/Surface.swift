@@ -81,7 +81,7 @@ extension Surface where Element: FloatingPoint, Element: Signed {
                     height: Element(height) / Element(texture.height))
     }
     
-    func setQuadWith(rectangle: Rectangle<Element>) {
+    func setQuadWith<Quad where Quad : Rectangular, Quad.Coordinate == Element>(rectangle: Quad) {
         setQuadWith(left: rectangle.left, right: rectangle.right, top: rectangle.top, bottom: rectangle.bottom)
     }
     

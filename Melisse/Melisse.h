@@ -6,7 +6,12 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
+//#if TARGET_OS_IOS
 #import <UIKit/UIKit.h>
+//#endif
+//#if TARGET_OS_MACOS
+//#import <Cocoa/Cocoa.h>
+//#endif
 
 //! Project version number for Melisse.
 FOUNDATION_EXPORT double MelisseVersionNumber;

@@ -42,154 +42,35 @@ extension Hitbox {
     
 }
 
-extension Rectangle : Hitbox {
-}
-
-protocol OffsetRectangular : Rectangular {
-    
-    var offset: Point<Coordinate> { get set }
-    
-}
-
-extension OffsetRectangular {
-    
-    var x: Coordinate {
-        return center.x + offset.x
-    }
-    
-    var y: Coordinate {
-        return center.y + offset.y
-    }
-    
-    init(center: Point<Coordinate>, offset: Point<Coordinate>, size: Size<Coordinate>) {
-        self.center = center
-        self.offset = offset
-        self.size = size
-    }
-    
-}
-
-struct OffsetHitbox : OffsetRectangular, Hitbox {
-    
-    /// Référence vers l'objet représentant le centre de la hitbox.
-    var center: Point<GLfloat>
-    
-    /// Décalage par rapport au centre du sprite. Un centre de [0, 2] aura les coordonées sprite.x, sprite.y + 2.
-    var offset: Point<GLfloat>
-    
-    /// Taille de la hitbox.
-    var size: Size<GLfloat>
-    
-}
-
-struct SpriteHitbox : Rectangular, Hitbox {
+struct SpriteHitbox : OffsettedRectangular, Hitbox {
     
     var sprite: Sprite
     var offset: Point<GLfloat>
     var size: Size<GLfloat>
     
-    var x: GLfloat {
-        return center.x + offset.x
-    }
-    
-    var y: GLfloat {
-        return center.y + offset.y
+    var center: Point {
+        get { sprite.center }
+        set { sprite.center = newValue }
     }
     
 }
 
-/// Hitbox attachée à un sprite.
-class SpriteHitbox : Hitbox {
+struct RotatedHitbox<Coordinate, InnerHitbox where Coordinate : Numeric, InnerHitbox : Hitbox, InnerHitbox.Coordinate == RotatedHitbox.Coordinate> : Hitbox {
     
-    /// Référence vers l'objet représentant le centre de la hitbox.
-    let sprite : Sprite
+    var hitbox: InnerHitbox
     
-    var x : GLfloat {
-        get {
-            return sprite.x + offsetX
-        }
-    }
+    var x: Coordinate
+    var y: Coordinate
     
-    var y : GLfloat {
-        get {
-            return sprite.y + offsetY
-        }
-    }
+    var width: Coordinate
+    var height: Coordinate
     
-    var width : GLfloat {
-        get {
-            return sprite.animation.frame.hitbox.width
-        }
-    }
+    var top: Coordinate
+    var bottom: Coordinate
+    var left: Coordinate
+    var right: Coordinate
     
-    var height : GLfloat {
-        get {
-            return sprite.animation.frame.hitbox.height
-        }
-    }
-    
-    var top : GLfloat {
-        get {
-            return sprite.y + offsetY - sprite.animation.frame.hitbox.height / 2
-        }
-    }
-    
-    var bottom : GLfloat {
-        get {
-            return sprite.y + offsetY + sprite.animation.frame.hitbox.height / 2
-        }
-    }
-    
-    var left : GLfloat {
-        get {
-            return sprite.x + offsetX - sprite.animation.frame.hitbox.width / 2
-        }
-    }
-    
-    var right : GLfloat {
-        get {
-            return sprite.x + offsetX + sprite.animation.frame.hitbox.width / 2
-        }
-    }
-    
-    private var offsetX : GLfloat {
-        get {
-            return (sprite.animation.frame.hitbox.x - sprite.width / 2) * sprite.direction.value
-        }
-    }
-    
-    private var offsetY : GLfloat {
-        get {
-            return sprite.animation.frame.hitbox.y - sprite.height / 2
-        }
-    }
-    
-    init(sprite: Sprite) {
-        self.sprite = sprite
-    }
-    
-}
-
-/// Hitbox encapsulant une autre hitbox pour lui ajouter une propriété "rotation".
-class RotatedHitbox : Hitbox {
- 
-    let hitbox : Hitbox
-    
-    var x : GLfloat = 0
-    var y : GLfloat = 0
-    var width : GLfloat = 0
-    var height : GLfloat = 0
-    
-    var top : GLfloat = 0
-    var bottom : GLfloat = 0
-    var left : GLfloat = 0
-    var right : GLfloat = 0
-    
-    init(hitbox: Hitbox) {
-        self.hitbox = hitbox
-    }
-    
-    func rotate(rotation: GLfloat, withPivot pivot: Point) {
+    mutating func rotate(rotation: GLfloat, with pivot: Point<Coordinate>) {
         let left = hitbox.left
         let top = hitbox.top
         let rectangle = Rectangle(left: left, top: top, width: hitbox.right - left, height: hitbox.bottom - top)
@@ -206,7 +87,7 @@ class RotatedHitbox : Hitbox {
         self.right = rotatedRectangle.right
     }
     
-    func restore() {
+    mutating func restore() {
         self.x = hitbox.x
         self.y = hitbox.y
         self.width = hitbox.width
