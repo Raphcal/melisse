@@ -11,6 +11,7 @@ import GLKit
 class Sprite {
     
     let definition: SpriteDefinition
+    var type: SpriteType
     
     var frame: Rectangle<GLfloat> {
         didSet {
@@ -51,7 +52,7 @@ class Sprite {
         animation.draw(self)
     }
     
-    func isLookingTowardPoint(point: Point<GLfloat>) -> Bool {
+    func isLookingToward(point: Point<GLfloat>) -> Bool {
         return direction.isSameValue(point.x - frame.x)
     }
     
@@ -99,14 +100,14 @@ class Sprite {
         }
     }
     
-    func setBlinkingWithDuration(duration: NSTimeInterval) {
+    func setBlinkingWith(duration duration: NSTimeInterval) {
         self.animation = BlinkingAnimation(animation: animation, blinkRate: 0.2, duration: duration) { (animation) -> Void in
             self.animation = animation
         }
     }
     
-    func setBlinkingWithRate(blinkRate: NSTimeInterval) {
-        self.animation = BlinkingAnimation(animation: animation, blinkRate: blinkRate)
+    func setBlinkingWith(rate rate: NSTimeInterval) {
+        self.animation = BlinkingAnimation(animation: animation, blinkRate: rate)
     }
     
     func setBlinking(blinking: Bool) {
@@ -115,16 +116,14 @@ class Sprite {
                 let blinkingAnimation = BlinkingAnimation(animation: animation)
                 self.animation = blinkingAnimation
             }
-        } else {
-            if let blinkingAnimation = self.animation as? BlinkingAnimation {
-                self.animation = blinkingAnimation.animation
-            }
+        } else if let blinkingAnimation = self.animation as? BlinkingAnimation {
+            self.animation = blinkingAnimation.animation
         }
     }
     
     // MARK: Accès aux variables
     
-    func variable(name: String, defaultValue: GLfloat = 0) -> GLfloat {
+    func variable(name: String, or defaultValue: GLfloat = 0) -> GLfloat {
         if let value = self.variables[name] {
             return value
         } else {
@@ -132,7 +131,7 @@ class Sprite {
         }
     }
     
-    func intVariable(name: String, defaultValue: Int = 0) -> Int {
+    func variable(name: String, or defaultValue: Int = 0) -> Int {
         if let value = self.variables[name] {
             return Int(value)
         } else {
