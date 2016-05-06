@@ -10,51 +10,42 @@ import GLKit
 
 protocol Hitbox {
     
-    associatedtype Coordinate : Numeric
+    var frame: Rectangle<GLfloat> { get set }
+    var offset: Point<GLfloat> { get }
     
-    var x: Coordinate { get set }
-    var y: Coordinate { get set }
-    
-    var width: Coordinate { get set }
-    var height: Coordinate { get set }
-    
-    var top: Coordinate { get set }
-    var bottom: Coordinate { get set }
-    var left: Coordinate { get set }
-    var right: Coordinate { get set }
-    
-    func collidesWith(point: Point<Coordinate>) -> Bool
-    func collidesWith<Other where Other : Hitbox, Self.Coordinate == Other.Coordinate>(other: Other) -> Bool
+    func collidesWith(point: Point<GLfloat>) -> Bool
+    func collidesWith(other: Hitbox) -> Bool
     
 }
 
 extension Hitbox {
     
-    func collidesWith(point: Point<Coordinate>) -> Bool {
-        return point.x >= self.left && point.x < self.right &&
-            point.y >= self.top && point.y < self.bottom
+    func collidesWith(point: Point<GLfloat>) -> Bool {
+        return point.x >= frame.left && point.x < frame.right &&
+            point.y >= frame.top && point.y < frame.bottom
     }
     
-    func collidesWith<Other where Other : Hitbox, Other.Coordinate == Self.Coordinate>(other: Other) -> Bool {
-        return (x - other.x).absolute <= (width + other.width).half
-            && (y - other.y).absolute <= (height + other.height).half
+    func collidesWith(other: Hitbox) -> Bool {
+        return (frame.x - other.frame.x).absolute <= (frame.width + other.frame.width).half
+            && (frame.y - other.frame.y).absolute <= (frame.height + other.frame.height).half
     }
     
 }
 
-struct SpriteHitbox : OffsettedRectangular, Hitbox {
+struct SpriteHitbox : Hitbox {
     
     var sprite: Sprite
-    var offset: Point<GLfloat>
-    var size: Size<GLfloat>
+    var frame: Rectangle<GLfloat>
     
-    var center: Point {
-        get { sprite.center }
-        set { sprite.center = newValue }
+    var offset: Point<GLfloat> {
+        get {
+            return sprite.center
+        }
     }
     
 }
 
+/*
 struct RotatedHitbox<Coordinate, InnerHitbox where Coordinate : Numeric, InnerHitbox : Hitbox, InnerHitbox.Coordinate == RotatedHitbox.Coordinate> : Hitbox {
     
     var hitbox: InnerHitbox
@@ -99,3 +90,4 @@ struct RotatedHitbox<Coordinate, InnerHitbox where Coordinate : Numeric, InnerHi
     }
     
 }
+*/

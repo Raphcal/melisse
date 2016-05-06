@@ -59,9 +59,9 @@ class SpriteFactory {
             self.pools = [ReferencePool(capacity: capacity)]
         }
         
-        let vertices = capacity * Surfaces.vertexesByQuad
-        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: Surfaces.coordinatesByVertice)
-        self.texCoordPointer = SurfaceArray(capacity: vertices, coordinates: Surfaces.coordinatesByTexture)
+        let vertices = capacity * vertexesByQuad
+        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertice)
+        self.texCoordPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByTexture)
         
         // Mise à 0 des pointeurs
         vertexPointer.clear()
@@ -98,13 +98,13 @@ class SpriteFactory {
     func draw(at translation: Point = Camera.instance.topLeft) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
-        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * Surfaces.vertexesByQuad))
+        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
     /// Dessine les sprites de cette factory sans prendre en compte la camera.
     func drawUntranslated() {
         Draws.bindTexture(textureAtlas)
-        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * Surfaces.vertexesByQuad))
+        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
     // MARK: Création de sprites

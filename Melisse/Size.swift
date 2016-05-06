@@ -8,11 +8,19 @@
 
 import Foundation
 
-protocol Size {
+struct Size<Coordinate where Coordinate : Numeric> {
     
-    associatedtype Coordinate : Numeric
+    var width: Coordinate
+    var height: Coordinate
     
-    var width: Coordinate { get set }
-    var height: Coordinate { get set }
+    init() {
+        self.width = Coordinate(0)
+        self.height = Coordinate(0)
+    }
+    
+    init(width: Coordinate, height: Coordinate) {
+        self.width = width
+        self.height = height
+    }
     
 }

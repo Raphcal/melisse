@@ -18,14 +18,14 @@ class Plane {
     
     init(capacity: Int) {
         self.capacity = capacity
-        let vertices = capacity * Surfaces.vertexesByQuad
-        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: Surfaces.coordinatesByVertice)
-        self.colorPointer = SurfaceArray(capacity: vertices, coordinates: Surfaces.coordinatesByColor)
+        let vertices = capacity * vertexesByQuad
+        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertice)
+        self.colorPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
     }
     
     func draw(at point: Point = Point()) {
         Draws.translateTo(point)
-        Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * Surfaces.vertexesByQuad))
+        Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
     }
     
     func coloredQuadrilateral() -> ColoredQuadrilateral {
@@ -35,8 +35,8 @@ class Plane {
                 abort()
             }
         #endif
-        let vertexSurface = Surface(memory: vertexPointer.memory, reference: Int(count), coordinates: Surfaces.coordinatesByVertice)
-        let colorSurface = Surface(memory: colorPointer.memory, reference: Int(count), coordinates: Surfaces.coordinatesByColor)
+        let vertexSurface = Surface(memory: vertexPointer.memory, reference: Int(count), coordinates: coordinatesByVertice)
+        let colorSurface = Surface(memory: colorPointer.memory, reference: Int(count), coordinates: coordinatesByColor)
         count = count + 1
         return ColoredQuadrilateral(vertexSurface: vertexSurface, colorSurface: colorSurface)
     }

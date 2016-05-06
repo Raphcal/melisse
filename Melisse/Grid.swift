@@ -81,9 +81,9 @@ class Grid : NSObject {
     
     private func createVerticesAndTextureCoordinates() {
         for layer in map.layers {
-            let length = layer.length * Surfaces.vertexesByQuad
-            let vertexPointer = SurfaceArray(capacity: length, coordinates: Surfaces.coordinatesByVertice)
-            let texCoordPointer = SurfaceArray(capacity: length, coordinates: Surfaces.coordinatesByTexture)
+            let length = layer.length * vertexesByQuad
+            let vertexPointer = SurfaceArray(capacity: length, coordinates: coordinatesByVertice)
+            let texCoordPointer = SurfaceArray(capacity: length, coordinates: coordinatesByTexture)
             
             for y in 0..<layer.height {
                 for x in 0..<layer.width {
@@ -124,8 +124,8 @@ class Grid : NSObject {
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
     func xInTileAtPoint(point: Point, direction: Direction) -> GLfloat? {
-        if let tile = ground.tileAtPoint(Point(x: point.x + direction.value * Surfaces.tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
-            let halfTileSize = Int(Surfaces.tileSize / 2)
+        if let tile = ground.tileAtPoint(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
+            let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {
                 let x = point.x + GLfloat(index) * direction.value
                 let pixel = Layer.pointInTileAtPoint(Point(x: x, y: point.y))

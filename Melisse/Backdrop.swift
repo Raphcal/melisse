@@ -19,8 +19,8 @@ class Backdrop {
     
     let palette : Palette
     let map : Map
-    var vertexPointers = [SurfaceArray]()
-    var texCoordPointers = [SurfaceArray]()
+    var vertexPointers = [SurfaceArray<GLfloat>]()
+    var texCoordPointers = [SurfaceArray<GLshort>]()
     
     init(palette: Palette, map: Map) {
         self.palette = palette
@@ -29,17 +29,17 @@ class Backdrop {
         createVerticesAndTextureCoordinates()
     }
     
-    func update(offset offset: GLfloat = 0, tilt: Point = Point()) {
+    func update(offset offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             
-            let cameraLeft = (Camera.instance.left + offset) * layer.scrollRate.x + rectangle((1 - layer.scrollRate.x) * tilt.x * Surfaces.tileSize / 4)
+            let cameraLeft = (Camera.instance.left + offset) * layer.scrollRate.x + rectangle((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
             
-            let cameraTop = Camera.instance.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * Surfaces.tileSize / 2
+            let cameraTop = Camera.instance.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
             
-            let left = Int(cameraLeft / Surfaces.tileSize)
-            let top = Int(cameraTop / Surfaces.tileSize)
+            let left = Int(cameraLeft / tileSize)
+            let top = Int(cameraTop / tileSize)
             
             vertexPointer.reset()
             texCoordPointer.reset()
@@ -47,7 +47,7 @@ class Backdrop {
             for y in top ..< top + Backdrop.height {
                 for x in left ..< left + Backdrop.width {
                     if let tile = layer.tileAtX(x % layer.width, y: y % layer.height) {
-                        vertexPointer.appendQuad(Surfaces.tileSize, height: Surfaces.tileSize, left: GLfloat(x) * Surfaces.tileSize - cameraLeft, top: GLfloat(y) * Surfaces.tileSize - cameraTop, distance: 0)
+                        vertexPointer.appendQuad(tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop, distance: 0)
                         texCoordPointer.appendTile(tile, fromPalette: palette)
                     }
                 }
@@ -69,8 +69,8 @@ class Backdrop {
     
     private func createVerticesAndTextureCoordinates() {
         for _ in 0 ..< map.layers.count {
-            let vertexPointer = SurfaceArray(capacity: Backdrop.maximumLength * Surfaces.vertexesByQuad, coordinates: Surfaces.coordinatesByVertice)
-            let texCoordPointer = SurfaceArray(capacity: Backdrop.maximumLength * Surfaces.vertexesByQuad, coordinates: Surfaces.coordinatesByTexture)
+            let vertexPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByVertice)
+            let texCoordPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
             
             vertexPointers.append(vertexPointer)
             texCoordPointers.append(texCoordPointer)

@@ -14,7 +14,7 @@ class Map : NSObject {
     
     let width : Int
     let height : Int
-    let backgroundColor : Color
+    let backgroundColor : Color<GLfloat>
     let layers : [Layer]
     
     override init() {
@@ -31,7 +31,7 @@ class Map : NSObject {
         self.layers = [layer]
     }
     
-    init(layers: [Layer], backgroundColor: Color) {
+    init(layers: [Layer], backgroundColor: Color<GLfloat>) {
         self.layers = layers
         self.backgroundColor = backgroundColor
         
@@ -103,10 +103,10 @@ class Map : NSObject {
         var layers = [Layer]()
         
         for layer in self.layers {
-            let left = Int(floor(Camera.instance.left * layer.scrollRate.x / Surfaces.tileSize))
-            let right = Int(ceil(Camera.instance.right * layer.scrollRate.x / Surfaces.tileSize))
-            let top = Int(floor(Camera.instance.top * layer.scrollRate.y / Surfaces.tileSize))
-            let bottom = Int(ceil(Camera.instance.bottom * layer.scrollRate.y / Surfaces.tileSize))
+            let left = Int(floor(Camera.instance.left * layer.scrollRate.x / tileSize))
+            let right = Int(ceil(Camera.instance.right * layer.scrollRate.x / tileSize))
+            let top = Int(floor(Camera.instance.top * layer.scrollRate.y / tileSize))
+            let bottom = Int(ceil(Camera.instance.bottom * layer.scrollRate.y / tileSize))
             
             var tiles = [Int?]()
             var count = 0

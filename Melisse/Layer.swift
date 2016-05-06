@@ -93,23 +93,23 @@ class Layer {
     }
     
     func tileAtPoint(point: Point) -> Int? {
-        return tileAtX(Int(point.x / Surfaces.tileSize), y: Int(point.y / Surfaces.tileSize))
+        return tileAtX(Int(point.x / tileSize), y: Int(point.y / tileSize))
     }
     
     static func pointInTileAtPoint(point: Point) -> Point {
-        return Point(x: point.x % Surfaces.tileSize, y: point.y % Surfaces.tileSize)
+        return Point(x: point.x % tileSize, y: point.y % tileSize)
     }
     
     static func tileTop(point: Point) -> GLfloat {
-        return GLfloat(Int(point.y / Surfaces.tileSize)) * Surfaces.tileSize
+        return GLfloat(Int(point.y / tileSize)) * tileSize
     }
     
     static func tileBottom(point: Point) -> GLfloat {
-        return GLfloat(Int(point.y / Surfaces.tileSize) + 1) * Surfaces.tileSize
+        return GLfloat(Int(point.y / tileSize) + 1) * tileSize
     }
     
     static func tileBorder(point: Point, direction: Direction) -> GLfloat {
-        return GLfloat(Int(point.x / Surfaces.tileSize) + direction.rawValue) * Surfaces.tileSize
+        return GLfloat(Int(point.x / tileSize) + direction.rawValue) * tileSize
     }
     
 }

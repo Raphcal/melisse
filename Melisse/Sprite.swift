@@ -8,31 +8,36 @@
 
 import GLKit
 
-class Sprite<FloatHitbox where FloatHitbox : Hitbox, FloatHitbox.Coordinate == GLfloat> : Rectangular {
+class Sprite {
     
-    var center: Point<GLfloat>
-    var size: Size<GLfloat>
+    let definition: SpriteDefinition
     
+    var frame: Rectangle<GLfloat> {
+        didSet {
+            vertexSurface.setQuadWith(frame)
+        }
+    }
     var direction: Direction = .Right
     
+    let factory: SpriteFactory
+    
+    let reference: Int
     let vertexSurface: Surface<GLfloat>
     let texCoordSurface: Surface<GLshort>
     
-    var hitbox: FloatHitbox
+    var removed: Bool = false
+    
+    var hitbox: Hitbox
     var motion: Motion = NoMotion.instance
     
     var currentAnimation: AnimationName?
     var animation: Animation = NoAnimation.instance
     
-    var dead: Bool = false
-    var removed: Bool = false
-    
     var variables = [String : GLfloat]()
     var objects = [String : AnyObject]()
     
     init() {
-        center = Point()
-        size = Size()
+        frame = Rectangle()
         vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
         texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
         
@@ -46,12 +51,8 @@ class Sprite<FloatHitbox where FloatHitbox : Hitbox, FloatHitbox.Coordinate == G
         animation.draw(self)
     }
     
-    func updateLocation() {
-        vertexSurface.setQuadWith(self)
-    }
-    
     func isLookingTowardPoint(point: Point<GLfloat>) -> Bool {
-        return direction.isSameValue(point.x - self.x)
+        return direction.isSameValue(point.x - frame.x)
     }
     
     // MARK: Méthodes de suppression du sprite
@@ -60,16 +61,14 @@ class Sprite<FloatHitbox where FloatHitbox : Hitbox, FloatHitbox.Coordinate == G
         self.removed = true
         
         if definition.animations[.Disappear]?.frames.count > 0 {
-            self.type = .Decoration
             setAnimation(.Disappear, onEnd: { self.factory.removeSprite(self) })
             self.motion = NoMotion.instance
-            
         } else {
             factory.removeSprite(self)
         }
     }
     
-    func explode(definition: Int = Sprite.explosionDefinition) {
+    func explode(definition: Int) {
         self.removed = true
         
         let explosion = factory.sprite(definition)
@@ -143,7 +142,7 @@ class Sprite<FloatHitbox where FloatHitbox : Hitbox, FloatHitbox.Coordinate == G
     
 }
 
-func += (inout left: GLfloat?, right: GLfloat) {
+func +=(inout left: GLfloat?, right: GLfloat) {
     if let l = left {
         left = l + right
     } else {
@@ -151,7 +150,7 @@ func += (inout left: GLfloat?, right: GLfloat) {
     }
 }
 
-func += (inout left: Int?, right: Int) {
+func +=(inout left: Int?, right: Int) {
     if let l = left {
         left = l + right
     } else {

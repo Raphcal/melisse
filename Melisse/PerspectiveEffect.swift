@@ -70,7 +70,7 @@ struct PerspectiveEffect {
             }
             
             self.backgroundTilt = tilt
-            self.foregroundTilt = Point(x: -tilt.x * Surfaces.tileSize / 2, y: -tilt.y * Surfaces.tileSize / 4)
+            self.foregroundTilt = Point(x: -tilt.x * tileSize / 2, y: -tilt.y * tileSize / 4)
         #endif
     }
     
