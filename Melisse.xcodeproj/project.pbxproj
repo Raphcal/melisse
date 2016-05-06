@@ -52,6 +52,7 @@
 		51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
 		51F8B95E1CD7B15B0029C1E0 /* Draws.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B95C1CD7B15B0029C1E0 /* Draws.swift */; };
 		51F8B95F1CD7B15B0029C1E0 /* KeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */; };
+		6440EA341CDC81E900190C3D /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440EA331CDC81E900190C3D /* Coordinates.swift */; };
 		6457C15D1CDB7C5F00794F1D /* OffsettedRectangular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6457C15C1CDB7C5F00794F1D /* OffsettedRectangular.swift */; };
 		6457C15F1CDB7C6D00794F1D /* Rectangular.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6457C15E1CDB7C6D00794F1D /* Rectangular.swift */; };
 		6457C1611CDB912E00794F1D /* OffsettedRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6457C1601CDB912E00794F1D /* OffsettedRectangle.swift */; };
@@ -106,6 +107,7 @@
 		51F8B9311CD7B0E40029C1E0 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		51F8B95C1CD7B15B0029C1E0 /* Draws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Draws.swift; sourceTree = "<group>"; };
 		51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
+		6440EA331CDC81E900190C3D /* Coordinates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		6457C15C1CDB7C5F00794F1D /* OffsettedRectangular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsettedRectangular.swift; sourceTree = "<group>"; };
 		6457C15E1CDB7C6D00794F1D /* Rectangular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rectangular.swift; sourceTree = "<group>"; };
 		6457C1601CDB912E00794F1D /* OffsettedRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsettedRectangle.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 		51D9F5941CDA17CE000AB096 /* Geometry */ = {
 			isa = PBXGroup;
 			children = (
+				6440EA331CDC81E900190C3D /* Coordinates.swift */,
 				51F8B9231CD7B0E40029C1E0 /* Point.swift */,
 				51D9F5A51CDA2134000AB096 /* Size.swift */,
 				51D9F5971CDA17F6000AB096 /* Rectangle.swift */,
@@ -315,6 +318,7 @@
 				51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */,
 				51F8B9461CD7B0E40029C1E0 /* NoController.swift in Sources */,
 				51F8B9351CD7B0E40029C1E0 /* Backdrop.swift in Sources */,
+				6440EA341CDC81E900190C3D /* Coordinates.swift in Sources */,
 				51F8B9521CD7B0E40029C1E0 /* Streams.swift in Sources */,
 				51F8B9511CD7B0E40029C1E0 /* SpriteFactory.swift in Sources */,
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,

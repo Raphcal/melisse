@@ -8,17 +8,9 @@
 
 import Foundation
 
-protocol Rectangular {
+protocol Rectangular : Coordinates, Size {
+    
     associatedtype Coordinate : Numeric
-    
-    var center: Point<Coordinate> { get set }
-    var size: Size<Coordinate> { get set }
-    
-    var x: Coordinate { get set }
-    var y: Coordinate { get set }
-    
-    var width: Coordinate { get set }
-    var height: Coordinate { get set }
     
     var top: Coordinate { get set }
     var bottom: Coordinate { get set }
@@ -28,26 +20,6 @@ protocol Rectangular {
 }
 
 extension Rectangular {
-    
-    var x: Coordinate {
-        get { center.x }
-        set { center.x = newValue }
-    }
-    
-    var y: Coordinate {
-        get { center.y }
-        set { center.y = newValue }
-    }
-    
-    var width: Coordinate {
-        get { size.width }
-        set { size.width = newValue }
-    }
-    
-    var height: Coordinate {
-        get { size.height }
-        set { size.height = newValue }
-    }
     
     var top: Coordinate {
         get { return center.y - height.half }
