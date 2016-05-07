@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SpriteType {
+protocol SpriteType: Hashable {
     
     var collidable: Bool { get }
     

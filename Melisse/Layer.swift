@@ -14,7 +14,7 @@ class Layer {
     let width : Int
     let height : Int
     let tiles : [Int?]
-    let scrollRate : Point
+    let scrollRate : Point<GLfloat>
     let length : Int
     let topLeft : (x: Int, y: Int)
     
@@ -28,7 +28,7 @@ class Layer {
         self.topLeft = (x: 0, y: 0)
     }
     
-    init(name: String, width: Int, height: Int, tiles: [Int?], length: Int, scrollRate: Point, topLeft: (x: Int, y: Int)) {
+    init(name: String, width: Int, height: Int, tiles: [Int?], length: Int, scrollRate: Point<GLfloat>, topLeft: (x: Int, y: Int)) {
         self.name = name
         self.width = width
         self.height = height
@@ -92,23 +92,23 @@ class Layer {
         }
     }
     
-    func tileAtPoint(point: Point) -> Int? {
+    func tileAtPoint(point: Point<GLfloat>) -> Int? {
         return tileAtX(Int(point.x / tileSize), y: Int(point.y / tileSize))
     }
     
-    static func pointInTileAtPoint(point: Point) -> Point {
+    static func pointInTileAtPoint(point: Point<GLfloat>) -> Point<GLfloat> {
         return Point(x: point.x % tileSize, y: point.y % tileSize)
     }
     
-    static func tileTop(point: Point) -> GLfloat {
+    static func tileTop(point: Point<GLfloat>) -> GLfloat {
         return GLfloat(Int(point.y / tileSize)) * tileSize
     }
     
-    static func tileBottom(point: Point) -> GLfloat {
+    static func tileBottom(point: Point<GLfloat>) -> GLfloat {
         return GLfloat(Int(point.y / tileSize) + 1) * tileSize
     }
     
-    static func tileBorder(point: Point, direction: Direction) -> GLfloat {
+    static func tileBorder(point: Point<GLfloat>, direction: Direction) -> GLfloat {
         return GLfloat(Int(point.x / tileSize) + direction.rawValue) * tileSize
     }
     

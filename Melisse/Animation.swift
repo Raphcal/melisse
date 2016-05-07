@@ -8,79 +8,17 @@
 
 import Foundation
 
-enum AnimationName : Int {
-    case Stand = 0, Walk, Run, Skid, Jump, Fall, Shaky, Bounce, Duck, Raise, Appear, Disappear, Attack, Hurt, Die
-    
-    static let values = [.Stand, .Walk, .Run, .Skid, .Jump, Fall, Shaky, Bounce, Duck, Raise, Appear, Disappear, Attack, Hurt, Die]
-}
 
 protocol Animation {
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval)
+    func updateWith(timeSinceLastUpdate: NSTimeInterval)
     func draw(sprite: Sprite)
-    func transitionToNextAnimation(nextAnimation: Animation) -> Animation
+    func transitionTo(nextAnimation: Animation) -> Animation
     
-    var definition : AnimationDefinition { get set }
-    var frameIndex : Int { get set }
-    var frame : Frame { get }
-    var speed : Float { get set }
-    
-}
-
-struct Frame {
-    
-    var frame: Rectangle<GLshort>
-    var hitbox: Rectangle<GLfloat>
-    
-    init() {
-        self.frame = Rectangle()
-        self.hitbox = Rectangle()
-    }
-    
-    init(width: GLshort, height: GLshort) {
-        self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
-        self.hitbox = Rectangle()
-    }
-    
-    init(x: GLshort, y: GLshort, width: GLshort, height: GLshort) {
-        self.frame = Rectangle(left: x, top: y, width: width, height: height)
-        self.hitbox = Rectangle()
-    }
-    
-    init(inputStream : NSInputStream) {
-        let x = GLshort(Streams.readInt(inputStream))
-        let y = GLshort(Streams.readInt(inputStream))
-        let width = GLshort(Streams.readInt(inputStream))
-        let height = GLshort(Streams.readInt(inputStream))
-        self.frame = Rectangle(left: x, top: y, width: width, height: height)
-        
-        if Streams.readBoolean(inputStream) {
-            let left = GLfloat(Streams.readInt(inputStream))
-            let top = GLfloat(Streams.readInt(inputStream))
-            let width = GLfloat(Streams.readInt(inputStream))
-            let height = GLfloat(Streams.readInt(inputStream))
-            
-            self.hitbox = Rectangle(left: left, top: top, width: width, height: height)
-        } else {
-            self.hitbox = Rectangle()
-        }
-    }
-    
-    func draw(sprite: Sprite) {
-        sprite.texCoordSurface.setQuadWith(left: frame.x, top: frame.y, width: frame.width, height: frame.height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
-    }
-    
-    func frameChunksForWidth(width: GLshort, direction: Direction = .Right) -> [Frame] {
-        let start = frame.width * GLshort(direction.mirror)
-        let end = frame.width * (1 - GLshort(direction.mirror))
-        let width = GLshort(width) * GLshort(direction.value)
-        
-        var frames = [Frame]()
-        for left in start.stride(to: end, by: Int(width)) {
-            frames.append(Frame(x: frame.x + left, y: frame.y, width: width, height: frame.height))
-        }
-        return frames
-    }
+    var definition: AnimationDefinition { get set }
+    var frameIndex: Int { get set }
+    var frame: Frame { get }
+    var speed: Float { get set }
     
 }
 
@@ -108,7 +46,7 @@ class NoAnimation : Animation {
         self.frame = frame
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         // Pas de traitement
     }
     
@@ -116,7 +54,7 @@ class NoAnimation : Animation {
         // Pas de traitement
     }
     
-    func transitionToNextAnimation(nextAnimation: Animation) -> Animation {
+    func transitionTo(nextAnimation: Animation) -> Animation {
         return nextAnimation
     }
     
@@ -155,7 +93,7 @@ class SingleFrameAnimation : Animation {
         self.init(definition: sprite.definition.animations[animation]!)
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         // Pas de traitement
     }
     
@@ -163,7 +101,7 @@ class SingleFrameAnimation : Animation {
         frame.draw(sprite)
     }
     
-    func transitionToNextAnimation(nextAnimation: Animation) -> Animation {
+    func transitionTo(nextAnimation: Animation) -> Animation {
         return nextAnimation
     }
     
@@ -177,7 +115,7 @@ class LoopingAnimation : SingleFrameAnimation {
     
     var time : NSTimeInterval = 0
     
-    override func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    override func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         time += timeSinceLastUpdate * NSTimeInterval(speed)
         
         if time >= frequency {
@@ -193,7 +131,7 @@ class SynchronizedLoopingAnimation : SingleFrameAnimation {
     
     static let referenceDate = NSDate()
     
-    override func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    override func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         self.frameIndex = Int(NSDate().timeIntervalSinceDate(SynchronizedLoopingAnimation.referenceDate) / frequency) % definition.frames.count
     }
     
@@ -222,7 +160,7 @@ class PlayOnceAnimation : SingleFrameAnimation {
         super.init(definition: definition)
     }
     
-    override func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    override func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         let timeSinceStart = NSDate().timeIntervalSinceDate(startDate)
         let frame = Int(timeSinceStart / frequency)
         
@@ -295,7 +233,7 @@ class BlinkingAnimation : Animation {
         self.blinkRate = blinkRate
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         self.time += timeSinceLastUpdate
         
         let frame = Int(time / blinkRate)
@@ -305,7 +243,7 @@ class BlinkingAnimation : Animation {
             onEnd(animation: animation)
         }
         
-        animation.updateWithTimeSinceLastUpdate(timeSinceLastUpdate)
+        animation.updateWith(timeSinceLastUpdate)
     }
     
     func draw(sprite: Sprite) {
@@ -316,7 +254,7 @@ class BlinkingAnimation : Animation {
         }
     }
     
-    func transitionToNextAnimation(nextAnimation: Animation) -> Animation {
+    func transitionTo(nextAnimation: Animation) -> Animation {
         self.animation = nextAnimation
         return self
     }

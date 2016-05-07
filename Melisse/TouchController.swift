@@ -69,7 +69,7 @@ class TouchController : Controller {
         factory.drawUntranslated()
     }
     
-    func updateWithTouches(touches: [Int:Point]) {
+    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
         for button in buttons.values {
             button.updateWithTouches(touches)
         }
@@ -126,7 +126,7 @@ class Button {
         sprite?.destroy()
     }
     
-    func updateWithTouches(touches: [Int:Point]) {
+    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
         self.previousState = state
         self.state = false
         

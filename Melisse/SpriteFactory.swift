@@ -23,16 +23,15 @@ class SpriteFactory {
     
     let pools : [ReferencePool]
     var sprites = [Sprite]()
+    var collidables = [Sprite]()
     var removalPending = [Sprite]()
     
     let definitions : [SpriteDefinition]
     
-    let vertexPointer : SurfaceArray
-    let texCoordPointer : SurfaceArray
+    let vertexPointer: SurfaceArray<GLfloat>
+    let texCoordPointer: SurfaceArray<GLshort>
     
     var collisions = [Sprite]()
-    
-    var types = [SpriteType:[Sprite]]()
     
     init() {
         self.capacity = 0
@@ -74,7 +73,7 @@ class SpriteFactory {
     
     // MARK: Gestion des mises à jour
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         for sprite in sprites {
             sprite.updateWithTimeSinceLastUpdate(timeSinceLastUpdate)
         }
@@ -83,19 +82,15 @@ class SpriteFactory {
     }
     
     func updateCollisionsForSprite(player: Sprite) {
-        self.collisions.removeAll(keepCapacity: true)
-        
-        for sprite in types[.Collidable]! {
-            if sprite.definition != player.definition && sprite.hitbox.collidesWith(player.hitbox) {
-                self.collisions.append(sprite)
-            }
+        self.collisions = collidables.flatMap { (sprite) -> T? in
+            return sprite !== player && sprite.hitbox.collidesWith(player.hitbox) ? sprite : nil
         }
     }
     
     // MARK: Gestion de l'affichage
     
     /// Dessine les sprites de cette factory.
-    func draw(at translation: Point = Camera.instance.topLeft) {
+    func draw(at translation: Point<GLfloat> = Camera.instance.topLeft) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
