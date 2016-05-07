@@ -9,8 +9,9 @@
 import Foundation
 
 protocol AnimationName {
+    var rawValue: Int { get }
 }
 
-enum DefaultAnimationName: AnimationName {
+enum DefaultAnimationName: Int, AnimationName {
     case Normal, Disappear
 }
