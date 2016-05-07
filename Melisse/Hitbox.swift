@@ -10,8 +10,7 @@ import GLKit
 
 protocol Hitbox {
     
-    var frame: Rectangle<GLfloat> { get set }
-    var offset: Point<GLfloat> { get }
+    var frame: Rectangle<GLfloat> { get }
     
     func collidesWith(point: Point<GLfloat>) -> Bool
     func collidesWith(other: Hitbox) -> Bool
@@ -35,59 +34,33 @@ extension Hitbox {
 struct SpriteHitbox : Hitbox {
     
     var sprite: Sprite
-    var frame: Rectangle<GLfloat>
-    
-    var offset: Point<GLfloat> {
+    var frame: Rectangle<GLfloat> {
         get {
-            return sprite.center
+            let animationFrameHitbox = sprite.animation.frame.hitbox
+            let offsetX = (animationFrameHitbox.x - sprite.frame.width.half) * sprite.direction.value
+            let offsetY = animationFrameHitbox.y - sprite.frame.height.half
+            return Rectangle(x: sprite.frame.x + offsetX, y: sprite.frame.y + offsetY, width: animationFrameHitbox.width, height: animationFrameHitbox.height)
         }
     }
     
 }
 
-/*
-struct RotatedHitbox<Coordinate, InnerHitbox where Coordinate : Numeric, InnerHitbox : Hitbox, InnerHitbox.Coordinate == RotatedHitbox.Coordinate> : Hitbox {
+struct RotatedHitbox : Hitbox {
     
-    var hitbox: InnerHitbox
+    var hitbox: Hitbox
+    var frame: Rectangle<GLfloat>
     
-    var x: Coordinate
-    var y: Coordinate
-    
-    var width: Coordinate
-    var height: Coordinate
-    
-    var top: Coordinate
-    var bottom: Coordinate
-    var left: Coordinate
-    var right: Coordinate
-    
-    mutating func rotate(rotation: GLfloat, with pivot: Point<Coordinate>) {
-        let left = hitbox.left
-        let top = hitbox.top
-        let rectangle = Rectangle(left: left, top: top, width: hitbox.right - left, height: hitbox.bottom - top)
-        
-        let rotatedRectangle = rectangle.rotate(rotation, withPivot: pivot).enclosingRectangle()
-        
-        self.x = rotatedRectangle.x
-        self.y = rotatedRectangle.y
-        self.width = rotatedRectangle.width
-        self.height = rotatedRectangle.height
-        self.top = rotatedRectangle.top
-        self.bottom = rotatedRectangle.bottom
-        self.left = rotatedRectangle.left
-        self.right = rotatedRectangle.right
+    init(hitbox: Hitbox) {
+        self.hitbox = hitbox
+        self.frame = hitbox.frame
     }
     
-    mutating func restore() {
-        self.x = hitbox.x
-        self.y = hitbox.y
-        self.width = hitbox.width
-        self.height = hitbox.height
-        self.top = hitbox.top
-        self.bottom = hitbox.bottom
-        self.left = hitbox.left
-        self.right = hitbox.right
+    mutating func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
+        self.frame = hitbox.frame.rotate(rotation, withPivot: pivot).enclosingRectangle()
+    }
+    
+    mutating func cancelRotation() {
+        self.frame = hitbox.frame
     }
     
 }
-*/

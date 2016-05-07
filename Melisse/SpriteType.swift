@@ -13,3 +13,15 @@ protocol SpriteType {
     var collidable: Bool { get }
     
 }
+
+enum DefaultSpriteType: SpriteType {
+    
+    case Decoration
+    
+    var collidable: Bool {
+        get {
+            return false
+        }
+    }
+    
+}

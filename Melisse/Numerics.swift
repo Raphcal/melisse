@@ -27,6 +27,7 @@ protocol Numeric {
     
     init(_: Int)
     init(_: GLuint)
+    init(_: GLfloat)
     
     static func min(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self
     static func max(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self

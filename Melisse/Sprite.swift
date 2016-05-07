@@ -11,7 +11,7 @@ import GLKit
 class Sprite {
     
     let definition: SpriteDefinition
-    var type: SpriteType
+    var type: SpriteType = DefaultSpriteType.Decoration
     
     var frame: Rectangle<GLfloat> {
         didSet {
@@ -64,6 +64,7 @@ class Sprite {
         if definition.animations[.Disappear]?.frames.count > 0 {
             setAnimation(.Disappear, onEnd: { self.factory.removeSprite(self) })
             self.motion = NoMotion.instance
+            self.type = DefaultSpriteType.Decoration
         } else {
             factory.removeSprite(self)
         }

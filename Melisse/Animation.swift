@@ -27,48 +27,32 @@ protocol Animation {
     
 }
 
-class Frame {
+struct Frame {
     
-    /// Emplacement x dans l'atlas.
-    let x : Int
-    /// Emplacement y dans l'atlas.
-    let y : Int
-    /// Largeur de l'image.
-    let width : Int
-    /// Hauteur de l'image.
-    let height : Int
-    /// Zone de collision.
-    let hitbox : Rectangle
+    var frame: Rectangle<GLshort>
+    var hitbox: Rectangle<GLfloat>
     
     init() {
-        self.x = 0
-        self.y = 0
-        self.width = 0
-        self.height = 0
+        self.frame = Rectangle()
         self.hitbox = Rectangle()
     }
     
-    init(width: Int, height: Int) {
-        self.x = 0
-        self.y = 0
-        self.width = width
-        self.height = height
+    init(width: GLshort, height: GLshort) {
+        self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
-    init(x: Int, y: Int, width: Int, height: Int) {
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+    init(x: GLshort, y: GLshort, width: GLshort, height: GLshort) {
+        self.frame = Rectangle(left: x, top: y, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
     init(inputStream : NSInputStream) {
-        self.x = Streams.readInt(inputStream)
-        self.y = Streams.readInt(inputStream)
-        self.width = Streams.readInt(inputStream)
-        self.height = Streams.readInt(inputStream)
+        let x = GLshort(Streams.readInt(inputStream))
+        let y = GLshort(Streams.readInt(inputStream))
+        let width = GLshort(Streams.readInt(inputStream))
+        let height = GLshort(Streams.readInt(inputStream))
+        self.frame = Rectangle(left: x, top: y, width: width, height: height)
         
         if Streams.readBoolean(inputStream) {
             let left = GLfloat(Streams.readInt(inputStream))
@@ -83,17 +67,17 @@ class Frame {
     }
     
     func draw(sprite: Sprite) {
-        sprite.texCoordSurface.setQuadWithLeft(x, top: y, width: width, height: height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
+        sprite.texCoordSurface.setQuadWith(left: frame.x, top: frame.y, width: frame.width, height: frame.height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
     }
     
-    func frameChunksForWidth(width: Int, direction: Direction = .Right) -> [Frame] {
-        let start = 0 + self.width * Int(direction.mirror)
-        let end = self.width * (1 - Int(direction.mirror))
-        let stride = width * Int(direction.value)
+    func frameChunksForWidth(width: GLshort, direction: Direction = .Right) -> [Frame] {
+        let start = frame.width * GLshort(direction.mirror)
+        let end = frame.width * (1 - GLshort(direction.mirror))
+        let width = GLshort(width) * GLshort(direction.value)
         
         var frames = [Frame]()
-        for left in start.stride(to: end, by: stride) {
-            frames.append(Frame(x: self.x + left, y: self.y, width: stride, height: self.height))
+        for left in start.stride(to: end, by: Int(width)) {
+            frames.append(Frame(x: frame.x + left, y: frame.y, width: width, height: frame.height))
         }
         return frames
     }
