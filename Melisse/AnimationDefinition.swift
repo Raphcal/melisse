@@ -12,7 +12,7 @@ enum AnimationType {
     case None, SingleFrame, PlayOnce, Looping, Synchronized
 }
 
-struct AnimationDefinition {
+struct AnimationDefinition : Equatable {
     
     var name: String
     var frames: [Frame]
@@ -92,4 +92,11 @@ struct AnimationDefinition {
         return PlayOnceAnimation(definition: self, onEnd: onEnd)
     }
     
+}
+
+func ==(left: AnimationDefinition, right: AnimationDefinition) -> Bool {
+    return left.frequency == right.frequency
+        && left.type == right.type
+        && left.name == right.name
+        && left.frames == right.frames
 }

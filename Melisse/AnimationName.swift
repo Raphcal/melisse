@@ -9,9 +9,20 @@
 import Foundation
 
 protocol AnimationName {
-    var rawValue: Int { get }
+    var name: String { get }
 }
 
-enum DefaultAnimationName: Int, AnimationName {
+enum DefaultAnimationName: AnimationName {
     case Normal, Disappear
+    
+    var name: String {
+        get {
+            switch self {
+            case .Normal:
+                return "Normal"
+            case .Disappear:
+                return "Disappear"
+            }
+        }
+    }
 }

@@ -8,7 +8,7 @@
 
 import GLKit
 
-struct Rectangle<Coordinate where Coordinate : Numeric> {
+struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
     
     var center: Point<Coordinate>
     var size: Size<Coordinate>
@@ -78,6 +78,10 @@ struct Rectangle<Coordinate where Coordinate : Numeric> {
         self.size = Size(width: right - left, height: bottom - top)
     }
 
+}
+
+func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordinate>) -> Bool {
+    return left.center == right.center && left.size == right.size
 }
 
 extension Rectangle where Coordinate : FloatingPoint {

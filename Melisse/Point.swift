@@ -8,7 +8,7 @@
 
 import GLKit
 
-struct Point<Coordinate where Coordinate : Numeric> {
+struct Point<Coordinate where Coordinate : Numeric> : Equatable {
     
     var x: Coordinate
     var y: Coordinate
@@ -47,7 +47,11 @@ extension Point where Coordinate : FloatingPoint {
     
 }
 
-func *<Coordinate where Coordinate: FloatingPoint>(left: Point<Coordinate>, right: GLfloat) -> Point<Coordinate> {
+func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {
+    return left.x == right.x && left.y == right.y
+}
+
+func *<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
     return Point(x: left.x * right, y: left.y * right)
 }
 

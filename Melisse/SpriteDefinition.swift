@@ -10,15 +10,17 @@ import Foundation
 
 struct SpriteDefinition : Equatable {
     
-    let defaultExtension = "sprites"
+    static let defaultExtension = "sprites"
     
+    var index: Int
     var name: String?
     var type: SpriteType
-    var animations: [Int:AnimationDefinition]
+    var animations: [String:AnimationDefinition]
     var motionName: String?
     var distance: Distance
     
     init() {
+        self.index = -1
         self.name = ""
         self.type = DefaultSpriteType.Decoration
         self.animations = [:]
@@ -26,7 +28,8 @@ struct SpriteDefinition : Equatable {
         self.distance = .Behind
     }
     
-    init(type: SpriteType, width: Int, height: Int, animations: [Int:AnimationDefinition]) {
+    init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
+        self.index = -1
         self.name = ""
         self.type = type
         self.animations = animations
@@ -35,18 +38,20 @@ struct SpriteDefinition : Equatable {
     }
     
     init(definition: SpriteDefinition, type: SpriteType, animation: AnimationName, frame frameIndex: Int) {
-        let animation = definition.animations[animation.rawValue]!
+        let animation = definition.animations[animation.name]!
         let frame = animation.frames[frameIndex]
         let singleFrameAnimation = AnimationDefinition(frames: [frame])
         
+        self.index = -1
         self.name = ""
         self.type = type
-        self.animations = [DefaultAnimationName.Normal.rawValue: singleFrameAnimation]
+        self.animations = [DefaultAnimationName.Normal.name: singleFrameAnimation]
         self.motionName = nil
         self.distance = definition.distance
     }
     
     init(inputStream : NSInputStream, index: Int, types: [SpriteType] = [], animationNames: [AnimationName] = []) {
+        self.index = index
         self.name = Streams.readNullableString(inputStream)
         let _ = Streams.readInt(inputStream) // width
         let _ = Streams.readInt(inputStream) // height
@@ -68,18 +73,18 @@ struct SpriteDefinition : Equatable {
         
         // Animations
         let animationCount = Streams.readInt(inputStream)
-        var animations = [Int:AnimationDefinition]()
+        var animations = [String:AnimationDefinition]()
         
         for index in 0..<animationCount {
             // TODO: Éviter de charger toutes les animations.
-            let animation = animationNames[index].rawValue
+            let animation = animationNames[index].name
             animations[animation] = AnimationDefinition(inputStream: inputStream)
         }
         
         self.animations = animations
     }
     
-    static func definitionsFromInputStream(inputStream : NSInputStream) -> [SpriteDefinition] {
+    static func definitionsFrom(inputStream : NSInputStream) -> [SpriteDefinition] {
         var definitions : [SpriteDefinition] = []
         
         let definitionCount = Streams.readInt(inputStream)
@@ -90,10 +95,10 @@ struct SpriteDefinition : Equatable {
         return definitions
     }
     
-    static func definitionsFromResource(resource: String) -> [SpriteDefinition]? {
-        if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: fileExtension), let inputStream = NSInputStream(URL: url) {
+    static func definitionsFrom(resource: String, extension ext: String = defaultExtension) -> [SpriteDefinition]? {
+        if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: ext), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
-            let definitions = definitionsFromInputStream(inputStream)
+            let definitions = definitionsFrom(inputStream)
             inputStream.close()
             
             return definitions
@@ -103,4 +108,12 @@ struct SpriteDefinition : Equatable {
         }
     }
     
+}
+
+func ==(left: SpriteDefinition, right: SpriteDefinition) -> Bool {
+    return left.index == right.index
+        && left.distance == right.distance
+        && left.name == right.name
+        && left.motionName == right.motionName
+        && left.animations == right.animations
 }

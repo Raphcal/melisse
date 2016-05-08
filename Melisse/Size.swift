@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Size<Coordinate where Coordinate : Numeric> {
+struct Size<Coordinate where Coordinate : Numeric> : Equatable {
     
     var width: Coordinate
     var height: Coordinate
@@ -23,4 +23,8 @@ struct Size<Coordinate where Coordinate : Numeric> {
         self.height = height
     }
     
+}
+
+func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> Bool {
+    return left.width == right.width && left.height == right.height
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Frame {
+struct Frame : Equatable {
     
     var frame: Rectangle<GLshort>
     var hitbox: Rectangle<GLfloat>
@@ -61,4 +61,8 @@ struct Frame {
         }
     }
     
+}
+
+func ==(left: Frame, right: Frame) -> Bool {
+    return left.frame == right.frame && left.hitbox == right.hitbox
 }
