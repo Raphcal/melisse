@@ -17,16 +17,16 @@ class SpriteFactory {
     
     // static let operationQueue = NSOperationQueue()
     
-    let capacity : Int
+    let capacity: Int
     
-    let textureAtlas : GLKTextureInfo
+    let textureAtlas: GLKTextureInfo
     
-    let pools : [ReferencePool]
+    let pools: [ReferencePool]
     var sprites = [Sprite]()
     var collidables = [Sprite]()
     var removalPending = [Sprite]()
     
-    let definitions : [SpriteDefinition]
+    let definitions: [SpriteDefinition]
     
     let vertexPointer: SurfaceArray<GLfloat>
     let texCoordPointer: SurfaceArray<GLshort>
