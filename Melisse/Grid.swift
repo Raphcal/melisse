@@ -13,13 +13,13 @@ class Grid : NSObject {
     let groundLayerName = "Piste"
     let waterLayerName = "Eau"
     
-    let palette : Palette
-    let map : Map
-    let foreground : Int
-    let ground : Layer
-    let water : Layer?
-    var vertexPointers = [SurfaceArray]()
-    var texCoordPointers = [SurfaceArray]()
+    let palette: Palette
+    let map: Map
+    let foreground: Int
+    let ground: Layer
+    let water: Layer?
+    var vertexPointers = [SurfaceArray<GLfloat>]()
+    var texCoordPointers = [SurfaceArray<GLshort>]()
     
     override init() {
         self.palette = Palette()
@@ -101,7 +101,7 @@ class Grid : NSObject {
     
     // MARK: Fonctions publiques.
     
-    func angleAtPoint(point: Point, forDirection direction: Direction) -> GLfloat {
+    func angleAtPoint(point: Point<GLfloat>, forDirection direction: Direction) -> GLfloat {
         if let tile = ground.tileAtPoint(point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAtPoint(point)
             
@@ -114,7 +114,7 @@ class Grid : NSObject {
         }
     }
     
-    func angleForVerticalRunAtPoint(point: Point, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
+    func angleForVerticalRunAtPoint(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
         if let x = xInTileAtPoint(point, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
@@ -123,7 +123,7 @@ class Grid : NSObject {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    func xInTileAtPoint(point: Point, direction: Direction) -> GLfloat? {
+    func xInTileAtPoint(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
         if let tile = ground.tileAtPoint(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {

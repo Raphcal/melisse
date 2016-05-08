@@ -14,22 +14,22 @@ struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
     var size: Size<Coordinate>
     
     var x: Coordinate {
-        get { center.x }
+        get { return center.x }
         set { center.x = newValue }
     }
     
     var y: Coordinate {
-        get { center.y }
+        get { return center.y }
         set { center.y = newValue }
     }
     
     var width: Coordinate {
-        get { size.width }
+        get { return size.width }
         set { size.width = newValue }
     }
     
     var height: Coordinate {
-        get { size.height }
+        get { return size.height }
         set { size.height = newValue }
     }
     
