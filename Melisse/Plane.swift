@@ -19,7 +19,7 @@ class Plane {
     init(capacity: Int) {
         self.capacity = capacity
         let vertices = capacity * vertexesByQuad
-        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertice)
+        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
         self.colorPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
     }
     
@@ -35,7 +35,7 @@ class Plane {
                 abort()
             }
         #endif
-        let vertexSurface = Surface(memory: vertexPointer.memory, reference: Int(count), coordinates: coordinatesByVertice)
+        let vertexSurface = Surface(memory: vertexPointer.memory, reference: Int(count), coordinates: coordinatesByVertex)
         let colorSurface = Surface(memory: colorPointer.memory, reference: Int(count), coordinates: coordinatesByColor)
         count = count + 1
         return ColoredQuadrilateral(vertexSurface: vertexSurface, colorSurface: colorSurface)

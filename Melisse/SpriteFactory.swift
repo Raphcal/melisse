@@ -59,7 +59,7 @@ class SpriteFactory {
         }
         
         let vertices = capacity * vertexesByQuad
-        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertice)
+        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
         self.texCoordPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByTexture)
         
         // Mise à 0 des pointeurs

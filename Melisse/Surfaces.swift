@@ -9,7 +9,7 @@
 import GLKit
 
 let vertexesByQuad = 6
-let coordinatesByVertice = 2
+let coordinatesByVertex = 2
 let coordinatesByTexture = 2
 let coordinatesByColor = 4
 let tileSize : Float = 32

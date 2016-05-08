@@ -107,3 +107,13 @@ extension SurfaceArray where Element: Signed {
     }
     
 }
+
+extension SurfaceArray where Element: Integer {
+    
+    func appendTile(tile: Int, from palette: Palette) {
+        // TODO: Écrire la méthode.
+        appendTile(width: palette.tileWidth, height: palette.tileHeight, left: (tile % palette.columns) * (palette.tileWidth + palette.paddingX) + palette.paddingX,
+            top: (tile / palette.columns) * (palette.tileHeight + palette.paddingY) + palette.paddingY)
+    }
+    
+}

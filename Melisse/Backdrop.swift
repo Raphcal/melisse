@@ -69,7 +69,7 @@ class Backdrop {
     
     private func createVerticesAndTextureCoordinates() {
         for _ in 0 ..< map.layers.count {
-            let vertexPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByVertice)
+            let vertexPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByVertex)
             let texCoordPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
             
             vertexPointers.append(vertexPointer)

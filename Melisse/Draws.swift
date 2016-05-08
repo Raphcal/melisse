@@ -24,7 +24,7 @@ class Draws {
     }
     
     static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLshort>, count: GLsizei) {
-        glVertexPointer(GLint(coordinatesByVertice), GLenum(GL_FLOAT), 0, vertexPointer)
+        glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
         glTexCoordPointer(GLint(coordinatesByTexture), GLenum(GL_SHORT), 0, texCoordPointer)
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
     }
@@ -34,7 +34,7 @@ class Draws {
         glDisableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
         glEnableClientState(GLenum(GL_COLOR_ARRAY))
         
-        glVertexPointer(GLint(coordinatesByVertice), GLenum(GL_FLOAT), 0, vertexPointer)
+        glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
         glColorPointer(GLint(coordinatesByColor), GLenum(GL_UNSIGNED_BYTE), 0, colorPointer)
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
         
