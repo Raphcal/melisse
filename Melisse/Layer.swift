@@ -59,10 +59,7 @@ class Layer {
         self.name = Streams.readString(inputStream)
         self.width = Streams.readInt(inputStream)
         self.height = Streams.readInt(inputStream)
-        
-        let scrollRateX = Streams.readFloat(inputStream)
-        let scrollRateY = Streams.readFloat(inputStream)
-        self.scrollRate = Point(x: scrollRateX, y: scrollRateY)
+        self.scrollRate = Streams.readPoint(inputStream)
         
         let count = Streams.readInt(inputStream)
         var tiles : [Int?] = []
@@ -113,9 +110,3 @@ class Layer {
     }
     
 }
-
-func % (left: GLfloat, right: GLfloat) -> GLfloat {
-    let division = left / right
-    return (division - floor(division)) * right
-}
-

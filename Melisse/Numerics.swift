@@ -94,6 +94,11 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
     
 }
 
+func %(left: GLfloat, right: GLfloat) -> GLfloat {
+    let division = left / right
+    return (division - floor(division)) * right
+}
+
 extension GLshort : Numeric, Signed, Integer {
     
     var half: GLshort {

@@ -183,13 +183,19 @@ class Streams {
         }
     }
     
-    class func readColor(inputStream : NSInputStream) -> Color {
-        let red = readInt(inputStream)
-        let green = readInt(inputStream)
-        let blue = readInt(inputStream)
-        let alpha = readInt(inputStream)
+    class func readColor(inputStream : NSInputStream) -> Color<GLubyte> {
+        let red = GLubyte(readInt(inputStream))
+        let green = GLubyte(readInt(inputStream))
+        let blue = GLubyte(readInt(inputStream))
+        let alpha = GLubyte(readInt(inputStream))
         
-        return Color(intRed: red, intGreen: green, intBlue: blue, intAlpha: alpha)
+        return Color(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    class func readPoint(inputStream: NSInputStream) -> Point<GLfloat> {
+        let x = readFloat(inputStream)
+        let y = readFloat(inputStream)
+        return Point<GLfloat>(x: x, y: y)
     }
     
     class func readFloatFromByteArray(bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {

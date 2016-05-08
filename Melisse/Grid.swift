@@ -82,8 +82,8 @@ class Grid : NSObject {
     private func createVerticesAndTextureCoordinates() {
         for layer in map.layers {
             let length = layer.length * vertexesByQuad
-            let vertexPointer = SurfaceArray(capacity: length, coordinates: coordinatesByVertice)
-            let texCoordPointer = SurfaceArray(capacity: length, coordinates: coordinatesByTexture)
+            let vertexPointer = SurfaceArray<GLfloat>(capacity: length, coordinates: coordinatesByVertice)
+            let texCoordPointer = SurfaceArray<GLshort>(capacity: length, coordinates: coordinatesByTexture)
             
             for y in 0..<layer.height {
                 for x in 0..<layer.width {
