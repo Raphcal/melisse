@@ -8,7 +8,7 @@
 
 import GLKit
 
-class Sprite {
+public class Sprite {
     
     let definition: SpriteDefinition
     var type: SpriteType = DefaultSpriteType.Decoration
@@ -38,10 +38,13 @@ class Sprite {
     var objects = [String : AnyObject]()
     
     init() {
+        definition = SpriteDefinition()
         frame = Rectangle()
+        factory = SpriteFactory()
+        reference = -1
         vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
         texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
-        
+        hitbox = SimpleHitbox()
     }
     
     // MARK: Gestion des mises à jour

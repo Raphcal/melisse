@@ -8,7 +8,7 @@
 
 import GLKit
 
-protocol Hitbox {
+public protocol Hitbox {
     
     var frame: Rectangle<GLfloat> { get }
     
@@ -17,7 +17,7 @@ protocol Hitbox {
     
 }
 
-extension Hitbox {
+public extension Hitbox {
     
     func collidesWith(point: Point<GLfloat>) -> Bool {
         return point.x >= frame.left && point.x < frame.right &&
@@ -31,10 +31,16 @@ extension Hitbox {
     
 }
 
-struct SpriteHitbox : Hitbox {
+public struct SimpleHitbox : Hitbox {
     
-    var sprite: Sprite
-    var frame: Rectangle<GLfloat> {
+    public var frame = Rectangle<GLfloat>()
+    
+}
+
+public struct SpriteHitbox : Hitbox {
+    
+    public var sprite: Sprite
+    public var frame: Rectangle<GLfloat> {
         get {
             let animationFrameHitbox = sprite.animation.frame.hitbox
             let offsetX = (animationFrameHitbox.x - sprite.frame.width.half) * sprite.direction.value
@@ -45,21 +51,21 @@ struct SpriteHitbox : Hitbox {
     
 }
 
-struct RotatedHitbox : Hitbox {
+public struct RotatedHitbox : Hitbox {
     
-    var hitbox: Hitbox
-    var frame: Rectangle<GLfloat>
+    public var hitbox: Hitbox
+    public var frame: Rectangle<GLfloat>
     
-    init(hitbox: Hitbox) {
+    public init(hitbox: Hitbox) {
         self.hitbox = hitbox
         self.frame = hitbox.frame
     }
     
-    mutating func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
+    mutating public func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
         self.frame = hitbox.frame.rotate(rotation, withPivot: pivot).enclosingRectangle()
     }
     
-    mutating func cancelRotation() {
+    mutating public func cancelRotation() {
         self.frame = hitbox.frame
     }
     

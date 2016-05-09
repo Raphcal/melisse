@@ -68,6 +68,11 @@ public struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
         self.size = other.size
     }
     
+    public init(center: Point<Coordinate>, size: Size<Coordinate>) {
+        self.center = center
+        self.size = size
+    }
+    
     public init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: x, y: y)
         self.size = Size(width: width, height: height)

@@ -8,16 +8,16 @@
 
 import GLKit
 
-class Map : NSObject {
+public struct Map : Equatable {
     
     static let fileExtension = "map"
     
-    let width : Int
-    let height : Int
-    let backgroundColor : Color<GLfloat>
-    let layers : [Layer]
+    var width: Int
+    var height: Int
+    var backgroundColor: Color<GLfloat>
+    var layers: [Layer]
     
-    override init() {
+    init() {
         self.width = 0
         self.height = 0
         self.backgroundColor = Color()
@@ -78,7 +78,7 @@ class Map : NSObject {
         self.height = maxHeight
     }
     
-    convenience init?(resource : String) {
+    init?(resource : String) {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Map.fileExtension), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
@@ -91,22 +91,19 @@ class Map : NSObject {
     }
     
     func layerIndex(name: String) -> Int? {
-        for index in 0..<layers.count {
-            if layers[index].name == name {
-                return index;
-            }
-        }
-        return nil;
+        return layers.indexOf({ (layer) -> Bool in
+            layer.name == name
+        })
     }
     
     func mapFromVisibleRect() -> Map {
         var layers = [Layer]()
         
         for layer in self.layers {
-            let left = Int(floor(Camera.instance.left * layer.scrollRate.x / tileSize))
-            let right = Int(ceil(Camera.instance.right * layer.scrollRate.x / tileSize))
-            let top = Int(floor(Camera.instance.top * layer.scrollRate.y / tileSize))
-            let bottom = Int(ceil(Camera.instance.bottom * layer.scrollRate.y / tileSize))
+            let left = Int(floor(Camera.instance.frame.left * layer.scrollRate.x / tileSize))
+            let right = Int(ceil(Camera.instance.frame.right * layer.scrollRate.x / tileSize))
+            let top = Int(floor(Camera.instance.frame.top * layer.scrollRate.y / tileSize))
+            let bottom = Int(ceil(Camera.instance.frame.bottom * layer.scrollRate.y / tileSize))
             
             var tiles = [Int?]()
             var count = 0
@@ -127,4 +124,9 @@ class Map : NSObject {
         
         return Map(layers: layers, backgroundColor: self.backgroundColor)
     }
+}
+
+public func ==(lhs: Map, rhs: Map) -> Bool {
+    // TODO: Écrire la méthode.
+    return false
 }

@@ -12,6 +12,8 @@
 		515E794F1CE0CDDB0044E22F /* Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E794E1CE0CDDB0044E22F /* Fade.swift */; };
 		515E79511CE0CDF40044E22F /* NoFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79501CE0CDF40044E22F /* NoFade.swift */; };
 		515E79531CE0CE6B0044E22F /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
+		51833DE01CE0EECE003052C8 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91B1CD7B0E40029C1E0 /* Map.swift */; };
+		51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90E1CD7B0E40029C1E0 /* Camera.swift */; };
 		51D9F5731CD9E1CE000AB096 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
 		51D9F57B1CD9E48E000AB096 /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
@@ -146,9 +148,29 @@
 				51F8B9271CD7B0E40029C1E0 /* Scene.swift */,
 				515E794C1CE0CD4B0044E22F /* EmptyScene.swift */,
 				515E794E1CE0CDDB0044E22F /* Fade.swift */,
+				51F8B9141CD7B0E40029C1E0 /* FadeScene.swift */,
 				515E79501CE0CDF40044E22F /* NoFade.swift */,
 			);
 			name = Scene;
+			sourceTree = "<group>";
+		};
+		515E79541CE0CFBC0044E22F /* Painters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Painters;
+			sourceTree = "<group>";
+		};
+		51833DDF1CE0EE79003052C8 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */,
+				51F8B9161CD7B0E40029C1E0 /* Grid.swift */,
+				51F8B9191CD7B0E40029C1E0 /* Layer.swift */,
+				51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */,
+				51F8B91B1CD7B0E40029C1E0 /* Map.swift */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 		51D9F5761CD9E242000AB096 /* Audio */ = {
@@ -220,20 +242,16 @@
 				51D9F5941CDA17CE000AB096 /* Geometry */,
 				51D9F5791CD9E3FD000AB096 /* Input */,
 				6496DB361CDF73A400121F0A /* Layer */,
+				515E79541CE0CFBC0044E22F /* Painters */,
 				515E794B1CE0CD160044E22F /* Scene */,
 				6440EA371CDCE84100190C3D /* Sprite */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
 				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
-				51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */,
 				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
 				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
-				51F8B9141CD7B0E40029C1E0 /* FadeScene.swift */,
-				51F8B9161CD7B0E40029C1E0 /* Grid.swift */,
 				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
-				51F8B9191CD7B0E40029C1E0 /* Layer.swift */,
-				51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */,
-				51F8B91B1CD7B0E40029C1E0 /* Map.swift */,
+				51833DDF1CE0EE79003052C8 /* Map */,
 				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
 				51F8B91F1CD7B0E40029C1E0 /* Operation.swift */,
 				51F8B9201CD7B0E40029C1E0 /* Palette.swift */,
@@ -385,6 +403,7 @@
 			files = (
 				6496DB3A1CDF740800121F0A /* SpriteLayer.swift in Sources */,
 				51D9F5981CDA17F6000AB096 /* Rectangle.swift in Sources */,
+				51833DE01CE0EECE003052C8 /* Map.swift in Sources */,
 				6440EA361CDCC89300190C3D /* Offset.swift in Sources */,
 				51F8B9481CD7B0E40029C1E0 /* Palette.swift in Sources */,
 				51F8B94C1CD7B0E40029C1E0 /* Random.swift in Sources */,
@@ -399,6 +418,7 @@
 				6496DB3C1CDF741100121F0A /* ShapeLayer.swift in Sources */,
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,
 				51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */,
+				51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */,
 				64B6F7561CDE6D2800CECE15 /* AnimationDefinition.swift in Sources */,
 				6496DB381CDF740000121F0A /* TileLayer.swift in Sources */,
 				6440EA391CDCE85500190C3D /* SpriteType.swift in Sources */,
