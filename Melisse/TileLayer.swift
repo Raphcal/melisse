@@ -36,27 +36,55 @@ struct TileLayer : Equatable {
         self.scrollRate = Streams.readPoint(inputStream)
         
         let count = Streams.readInt(inputStream)
-        var length = 0
         
-        self.vertexPointer = SurfaceArray(capacity: width * height, coordinates: coordinatesByVertex)
-        self.texCoordPointer = SurfaceArray(capacity: width * height, coordinates: coordinatesByTexture)
-        
-        self.tiles = (0 ..< count).map { index in
-            let tile = Streams.readInt(inputStream)
-            
-            if tile > -1 {
-                length += 1
+        #if REDUCE_MEMORY_USAGE
+            var length = 0
+            var tiles = [Int?]()
+            for index in 0 ..< count {
+                let tile = Streams.readInt(inputStream)
                 
-                let x = index % width
-                let y = index / width
-                vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
-                texCoordPointer.appendTile(tile, from: palette)
-                
-                return tile
-            } else {
-                return nil
+                if tile > -1 {
+                    tiles.append(tile)
+                    length += 1
+                } else {
+                    tiles.append(nil)
+                }
             }
-        }
+            
+            self.tiles = tiles
+            self.vertexPointer = SurfaceArray(capacity: length, coordinates: coordinatesByVertex)
+            self.texCoordPointer = SurfaceArray(capacity: length, coordinates: coordinatesByTexture)
+            
+            for (index, tile) in tiles.enumerate() {
+                if let tile = tile {
+                    let x = index % width
+                    let y = index / width
+                    
+                    vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
+                    texCoordPointer.appendTile(tile, from: palette)
+                }
+            }
+        #else
+            self.vertexPointer = SurfaceArray(capacity: width * height, coordinates: coordinatesByVertex)
+            self.texCoordPointer = SurfaceArray(capacity: width * height, coordinates: coordinatesByTexture)
+            
+            var tiles = [Int?]()
+            for index in 0 ..< count {
+                let tile = Streams.readInt(inputStream)
+                
+                if tile > -1 {
+                    tiles.append(tile)
+                    
+                    let x = index % width
+                    let y = index / width
+                    vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
+                    texCoordPointer.appendTile(tile, from: palette)
+                } else {
+                    tiles.append(nil)
+                }
+            }
+            self.tiles = tiles
+        #endif
     }
     
 }

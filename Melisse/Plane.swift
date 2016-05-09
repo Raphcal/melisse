@@ -11,8 +11,8 @@ import GLKit
 class Plane {
     
     let capacity: Int
-    let vertexPointer: SurfaceArray
-    let colorPointer: SurfaceArray
+    let vertexPointer: SurfaceArray<GLfloat>
+    let colorPointer: SurfaceArray<GLubyte>
     
     var count: Int = 0
     
@@ -23,7 +23,7 @@ class Plane {
         self.colorPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
     }
     
-    func draw(at point: Point = Point()) {
+    func draw(at point: Point<GLfloat> = Point()) {
         Draws.translateTo(point)
         Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
     }
@@ -45,7 +45,7 @@ class Plane {
 
 class ColoredQuadrilateral {
     
-    var color: Color? {
+    var color: Color<GLubyte>? {
         didSet {
             if let color = self.color {
                 colorSurface.setColor(color)
@@ -54,20 +54,20 @@ class ColoredQuadrilateral {
             }
         }
     }
-    var quadrilateral: Quadrilateral? {
+    var quadrilateral: Quadrilateral<GLfloat>? {
         didSet {
             if let quadrilateral = self.quadrilateral {
-                vertexSurface.setQuadWithQuadrilateral(quadrilateral)
+                vertexSurface.setQuadWith(quadrilateral)
             } else {
                 vertexSurface.clear()
             }
         }
     }
     
-    let vertexSurface: Surface
-    let colorSurface: Surface
+    let vertexSurface: Surface<GLfloat>
+    let colorSurface: Surface<GLubyte>
     
-    init(vertexSurface: Surface, colorSurface: Surface) {
+    init(vertexSurface: Surface<GLfloat>, colorSurface: Surface<GLubyte>) {
         self.vertexSurface = vertexSurface
         self.colorSurface = colorSurface
     }

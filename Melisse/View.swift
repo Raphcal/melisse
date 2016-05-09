@@ -55,11 +55,12 @@ class View : NSObject {
         // TODO: Utiliser autre chose que factory pour pouvoir gérer les objets Text.
         if let factory = self.factory {
             for sprite in factory.sprites {
-                sprite.width = GLfloat(sprite.animation.frame.width) * zoom
-                sprite.height = GLfloat(sprite.animation.frame.height) * zoom
+                var frame = sprite.frame
+                frame.width = GLfloat(sprite.animation.frame.frame.width) * zoom
+                frame.height = GLfloat(sprite.animation.frame.frame.height) * zoom
                 // TODO: Changer les positions Y
                 // sprite.y =
-                sprite.updateLocation()
+                sprite.frame = frame
             }
         }
     }

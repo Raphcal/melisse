@@ -183,11 +183,11 @@ class Streams {
         }
     }
     
-    class func readColor(inputStream : NSInputStream) -> Color<GLubyte> {
-        let red = GLubyte(readInt(inputStream))
-        let green = GLubyte(readInt(inputStream))
-        let blue = GLubyte(readInt(inputStream))
-        let alpha = GLubyte(readInt(inputStream))
+    class func readColor(inputStream : NSInputStream) -> Color<GLfloat> {
+        let red = GLfloat(readInt(inputStream)) / 255
+        let green = GLfloat(readInt(inputStream)) / 255
+        let blue = GLfloat(readInt(inputStream)) / 255
+        let alpha = GLfloat(readInt(inputStream)) / 255
         
         return Color(red: red, green: green, blue: blue, alpha: alpha)
     }

@@ -8,21 +8,21 @@
 
 import GLKit
 
-struct Color<Component where Component : Numeric> {
+public struct Color<Component where Component : Numeric> {
     
-    var red: Component
-    var green: Component
-    var blue: Component
-    var alpha: Component
+    public var red: Component
+    public var green: Component
+    public var blue: Component
+    public var alpha: Component
     
-    init(red: Component, green: Component, blue: Component, alpha: Component) {
+    public init(red: Component, green: Component, blue: Component, alpha: Component) {
         self.red = red
         self.green = green
         self.blue = blue
         self.alpha = alpha
     }
     
-    init(white: Component, alpha: Component) {
+    public init(white: Component, alpha: Component) {
         self.red = white
         self.green = white
         self.blue = white
@@ -31,7 +31,7 @@ struct Color<Component where Component : Numeric> {
     
 }
 
-extension Color where Component : FloatingPoint {
+public extension Color where Component : FloatingPoint {
     
     init() {
         self.red = Component(0)
@@ -47,13 +47,13 @@ extension Color where Component : FloatingPoint {
         
         self.red = Component(red) / GLfloat(255)
         self.green = Component(green) / GLfloat(255)
-        self.green = Component(blue) / GLfloat(255)
+        self.blue = Component(blue) / GLfloat(255)
         self.alpha = alpha
     }
     
 }
 
-extension Color where Component : Integer {
+public extension Color where Component : Integer {
     
     init() {
         self.red = Component(0)
@@ -69,7 +69,7 @@ extension Color where Component : Integer {
         
         self.red = Component(red)
         self.green = Component(green)
-        self.green = Component(blue)
+        self.blue = Component(blue)
         self.alpha = alpha
     }
     

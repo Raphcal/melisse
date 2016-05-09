@@ -11,9 +11,7 @@ import Foundation
 /// Ensemble de sons lus à la suite.
 class SoundSet {
     
-    static let Bubble = SoundSet(sounds: [.Bubble1, .Bubble2, .Bubble3, .Bubble2])
-    
-    var sound : Sound {
+    var sound: Sound {
         get {
             let sound = sounds[current]
             self.current = (current + 1) % sounds.count
@@ -21,7 +19,7 @@ class SoundSet {
         }
     }
     
-    private let sounds : [Sound]
+    private let sounds: [Sound]
     private var current = 0
     
     init(sounds: [Sound]) {

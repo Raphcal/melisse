@@ -18,26 +18,22 @@ class Director : NSObject {
     
     static let audio : Audio = OpenALAudio()
     
-    var scene : Scene = EmptyScene()
-    var nextScene : Scene?
+    var scene: Scene = EmptyScene()
+    var nextScene: Scene?
     
-    var fade : Fade = NoFade()
+    var fade: Fade = NoFade()
     
-    let gameCenter = GameCenter()
-    
-    func start() {
+    func startWith(scene: Scene) {
         View.instance.applyZoom()
         
-        // gameCenter.authenticate()
-        
         self.fade = FadeScene()
-        self.scene = TitleScene()
-        scene.load?()
-        scene.willAppear?()
+        self.scene = scene
+        scene.load()
+        scene.willAppear()
     }
     
     func restart() {
-        scene.reload?()
+        scene.reload()
     }
     
     func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
@@ -46,15 +42,15 @@ class Director : NSObject {
                 Director.audio.stopStream()
                 
                 // TODO: Voir comment faire le unload ailleurs.
-                nextScene.load?()
+                nextScene.load()
                 
                 fade.previousScene = scene
                 fade.nextScene = nextScene
-                fade.load?()
+                fade.load()
                 
                 nextScene = fade
             } else {
-                fade.previousScene.unload?()
+                fade.previousScene.unload()
                 fade.previousScene = EmptyScene()
                 fade.nextScene = EmptyScene()
             }
@@ -63,7 +59,7 @@ class Director : NSObject {
             self.nextScene = nil
             
         } else {
-            scene.updateWithTimeSinceLastUpdate(timeSinceLastUpdate)
+            scene.updateWith(timeSinceLastUpdate)
         }
     }
     
@@ -76,28 +72,4 @@ class Director : NSObject {
         glTranslatef(0, -top, 0)
     }
     
-}
-
-class NoAudio : NSObject, Audio {
-    
-    func loadSound(sound: Sound, fromResource name: String) {
-        // Pas de chargement.
-    }
-    
-    func playSound(sound: Sound) {
-        // Pas de lecture.
-    }
-    
-    func playStreamAtURL(url: NSURL) {
-        // Pas de lecture.
-    }
-    
-    func playOnceStreamAtURL(url: NSURL, withCompletionBlock block: () -> Void) {
-        // Pas de lecture.
-    }
-    
-    func stopStream() {
-        // Pas de lecture.
-    }
-
 }

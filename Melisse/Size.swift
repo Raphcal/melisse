@@ -8,23 +8,23 @@
 
 import Foundation
 
-struct Size<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Size<Coordinate where Coordinate : Numeric> : Equatable {
     
-    var width: Coordinate
-    var height: Coordinate
+    public var width: Coordinate
+    public var height: Coordinate
     
-    init() {
+    public init() {
         self.width = Coordinate(0)
         self.height = Coordinate(0)
     }
     
-    init(width: Coordinate, height: Coordinate) {
+    public init(width: Coordinate, height: Coordinate) {
         self.width = width
         self.height = height
     }
     
 }
 
-func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> Bool {
+public func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> Bool {
     return left.width == right.width && left.height == right.height
 }

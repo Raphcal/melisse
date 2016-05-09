@@ -8,83 +8,88 @@
 
 import GLKit
 
-struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
     
-    var center: Point<Coordinate>
-    var size: Size<Coordinate>
+    public var center: Point<Coordinate>
+    public var size: Size<Coordinate>
     
-    var x: Coordinate {
+    public var topLeft: Point<Coordinate> {
+        get { return Point(x: left, y: top) }
+        set { center = Point(x: topLeft.x + width.half, y: topLeft.y + height.half) }
+    }
+    
+    public var x: Coordinate {
         get { return center.x }
         set { center.x = newValue }
     }
     
-    var y: Coordinate {
+    public var y: Coordinate {
         get { return center.y }
         set { center.y = newValue }
     }
     
-    var width: Coordinate {
+    public var width: Coordinate {
         get { return size.width }
         set { size.width = newValue }
     }
     
-    var height: Coordinate {
+    public var height: Coordinate {
         get { return size.height }
         set { size.height = newValue }
     }
     
-    var top: Coordinate {
+    public var top: Coordinate {
         get { return center.y - height.half }
         set { center.y = newValue + height.half }
     }
     
-    var bottom: Coordinate {
+    public var bottom: Coordinate {
         get { return center.y + height.half }
         set { center.y = newValue - height.half }
     }
     
-    var left: Coordinate {
+    public var left: Coordinate {
         get { return center.x - width.half }
         set { center.x = newValue + width.half }
     }
     
-    var right: Coordinate {
+    public var right: Coordinate {
         get { return center.x + width.half }
         set { center.x = newValue - width.half }
     }
     
-    init() {
+    public init() {
         self.center = Point()
         self.size = Size()
     }
     
-    init(other: Rectangle<Coordinate>) {
+    public init(other: Rectangle<Coordinate>) {
         self.center = other.center
         self.size = other.size
     }
     
-    init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
+    public init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: x, y: y)
         self.size = Size(width: width, height: height)
     }
     
-    init(left: Coordinate, top: Coordinate, width: Coordinate, height: Coordinate) {
+    public init(left: Coordinate, top: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: left + width.half, y: top + height.half)
         self.size = Size(width: width, height: height)
     }
     
-    init(top: Coordinate, bottom: Coordinate, left: Coordinate, right: Coordinate) {
+    public init(top: Coordinate, bottom: Coordinate, left: Coordinate, right: Coordinate) {
         self.center = Point(x: (left + right).half, y: (top + bottom).half)
         self.size = Size(width: right - left, height: bottom - top)
     }
 
 }
 
-func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordinate>) -> Bool {
+public func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordinate>) -> Bool {
     return left.center == right.center && left.size == right.size
 }
 
-extension Rectangle where Coordinate : FloatingPoint {
+public extension Rectangle where Coordinate : FloatingPoint {
     
     func rotate(rotation: Coordinate) -> Quadrilateral<Coordinate> {
         return rotate(rotation, withPivot: center)

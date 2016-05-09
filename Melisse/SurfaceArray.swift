@@ -26,8 +26,8 @@ class SurfaceArray<Element where Element: Numeric> {
         self.init(capacity: 0, coordinates: 0)
     }
     
-    init(capacity: Int, coordinates: Int) {
-        let total = capacity * coordinates
+    init(capacity: Int, coordinates: Int, vertexesByQuad: Int = vertexesByQuad) {
+        let total = capacity * coordinates * vertexesByQuad
         
         self.capacity = total
         self.coordinates = coordinates
@@ -111,9 +111,8 @@ extension SurfaceArray where Element: Signed {
 extension SurfaceArray where Element: Integer {
     
     func appendTile(tile: Int, from palette: Palette) {
-        // TODO: Écrire la méthode.
-        appendTile(width: palette.tileWidth, height: palette.tileHeight, left: (tile % palette.columns) * (palette.tileWidth + palette.paddingX) + palette.paddingX,
-            top: (tile / palette.columns) * (palette.tileHeight + palette.paddingY) + palette.paddingY)
+        append(width: Element(palette.tileWidth), height: Element(palette.tileHeight), left: Element(tile % palette.columns) * Element(palette.tileWidth + palette.paddingX) + Element(palette.paddingX),
+            top: Element(tile / palette.columns) * Element(palette.tileHeight + palette.paddingY) + Element(palette.paddingY))
     }
     
 }

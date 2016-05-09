@@ -29,7 +29,7 @@ class Sprite {
     var removed: Bool = false
     
     var hitbox: Hitbox
-    var motion: Motion = NoMotion.instance
+    var motion: Motion = NoMotion()
     
     var currentAnimation: AnimationName?
     var animation: Animation = NoAnimation.instance
@@ -47,8 +47,8 @@ class Sprite {
     // MARK: Gestion des mises à jour
     
     func updateWith(timeSinceLastUpdate: NSTimeInterval) {
-        motion.updateWithTimeSinceLastUpdate(timeSinceLastUpdate, sprite: self)
-        animation.updateWithTimeSinceLastUpdate(timeSinceLastUpdate)
+        motion.updateWith(timeSinceLastUpdate, sprite: self)
+        animation.updateWith(timeSinceLastUpdate)
         animation.draw(self)
     }
     
@@ -61,9 +61,9 @@ class Sprite {
     func destroy() {
         self.removed = true
         
-        if definition.animations[.Disappear]?.frames.count > 0 {
-            setAnimation(.Disappear, onEnd: { self.factory.removeSprite(self) })
-            self.motion = NoMotion.instance
+        if definition.animations[DefaultAnimationName.Disappear.name]?.frames.count > 0 {
+            setAnimation(DefaultAnimationName.Disappear, onEnd: { self.factory.removeSprite(self) })
+            self.motion = NoMotion()
             self.type = DefaultSpriteType.Decoration
         } else {
             factory.removeSprite(self)
@@ -74,30 +74,26 @@ class Sprite {
         self.removed = true
         
         let explosion = factory.sprite(definition)
-        explosion.center = self.center
-        explosion.motion = NoMotion.instance
-        explosion.setAnimation(.Stand, onEnd: { self.factory.removeSprite(explosion) })
+        explosion.frame.center = self.frame.center
+        explosion.motion = NoMotion()
+        explosion.setAnimation(DefaultAnimationName.Normal, onEnd: { self.factory.removeSprite(explosion) })
         
         factory.removeSprite(self)
     }
     
     // MARK: Gestion des animations
     
-    func setAnimation(name: AnimationName) {
-        setAnimation(name, force: false)
-    }
-    
-    func setAnimation(name: AnimationName, force: Bool) {
-        if name != currentAnimation || force, let nextAnimation = definition.animations[name]?.toAnimation() {
-            self.animation = animation.transitionToNextAnimation(nextAnimation)
-            self.currentAnimation = name
+    func setAnimation(animationName: AnimationName, force: Bool = false) {
+        if animationName.name != currentAnimation?.name || force, let nextAnimation = definition.animations[animationName.name]?.toAnimation() {
+            self.animation = animation.transitionTo(nextAnimation)
+            self.currentAnimation = animationName
         }
     }
     
-    func setAnimation(name: AnimationName, onEnd: () -> Void) {
-        if let nextAnimation = definition.animations[name]?.toAnimation(onEnd) {
-            self.animation = animation.transitionToNextAnimation(nextAnimation)
-            self.currentAnimation = name
+    func setAnimation(animationName: AnimationName, onEnd: () -> Void) {
+        if let nextAnimation = definition.animations[animationName.name]?.toAnimation(onEnd) {
+            self.animation = animation.transitionTo(nextAnimation)
+            self.currentAnimation = animationName
         }
     }
     

@@ -8,27 +8,27 @@
 
 import GLKit
 
-struct Point<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Point<Coordinate where Coordinate : Numeric> : Equatable {
     
-    var x: Coordinate
-    var y: Coordinate
+    public var x: Coordinate
+    public var y: Coordinate
     
-    init() {
+    public init() {
         self.x = Coordinate(0)
         self.y = Coordinate(0)
     }
     
-    init(x: Coordinate, y: Coordinate) {
+    public init(x: Coordinate, y: Coordinate) {
         self.x = x
         self.y = y
     }
     
-    init(point: Point) {
+    public init(point: Point) {
         self.x = point.x
         self.y = point.y
     }
     
-    init(bottomOfRectangle rectangle: Rectangle<Coordinate>) {
+    public init(bottomOfRectangle rectangle: Rectangle<Coordinate>) {
         self.x = rectangle.x
         self.y = rectangle.bottom
     }
@@ -47,31 +47,31 @@ extension Point where Coordinate : FloatingPoint {
     
 }
 
-func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {
+public func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {
     return left.x == right.x && left.y == right.y
 }
 
-func *<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
+public func *<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
     return Point(x: left.x * right, y: left.y * right)
 }
 
-func *<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
+public func *<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x * right.x, y: left.y * right.y)
 }
 
-func +<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
+public func +<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x + right.x, y: left.y + right.y)
 }
 
-func -<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
+public func -<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: left.x - right.x, y: left.y - right.y)
 }
 
-prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinate>) -> Point<Coordinate> {
+public prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinate>) -> Point<Coordinate> {
     return Point(x: -point.x, y: -point.y)
 }
 
-func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
+public func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
     left.x += right.x
     left.y += right.y
 }

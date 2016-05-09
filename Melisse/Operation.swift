@@ -118,12 +118,15 @@ class Operation {
                     sprite!.direction = Direction(rawValue: Int(stack.removeLast()))!
                     
                 case .SpriteHitboxTop:
+                    /*
                     let hitboxTop = stack.removeLast()
                     
                     if let hitbox = sprite!.hitbox as? SimpleHitbox {
                         hitbox.height -= hitboxTop
                         hitbox.offset.y = hitboxTop
                     }
+                     */
+                    print("SpriteHitboxTop is not supported yet.")
                 }
             }
         }

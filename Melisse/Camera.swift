@@ -8,48 +8,47 @@
 
 import GLKit
 
-class Camera : Rectangle {
+class Camera {
     
     static let instance = Camera()
     static let defaultMoveTime : NSTimeInterval = 1
     
+    var frame: Rectangle<GLfloat>
+    
     /// Cadre dans lequel se déplace la caméra.
-    var frame : Rectangle
+    var bounds: Rectangle<GLfloat>
     
     /// Décalage vertical causé par les zoom.
-    var offsetY : GLfloat = 0
+    var offsetY: GLfloat = 0
     
     var motion : CameraMotion = NoCameraMotion()
     
-    var target : Point? {
+    var target: Point<GLfloat>? {
         didSet {
             if let target = self.target {
                 self.motion = motion.to(LockedCameraMotion(target: target))
             } else {
                 self.motion = motion.to(NoCameraMotion())
             }
-            self.center = motion.locationWithTimeSinceLastUpdate(0)
+            self.frame.center = motion.locationWithTimeSinceLastUpdate(0)
         }
     }
     
-    override init() {
+    init() {
         let width = View.instance.width
         let height = View.instance.height
-        self.frame = Rectangle(left: 0, top: 0, width: width, height: height)
-        
-        super.init(left: 0, top: 0, width: width, height: height)
+        self.bounds = Rectangle(left: 0, top: 0, width: width, height: height)
     }
     
     func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
         let center = motion.locationWithTimeSinceLastUpdate(timeSinceLastUpdate)
         
-        self.x = max(min(center.x, frame.right - width / 2), frame.left + width / 2)
-        self.y = max(min(center.y, frame.bottom - height / 2), frame.top + height / 2) + offsetY
+        frame.x = max(min(center.x, bounds.right - frame.width / 2), bounds.left + frame.width / 2)
+        frame.y = max(min(center.y, bounds.bottom - frame.height / 2), bounds.top + frame.height / 2) + offsetY
     }
     
     func center(width: GLfloat, height: GLfloat) {
-        self.x = width / 2
-        self.y = height / 2
+        self.frame.center = Point<GLfloat>(x: width / 2, y: height / 2)
     }
     
     func moveTo(target: Point) {

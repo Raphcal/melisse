@@ -15,7 +15,7 @@ struct NoMotion : Motion {
         // Pas de chargement.
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
         // Pas de mouvement.
     }
     

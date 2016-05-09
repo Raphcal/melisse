@@ -8,56 +8,63 @@
 
 import Foundation
 
-struct Quadrilateral<Coordinate where Coordinate : Numeric> {
+public struct Quadrilateral<Coordinate where Coordinate : Numeric> : Equatable {
     
-    var topLeft: Point<Coordinate>
-    var topRight: Point<Coordinate>
-    var bottomLeft: Point<Coordinate>
-    var bottomRight: Point<Coordinate>
+    public var topLeft: Point<Coordinate>
+    public var topRight: Point<Coordinate>
+    public var bottomLeft: Point<Coordinate>
+    public var bottomRight: Point<Coordinate>
     
-    var left: Coordinate {
+    public var left: Coordinate {
         return Coordinate.min(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
     }
     
-    var right: Coordinate {
+    public var right: Coordinate {
         return Coordinate.max(topLeft.x, topRight.x, bottomLeft.x, bottomRight.x)
     }
     
-    var top: Coordinate {
+    public var top: Coordinate {
         return Coordinate.min(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y)
     }
     
-    var bottom: Coordinate {
+    public var bottom: Coordinate {
         return Coordinate.max(topLeft.y, topRight.y, bottomLeft.y, bottomRight.y)
     }
     
-    init(rectangle: Rectangle<Coordinate>) {
+    public init(rectangle: Rectangle<Coordinate>) {
         self.topLeft = Point(x: rectangle.left, y: rectangle.top)
         self.topRight = Point(x: rectangle.right, y: rectangle.top)
         self.bottomLeft = Point(x: rectangle.left, y: rectangle.bottom)
         self.bottomRight = Point(x: rectangle.right, y: rectangle.bottom)
     }
     
-    init(vertices: [Point<Coordinate>]) {
+    public init(vertices: [Point<Coordinate>]) {
         self.topLeft = vertices[0]
         self.topRight = vertices[1]
         self.bottomLeft = vertices[2]
         self.bottomRight = vertices[3]
     }
     
-    init(topLeft: Point<Coordinate>, topRight: Point<Coordinate>, bottomLeft: Point<Coordinate>, bottomRight: Point<Coordinate>) {
+    public init(topLeft: Point<Coordinate>, topRight: Point<Coordinate>, bottomLeft: Point<Coordinate>, bottomRight: Point<Coordinate>) {
         self.topLeft = topLeft
         self.topRight = topRight
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
     }
     
-    func enclosingRectangle() -> Rectangle<Coordinate> {
+    public func enclosingRectangle() -> Rectangle<Coordinate> {
         return Rectangle(left: left, top: top, width: right - left, height: bottom - top)
     }
     
 }
 
-func +<Coordinate where Coordinate : Numeric>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> {
+public func ==<Coordinate where Coordinate : Numeric>(left: Quadrilateral<Coordinate>, right: Quadrilateral<Coordinate>) -> Bool {
+    return left.topLeft == right.topLeft
+        && left.topRight == right.topRight
+        && left.bottomLeft == right.bottomLeft
+        && left.bottomRight == right.bottomRight
+}
+
+public func +<Coordinate where Coordinate : Numeric>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> {
     return Quadrilateral(topLeft: left.topLeft + right, topRight: left.topRight + right, bottomLeft: left.bottomLeft + right, bottomRight: left.bottomRight + right)
 }

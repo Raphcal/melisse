@@ -50,8 +50,6 @@ class Grid : NSObject {
         }
         
         super.init()
-        
-        createVerticesAndTextureCoordinates()
     }
     
     // MARK: Affichage.
@@ -74,28 +72,8 @@ class Grid : NSObject {
         for index in from..<to {
             let layer = map.layers[index]
             
-            Draws.translateTo(Camera.instance.topLeft * layer.scrollRate)
+            Draws.translateTo(Camera.instance.frame.topLeft * layer.scrollRate)
             Draws.drawWithVertexPointer(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
-        }
-    }
-    
-    private func createVerticesAndTextureCoordinates() {
-        for layer in map.layers {
-            let length = layer.length * vertexesByQuad
-            let vertexPointer = SurfaceArray<GLfloat>(capacity: length, coordinates: coordinatesByVertex)
-            let texCoordPointer = SurfaceArray<GLshort>(capacity: length, coordinates: coordinatesByTexture)
-            
-            for y in 0..<layer.height {
-                for x in 0..<layer.width {
-                    if let tile = layer.tileAtX(x, y: y) {
-                        vertexPointer.appendQuad(x + layer.topLeft.x, y: y + layer.topLeft.y)
-                        texCoordPointer.appendTile(tile, fromPalette: palette)
-                    }
-                }
-            }
-            
-            vertexPointers.append(vertexPointer)
-            texCoordPointers.append(texCoordPointer)
         }
     }
     

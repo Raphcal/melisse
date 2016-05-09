@@ -33,8 +33,8 @@ struct MotionMetric {
 
 struct PerspectiveEffect {
     
-    var backgroundTilt = Point()
-    var foregroundTilt = Point()
+    var backgroundTilt = Point<GLfloat>()
+    var foregroundTilt = Point<GLfloat>()
     
     #if os(iOS)
     let motionManager = CMMotionManager()
@@ -59,7 +59,7 @@ struct PerspectiveEffect {
     
     mutating func update() {
         #if os(iOS)
-            let tilt: Point
+            let tilt: Point<GLfloat>
             if let motion = motionManager.deviceMotion {
                 let orientation = UIApplication.sharedApplication().statusBarOrientation
                 let horizontalMetric = horizontalMetrics[orientation]!

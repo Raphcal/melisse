@@ -56,7 +56,7 @@ enum Direction : Int {
     }
     
     static func directionFromSprite(from: Sprite, toSprite to: Sprite) -> Direction {
-        if from.x <= to.x {
+        if from.frame.x <= to.frame.x {
             return .Right
         } else {
             return .Left

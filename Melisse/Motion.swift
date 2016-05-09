@@ -15,6 +15,6 @@ protocol Motion {
     func load(sprite : Sprite)
     
     /// Calcul et application du mouvement pour le sprite donné.
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
+    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
     
 }

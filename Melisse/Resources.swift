@@ -32,7 +32,7 @@ class Resources {
         
         if let url = Resources.URLForResource("atlas", withExtension: "sprites"), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
-            self.definitions = SpriteDefinition.definitionsFromInputStream(inputStream)
+            self.definitions = SpriteDefinition.definitionsFrom(inputStream)
             inputStream.close()
         } else {
             NSLog("Erreur de chargement des définitions.")

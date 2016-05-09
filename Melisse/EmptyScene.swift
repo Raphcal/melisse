@@ -1,0 +1,23 @@
+//
+//  EmptyScene.swift
+//  Melisse
+//
+//  Created by Raphaël Calabro on 09/05/2016.
+//  Copyright © 2016 Raphaël Calabro. All rights reserved.
+//
+
+import Foundation
+
+public struct EmptyScene: Scene {
+    
+    public var backgroundColor = Color<GLfloat>()
+    
+    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+        // Pas de mise à jour.
+    }
+    
+    public func draw() {
+        // Pas d'affichage.
+    }
+    
+}
