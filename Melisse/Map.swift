@@ -12,26 +12,19 @@ public struct Map : Equatable {
     
     static let fileExtension = "map"
     
-    var width: Int
-    var height: Int
-    var backgroundColor: Color<GLfloat>
-    var layers: [Layer]
+    public var width: Int
+    public var height: Int
+    public var backgroundColor: Color<GLfloat>
+    public var layers: [Layer]
     
-    init() {
+    public init() {
         self.width = 0
         self.height = 0
         self.backgroundColor = Color()
         self.layers = []
     }
     
-    init(layer: Layer) {
-        self.width = layer.width
-        self.height = layer.height
-        self.backgroundColor = Color()
-        self.layers = [layer]
-    }
-    
-    init(layers: [Layer], backgroundColor: Color<GLfloat>) {
+    public init(layers: [Layer], backgroundColor: Color<GLfloat> = Color()) {
         self.layers = layers
         self.backgroundColor = backgroundColor
         
@@ -51,16 +44,14 @@ public struct Map : Equatable {
         self.height = maxHeight
     }
     
-    init(inputStream : NSInputStream) {
+    public init(inputStream : NSInputStream) {
         self.backgroundColor = Streams.readColor(inputStream)
-        
-        let count = Streams.readInt(inputStream)
-        var layers : [Layer] = []
         
         var maxWidth = 0
         var maxHeight = 0
         
-        for _ in 0..<count {
+        let count = Streams.readInt(inputStream)
+        self.layers = (0 ..< count).map { _ in
             let layer = Layer(inputStream: inputStream)
             
             if layer.width > maxWidth {
@@ -70,33 +61,30 @@ public struct Map : Equatable {
                 maxHeight = layer.height
             }
             
-            layers.append(layer)
+            return layer
         }
-        
-        self.layers = layers
         self.width = maxWidth
         self.height = maxHeight
     }
     
-    init?(resource : String) {
+    public init?(resource : String) {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Map.fileExtension), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()
-            
         } else {
-            self.init()
+            print("Map: resource '\(resource)' not found.")
             return nil
         }
     }
     
-    func layerIndex(name: String) -> Int? {
+    public func indexOfLayer(named name: String) -> Int? {
         return layers.indexOf({ (layer) -> Bool in
             layer.name == name
         })
     }
     
-    func mapFromVisibleRect() -> Map {
+    public func mapFromVisibleRect() -> Map {
         var layers = [Layer]()
         
         for layer in self.layers {
@@ -110,7 +98,7 @@ public struct Map : Equatable {
             
             for y in top..<bottom {
                 for x in left..<right {
-                    let tile = layer.tileAtX(x, y: y)
+                    let tile = layer.tileAt(x, y: y)
                     tiles.append(tile)
                     
                     if tile != nil {
