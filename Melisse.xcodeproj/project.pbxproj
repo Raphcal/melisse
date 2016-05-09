@@ -155,8 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				51D9F5721CD9E1CE000AB096 /* Audio.swift */,
-				51D9F5771CD9E257000AB096 /* OpenALAudio.swift */,
 				515E79521CE0CE6B0044E22F /* NoAudio.swift */,
+				51D9F5771CD9E257000AB096 /* OpenALAudio.swift */,
+				51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -241,7 +242,6 @@
 				51F8B9241CD7B0E40029C1E0 /* Random.swift */,
 				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
 				51F8B9261CD7B0E40029C1E0 /* Resources.swift */,
-				51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */,
 				51F8B92A1CD7B0E40029C1E0 /* Streams.swift */,
 				51F8B9311CD7B0E40029C1E0 /* View.swift */,
 				51F8B9001CD78DF70029C1E0 /* Melisse.h */,
