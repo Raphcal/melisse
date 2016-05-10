@@ -79,7 +79,7 @@ class Resources {
         
         if let inputStream = NSInputStream(fileAtPath: mml + "/atlas.sprites") {
             inputStream.open()
-            self.definitions = SpriteDefinition.definitionsFromInputStream(inputStream)
+            self.definitions = SpriteDefinition.definitionsFrom(inputStream)
             inputStream.close()
         }
     }

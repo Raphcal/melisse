@@ -75,7 +75,7 @@ class SpriteFactory {
     
     func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         for sprite in sprites {
-            sprite.updateWithTimeSinceLastUpdate(timeSinceLastUpdate)
+            sprite.updateWith(timeSinceLastUpdate)
         }
         
         commitRemoval()

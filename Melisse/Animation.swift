@@ -90,7 +90,7 @@ class SingleFrameAnimation : Animation {
     }
     
     convenience init(animation: AnimationName, fromSprite sprite: Sprite) {
-        self.init(definition: sprite.definition.animations[animation]!)
+        self.init(definition: sprite.definition.animations[animation.name]!)
     }
     
     func updateWith(timeSinceLastUpdate: NSTimeInterval) {
