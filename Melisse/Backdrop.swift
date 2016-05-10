@@ -48,7 +48,7 @@ class Backdrop {
                 for x in left ..< left + Backdrop.width {
                     if let tile = layer.tileAtX(x % layer.width, y: y % layer.height) {
                         vertexPointer.appendQuad(tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop, distance: 0)
-                        texCoordPointer.appendTile(tile, fromPalette: palette)
+                        texCoordPointer.append(tile: tile, fromPalette: palette)
                     }
                 }
             }

@@ -42,8 +42,8 @@ public class Sprite {
         frame = Rectangle()
         factory = SpriteFactory()
         reference = -1
-        vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
-        texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0)
+        vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
+        texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
         hitbox = SimpleHitbox()
     }
     

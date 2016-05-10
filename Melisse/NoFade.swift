@@ -6,7 +6,7 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
 public struct NoFade: Fade {
     

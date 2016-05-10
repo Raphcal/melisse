@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
 public protocol Scene {
     

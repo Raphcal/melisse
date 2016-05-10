@@ -6,15 +6,16 @@
 //  Copyright © 2015 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
-class SurfaceArray<Element where Element: Numeric> {
+public class SurfaceArray<Element where Element: Numeric> {
     
-    let memory: UnsafeMutablePointer<Element>
-    let capacity: Int
-    let coordinates: Int
+    public let memory: UnsafeMutablePointer<Element>
+    public let capacity: Int
+    public let coordinates: Int
+    public let vertexesByQuad: Int
     
-    var count: GLsizei {
+    public var count: GLsizei {
         get {
             return GLsizei(cursor / coordinates)
         }
@@ -22,43 +23,44 @@ class SurfaceArray<Element where Element: Numeric> {
     
     private var cursor: Int = 0
     
-    convenience init() {
+    public convenience init() {
         self.init(capacity: 0, coordinates: 0)
     }
     
-    init(capacity: Int, coordinates: Int, vertexesByQuad: Int = vertexesByQuad) {
+    public init(capacity: Int, coordinates: Int, vertexesByQuad: Int = Melisse.vertexesByQuad) {
         let total = capacity * coordinates * vertexesByQuad
         
         self.capacity = total
         self.coordinates = coordinates
         self.memory = UnsafeMutablePointer.alloc(total)
+        self.vertexesByQuad = vertexesByQuad
     }
     
     deinit {
         memory.destroy()
     }
     
-    func clear() {
+    public func clear() {
         memset(UnsafeMutablePointer<Int8>(memory), 0, capacity * sizeof(Element))
     }
     
-    func clearFrom(index: Int, count: Int) {
+    public func clearFrom(index: Int, count: Int) {
         memset(UnsafeMutablePointer<Int8>(memory.advancedBy(index * coordinates)), 0, count * coordinates * sizeof(GLfloat))
     }
     
-    func clearQuadAt(index: Int) {
+    public func clearQuadAt(index: Int) {
         clearFrom(index * vertexesByQuad, count: vertexesByQuad)
     }
     
-    func reset() {
+    public func surfaceAt(index: Int) -> Surface<Element> {
+        return Surface<Element>(memory: memory, cursor: index * coordinates * vertexesByQuad, coordinates: coordinates, vertexesByQuad: vertexesByQuad)
+    }
+    
+    public func reset() {
         cursor = 0
     }
     
-    func surfaceAt(index: Int) -> Surface<Element> {
-        return Surface<Element>(memory: memory, cursor: index * coordinates * vertexesByQuad, coordinates: coordinates)
-    }
-    
-    func append(value: Element) {
+    public func append(value: Element) {
         #if CHECK_CAPACITY
             if cursor < capacity {
                 memory[cursor] = value
@@ -72,7 +74,7 @@ class SurfaceArray<Element where Element: Numeric> {
         #endif
     }
     
-    func append(width width: Element, height: Element, left: Element, top: Element) {
+    public func append(width width: Element, height: Element, left: Element, top: Element) {
         // Bas gauche
         append(left)
         append(top + height)
@@ -98,9 +100,18 @@ class SurfaceArray<Element where Element: Numeric> {
         append(top)
     }
     
+    public func append(color color: Color<Element>) {
+        for _ in 0 ..< vertexesByQuad {
+            append(color.red)
+            append(color.green)
+            append(color.blue)
+            append(color.alpha)
+        }
+    }
+    
 }
 
-extension SurfaceArray where Element: Signed {
+public extension SurfaceArray where Element: Signed {
     
     func appendQuad(width width: Element, height: Element, left: Element, top: Element) {
         append(width: width, height: -height, left: left, top: -top)
@@ -108,11 +119,11 @@ extension SurfaceArray where Element: Signed {
     
 }
 
-extension SurfaceArray where Element: Integer {
+public extension SurfaceArray where Element: Integer {
     
-    func appendTile(tile: Int, from palette: Palette) {
-        append(width: Element(palette.tileWidth), height: Element(palette.tileHeight), left: Element(tile % palette.columns) * Element(palette.tileWidth + palette.paddingX) + Element(palette.paddingX),
-            top: Element(tile / palette.columns) * Element(palette.tileHeight + palette.paddingY) + Element(palette.paddingY))
+    func append(tile tile: Int, from palette: TexturePalette) {
+        append(width: Element(palette.tileSize), height: Element(palette.tileSize), left: Element(tile % palette.columns) * Element(palette.tileSize + palette.padding) + Element(palette.padding),
+            top: Element(tile / palette.columns) * Element(palette.tileSize + palette.padding) + Element(palette.padding))
     }
     
 }

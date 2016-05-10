@@ -27,6 +27,7 @@ public protocol Numeric {
     
     init(_: Int)
     init(_: GLuint)
+    init(_: GLshort)
     init(_: GLfloat)
     
     static func min(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self
@@ -44,8 +45,6 @@ public protocol FloatingPoint {
     var squareRoot: Self { get }
     var cosinus: Self { get }
     var sinus: Self { get }
-    
-    init(_: GLfloat)
     
     static func atan2(lhs: Self, _ rhs: Self) -> Self
     static func distance(x1: Self, y1: Self, x2: Self, y2: Self) -> Self

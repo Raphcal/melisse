@@ -6,7 +6,11 @@
 //  Copyright (c) 2015 Raphaël Calabro. All rights reserved.
 //
 
+#if os(iOS)
 import GLKit
+#else
+import OpenGL.GL
+#endif
 
 class Director : NSObject {
     

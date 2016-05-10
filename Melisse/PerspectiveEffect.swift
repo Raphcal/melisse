@@ -6,10 +6,9 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
+import GLKit
 #if os(iOS)
     import CoreMotion
-#else
-    import Foundation
 #endif
 
 struct MotionMetric {

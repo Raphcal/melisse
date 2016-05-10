@@ -29,7 +29,7 @@ struct TileLayer : Equatable {
         self.texCoordPointer = SurfaceArray()
     }
     
-    init(inputStream : NSInputStream, palette: Palette) {
+    init(inputStream : NSInputStream, palette: TexturePalette) {
         self.name = Streams.readString(inputStream)
         self.width = Streams.readInt(inputStream)
         self.height = Streams.readInt(inputStream)
@@ -61,7 +61,7 @@ struct TileLayer : Equatable {
                     let y = index / width
                     
                     vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
-                    texCoordPointer.appendTile(tile, from: palette)
+                    texCoordPointer.append(tile: tile, from: palette)
                 }
             }
         #else
@@ -78,7 +78,7 @@ struct TileLayer : Equatable {
                     let x = index % width
                     let y = index / width
                     vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
-                    texCoordPointer.appendTile(tile, from: palette)
+                    texCoordPointer.append(tile: tile, from: palette)
                 } else {
                     tiles.append(nil)
                 }

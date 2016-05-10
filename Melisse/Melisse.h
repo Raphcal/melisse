@@ -6,8 +6,9 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 //#if TARGET_OS_IOS
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
 //#endif
 //#if TARGET_OS_MACOS
 //#import <Cocoa/Cocoa.h>

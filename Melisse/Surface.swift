@@ -8,21 +8,22 @@
 
 import GLKit
 
-struct Surface<Element : Numeric> {
+public struct Surface<Element : Numeric> {
     
     var memory: UnsafeMutablePointer<Element>
     var cursor: Int
     var coordinates: Int
+    var vertexesByQuad: Int
     
-    func clear() {
+    public func clear() {
         memset(memory, 0, vertexesByQuad * coordinates)
     }
     
-    func setQuadWith(left left: Element, top: Element, width: Element, height: Element) {
+    public func setQuadWith(left left: Element, top: Element, width: Element, height: Element) {
         setQuadWith(left: left, right: left + width, top: top, bottom: top + height)
     }
     
-    func setQuadWith(left left: Element, right: Element, top: Element, bottom: Element) {
+    public func setQuadWith(left left: Element, right: Element, top: Element, bottom: Element) {
         // Bas gauche
         memory[cursor] = left
         memory[cursor + 1] = bottom
@@ -48,7 +49,7 @@ struct Surface<Element : Numeric> {
         memory[cursor + 11] = top
     }
     
-    func setColor(color: Color<Element>) {
+    public func setColor(color: Color<Element>) {
         var index = cursor
         for _ in 0 ..< vertexesByQuad {
             memory[index] = color.red
@@ -59,7 +60,7 @@ struct Surface<Element : Numeric> {
         }
     }
     
-    func setColor(with white: Element, alpha: Element) {
+    public func setColor(with white: Element, alpha: Element) {
         var index = cursor
         for _ in 0 ..< vertexesByQuad {
             memory[index] = white
@@ -72,7 +73,7 @@ struct Surface<Element : Numeric> {
     
 }
 
-extension Surface where Element: FloatingPoint, Element: Signed {
+public extension Surface where Element: FloatingPoint, Element: Signed {
     
     func setQuadWith(left left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
         setQuadWith(left: (Element(left) + Element(width) * direction.mirror) / Element(texture.width),
@@ -112,7 +113,7 @@ extension Surface where Element: FloatingPoint, Element: Signed {
     
 }
 
-extension Surface where Element: Integer {
+public extension Surface where Element: Integer {
     
     func setQuadWith(left left: Element, top: Element, width: Element, height: Element, direction: Direction, texture: GLKTextureInfo) {
         setQuadWith(left: left + width * Element(direction.mirror),

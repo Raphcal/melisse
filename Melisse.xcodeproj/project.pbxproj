@@ -14,6 +14,9 @@
 		515E79531CE0CE6B0044E22F /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
 		51833DE01CE0EECE003052C8 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91B1CD7B0E40029C1E0 /* Map.swift */; };
 		51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90E1CD7B0E40029C1E0 /* Camera.swift */; };
+		51BD8AB91CE1FD830024A2CA /* ImagePalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */; };
+		51BD8ABB1CE1FDAA0024A2CA /* AlphaColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */; };
+		51BD8ABD1CE207FD0024A2CA /* ColorGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */; };
 		51D9F5731CD9E1CE000AB096 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
 		51D9F57B1CD9E48E000AB096 /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
@@ -68,6 +71,9 @@
 		515E794E1CE0CDDB0044E22F /* Fade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fade.swift; sourceTree = "<group>"; };
 		515E79501CE0CDF40044E22F /* NoFade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFade.swift; sourceTree = "<group>"; };
 		515E79521CE0CE6B0044E22F /* NoAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAudio.swift; sourceTree = "<group>"; };
+		51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePalette.swift; sourceTree = "<group>"; };
+		51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaColorPalette.swift; sourceTree = "<group>"; };
+		51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
 		51D9F5721CD9E1CE000AB096 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		51D9F5771CD9E257000AB096 /* OpenALAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenALAudio.swift; sourceTree = "<group>"; };
 		51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurfaceArray.swift; sourceTree = "<group>"; };
@@ -160,10 +166,13 @@
 			children = (
 				51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */,
 				51F8B9161CD7B0E40029C1E0 /* Grid.swift */,
+				51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */,
 				51F8B9191CD7B0E40029C1E0 /* Layer.swift */,
 				51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */,
 				51F8B91B1CD7B0E40029C1E0 /* Map.swift */,
 				51F8B9201CD7B0E40029C1E0 /* Palette.swift */,
+				51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */,
+				51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -410,8 +419,10 @@
 				51F8B9511CD7B0E40029C1E0 /* SpriteFactory.swift in Sources */,
 				6496DB341CDF729B00121F0A /* Unload.swift in Sources */,
 				6496DB3C1CDF741100121F0A /* ShapeLayer.swift in Sources */,
+				51BD8ABD1CE207FD0024A2CA /* ColorGrid.swift in Sources */,
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,
 				51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */,
+				51BD8AB91CE1FD830024A2CA /* ImagePalette.swift in Sources */,
 				51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */,
 				64B6F7561CDE6D2800CECE15 /* AnimationDefinition.swift in Sources */,
 				6496DB381CDF740000121F0A /* TileLayer.swift in Sources */,
@@ -438,6 +449,7 @@
 				6496DB2F1CDF2B1700121F0A /* SpriteInfo.swift in Sources */,
 				51F8B9411CD7B0E40029C1E0 /* Layer.swift in Sources */,
 				64BA6C1A1CE1127E0093E184 /* Axe.swift in Sources */,
+				51BD8ABB1CE1FDAA0024A2CA /* AlphaColorPalette.swift in Sources */,
 				51F8B9571CD7B0E40029C1E0 /* Surfaces.swift in Sources */,
 				515E79531CE0CE6B0044E22F /* NoAudio.swift in Sources */,
 				515E79511CE0CDF40044E22F /* NoFade.swift in Sources */,

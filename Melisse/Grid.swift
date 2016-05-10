@@ -13,7 +13,7 @@ public struct Grid {
     let groundLayerName = "Piste"
     let waterLayerName = "Eau"
     
-    public var palette: Palette
+    public var palette: TexturePalette
     public var map: Map
     public var foreground: Int
     public var ground: Layer
@@ -21,37 +21,30 @@ public struct Grid {
     public var vertexPointers = [SurfaceArray<GLfloat>]()
     public var texCoordPointers = [SurfaceArray<GLshort>]()
     
-    init() {
-        self.palette = Palette()
-        self.map = Map()
-        self.foreground = 0
-        self.ground = Layer()
-        self.water = nil
-    }
-    
-    init(palette: Palette, map: Map) {
+    init(palette: TexturePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
         
         if let ground = map.indexOfLayer(named: groundLayerName) {
             self.foreground = ground + 1
             self.ground = map.layers[ground]
-        } else {
+        } else if map.layers.count > 0 {
             self.foreground = 0
             self.ground = map.layers[0]
+        } else {
+            self.foreground = 0
+            self.ground = Layer()
         }
         
         self.water = map.layerNamed(waterLayerName)
+        
+        createVerticesAndTexturePointers()
     }
     
     // MARK: Affichage.
     
-    public func drawBackground() {
-        draw(to: foreground)
-    }
-    
-    public func drawForeground() {
-        draw(from: foreground, to: map.layers.count)
+    public func draw() {
+        draw(to: map.layers.count)
     }
     
     public func draw(from from: Int = 0, to: Int) {
@@ -63,6 +56,14 @@ public struct Grid {
             Draws.translateTo(Camera.instance.frame.topLeft * layer.scrollRate)
             Draws.drawWithVertexPointer(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
         }
+    }
+    
+    public func drawBackground() {
+        draw(to: foreground)
+    }
+    
+    public func drawForeground() {
+        draw(from: foreground, to: map.layers.count)
     }
     
     // MARK: Fonctions publiques.
@@ -104,5 +105,26 @@ public struct Grid {
         }
         return nil
     }
+    
+    private mutating func createVerticesAndTexturePointers() {
+        for layer in map.layers {
+            let vertexPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByVertex)
+            let texCoordPointer = SurfaceArray<GLshort>(capacity: layer.length, coordinates: coordinatesByTexture)
+            
+            for y in 0..<layer.height {
+                for x in 0..<layer.width {
+                    if let tile = layer.tileAt(x: x, y: y) {
+                        vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
+                        texCoordPointer.append(tile: tile, from: palette)
+                    }
+                }
+            }
+            
+            vertexPointers.append(vertexPointer)
+            texCoordPointers.append(texCoordPointer)
+        }
+    }
    
 }
+
+
