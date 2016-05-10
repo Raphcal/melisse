@@ -8,7 +8,7 @@
 
 import GLKit
 
-class Palette : NSObject {
+public class Palette : NSObject {
     
     static let fileExtension = "pal"
     

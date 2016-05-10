@@ -163,6 +163,7 @@
 				51F8B9191CD7B0E40029C1E0 /* Layer.swift */,
 				51F8B91A1CD7B0E40029C1E0 /* LayerStructure.swift */,
 				51F8B91B1CD7B0E40029C1E0 /* Map.swift */,
+				51F8B9201CD7B0E40029C1E0 /* Palette.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -236,6 +237,7 @@
 				51D9F5941CDA17CE000AB096 /* Geometry */,
 				51D9F5791CD9E3FD000AB096 /* Input */,
 				6496DB361CDF73A400121F0A /* Layer */,
+				51833DDF1CE0EE79003052C8 /* Map */,
 				515E794B1CE0CD160044E22F /* Scene */,
 				6440EA371CDCE84100190C3D /* Sprite */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
@@ -244,10 +246,8 @@
 				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
 				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
-				51833DDF1CE0EE79003052C8 /* Map */,
 				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
 				51F8B91F1CD7B0E40029C1E0 /* Operation.swift */,
-				51F8B9201CD7B0E40029C1E0 /* Palette.swift */,
 				51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */,
 				51F8B9221CD7B0E40029C1E0 /* Plane.swift */,
 				51F8B9241CD7B0E40029C1E0 /* Random.swift */,

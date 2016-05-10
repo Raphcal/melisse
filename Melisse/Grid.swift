@@ -8,34 +8,32 @@
 
 import GLKit
 
-class Grid : NSObject {
+public struct Grid {
     
     let groundLayerName = "Piste"
     let waterLayerName = "Eau"
     
-    let palette: Palette
-    let map: Map
-    let foreground: Int
-    let ground: Layer
-    let water: Layer?
-    var vertexPointers = [SurfaceArray<GLfloat>]()
-    var texCoordPointers = [SurfaceArray<GLshort>]()
+    public var palette: Palette
+    public var map: Map
+    public var foreground: Int
+    public var ground: Layer
+    public var water: Layer?
+    public var vertexPointers = [SurfaceArray<GLfloat>]()
+    public var texCoordPointers = [SurfaceArray<GLshort>]()
     
-    override init() {
+    init() {
         self.palette = Palette()
         self.map = Map()
         self.foreground = 0
         self.ground = Layer()
         self.water = nil
-        
-        super.init()
     }
     
     init(palette: Palette, map: Map) {
         self.palette = palette
         self.map = map
         
-        if let ground = map.layerIndex(groundLayerName) {
+        if let ground = map.indexOfLayer(named: groundLayerName) {
             self.foreground = ground + 1
             self.ground = map.layers[ground]
         } else {
@@ -43,33 +41,23 @@ class Grid : NSObject {
             self.ground = map.layers[0]
         }
         
-        if let water = map.layerIndex(waterLayerName) {
-            self.water = map.layers[water]
-        } else {
-            self.water = nil
-        }
-        
-        super.init()
+        self.water = map.layerNamed(waterLayerName)
     }
     
     // MARK: Affichage.
     
-    func draw() {
-        drawFrom(0, to: map.layers.count)
+    public func drawBackground() {
+        draw(to: foreground)
     }
     
-    func drawBackground() {
-        drawFrom(0, to: foreground)
+    public func drawForeground() {
+        draw(from: foreground, to: map.layers.count)
     }
     
-    func drawForeground() {
-        drawFrom(foreground, to: map.layers.count)
-    }
-    
-    private func drawFrom(from: Int, to: Int) {
+    public func draw(from from: Int = 0, to: Int) {
         Draws.bindTexture(palette.texture)
         
-        for index in from..<to {
+        for index in from ..< to {
             let layer = map.layers[index]
             
             Draws.translateTo(Camera.instance.frame.topLeft * layer.scrollRate)
@@ -79,9 +67,9 @@ class Grid : NSObject {
     
     // MARK: Fonctions publiques.
     
-    func angleAtPoint(point: Point<GLfloat>, forDirection direction: Direction) -> GLfloat {
-        if let tile = ground.tileAtPoint(point), let tileHitbox = palette.functions[tile] {
-            let pixel = Layer.pointInTileAtPoint(point)
+    func angleAt(point: Point<GLfloat>, direction: Direction) -> GLfloat {
+        if let tile = ground.tileAt(point: point), let tileHitbox = palette.functions[tile] {
+            let pixel = Layer.pointInTileAt(point)
             
             let backY = Operation.execute(tileHitbox, x: pixel.x)
             let frontY = Operation.execute(tileHitbox, x: pixel.x + direction.value)
@@ -92,8 +80,8 @@ class Grid : NSObject {
         }
     }
     
-    func angleForVerticalRunAtPoint(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
-        if let x = xInTileAtPoint(point, direction: direction) {
+    func angleForVerticalRunAt(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
+        if let x = xInTileAt(point, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
             return verticalDirection.angle
@@ -101,12 +89,12 @@ class Grid : NSObject {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    func xInTileAtPoint(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
-        if let tile = ground.tileAtPoint(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
+    func xInTileAt(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
+        if let tile = ground.tileAt(point: Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {
                 let x = point.x + GLfloat(index) * direction.value
-                let pixel = Layer.pointInTileAtPoint(Point(x: x, y: point.y))
+                let pixel = Layer.pointInTileAt(Point(x: x, y: point.y))
                 
                 let y = Operation.execute(tileHitbox, x: pixel.x)
                 if (pixel.y > y) {

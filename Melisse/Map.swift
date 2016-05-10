@@ -84,10 +84,16 @@ public struct Map : Equatable {
         })
     }
     
+    public func layerNamed(name: String) -> Layer? {
+        if let index = indexOfLayer(named: name) {
+            return layers[index]
+        } else {
+            return nil
+        }
+    }
+    
     public func mapFromVisibleRect() -> Map {
-        var layers = [Layer]()
-        
-        for layer in self.layers {
+        let layers = self.layers.map { (layer) -> Layer in
             let left = Int(floor(Camera.instance.frame.left * layer.scrollRate.x / tileSize))
             let right = Int(ceil(Camera.instance.frame.right * layer.scrollRate.x / tileSize))
             let top = Int(floor(Camera.instance.frame.top * layer.scrollRate.y / tileSize))
@@ -98,7 +104,7 @@ public struct Map : Equatable {
             
             for y in top..<bottom {
                 for x in left..<right {
-                    let tile = layer.tileAt(x, y: y)
+                    let tile = layer.tileAt(x: x, y: y)
                     tiles.append(tile)
                     
                     if tile != nil {
@@ -107,7 +113,7 @@ public struct Map : Equatable {
                 }
             }
             
-            layers.append(Layer(name: layer.name, width: right - left, height: bottom - top, tiles: tiles, length: count, scrollRate: layer.scrollRate, topLeft: (x: left, y: top)))
+            return Layer(name: layer.name, width: right - left, height: bottom - top, tiles: tiles, scrollRate: layer.scrollRate)
         }
         
         return Map(layers: layers, backgroundColor: self.backgroundColor)
@@ -115,6 +121,8 @@ public struct Map : Equatable {
 }
 
 public func ==(lhs: Map, rhs: Map) -> Bool {
-    // TODO: Écrire la méthode.
-    return false
+    return lhs.width == rhs.width
+        && lhs.height == rhs.height
+        && lhs.backgroundColor == rhs.backgroundColor
+        && lhs.layers == rhs.layers
 }

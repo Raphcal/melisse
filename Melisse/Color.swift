@@ -8,7 +8,7 @@
 
 import GLKit
 
-public struct Color<Component where Component : Numeric> {
+public struct Color<Component where Component : Numeric> : Equatable {
     
     public var red: Component
     public var green: Component
@@ -29,6 +29,13 @@ public struct Color<Component where Component : Numeric> {
         self.alpha = alpha
     }
     
+}
+
+public func ==<Component where Component : Numeric>(lhs: Color<Component>, rhs: Color<Component>) -> Bool {
+    return lhs.red == rhs.red
+        && lhs.green == rhs.green
+        && lhs.blue == rhs.blue
+        && lhs.alpha == rhs.alpha
 }
 
 public extension Color where Component : FloatingPoint {
