@@ -82,7 +82,7 @@ class SpriteFactory {
     }
     
     func updateCollisionsForSprite(player: Sprite) {
-        self.collisions = collidables.flatMap { (sprite) -> T? in
+        self.collisions = collidables.flatMap { (sprite) -> Sprite? in
             return sprite !== player && sprite.hitbox.collidesWith(player.hitbox) ? sprite : nil
         }
     }
@@ -90,7 +90,7 @@ class SpriteFactory {
     // MARK: Gestion de l'affichage
     
     /// Dessine les sprites de cette factory.
-    func draw(at translation: Point<GLfloat> = Camera.instance.topLeft) {
+    func draw(at translation: Point<GLfloat> = Camera.instance.frame.topLeft) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
