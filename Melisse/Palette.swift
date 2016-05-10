@@ -9,19 +9,10 @@
 import GLKit
 
 public protocol Palette {
-    var functions: [[UInt8]?] { get }
 }
 
-public protocol TexturePalette : Palette {
-    var texture: GLKTextureInfo { get }
+public protocol ColorPalette {
     
-    var tileSize: GLshort { get }
-    var padding: GLshort { get }
-    var columns: Int { get }
-    
-    func loadTexture()
-}
-
-public protocol ColorPalette : Palette {
     func colorFor(tile: Int) -> Color<GLubyte>
+    
 }

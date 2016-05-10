@@ -8,20 +8,20 @@
 
 import GLKit
 
-public struct Grid {
+public class Grid {
     
     let groundLayerName = "Piste"
     let waterLayerName = "Eau"
     
-    public var palette: TexturePalette
-    public var map: Map
-    public var foreground: Int
-    public var ground: Layer
-    public var water: Layer?
-    public var vertexPointers = [SurfaceArray<GLfloat>]()
-    public var texCoordPointers = [SurfaceArray<GLshort>]()
+    public let palette: ImagePalette
+    public let map: Map
+    public let foreground: Int
+    public let ground: Layer
+    public let water: Layer?
+    public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
+    public private(set) var texCoordPointers = [SurfaceArray<GLshort>]()
     
-    init(palette: TexturePalette = ImagePalette(), map: Map = Map()) {
+    public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
         
@@ -68,7 +68,7 @@ public struct Grid {
     
     // MARK: Fonctions publiques.
     
-    func angleAt(point: Point<GLfloat>, direction: Direction) -> GLfloat {
+    public func angleAt(point: Point<GLfloat>, direction: Direction) -> GLfloat {
         if let tile = ground.tileAt(point: point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAt(point)
             
@@ -81,7 +81,7 @@ public struct Grid {
         }
     }
     
-    func angleForVerticalRunAt(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
+    public func angleForVerticalRunAt(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
         if let x = xInTileAt(point, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
@@ -90,7 +90,7 @@ public struct Grid {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    func xInTileAt(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
+    public func xInTileAt(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
         if let tile = ground.tileAt(point: Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {
@@ -106,7 +106,7 @@ public struct Grid {
         return nil
     }
     
-    private mutating func createVerticesAndTexturePointers() {
+    private func createVerticesAndTexturePointers() {
         for layer in map.layers {
             let vertexPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByVertex)
             let texCoordPointer = SurfaceArray<GLshort>(capacity: layer.length, coordinates: coordinatesByTexture)

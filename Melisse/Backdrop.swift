@@ -8,35 +8,34 @@
 
 import GLKit
 
-class Backdrop {
+public class Backdrop {
     
-    /// Nombre de cases horizontalement.
-    static let width = 13
-    /// Nombre de cases verticalement.
-    static let height = 8
-    /// Taille maximum d'une couche.
-    static let maximumLength = width * height
+    public let palette: ImagePalette
+    public let map: Map
+    public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
+    public private(set) var texCoordPointers = [SurfaceArray<GLshort>]()
     
-    let palette : Palette
-    let map : Map
-    var vertexPointers = [SurfaceArray<GLfloat>]()
-    var texCoordPointers = [SurfaceArray<GLshort>]()
+    private let width: Int
+    private let height: Int
     
-    init(palette: Palette, map: Map) {
+    public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
+        
+        self.width = Int(ceil(View.instance.width / tileSize) + 2)
+        self.height = Int(ceil(View.instance.height / tileSize) + 2)
         
         createVerticesAndTextureCoordinates()
     }
     
-    func update(offset offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
+    public func update(offset offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             
-            let cameraLeft = (Camera.instance.left + offset) * layer.scrollRate.x + rectangle((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
+            let cameraLeft = (Camera.instance.frame.left + offset) * layer.scrollRate.x + rectangle((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
             
-            let cameraTop = Camera.instance.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
+            let cameraTop = Camera.instance.frame.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
             
             let left = Int(cameraLeft / tileSize)
             let top = Int(cameraTop / tileSize)
@@ -44,18 +43,18 @@ class Backdrop {
             vertexPointer.reset()
             texCoordPointer.reset()
             
-            for y in top ..< top + Backdrop.height {
-                for x in left ..< left + Backdrop.width {
-                    if let tile = layer.tileAtX(x % layer.width, y: y % layer.height) {
-                        vertexPointer.appendQuad(tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop, distance: 0)
-                        texCoordPointer.append(tile: tile, fromPalette: palette)
+            for y in top ..< top + height {
+                for x in left ..< left + width {
+                    if let tile = layer.tileAt(x: x % layer.width, y: y % layer.height) {
+                        vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop)
+                        texCoordPointer.append(tile: tile, from: palette)
                     }
                 }
             }
         }
     }
     
-    func draw() {
+    public func draw() {
         Draws.bindTexture(palette.texture)
         Draws.translateTo(Point())
         
@@ -68,9 +67,11 @@ class Backdrop {
     }
     
     private func createVerticesAndTextureCoordinates() {
+        let maximumLength = width * height
+        
         for _ in 0 ..< map.layers.count {
-            let vertexPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByVertex)
-            let texCoordPointer = SurfaceArray(capacity: Backdrop.maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
+            let vertexPointer = SurfaceArray<GLfloat>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByVertex)
+            let texCoordPointer = SurfaceArray<GLshort>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
             
             vertexPointers.append(vertexPointer)
             texCoordPointers.append(texCoordPointer)

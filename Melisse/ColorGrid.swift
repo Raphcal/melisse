@@ -16,7 +16,7 @@ public struct ColorGrid {
     public var vertexPointers = [SurfaceArray<GLfloat>]()
     public var colorPointers = [SurfaceArray<GLubyte>]()
     
-    init(palette: ColorPalette = AlphaColorPalette(), map: Map = Map()) {
+    public init(palette: ColorPalette = AlphaColorPalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
         
