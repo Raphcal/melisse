@@ -8,26 +8,27 @@
 
 import GLKit
 
-class FadeScene : NSObject, Fade {
+class FadeScene : Fade {
     
-    let halfProgress : GLfloat = 0.5
-    let fullProgress : GLfloat = 1
+    let halfProgress: GLfloat = 0.5
+    let fullProgress: GLfloat = 1
     
-    var backgroundColor : Color = Color()
+    var backgroundColor: Color<GLfloat> = Color()
     
-    var previousScene : Scene = EmptyScene()
-    var nextScene : Scene = EmptyScene()
+    var previousScene: Scene = EmptyScene()
+    var nextScene: Scene = EmptyScene()
     
-    var firstScene : Bool = true
+    var firstScene: Bool = true
     
-    var progress : GLfloat = 0
+    var progress: GLfloat = 0
     var time : NSTimeInterval = 0
     let duration : NSTimeInterval = 1
     
     let plane = Plane(capacity: 1)
+    var mask: ColoredQuadrilateral
     
-    override init() {
-        let mask = plane.coloredQuadrilateral()
+    init() {
+        self.mask = plane.coloredQuadrilateral()
         mask.quadrilateral = Quadrilateral(rectangle: Rectangle(left: 0, top: 0, width: View.instance.width, height: View.instance.height))
     }
     
@@ -37,7 +38,7 @@ class FadeScene : NSObject, Fade {
         self.backgroundColor = previousScene.backgroundColor
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         self.time += timeSinceLastUpdate
         self.progress = min(GLfloat(time / duration), fullProgress)
         
@@ -47,8 +48,8 @@ class FadeScene : NSObject, Fade {
         } else if firstScene && progress >= halfProgress {
             firstScene = false
             // TODO: Charger ici la seconde scène ?
-            nextScene.willAppear?()
-            nextScene.updateWithTimeSinceLastUpdate(0)
+            nextScene.willAppear()
+            nextScene.updateWith(0)
             self.backgroundColor = nextScene.backgroundColor
         }
     }
@@ -63,7 +64,7 @@ class FadeScene : NSObject, Fade {
             nextScene.draw()
         }
         
-        plane.colorPointer.setColorWithWhite(0, alpha: darkness, forQuad: 0)
+        mask.color = Color(white: 0, alpha: GLubyte(darkness * 255))
         plane.draw()
     }
     

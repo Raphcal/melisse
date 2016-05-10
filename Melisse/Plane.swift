@@ -35,41 +35,10 @@ class Plane {
                 abort()
             }
         #endif
-        let vertexSurface = Surface(memory: vertexPointer.memory, reference: Int(count), coordinates: coordinatesByVertex)
-        let colorSurface = Surface(memory: colorPointer.memory, reference: Int(count), coordinates: coordinatesByColor)
+        let vertexSurface = Surface(memory: vertexPointer.memory, cursor: Int(count), coordinates: coordinatesByVertex, vertexesByQuad: vertexesByQuad)
+        let colorSurface = Surface(memory: colorPointer.memory, cursor: Int(count), coordinates: coordinatesByColor, vertexesByQuad: vertexesByQuad)
         count = count + 1
         return ColoredQuadrilateral(vertexSurface: vertexSurface, colorSurface: colorSurface)
-    }
-    
-}
-
-class ColoredQuadrilateral {
-    
-    var color: Color<GLubyte>? {
-        didSet {
-            if let color = self.color {
-                colorSurface.setColor(color)
-            } else {
-                colorSurface.clear()
-            }
-        }
-    }
-    var quadrilateral: Quadrilateral<GLfloat>? {
-        didSet {
-            if let quadrilateral = self.quadrilateral {
-                vertexSurface.setQuadWith(quadrilateral)
-            } else {
-                vertexSurface.clear()
-            }
-        }
-    }
-    
-    let vertexSurface: Surface<GLfloat>
-    let colorSurface: Surface<GLubyte>
-    
-    init(vertexSurface: Surface<GLfloat>, colorSurface: Surface<GLubyte>) {
-        self.vertexSurface = vertexSurface
-        self.colorSurface = colorSurface
     }
     
 }
