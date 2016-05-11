@@ -22,7 +22,6 @@ public class SpriteFactory {
     let pools: [ReferencePool]
     public var sprites = [Sprite]()
     public var collidables = [Sprite]()
-    var removalPending = [Sprite]()
     
     public let definitions: [SpriteDefinition]
     
@@ -75,8 +74,6 @@ public class SpriteFactory {
         for sprite in sprites {
             sprite.updateWith(timeSinceLastUpdate)
         }
-        
-        commitRemoval()
     }
     
     func updateCollisionsForSprite(player: Sprite) {
@@ -107,8 +104,8 @@ public class SpriteFactory {
     }
     
     func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
-        let sprite = self.sprite(definitions[definition])
-        sprite.topLeft = Point(x: x, y: y)
+        let sprite = self.sprite(definition)
+        sprite.frame.topLeft = Point(x: x, y: y)
         return sprite
     }
     
@@ -139,15 +136,14 @@ public class SpriteFactory {
     /// - parameter info: Informations du loader sur le sprite à créer.
     /// - parameter after: Si non nil, la référence du nouveau sprite sera (si possible) supérieur à celle du sprite donné.
     /// - returns: Un nouveau sprite.
-    func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
+    func sprite<Info where Info : SpriteInfo>(definition: SpriteDefinition, info: Info? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
-        let sprite = Sprite(reference: reference, definition: definition, info: info, parent: self)
+        // TODO: Ajout Info !!
+        let sprite = Sprite(definition: definition, reference: reference, factory: self)
         self.sprites.append(sprite)
         
-        if definition.type == .Player {
-            appendSprite(sprite, toType: .Player)
-        } else if definition.type.hasCollisions {
-            appendSprite(sprite, toType: .Collidable)
+        if definition.type.collidable {
+            collidables.append(sprite)
         }
         
         return sprite
@@ -157,68 +153,34 @@ public class SpriteFactory {
     
     func removeSprite(sprite: Sprite) {
         sprite.removed = true
-        removalPending.append(sprite)
         
         (sprite.motion as? Unloadable)?.unload(sprite)
+        pools[sprite.definition.distance.rawValue].releaseReference(sprite.reference)
+        sprite.vertexSurface.clear()
+        sprite.texCoordSurface.clear()
+        if let index = sprites.indexOf({ sprite === $0 }) {
+            sprites.removeAtIndex(index)
+        }
         
         let definition = sprite.definition
-        if definition.type == .Player {
-            removeSprite(sprite, fromType: .Player)
-        } else if definition.type.hasCollisions {
-            removeSprite(sprite, fromType: .Collidable)
+        if definition.type.collidable, let index = collidables.indexOf({ sprite === $0 }) {
+            collidables.removeAtIndex(index)
         }
     }
     
     func removeOrphanSprites() {
         for sprite in sprites {
+            // TODO: Gérer INFO
             if sprite.info == nil && !sprite.removed {
                 removeSprite(sprite)
             }
         }
     }
     
-    func commitRemoval() {
-        for sprite in removalPending {
-            if let index = sprites.indexOf(sprite) {
-                sprites.removeAtIndex(index)
-                let reference = sprite.reference
-                pools[sprite.definition.distance.rawValue].releaseReference(reference)
-                vertexPointer.clearQuadAtIndex(reference)
-                texCoordPointer.clearQuadAtIndex(reference)
-            } else {
-                NSLog("removalPending: Sprite \(sprite.reference) non trouvé.")
-            }
-        }
-        removalPending.removeAll(keepCapacity: true)
-    }
-    
     func clear() {
         for sprite in sprites {
             removeSprite(sprite)
         }
-    }
-    
-    // MARK: Gestion du tri des sprites par type
-    
-    private func appendSprite(sprite: Sprite, toType type: SpriteType) {
-        var sprites = self.types[type]
-        
-        if sprites == nil {
-            sprites = []
-        }
-        
-        sprites!.append(sprite)
-        self.types[type] = sprites
-    }
-    
-    private func removeSprite(sprite: Sprite, fromType type: SpriteType) {
-        var sprites = self.types[type]!
-        
-        if let index = sprites.indexOf(sprite) {
-            sprites.removeAtIndex(index)
-        }
-        
-        self.types[type] = sprites
     }
     
 }

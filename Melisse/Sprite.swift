@@ -32,12 +32,12 @@ public class Sprite {
     var motion: Motion = NoMotion()
     
     var currentAnimation: AnimationName?
-    var animation: Animation = NoAnimation.instance
+    var animation: Animation = NoAnimation()
     
     var variables = [String : GLfloat]()
     var objects = [String : AnyObject]()
     
-    init() {
+    public init() {
         definition = SpriteDefinition()
         frame = Rectangle()
         factory = SpriteFactory()
@@ -45,6 +45,30 @@ public class Sprite {
         vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
         texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
         hitbox = SimpleHitbox()
+    }
+    
+    public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory) {
+        self.definition = definition
+        self.factory = factory
+        
+        // self.info = info
+        self.type = definition.type
+        self.reference = reference
+        self.vertexSurface = factory.vertexPointer.surfaceAt(reference)
+        self.texCoordSurface = factory.texCoordPointer.surfaceAt(reference)
+        
+        if let normalAnimationDefinition = definition.animations[DefaultAnimationName.Normal.name] {
+            self.animation = normalAnimationDefinition.toAnimation()
+            self.currentAnimation = DefaultAnimationName.Normal
+        } else {
+            self.animation = NoAnimation()
+        }
+        
+        // TODO: width et height, voir SpriteDefinition
+        self.frame = Rectangle()
+        self.hitbox = SimpleHitbox()
+        
+        self.hitbox = SpriteHitbox(sprite: self)
     }
     
     // MARK: Gestion des mises à jour

@@ -20,6 +20,11 @@
 		51BD8ABF1CE20FE50024A2CA /* ColorQuadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */; };
 		51BD8AC31CE23C9C0024A2CA /* Backdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90D1CD7B0E40029C1E0 /* Backdrop.swift */; };
 		51CACEF51CE3253100F5B795 /* NoAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACEF41CE3253100F5B795 /* NoAnimation.swift */; };
+		51CACEFC1CE352D900F5B795 /* SingleFrameAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACEFB1CE352D900F5B795 /* SingleFrameAnimation.swift */; };
+		51CACEFE1CE3579900F5B795 /* LoopingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACEFD1CE3579900F5B795 /* LoopingAnimation.swift */; };
+		51CACF001CE358E600F5B795 /* SynchronizedLoopingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACEFF1CE358E600F5B795 /* SynchronizedLoopingAnimation.swift */; };
+		51CACF141CE37CC300F5B795 /* PlayOnceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACF131CE37CC300F5B795 /* PlayOnceAnimation.swift */; };
+		51CACF161CE38A8400F5B795 /* BlinkingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CACF151CE38A8400F5B795 /* BlinkingAnimation.swift */; };
 		51D9F5731CD9E1CE000AB096 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
 		51D9F57B1CD9E48E000AB096 /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
@@ -76,6 +81,11 @@
 		51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
 		51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorQuadrilateral.swift; sourceTree = "<group>"; };
 		51CACEF41CE3253100F5B795 /* NoAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAnimation.swift; sourceTree = "<group>"; };
+		51CACEFB1CE352D900F5B795 /* SingleFrameAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleFrameAnimation.swift; sourceTree = "<group>"; };
+		51CACEFD1CE3579900F5B795 /* LoopingAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopingAnimation.swift; sourceTree = "<group>"; };
+		51CACEFF1CE358E600F5B795 /* SynchronizedLoopingAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedLoopingAnimation.swift; sourceTree = "<group>"; };
+		51CACF131CE37CC300F5B795 /* PlayOnceAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayOnceAnimation.swift; sourceTree = "<group>"; };
+		51CACF151CE38A8400F5B795 /* BlinkingAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlinkingAnimation.swift; sourceTree = "<group>"; };
 		51D9F5721CD9E1CE000AB096 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		51D9F5771CD9E257000AB096 /* OpenALAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenALAudio.swift; sourceTree = "<group>"; };
 		51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurfaceArray.swift; sourceTree = "<group>"; };
@@ -327,6 +337,11 @@
 				64B6F74E1CDE662100CECE15 /* AnimationFrame.swift */,
 				64B6F7501CDE678D00CECE15 /* AnimationName.swift */,
 				51CACEF41CE3253100F5B795 /* NoAnimation.swift */,
+				51CACEFB1CE352D900F5B795 /* SingleFrameAnimation.swift */,
+				51CACEFD1CE3579900F5B795 /* LoopingAnimation.swift */,
+				51CACEFF1CE358E600F5B795 /* SynchronizedLoopingAnimation.swift */,
+				51CACF131CE37CC300F5B795 /* PlayOnceAnimation.swift */,
+				51CACF151CE38A8400F5B795 /* BlinkingAnimation.swift */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -423,15 +438,19 @@
 				6440EA361CDCC89300190C3D /* Offset.swift in Sources */,
 				51F8B9481CD7B0E40029C1E0 /* Palette.swift in Sources */,
 				51F8B94C1CD7B0E40029C1E0 /* Random.swift in Sources */,
+				51CACF001CE358E600F5B795 /* SynchronizedLoopingAnimation.swift in Sources */,
 				51F8B94D1CD7B0E40029C1E0 /* ReferencePool.swift in Sources */,
 				515E794F1CE0CDDB0044E22F /* Fade.swift in Sources */,
 				51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */,
 				51BD8ABF1CE20FE50024A2CA /* ColorQuadrilateral.swift in Sources */,
 				6496DB321CDF71F900121F0A /* NoMotion.swift in Sources */,
+				51CACEFC1CE352D900F5B795 /* SingleFrameAnimation.swift in Sources */,
 				515E794D1CE0CD4B0044E22F /* EmptyScene.swift in Sources */,
 				51F8B9521CD7B0E40029C1E0 /* Streams.swift in Sources */,
+				51CACEFE1CE3579900F5B795 /* LoopingAnimation.swift in Sources */,
 				51F8B9511CD7B0E40029C1E0 /* SpriteFactory.swift in Sources */,
 				6496DB341CDF729B00121F0A /* Unload.swift in Sources */,
+				51CACF141CE37CC300F5B795 /* PlayOnceAnimation.swift in Sources */,
 				51BD8ABD1CE207FD0024A2CA /* ColorGrid.swift in Sources */,
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,
 				51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */,
@@ -458,6 +477,7 @@
 				51F8B9441CD7B0E40029C1E0 /* Math.swift in Sources */,
 				51F8B94F1CD7B0E40029C1E0 /* Scene.swift in Sources */,
 				51D9F5A61CDA2134000AB096 /* Size.swift in Sources */,
+				51CACF161CE38A8400F5B795 /* BlinkingAnimation.swift in Sources */,
 				515E794A1CE0B43F0044E22F /* Resources.swift in Sources */,
 				51F8B9321CD7B0E40029C1E0 /* Animation.swift in Sources */,
 				6496DB2F1CDF2B1700121F0A /* SpriteInfo.swift in Sources */,

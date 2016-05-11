@@ -19,21 +19,14 @@ public struct AnimationDefinition : Equatable {
     public var frequency: Int
     public var type: AnimationType
     
-    init() {
-        self.name = ""
-        self.frames = []
-        self.frequency = 1
-        self.type = .None
-    }
-    
-    init(frames: [AnimationFrame]) {
+    public init(frames: [AnimationFrame] = []) {
         self.name = ""
         self.frames = frames
         self.frequency = 1
         self.type = .None
     }
     
-    init(inputStream : NSInputStream) {
+    public init(inputStream : NSInputStream) {
         self.name = Streams.readString(inputStream)
         self.frequency = Streams.readInt(inputStream)
         let looping = Streams.readBoolean(inputStream)
@@ -73,7 +66,7 @@ public struct AnimationDefinition : Equatable {
         }
     }
     
-    func toAnimation() -> Animation {
+    public func toAnimation() -> Animation {
         switch type {
         case .None:
             return NoAnimation(definition: self)
