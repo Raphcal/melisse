@@ -8,27 +8,27 @@
 
 import GLKit
 
-struct Frame : Equatable {
+public struct AnimationFrame : Equatable {
     
-    var frame: Rectangle<GLshort>
-    var hitbox: Rectangle<GLfloat>
+    public var frame: Rectangle<GLshort>
+    public var hitbox: Rectangle<GLfloat>
     
-    init() {
+    public init() {
         self.frame = Rectangle()
         self.hitbox = Rectangle()
     }
     
-    init(width: GLshort, height: GLshort) {
+    public init(width: GLshort, height: GLshort) {
         self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
-    init(x: GLshort, y: GLshort, width: GLshort, height: GLshort) {
+    public init(x: GLshort, y: GLshort, width: GLshort, height: GLshort) {
         self.frame = Rectangle(left: x, top: y, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
-    init(inputStream : NSInputStream) {
+    public init(inputStream : NSInputStream) {
         let x = GLshort(Streams.readInt(inputStream))
         let y = GLshort(Streams.readInt(inputStream))
         let width = GLshort(Streams.readInt(inputStream))
@@ -47,22 +47,22 @@ struct Frame : Equatable {
         }
     }
     
-    func draw(sprite: Sprite) {
+    public func draw(sprite: Sprite) {
         sprite.texCoordSurface.setQuadWith(left: frame.x, top: frame.y, width: frame.width, height: frame.height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
     }
     
-    func frameChunksFor(width width: GLshort, direction: Direction = .Right) -> [Frame] {
+    public func frameChunksFor(width width: GLshort, direction: Direction = .Right) -> [AnimationFrame] {
         let start = frame.width * GLshort(direction.mirror)
         let end = frame.width * (1 - GLshort(direction.mirror))
         let width = GLshort(width) * GLshort(direction.value)
         
         return start.stride(to: end, by: Int(width)).map { left in
-            Frame(x: frame.x + left, y: frame.y, width: width, height: frame.height)
+            AnimationFrame(x: frame.x + left, y: frame.y, width: width, height: frame.height)
         }
     }
     
 }
 
-func ==(left: Frame, right: Frame) -> Bool {
+public func ==(left: AnimationFrame, right: AnimationFrame) -> Bool {
     return left.frame == right.frame && left.hitbox == right.hitbox
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol Animation {
+public protocol Animation {
     
     func updateWith(timeSinceLastUpdate: NSTimeInterval)
     func draw(sprite: Sprite)
@@ -17,48 +17,20 @@ protocol Animation {
     
     var definition: AnimationDefinition { get set }
     var frameIndex: Int { get set }
-    var frame: Frame { get }
+    var frame: AnimationFrame { get }
     var speed: Float { get set }
     
 }
 
-// MARK: - Implémentation des différents types d'animation
-
-class NoAnimation : Animation {
-    
-    static let instance : NoAnimation = NoAnimation()
-    
-    var definition : AnimationDefinition = AnimationDefinition()
-    var frameIndex : Int = 0
-    let frame : Frame
-    var speed : Float = 0
-    
-    init() {
-        self.frame = Frame()
-    }
-    
-    init(definition: AnimationDefinition) {
-        self.frame = Frame()
-        self.definition = definition
-    }
-    
-    init(frame: Frame) {
-        self.frame = frame
-    }
-    
-    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
-        // Pas de traitement
-    }
-    
-    func draw(sprite: Sprite) {
-        // Pas de traitement
-    }
+public extension Animation {
     
     func transitionTo(nextAnimation: Animation) -> Animation {
         return nextAnimation
     }
     
 }
+
+// MARK: - Implémentation des différents types d'animation
 
 class SingleFrameAnimation : Animation {
     
@@ -74,7 +46,7 @@ class SingleFrameAnimation : Animation {
             }
         }
     }
-    var frame : Frame
+    var frame : AnimationFrame
     var speed : Float = 1
     var frequency : NSTimeInterval
     
@@ -85,7 +57,7 @@ class SingleFrameAnimation : Animation {
         if definition.frames.count > 0 {
             self.frame = definition.frames[0]
         } else {
-            self.frame = Frame()
+            self.frame = AnimationFrame()
         }
     }
     
@@ -99,10 +71,6 @@ class SingleFrameAnimation : Animation {
     
     func draw(sprite: Sprite) {
         frame.draw(sprite)
-    }
-    
-    func transitionTo(nextAnimation: Animation) -> Animation {
-        return nextAnimation
     }
     
     func start() {
@@ -212,7 +180,7 @@ class BlinkingAnimation : Animation {
             animation.frameIndex = newValue
         }
     }
-    var frame : Frame {
+    var frame : AnimationFrame {
         get {
             return animation.frame
         }

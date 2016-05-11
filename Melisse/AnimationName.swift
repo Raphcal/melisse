@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol AnimationName {
+public protocol AnimationName {
     var name: String { get }
 }
 
-enum DefaultAnimationName: AnimationName {
+public enum DefaultAnimationName: AnimationName {
     case Normal, Disappear
     
-    var name: String {
+    public var name: String {
         get {
             switch self {
             case .Normal:

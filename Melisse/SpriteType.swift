@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol SpriteType {
+public protocol SpriteType {
     
     var collidable: Bool { get }
     
 }
 
-enum DefaultSpriteType: SpriteType {
+public enum DefaultSpriteType: SpriteType {
     
     case Decoration
     
-    var collidable: Bool {
+    public var collidable: Bool {
         get {
             return false
         }

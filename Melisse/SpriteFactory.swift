@@ -8,28 +8,26 @@
 
 import GLKit
 
-enum Distance : Int {
+public enum Distance : Int {
     case Behind, Middle, Front
 }
 
 /// Gère la création, l'affichage et la mise à jour d'un ensemble de sprites.
-class SpriteFactory {
+public class SpriteFactory {
     
-    // static let operationQueue = NSOperationQueue()
-    
-    let capacity: Int
+    public let capacity: Int
     
     let textureAtlas: GLKTextureInfo
     
     let pools: [ReferencePool]
-    var sprites = [Sprite]()
-    var collidables = [Sprite]()
+    public var sprites = [Sprite]()
+    public var collidables = [Sprite]()
     var removalPending = [Sprite]()
     
-    let definitions: [SpriteDefinition]
+    public let definitions: [SpriteDefinition]
     
-    let vertexPointer: SurfaceArray<GLfloat>
-    let texCoordPointer: SurfaceArray<GLshort>
+    public let vertexPointer: SurfaceArray<GLfloat>
+    public let texCoordPointer: SurfaceArray<GLshort>
     
     var collisions = [Sprite]()
     

@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum AnimationType {
+public enum AnimationType {
     case None, SingleFrame, PlayOnce, Looping, Synchronized
 }
 
-struct AnimationDefinition : Equatable {
+public struct AnimationDefinition : Equatable {
     
-    var name: String
-    var frames: [Frame]
-    var frequency: Int
-    var type: AnimationType
+    public var name: String
+    public var frames: [AnimationFrame]
+    public var frequency: Int
+    public var type: AnimationType
     
     init() {
         self.name = ""
@@ -26,7 +26,7 @@ struct AnimationDefinition : Equatable {
         self.type = .None
     }
     
-    init(frames: [Frame]) {
+    init(frames: [AnimationFrame]) {
         self.name = ""
         self.frames = frames
         self.frequency = 1
@@ -41,7 +41,7 @@ struct AnimationDefinition : Equatable {
         // Directions et frames
         let directionCount = Streams.readInt(inputStream)
         
-        var mainFrames : [Frame] = []
+        var mainFrames : [AnimationFrame] = []
         
         for _ in 0..<directionCount {
             let key = Streams.readDouble(inputStream)
@@ -49,10 +49,10 @@ struct AnimationDefinition : Equatable {
             // Frames
             let frameCount = Streams.readInt(inputStream)
             
-            var frames : [Frame] = []
+            var frames : [AnimationFrame] = []
             
             for _ in 0..<frameCount {
-                frames.append(Frame(inputStream: inputStream))
+                frames.append(AnimationFrame(inputStream: inputStream))
             }
             
             if key == 0 || mainFrames.isEmpty {
@@ -94,7 +94,7 @@ struct AnimationDefinition : Equatable {
     
 }
 
-func ==(left: AnimationDefinition, right: AnimationDefinition) -> Bool {
+public func ==(left: AnimationDefinition, right: AnimationDefinition) -> Bool {
     return left.frequency == right.frequency
         && left.type == right.type
         && left.name == right.name

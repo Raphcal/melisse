@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct SpriteDefinition : Equatable {
+public struct SpriteDefinition : Equatable {
     
     static let defaultExtension = "sprites"
     
-    var index: Int
-    var name: String?
-    var type: SpriteType
-    var animations: [String:AnimationDefinition]
-    var motionName: String?
-    var distance: Distance
+    public var index: Int
+    public var name: String?
+    public var type: SpriteType
+    public var animations: [String:AnimationDefinition]
+    public var motionName: String?
+    public var distance: Distance
     
-    init() {
+    public init() {
         self.index = -1
         self.name = ""
         self.type = DefaultSpriteType.Decoration
@@ -28,7 +28,7 @@ struct SpriteDefinition : Equatable {
         self.distance = .Behind
     }
     
-    init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
+    public init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
         self.index = -1
         self.name = ""
         self.type = type
@@ -37,7 +37,7 @@ struct SpriteDefinition : Equatable {
         self.distance = .Behind
     }
     
-    init(definition: SpriteDefinition, type: SpriteType, animation: AnimationName, frame frameIndex: Int) {
+    public init(definition: SpriteDefinition, type: SpriteType, animation: AnimationName, frame frameIndex: Int) {
         let animation = definition.animations[animation.name]!
         let frame = animation.frames[frameIndex]
         let singleFrameAnimation = AnimationDefinition(frames: [frame])
@@ -50,7 +50,7 @@ struct SpriteDefinition : Equatable {
         self.distance = definition.distance
     }
     
-    init(inputStream : NSInputStream, index: Int, types: [SpriteType] = [], animationNames: [AnimationName] = []) {
+    public init(inputStream : NSInputStream, index: Int, types: [SpriteType] = [], animationNames: [AnimationName] = []) {
         self.index = index
         self.name = Streams.readNullableString(inputStream)
         let _ = Streams.readInt(inputStream) // width
@@ -84,7 +84,7 @@ struct SpriteDefinition : Equatable {
         self.animations = animations
     }
     
-    static func definitionsFrom(inputStream : NSInputStream) -> [SpriteDefinition] {
+    public static func definitionsFrom(inputStream : NSInputStream) -> [SpriteDefinition] {
         var definitions : [SpriteDefinition] = []
         
         let definitionCount = Streams.readInt(inputStream)
@@ -95,7 +95,7 @@ struct SpriteDefinition : Equatable {
         return definitions
     }
     
-    static func definitionsFrom(resource: String, extension ext: String = defaultExtension) -> [SpriteDefinition]? {
+    public static func definitionsFrom(resource: String, extension ext: String = defaultExtension) -> [SpriteDefinition]? {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: ext), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             let definitions = definitionsFrom(inputStream)
@@ -110,7 +110,7 @@ struct SpriteDefinition : Equatable {
     
 }
 
-func ==(left: SpriteDefinition, right: SpriteDefinition) -> Bool {
+public func ==(left: SpriteDefinition, right: SpriteDefinition) -> Bool {
     return left.index == right.index
         && left.distance == right.distance
         && left.name == right.name
