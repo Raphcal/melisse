@@ -35,9 +35,6 @@ public class Sprite {
     var currentAnimation: AnimationName?
     var animation: Animation = NoAnimation()
     
-    var variables = [String : GLfloat]()
-    var objects = [String : AnyObject]()
-    
     public init() {
         definition = SpriteDefinition()
         info = nil
@@ -145,24 +142,6 @@ public class Sprite {
             }
         } else if let blinkingAnimation = self.animation as? BlinkingAnimation {
             self.animation = blinkingAnimation.animation
-        }
-    }
-    
-    // MARK: Accès aux variables
-    
-    func variable(name: String, or defaultValue: GLfloat = 0) -> GLfloat {
-        if let value = self.variables[name] {
-            return value
-        } else {
-            return defaultValue
-        }
-    }
-    
-    func variable(name: String, or defaultValue: Int = 0) -> Int {
-        if let value = self.variables[name] {
-            return Int(value)
-        } else {
-            return defaultValue
         }
     }
     
