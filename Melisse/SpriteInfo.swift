@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol SpriteInfo : Equatable {
-    
+public protocol SpriteInfo {
 }
 
 /*

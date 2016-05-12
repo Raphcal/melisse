@@ -11,6 +11,7 @@ import GLKit
 public class Sprite {
     
     let definition: SpriteDefinition
+    let info: SpriteInfo?
     var type: SpriteType = DefaultSpriteType.Decoration
     
     var frame: Rectangle<GLfloat> {
@@ -39,6 +40,7 @@ public class Sprite {
     
     public init() {
         definition = SpriteDefinition()
+        info = nil
         frame = Rectangle()
         factory = SpriteFactory()
         reference = -1
@@ -47,11 +49,10 @@ public class Sprite {
         hitbox = SimpleHitbox()
     }
     
-    public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory) {
+    public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory, info: SpriteInfo? = nil) {
         self.definition = definition
+        self.info = info
         self.factory = factory
-        
-        // self.info = info
         self.type = definition.type
         self.reference = reference
         self.vertexSurface = factory.vertexPointer.surfaceAt(reference)
@@ -64,11 +65,13 @@ public class Sprite {
             self.animation = NoAnimation()
         }
         
-        // TODO: width et height, voir SpriteDefinition
-        self.frame = Rectangle()
+        let size = animation.frame.frame.size
+        self.frame = Rectangle(size: Size(width: GLfloat(size.width), height: GLfloat(size.height)))
         self.hitbox = SimpleHitbox()
         
-        self.hitbox = SpriteHitbox(sprite: self)
+        if animation.frame.hitbox != Rectangle() {
+            self.hitbox = SpriteHitbox(sprite: self)
+        }
     }
     
     // MARK: Gestion des mises à jour

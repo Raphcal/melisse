@@ -8,15 +8,15 @@
 
 import Foundation
 
-class ReferencePool {
+public class ReferencePool {
     
-    private var available : [Int]
+    private var available: [Int]
     
-    init() {
+    public init() {
         self.available = []
     }
     
-    init(capacity: Int) {
+    public init(capacity: Int) {
         var available = [Int]()
         
         for index in 1...capacity {
@@ -26,7 +26,7 @@ class ReferencePool {
         self.available = available
     }
     
-    init(from: Int, to: Int) {
+    public init(from: Int, to: Int) {
         let count = abs(to - from)
         let step = (to - from) / count
         
@@ -40,11 +40,19 @@ class ReferencePool {
         self.available = available
     }
     
-    func nextReference() -> Int {
+    public func next(other: Int?) -> Int {
+        if let reference = other {
+            return nextAfter(reference)
+        } else {
+            return next()
+        }
+    }
+    
+    public func next() -> Int {
         return available.removeLast()
     }
     
-    func nextReferenceAfter(other: Int) -> Int {
+    public func nextAfter(other: Int) -> Int {
         for index in 1...available.count {
             let reference = available[available.count - index]
             
@@ -54,18 +62,10 @@ class ReferencePool {
             }
         }
         
-        return nextReference()
+        return next()
     }
     
-    func next(other: Int?) -> Int {
-        if let reference = other {
-            return nextReferenceAfter(reference)
-        } else {
-            return nextReference()
-        }
-    }
-    
-    func releaseReference(reference: Int) {
+    public func release(reference: Int) {
         available.append(reference)
     }
     

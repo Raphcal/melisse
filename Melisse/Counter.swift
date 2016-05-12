@@ -11,10 +11,10 @@ import GLKit
 /// Compteur affichant une valeur alignée en haut à droite en utilisant un sprite par chiffre.
 class Counter : Point {
     
-    let factory : SpriteFactory
-    var digits : [Int] = []
-    var sprites : [Sprite] = []
-    var value : Int = 0 {
+    let factory: SpriteFactory
+    var digits: [Int] = []
+    var sprites: [Sprite] = []
+    var value: Int = 0 {
         didSet {
             self.digits = value.digits
             displayValue()
@@ -67,30 +67,6 @@ class Counter : Point {
         
         sprite.animation = animation
         return sprite
-    }
-    
-}
-
-/// Ajout d'une fonction permettant d'accéder aux chiffres d'un entier.
-extension Int {
-    
-    /// Tableau des chiffres du nombre.
-    var digits : [Int] {
-        get {
-            if self <= 0 {
-                return [0]
-            }
-            
-            var result = [Int]()
-            
-            var number = self
-            while number > 0 {
-                result.append(number % 10)
-                number /= 10
-            }
-            
-            return result
-        }
     }
     
 }

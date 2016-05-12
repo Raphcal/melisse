@@ -118,12 +118,12 @@ public class SpriteFactory {
     func sprite(parent: Sprite, animation: AnimationName, frame: Int) -> Sprite {
         let sprite = self.sprite(parent.definition, info: nil, after: parent)
         
-        sprite.animation = SingleFrameAnimation(definition: parent.definition.animations[animation]!)
+        sprite.animation = SingleFrameAnimation(definition: parent.definition.animations[animation.name]!)
         sprite.animation.frameIndex = frame
         
-        let frame = sprite.animation.frame
-        sprite.width = GLfloat(frame.width)
-        sprite.height = GLfloat(frame.height)
+        let frame = sprite.animation.frame.frame
+        sprite.frame.width = GLfloat(frame.width)
+        sprite.frame.height = GLfloat(frame.height)
         
         return sprite
     }
@@ -136,7 +136,7 @@ public class SpriteFactory {
     /// - parameter info: Informations du loader sur le sprite à créer.
     /// - parameter after: Si non nil, la référence du nouveau sprite sera (si possible) supérieur à celle du sprite donné.
     /// - returns: Un nouveau sprite.
-    func sprite<Info where Info : SpriteInfo>(definition: SpriteDefinition, info: Info? = nil, after: Sprite? = nil) -> Sprite {
+    func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
         // TODO: Ajout Info !!
         let sprite = Sprite(definition: definition, reference: reference, factory: self)
@@ -155,7 +155,7 @@ public class SpriteFactory {
         sprite.removed = true
         
         (sprite.motion as? Unloadable)?.unload(sprite)
-        pools[sprite.definition.distance.rawValue].releaseReference(sprite.reference)
+        pools[sprite.definition.distance.rawValue].release(sprite.reference)
         sprite.vertexSurface.clear()
         sprite.texCoordSurface.clear()
         if let index = sprites.indexOf({ sprite === $0 }) {

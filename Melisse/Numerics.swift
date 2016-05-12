@@ -137,3 +137,27 @@ extension GLubyte : Numeric, Integer {
     }
     
 }
+
+/// Ajout d'une fonction permettant d'accéder aux chiffres d'un entier.
+public extension Int {
+    
+    /// Tableau des chiffres du nombre.
+    var digits: [Int] {
+        get {
+            if self <= 0 {
+                return [0]
+            }
+            
+            var result = [Int]()
+            
+            var number = self
+            while number > 0 {
+                result.append(number % 10)
+                number /= 10
+            }
+            
+            return result
+        }
+    }
+    
+}

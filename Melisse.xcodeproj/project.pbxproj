@@ -14,6 +14,8 @@
 		515E79531CE0CE6B0044E22F /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
 		51833DE01CE0EECE003052C8 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91B1CD7B0E40029C1E0 /* Map.swift */; };
 		51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90E1CD7B0E40029C1E0 /* Camera.swift */; };
+		51A95EB51CE4A02000E452C7 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB41CE4A02000E452C7 /* Text.swift */; };
+		51A95EB71CE4A21300E452C7 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB61CE4A21300E452C7 /* Font.swift */; };
 		51BD8AB91CE1FD830024A2CA /* ImagePalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */; };
 		51BD8ABB1CE1FDAA0024A2CA /* AlphaColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */; };
 		51BD8ABD1CE207FD0024A2CA /* ColorGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */; };
@@ -76,6 +78,8 @@
 		515E794E1CE0CDDB0044E22F /* Fade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fade.swift; sourceTree = "<group>"; };
 		515E79501CE0CDF40044E22F /* NoFade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoFade.swift; sourceTree = "<group>"; };
 		515E79521CE0CE6B0044E22F /* NoAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAudio.swift; sourceTree = "<group>"; };
+		51A95EB41CE4A02000E452C7 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		51A95EB61CE4A21300E452C7 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePalette.swift; sourceTree = "<group>"; };
 		51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaColorPalette.swift; sourceTree = "<group>"; };
 		51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
@@ -184,6 +188,16 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		51A95EB81CE4A21C00E452C7 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
+				51A95EB61CE4A21300E452C7 /* Font.swift */,
+				51A95EB41CE4A02000E452C7 /* Text.swift */,
+			);
+			name = Text;
+			sourceTree = "<group>";
+		};
 		51BD8AC01CE239EC0024A2CA /* Plane */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,7 +300,6 @@
 				51BD8AC11CE239FB0024A2CA /* UI */,
 				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
 				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
-				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
 				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
 				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
@@ -309,6 +322,7 @@
 				64B6F74D1CDE661200CECE15 /* Animation */,
 				64B6F7521CDE68CC00CECE15 /* Definition */,
 				6496DB301CDF71D800121F0A /* Motion */,
+				51A95EB81CE4A21C00E452C7 /* Text */,
 				64BA6C191CE1127E0093E184 /* Axe.swift */,
 				51F8B9121CD7B0E40029C1E0 /* Direction.swift */,
 				6496DB2C1CDF2AE200121F0A /* Loader.swift */,
@@ -443,6 +457,7 @@
 				515E794F1CE0CDDB0044E22F /* Fade.swift in Sources */,
 				51D9F5781CD9E257000AB096 /* OpenALAudio.swift in Sources */,
 				51BD8ABF1CE20FE50024A2CA /* ColorQuadrilateral.swift in Sources */,
+				51A95EB51CE4A02000E452C7 /* Text.swift in Sources */,
 				6496DB321CDF71F900121F0A /* NoMotion.swift in Sources */,
 				51CACEFC1CE352D900F5B795 /* SingleFrameAnimation.swift in Sources */,
 				515E794D1CE0CD4B0044E22F /* EmptyScene.swift in Sources */,
@@ -455,6 +470,7 @@
 				51F8B9591CD7B0E40029C1E0 /* View.swift in Sources */,
 				51D9F59A1CDA194F000AB096 /* Quadrilateral.swift in Sources */,
 				51BD8AB91CE1FD830024A2CA /* ImagePalette.swift in Sources */,
+				51A95EB71CE4A21300E452C7 /* Font.swift in Sources */,
 				51833DE11CE0EF4C003052C8 /* Camera.swift in Sources */,
 				64B6F7561CDE6D2800CECE15 /* AnimationDefinition.swift in Sources */,
 				6440EA391CDCE85500190C3D /* SpriteType.swift in Sources */,
