@@ -198,6 +198,16 @@
 			name = Text;
 			sourceTree = "<group>";
 		};
+		51A95EB91CE4A78500E452C7 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
+				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
+				51F8B9241CD7B0E40029C1E0 /* Random.swift */,
+			);
+			name = Math;
+			sourceTree = "<group>";
+		};
 		51BD8AC01CE239EC0024A2CA /* Plane */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,17 +305,14 @@
 				51D9F5761CD9E242000AB096 /* Audio */,
 				51D9F5941CDA17CE000AB096 /* Geometry */,
 				51D9F5791CD9E3FD000AB096 /* Input */,
+				51A95EB91CE4A78500E452C7 /* Math */,
 				515E794B1CE0CD160044E22F /* Scene */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
 				51BD8AC11CE239FB0024A2CA /* UI */,
-				51D9F57C1CD9E504000AB096 /* Numerics.swift */,
 				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
-				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
-				51F8B91C1CD7B0E40029C1E0 /* Math.swift */,
 				51F8B91F1CD7B0E40029C1E0 /* Operation.swift */,
 				51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */,
-				51F8B9241CD7B0E40029C1E0 /* Random.swift */,
 				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
 				51F8B9261CD7B0E40029C1E0 /* Resources.swift */,
 				51F8B92A1CD7B0E40029C1E0 /* Streams.swift */,
@@ -325,6 +332,7 @@
 				51A95EB81CE4A21C00E452C7 /* Text */,
 				64BA6C191CE1127E0093E184 /* Axe.swift */,
 				51F8B9121CD7B0E40029C1E0 /* Direction.swift */,
+				51F8B9171CD7B0E40029C1E0 /* Hitbox.swift */,
 				6496DB2C1CDF2AE200121F0A /* Loader.swift */,
 				6457C1621CDB946D00794F1D /* Sprite.swift */,
 				51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */,

@@ -8,7 +8,7 @@
 
 import GLKit
 
-class Streams {
+public struct Streams {
 
     static let byteSize = 1
     static let characterSize = 2
@@ -18,7 +18,7 @@ class Streams {
     static let bitsInAByte : Int = 8
     static let maximumValueOfAByte : UInt8 = 0xFF
     
-    class func inputStreams(resources: [(name: String, ext: String)]) -> [(url: NSURL, inputStream: NSInputStream)]? {
+    public static func inputStreams(resources: [(name: String, ext: String)]) -> [(url: NSURL, inputStream: NSInputStream)]? {
         var inputStreams : [(url: NSURL, inputStream: NSInputStream)] = []
         
         for (name, ext) in resources {
@@ -32,7 +32,7 @@ class Streams {
         return inputStreams
     }
     
-    class func readByte(inputStream: NSInputStream) -> UInt8 {
+    public static func readByte(inputStream: NSInputStream) -> UInt8 {
         let buffer = UnsafeMutablePointer<UInt8>.alloc(byteSize)
         let read = inputStream.read(buffer, maxLength: byteSize)
         
@@ -47,16 +47,16 @@ class Streams {
         return result
     }
     
-    class func writeBytes<T>(buffer: UnsafeMutablePointer<T>, count: Int, outputStream: NSOutputStream) {
+    public static func writeBytes<T>(buffer: UnsafeMutablePointer<T>, count: Int, outputStream: NSOutputStream) {
         let byteBuffer = UnsafeMutablePointer<UInt8>(buffer)
         outputStream.write(byteBuffer, maxLength: count)
     }
     
-    class func readBoolean(inputStream : NSInputStream) -> Bool {
+    public static func readBoolean(inputStream : NSInputStream) -> Bool {
         return readByte(inputStream) == 1
     }
     
-    class func readInt(inputStream : NSInputStream) -> Int {
+    public static func readInt(inputStream : NSInputStream) -> Int {
         let buffer = UnsafeMutablePointer<UInt8>.alloc(integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
@@ -72,7 +72,7 @@ class Streams {
         return result
     }
     
-    class func writeInt(int: Int, outputStream: NSOutputStream) {
+    public static func writeInt(int: Int, outputStream: NSOutputStream) {
         let buffer = UnsafeMutablePointer<Int32>.alloc(1)
         buffer[0] = Int32(int)
         
@@ -80,7 +80,7 @@ class Streams {
         buffer.destroy()
     }
     
-    class func writeCharacter(character: Character, outputStream: NSOutputStream) {
+    public static func writeCharacter(character: Character, outputStream: NSOutputStream) {
         let buffer = UnsafeMutablePointer<Character>.alloc(1)
         buffer[0] = character
         
@@ -88,7 +88,7 @@ class Streams {
         buffer.destroy()
     }
     
-    class func readFloat(inputStream : NSInputStream) -> Float {
+    public static func readFloat(inputStream : NSInputStream) -> Float {
         let buffer = UnsafeMutablePointer<UInt8>.alloc(integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
@@ -104,7 +104,7 @@ class Streams {
         return result
     }
     
-    class func readDouble(inputStream : NSInputStream) -> Double {
+    public static func readDouble(inputStream : NSInputStream) -> Double {
         let buffer = UnsafeMutablePointer<UInt8>.alloc(longSize)
         let read = inputStream.read(buffer, maxLength: longSize)
         
@@ -120,7 +120,7 @@ class Streams {
         return result
     }
     
-    class func readByteArray(inputStream : NSInputStream) -> [UInt8] {
+    public static func readByteArray(inputStream : NSInputStream) -> [UInt8] {
         let count = readInt(inputStream)
         var result = [UInt8]()
         result.reserveCapacity(count)
@@ -132,7 +132,7 @@ class Streams {
         return result
     }
     
-    class func readNullableByteArray(inputStream : NSInputStream) -> [UInt8]? {
+    public static func readNullableByteArray(inputStream : NSInputStream) -> [UInt8]? {
         if readBoolean(inputStream) {
             return readByteArray(inputStream)
         } else {
@@ -140,7 +140,7 @@ class Streams {
         }
     }
     
-    class func readIntArray(inputStream : NSInputStream) -> [Int] {
+    public static func readIntArray(inputStream : NSInputStream) -> [Int] {
         let count = readInt(inputStream)
         var result = [Int]()
         result.reserveCapacity(count)
@@ -152,7 +152,7 @@ class Streams {
         return result
     }
     
-    class func readString(inputStream : NSInputStream) -> String {
+    public static func readString(inputStream : NSInputStream) -> String {
         let length = readInt(inputStream) * characterSize
         
         if length == 0 {
@@ -175,7 +175,7 @@ class Streams {
         return string
     }
     
-    class func readNullableString(inputStream : NSInputStream) -> String? {
+    public static func readNullableString(inputStream : NSInputStream) -> String? {
         if readBoolean(inputStream) {
             return readString(inputStream)
         } else {
@@ -183,7 +183,7 @@ class Streams {
         }
     }
     
-    class func readColor(inputStream : NSInputStream) -> Color<GLfloat> {
+    public static func readColor(inputStream : NSInputStream) -> Color<GLfloat> {
         let red = GLfloat(readInt(inputStream)) / 255
         let green = GLfloat(readInt(inputStream)) / 255
         let blue = GLfloat(readInt(inputStream)) / 255
@@ -192,13 +192,13 @@ class Streams {
         return Color(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    class func readPoint(inputStream: NSInputStream) -> Point<GLfloat> {
+    public static func readPoint(inputStream: NSInputStream) -> Point<GLfloat> {
         let x = readFloat(inputStream)
         let y = readFloat(inputStream)
         return Point<GLfloat>(x: x, y: y)
     }
     
-    class func readFloatFromByteArray(bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {
+    public static func readFloatFromByteArray(bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {
         let pointer = UnsafeMutablePointer<UInt8>.alloc(4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
@@ -212,7 +212,7 @@ class Streams {
         return (float: float, readCount: 4)
     }
     
-    class func readStringFromByteArray(bytes: [UInt8], atIndex start: Int) -> (string: String, readCount: Int) {
+    public static func readStringFromByteArray(bytes: [UInt8], atIndex start: Int) -> (string: String, readCount: Int) {
         let pointer = UnsafeMutablePointer<UInt8>.alloc(4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
