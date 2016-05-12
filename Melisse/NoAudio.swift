@@ -8,25 +8,25 @@
 
 import Foundation
 
-struct NoAudio: Audio {
+public struct NoAudio: Audio {
     
-    func load(sound: Sound) {
+    public func load(sound: Sound) {
         // TODO: Implémenter la méthode.
     }
     
-    func play(sound: Sound) {
+    public func play(sound: Sound) {
         // TODO: Implémenter la méthode.
     }
     
-    func play(streamFrom URL: NSURL) {
+    public func play(streamFrom URL: NSURL) {
         // TODO: Implémenter la méthode.
     }
     
-    func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
+    public func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
         // TODO: Implémenter la méthode.
     }
     
-    func stopStream() {
+    public func stopStream() {
         // TODO: Implémenter la méthode.
     }
     

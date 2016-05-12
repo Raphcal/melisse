@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol Sound {
+public protocol Sound {
     
     /// Nom de la ressource correspondant au son.
     var resource: String { get }
     
 }
 
-protocol Audio {
+public protocol Audio {
     
     /// Charge le son donné.
     ///

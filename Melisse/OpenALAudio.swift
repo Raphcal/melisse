@@ -8,7 +8,7 @@
 
 import OpenAL
 
-class OpenALAudio: Audio {
+struct OpenALAudio: Audio {
     
     func load(sound: Sound) {
         // TODO: Implémenter la méthode.

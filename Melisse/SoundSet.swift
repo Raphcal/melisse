@@ -9,9 +9,9 @@
 import Foundation
 
 /// Ensemble de sons lus à la suite.
-class SoundSet {
+public class SoundSet {
     
-    var sound: Sound {
+    public var sound: Sound {
         get {
             let sound = sounds[current]
             self.current = (current + 1) % sounds.count
@@ -22,7 +22,7 @@ class SoundSet {
     private let sounds: [Sound]
     private var current = 0
     
-    init(sounds: [Sound]) {
+    public init(sounds: [Sound]) {
         self.sounds = sounds
     }
     
