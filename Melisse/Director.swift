@@ -68,9 +68,8 @@ class Director : NSObject {
     }
     
     func draw() {
-        // TODO : Faire la translation qu'une fois.
         let top = View.instance.height
-        Draws.clearWithColor(scene.backgroundColor)
+        Draws.clearWith(scene.backgroundColor)
         glTranslatef(0, top, 0)
         scene.draw()
         glTranslatef(0, -top, 0)

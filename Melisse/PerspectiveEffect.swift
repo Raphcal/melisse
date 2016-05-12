@@ -30,10 +30,10 @@ struct MotionMetric {
     
 }
 
-struct PerspectiveEffect {
+public struct PerspectiveEffect {
     
-    var backgroundTilt = Point<GLfloat>()
-    var foregroundTilt = Point<GLfloat>()
+    public var backgroundTilt = Point<GLfloat>()
+    public var foregroundTilt = Point<GLfloat>()
     
     #if os(iOS)
     let motionManager = CMMotionManager()
@@ -43,20 +43,20 @@ struct PerspectiveEffect {
                              UIInterfaceOrientation.LandscapeLeft : MotionMetric(from: -1, to: 1)]
     #endif
     
-    func load() {
+    public func load() {
         #if os(iOS)
             motionManager.deviceMotionUpdateInterval = 1 / 60
             motionManager.startDeviceMotionUpdates()
         #endif
     }
     
-    func unload() {
+    public func unload() {
         #if os(iOS)
             motionManager.stopDeviceMotionUpdates()
         #endif
     }
     
-    mutating func update() {
+    mutating public func update() {
         #if os(iOS)
             let tilt: Point<GLfloat>
             if let motion = motionManager.deviceMotion {

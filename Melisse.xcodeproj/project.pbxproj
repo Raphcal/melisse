@@ -164,6 +164,7 @@
 		515E794B1CE0CD160044E22F /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
 				51F8B9131CD7B0E40029C1E0 /* Director.swift */,
 				51F8B9271CD7B0E40029C1E0 /* Scene.swift */,
 				515E794C1CE0CD4B0044E22F /* EmptyScene.swift */,
@@ -206,6 +207,23 @@
 				51F8B9241CD7B0E40029C1E0 /* Random.swift */,
 			);
 			name = Math;
+			sourceTree = "<group>";
+		};
+		51A95ECB1CE4E1FA00E452C7 /* Effect */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */,
+			);
+			name = Effect;
+			sourceTree = "<group>";
+		};
+		51A95ECC1CE4E24200E452C7 /* IO */ = {
+			isa = PBXGroup;
+			children = (
+				51F8B9261CD7B0E40029C1E0 /* Resources.swift */,
+				51F8B92A1CD7B0E40029C1E0 /* Streams.swift */,
+			);
+			name = IO;
 			sourceTree = "<group>";
 		};
 		51BD8AC01CE239EC0024A2CA /* Plane */ = {
@@ -276,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				51F8B90F1CD7B0E40029C1E0 /* Color.swift */,
+				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
 				51D9F5921CDA0CA3000AB096 /* Surface.swift */,
 				51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */,
 				51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */,
@@ -303,19 +322,16 @@
 			isa = PBXGroup;
 			children = (
 				51D9F5761CD9E242000AB096 /* Audio */,
+				51A95ECB1CE4E1FA00E452C7 /* Effect */,
 				51D9F5941CDA17CE000AB096 /* Geometry */,
 				51D9F5791CD9E3FD000AB096 /* Input */,
+				51A95ECC1CE4E24200E452C7 /* IO */,
 				51A95EB91CE4A78500E452C7 /* Math */,
 				515E794B1CE0CD160044E22F /* Scene */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
 				51BD8AC11CE239FB0024A2CA /* UI */,
-				51F8B90E1CD7B0E40029C1E0 /* Camera.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
 				51F8B91F1CD7B0E40029C1E0 /* Operation.swift */,
-				51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */,
-				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
-				51F8B9261CD7B0E40029C1E0 /* Resources.swift */,
-				51F8B92A1CD7B0E40029C1E0 /* Streams.swift */,
 				51F8B9311CD7B0E40029C1E0 /* View.swift */,
 				51F8B9001CD78DF70029C1E0 /* Melisse.h */,
 				51F8B9021CD78DF70029C1E0 /* Info.plist */,
