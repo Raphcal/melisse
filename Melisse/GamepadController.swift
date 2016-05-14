@@ -8,6 +8,8 @@
 
 import GameController
 
+// TODO: Revoir cette classe.
+
 /// Contrôle avec une manette externe.
 class GamepadController : Controller {
     

@@ -8,6 +8,8 @@
 
 import GLKit
 
+// TODO: Revoir cette classe.
+
 /// Pas de contrôle.
 class NoController : Controller {
     

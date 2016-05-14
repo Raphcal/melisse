@@ -8,6 +8,8 @@
 
 import GLKit
 
+// TODO: Revoir cette classe.
+
 // TODO: Diviser les sprites en grilles de "grandes tailles" (160x160 par exemple -- tester avec des tailles plus petites) et charger les sprites par bloc. Stocker plusieurs sprites par bloc. Charger seulement les blocs visibles (ou dans un champ de vision proche).
 
 // Voir SpriteGrid et Feeder en bas de ce fichier.

@@ -8,6 +8,8 @@
 
 import GLKit
 
+// TODO: Revoir cette classe.
+
 enum GamePadButton {
     case Up, Down, Left, Right, Jump, L, R, Start
     

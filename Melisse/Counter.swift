@@ -8,6 +8,8 @@
 
 import GLKit
 
+// TODO: Revoir cette classe.
+
 /// Compteur affichant une valeur alignée en haut à droite en utilisant un sprite par chiffre.
 class Counter : Point {
     

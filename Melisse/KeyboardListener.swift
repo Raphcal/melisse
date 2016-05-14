@@ -9,6 +9,8 @@
 #if os(OSX)
 import Cocoa
 
+// TODO: Revoir cette classe.
+    
 class KeyboardListener: NSWindowController {
     
     override func awakeFromNib() {
