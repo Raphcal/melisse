@@ -44,7 +44,7 @@ public class Director {
         scene.reload()
     }
     
-    public func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         if var nextScene = self.nextScene {
             if !(self.scene is Fade) {
                 audio.stopStream()
