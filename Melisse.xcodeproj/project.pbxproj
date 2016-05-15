@@ -200,8 +200,8 @@
 		6429FED21CE879010052ED4D /* Melisse Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Melisse Mac.h"; sourceTree = "<group>"; };
 		6429FED41CE879010052ED4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		643817D81CE7A194002C68F8 /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		643817DA1CE7A194002C68F8 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Melisse.h; path = Melisse/Melisse.h; sourceTree = "<group>"; };
-		643817DC1CE7A194002C68F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Melisse/Info.plist; sourceTree = "<group>"; };
+		643817DA1CE7A194002C68F8 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Melisse.h; sourceTree = "<group>"; };
+		643817DC1CE7A194002C68F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6440EA351CDCC89300190C3D /* Offset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offset.swift; sourceTree = "<group>"; };
 		6440EA381CDCE85500190C3D /* SpriteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteType.swift; sourceTree = "<group>"; };
 		6457C1621CDB946D00794F1D /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
@@ -381,8 +381,6 @@
 			isa = PBXGroup;
 			children = (
 				643817CC1CE7A131002C68F8 /* Melisse */,
-				643817DA1CE7A194002C68F8 /* Melisse.h */,
-				643817DC1CE7A194002C68F8 /* Info.plist */,
 				6429FED11CE879010052ED4D /* Melisse Mac */,
 				51F8B8FE1CD78DF70029C1E0 /* Products */,
 			);
@@ -418,6 +416,8 @@
 				515E794B1CE0CD160044E22F /* Scene */,
 				51D9F5A71CDA264D000AB096 /* Surface */,
 				51BD8AC11CE239FB0024A2CA /* UI */,
+				643817DA1CE7A194002C68F8 /* Melisse.h */,
+				643817DC1CE7A194002C68F8 /* Info.plist */,
 			);
 			path = Melisse;
 			sourceTree = "<group>";

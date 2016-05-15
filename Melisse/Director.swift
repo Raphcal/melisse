@@ -21,17 +21,20 @@ public class Director {
     static let fullProgress: Float = 1
     static let halfProgress: Float = 0.5
     
-    var audio: Audio = NoAudio()
+    public var audio: Audio = NoAudio()
     
-    var scene: Scene = EmptyScene()
-    var nextScene: Scene?
+    public var scene: Scene = EmptyScene()
+    public var nextScene: Scene?
     
-    var fade: Fade = NoFade()
+    public var fade: Fade = NoFade()
+    
+    public init() {
+        // Public initializer.
+    }
     
     public func startWith(scene: Scene) {
         View.instance.applyZoom()
         
-        self.fade = FadeScene()
         self.scene = scene
         scene.load()
         scene.willAppear()
