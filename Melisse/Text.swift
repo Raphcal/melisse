@@ -26,9 +26,9 @@ public struct Text {
     let semicolon = Text.integerFromCharacter(":")
     let space = Text.integerFromCharacter(" ")
     
-    var frame: Rectangle<GLfloat>
-    var font: Font
-    let factory: SpriteFactory
+    public var frame: Rectangle<GLfloat>
+    public var font: Font
+    public let factory: SpriteFactory
     
     var sprites = [Sprite]()
     var value = "" {

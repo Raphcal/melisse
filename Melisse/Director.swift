@@ -6,28 +6,29 @@
 //  Copyright (c) 2015 Raphaël Calabro. All rights reserved.
 //
 
+import Foundation
 #if os(iOS)
 import GLKit
 #else
 import OpenGL.GL
 #endif
 
-class Director : NSObject {
+public class Director {
     
     static let instance = Director()
     
-    static let fadeDuration : NSTimeInterval = 0.5
-    static let fullProgress : Float = 1
-    static let halfProgress : Float = 0.5
+    static let fadeDuration: NSTimeInterval = 0.5
+    static let fullProgress: Float = 1
+    static let halfProgress: Float = 0.5
     
-    static let audio : Audio = OpenALAudio()
+    var audio: Audio = NoAudio()
     
     var scene: Scene = EmptyScene()
     var nextScene: Scene?
     
     var fade: Fade = NoFade()
     
-    func startWith(scene: Scene) {
+    public func startWith(scene: Scene) {
         View.instance.applyZoom()
         
         self.fade = FadeScene()
@@ -36,14 +37,14 @@ class Director : NSObject {
         scene.willAppear()
     }
     
-    func restart() {
+    public func restart() {
         scene.reload()
     }
     
-    func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWithTimeSinceLastUpdate(timeSinceLastUpdate: NSTimeInterval) {
         if var nextScene = self.nextScene {
             if !(self.scene is Fade) {
-                Director.audio.stopStream()
+                audio.stopStream()
                 
                 // TODO: Voir comment faire le unload ailleurs.
                 nextScene.load()
@@ -67,7 +68,7 @@ class Director : NSObject {
         }
     }
     
-    func draw() {
+    public func draw() {
         let top = View.instance.height
         Draws.clearWith(scene.backgroundColor)
         glTranslatef(0, top, 0)

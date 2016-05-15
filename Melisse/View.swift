@@ -36,8 +36,14 @@ class View : NSObject {
     weak var factory : SpriteFactory?
     
     override init() {
-        let screenWidth = GLfloat(UIScreen.mainScreen().bounds.width)
-        let screenHeight = GLfloat(UIScreen.mainScreen().bounds.height)
+        #if os(iOS)
+            let screenWidth = GLfloat(UIScreen.mainScreen().bounds.width)
+            let screenHeight = GLfloat(UIScreen.mainScreen().bounds.height)
+        #else
+            // TODO: Faire différemment.
+            let screenWidth = GLfloat(320)
+            let screenHeight = GLfloat(240)
+        #endif
         
         self.width = 384
         self.ratio = width / screenWidth

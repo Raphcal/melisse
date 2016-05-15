@@ -11,27 +11,28 @@ import GLKit
 // TODO: Revoir cette classe.
 
 /// Compteur affichant une valeur alignée en haut à droite en utilisant un sprite par chiffre.
-class Counter : Point {
+public class Counter {
     
-    let factory: SpriteFactory
-    var digits: [Int] = []
-    var sprites: [Sprite] = []
-    var value: Int = 0 {
+    public var frame: Rectangle<GLfloat>
+    
+    public let factory: SpriteFactory
+    public var value: Int = 0 {
         didSet {
             self.digits = value.digits
             displayValue()
         }
     }
     
-    override init() {
+    var digits = [Int]()
+    var sprites = [Sprite]()
+    
+    init() {
+        self.frame = Rectangle()
         self.factory = SpriteFactory()
-        super.init()
     }
     
     init(factory: SpriteFactory, x: GLfloat, y: GLfloat) {
         self.factory = factory
-        super.init(x: x, y: y)
-        
         self.value = 0
     }
     
