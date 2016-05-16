@@ -8,14 +8,65 @@
 
 import GLKit
 
-public struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
+public protocol Rectangular {
     
-    public var center: Point<Coordinate>
-    public var size: Size<Coordinate>
+    associatedtype Coordinate : Numeric
     
-    public var topLeft: Point<Coordinate> {
+    var center: Point<Coordinate> { get }
+    var size: Size<Coordinate> { get }
+    
+}
+
+public extension Rectangular {
+    
+    public var x: Coordinate {
+        get { return center.x }
+    }
+    
+    public var y: Coordinate {
+        get { return center.y }
+    }
+    
+    var width: Coordinate {
+        get { return size.width }
+    }
+    
+    var height: Coordinate {
+        get { return size.height }
+    }
+    
+    var top: Coordinate {
+        get { return center.y - size.height.half }
+    }
+    
+    var bottom: Coordinate {
+        get { return center.y + size.height.half }
+    }
+    
+    var left: Coordinate {
+        get { return center.x - size.width.half }
+    }
+    
+    var right: Coordinate {
+        get { return center.x + size.width.half }
+    }
+    
+}
+
+public protocol MovableRectangle : Rectangular {
+    
+    associatedtype Coordinate : Numeric
+    
+    var center: Point<Coordinate> { get set }
+    var size: Size<Coordinate> { get }
+    
+}
+
+public extension MovableRectangle {
+    
+    var topLeft: Point<Coordinate> {
         get { return Point(x: left, y: top) }
-        set { center = Point(x: topLeft.x + width.half, y: topLeft.y + height.half) }
+        set { center = Point(x: topLeft.x + size.width.half, y: topLeft.y + size.height.half) }
     }
     
     public var x: Coordinate {
@@ -28,35 +79,55 @@ public struct Rectangle<Coordinate where Coordinate : Numeric> : Equatable {
         set { center.y = newValue }
     }
     
-    public var width: Coordinate {
+    var top: Coordinate {
+        get { return center.y - size.height.half }
+        set { center.y = newValue + size.height.half }
+    }
+    
+    var bottom: Coordinate {
+        get { return center.y + size.height.half }
+        set { center.y = newValue - size.height.half }
+    }
+    
+    var left: Coordinate {
+        get { return center.x - size.width.half }
+        set { center.x = newValue + size.width.half }
+    }
+    
+    var right: Coordinate {
+        get { return center.x + size.width.half }
+        set { center.x = newValue - size.width.half }
+    }
+    
+}
+
+public protocol ResizableRectangle : Rectangular {
+    
+    associatedtype Coordinate : Numeric
+    
+    var center: Point<Coordinate> { get }
+    var size: Size<Coordinate> { get set }
+    
+}
+
+public extension ResizableRectangle {
+    
+    var width: Coordinate {
         get { return size.width }
         set { size.width = newValue }
     }
     
-    public var height: Coordinate {
+    var height: Coordinate {
         get { return size.height }
         set { size.height = newValue }
     }
     
-    public var top: Coordinate {
-        get { return center.y - height.half }
-        set { center.y = newValue + height.half }
-    }
+}
+
+public struct Rectangle<Coordinate where Coordinate : Numeric> : MovableRectangle, ResizableRectangle, Equatable {
     
-    public var bottom: Coordinate {
-        get { return center.y + height.half }
-        set { center.y = newValue - height.half }
-    }
-    
-    public var left: Coordinate {
-        get { return center.x - width.half }
-        set { center.x = newValue + width.half }
-    }
-    
-    public var right: Coordinate {
-        get { return center.x + width.half }
-        set { center.x = newValue - width.half }
-    }
+    public var center: Point<Coordinate>
+    public var size: Size<Coordinate>
     
     public init(center: Point<Coordinate> = Point(), size: Size<Coordinate> = Size()) {
         self.center = center
@@ -89,7 +160,7 @@ public func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordin
     return left.center == right.center && left.size == right.size
 }
 
-public extension Rectangle where Coordinate : FloatingPoint {
+public extension Rectangular where Coordinate : FloatingPoint {
     
     func rotate(rotation: Coordinate) -> Quadrilateral<Coordinate> {
         return rotate(rotation, withPivot: center)

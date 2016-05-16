@@ -133,6 +133,12 @@
 		643818261CE7A1F1002C68F8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
 		64BB3B2E1CE897860063958F /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		64BB3B2F1CE8978F0063958F /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
+		64BB3C281CE9F2630063958F /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C271CE9F2630063958F /* Controller.swift */; };
+		64BB3C291CE9F2630063958F /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C271CE9F2630063958F /* Controller.swift */; };
+		64BB3C2D1CE9F3450063958F /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C2C1CE9F3450063958F /* Menu.swift */; };
+		64BB3C2E1CE9F3450063958F /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C2C1CE9F3450063958F /* Menu.swift */; };
+		64BB3C2F1CE9FB560063958F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9101CD7B0E40029C1E0 /* Counter.swift */; };
+		64BB3C301CE9FB570063958F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9101CD7B0E40029C1E0 /* Counter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,6 +219,8 @@
 		64B6F7501CDE678D00CECE15 /* AnimationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationName.swift; sourceTree = "<group>"; };
 		64B6F7551CDE6D2800CECE15 /* AnimationDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationDefinition.swift; sourceTree = "<group>"; };
 		64BA6C191CE1127E0093E184 /* Axe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
+		64BB3C271CE9F2630063958F /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
+		64BB3C2C1CE9F3450063958F /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +275,7 @@
 				51F8B9101CD7B0E40029C1E0 /* Counter.swift */,
 				51A95EB61CE4A21300E452C7 /* Font.swift */,
 				51A95EB41CE4A02000E452C7 /* Text.swift */,
+				64BB3C2C1CE9F3450063958F /* Menu.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -340,16 +349,17 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
-		51D9F5791CD9E3FD000AB096 /* Input */ = {
+		51D9F5791CD9E3FD000AB096 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				64BB3C271CE9F2630063958F /* Controller.swift */,
 				51F8B9181CD7B0E40029C1E0 /* Input.swift */,
 				51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */,
 				51F8B9301CD7B0E40029C1E0 /* TouchController.swift */,
 				51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */,
 				51F8B91E1CD7B0E40029C1E0 /* NoController.swift */,
 			);
-			name = Input;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		51D9F5941CDA17CE000AB096 /* Geometry */ = {
@@ -410,7 +420,7 @@
 				51D9F5761CD9E242000AB096 /* Audio */,
 				51A95ECB1CE4E1FA00E452C7 /* Effect */,
 				51D9F5941CDA17CE000AB096 /* Geometry */,
-				51D9F5791CD9E3FD000AB096 /* Input */,
+				51D9F5791CD9E3FD000AB096 /* Controller */,
 				51A95ECC1CE4E24200E452C7 /* IO */,
 				51A95EB91CE4A78500E452C7 /* Math */,
 				515E794B1CE0CD160044E22F /* Scene */,
@@ -599,6 +609,7 @@
 				6429FEDD1CE87B850052ED4D /* Offset.swift in Sources */,
 				6429FEDE1CE87B850052ED4D /* Resources.swift in Sources */,
 				6429FEDF1CE87B850052ED4D /* Streams.swift in Sources */,
+				64BB3C301CE9FB570063958F /* Counter.swift in Sources */,
 				6429FEE01CE87B850052ED4D /* Numerics.swift in Sources */,
 				6429FEE11CE87B850052ED4D /* Math.swift in Sources */,
 				6429FEE21CE87B850052ED4D /* Operation.swift in Sources */,
@@ -626,6 +637,7 @@
 				6429FEF61CE87B850052ED4D /* NoAnimation.swift in Sources */,
 				6429FEF71CE87B850052ED4D /* SingleFrameAnimation.swift in Sources */,
 				6429FEF81CE87B850052ED4D /* LoopingAnimation.swift in Sources */,
+				64BB3C291CE9F2630063958F /* Controller.swift in Sources */,
 				6429FEF91CE87B850052ED4D /* SynchronizedLoopingAnimation.swift in Sources */,
 				6429FEFA1CE87B850052ED4D /* PlayOnceAnimation.swift in Sources */,
 				6429FEFB1CE87B850052ED4D /* BlinkingAnimation.swift in Sources */,
@@ -641,6 +653,7 @@
 				6429FF061CE87B850052ED4D /* Hitbox.swift in Sources */,
 				6429FF081CE87B850052ED4D /* Sprite.swift in Sources */,
 				6429FF091CE87B850052ED4D /* SpriteFactory.swift in Sources */,
+				64BB3C2E1CE9F3450063958F /* Menu.swift in Sources */,
 				6429FF0A1CE87B850052ED4D /* SpriteInfo.swift in Sources */,
 				6429FF0B1CE87B850052ED4D /* SpriteType.swift in Sources */,
 				6429FF0C1CE87B850052ED4D /* Palette.swift in Sources */,
@@ -661,6 +674,7 @@
 			files = (
 				643817FE1CE7A1F1002C68F8 /* ReferencePool.swift in Sources */,
 				643818071CE7A1F1002C68F8 /* NoAnimation.swift in Sources */,
+				64BB3C2F1CE9FB560063958F /* Counter.swift in Sources */,
 				643817F81CE7A1F1002C68F8 /* EmptyScene.swift in Sources */,
 				643817F51CE7A1F1002C68F8 /* Camera.swift in Sources */,
 				643817E01CE7A1F1002C68F8 /* Audio.swift in Sources */,
@@ -668,12 +682,14 @@
 				643818201CE7A1F1002C68F8 /* Backdrop.swift in Sources */,
 				643817E61CE7A1F1002C68F8 /* Size.swift in Sources */,
 				643818191CE7A1F1002C68F8 /* Sprite.swift in Sources */,
+				64BB3C2D1CE9F3450063958F /* Menu.swift in Sources */,
 				643817FB1CE7A1F1002C68F8 /* NoFade.swift in Sources */,
 				643818251CE7A1F1002C68F8 /* Map.swift in Sources */,
 				643818101CE7A1F1002C68F8 /* NoMotion.swift in Sources */,
 				643817F31CE7A1F1002C68F8 /* Operation.swift in Sources */,
 				643817E11CE7A1F1002C68F8 /* NoAudio.swift in Sources */,
 				6438180C1CE7A1F1002C68F8 /* BlinkingAnimation.swift in Sources */,
+				64BB3C281CE9F2630063958F /* Controller.swift in Sources */,
 				643817EF1CE7A1F1002C68F8 /* Resources.swift in Sources */,
 				6438181A1CE7A1F1002C68F8 /* SpriteFactory.swift in Sources */,
 				6438180F1CE7A1F1002C68F8 /* Motion.swift in Sources */,

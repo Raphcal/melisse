@@ -103,6 +103,14 @@ public class SpriteFactory {
         return sprite(definitions[definition])
     }
     
+    func sprite(definition: Int?) -> Sprite? {
+        if let definition = definition {
+            return sprite(definitions[definition])
+        } else {
+            return nil
+        }
+    }
+    
     func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
         let sprite = self.sprite(definition)
         sprite.frame.topLeft = Point(x: x, y: y)

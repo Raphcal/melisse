@@ -10,24 +10,7 @@ import GLKit
 
 // TODO: Revoir cette classe.
 
-enum GamePadButton {
-    case Up, Down, Left, Right, Jump, L, R, Start
-    
-    static let values = [Up, Down, Left, Right, Jump, L, R, Start]
-}
-
-protocol Controller {
-    
-    var direction : GLfloat { get }
-    
-    func pressed(button: GamePadButton) -> Bool
-    func pressing(button: GamePadButton) -> Bool
-    func draw()
-    func updateWithTouches(touches: [Int:Point<GLfloat>])
-    
-}
-
-class Input : NSObject, Controller {
+public class Input : Controller {
     
     static let instance = Input()
     

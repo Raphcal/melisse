@@ -17,6 +17,8 @@ public protocol Font {
     var lowerCaseAnimation: AnimationName { get }
     var semicolonAnimation: AnimationName { get }
     
+    var cursorDefintion: Int? { get }
+    
 }
 
 public struct NoFont : Font {
@@ -27,5 +29,7 @@ public struct NoFont : Font {
     public let upperCaseAnimation: AnimationName = DefaultAnimationName.Normal
     public let lowerCaseAnimation: AnimationName = DefaultAnimationName.Normal
     public let semicolonAnimation: AnimationName = DefaultAnimationName.Normal
+    
+    public let cursorDefintion: Int? = nil
     
 }

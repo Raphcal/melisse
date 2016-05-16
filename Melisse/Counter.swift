@@ -8,14 +8,13 @@
 
 import GLKit
 
-// TODO: Revoir cette classe.
-
 /// Compteur affichant une valeur alignée en haut à droite en utilisant un sprite par chiffre.
 public class Counter {
     
-    public var frame: Rectangle<GLfloat>
+    public var topLeft: Point<GLfloat>
     
     public let factory: SpriteFactory
+    public var font: Font
     public var value: Int = 0 {
         didSet {
             self.digits = value.digits
@@ -23,17 +22,21 @@ public class Counter {
         }
     }
     
-    var digits = [Int]()
-    var sprites = [Sprite]()
+    private var digits = [Int]()
+    private var sprites = [Sprite]()
     
-    init() {
-        self.frame = Rectangle()
+    public init() {
+        self.topLeft = Point()
         self.factory = SpriteFactory()
+        self.font = NoFont()
     }
     
-    init(factory: SpriteFactory, x: GLfloat, y: GLfloat) {
+    public init(factory: SpriteFactory, font: Font, topLeft: Point<GLfloat> = Point()) {
         self.factory = factory
-        self.value = 0
+        self.font = font
+        self.topLeft = topLeft
+        
+        displayValue()
     }
     
     deinit {
@@ -48,25 +51,25 @@ public class Counter {
             sprites.removeAtIndex(sprites.count - 1)
         }
         while sprites.count < digits.count {
-            sprites.append(createDigit())
+            sprites.append(digit())
         }
         
-        for index in 0..<digits.count {
+        for index in 0 ..< digits.count {
             let sprite = sprites[index]
             
             // Pour l'alignement à gauche, utiliser "+ index * sprite.width".
-            sprite.topLeft = Point(x: self.x - GLfloat(index) * sprite.width, y: self.y)
+            sprite.frame.topLeft = Point(x: topLeft.x - GLfloat(index) * sprite.frame.width, y: topLeft.y)
             
             // Pour l'alignement à gauche, utiliser "digits.count - index - 1".
             sprite.animation.frameIndex = digits[index]
         }
     }
     
-    private func createDigit() -> Sprite {
-        let sprite = factory.sprite(Sprite.countGUIDefinition)
+    private func digit() -> Sprite {
+        let sprite = factory.sprite(font.definition)
         
-        let definition = sprite.animation.definition
-        let animation = SingleFrameAnimation(definition: definition)
+        let definition = sprite.definition.animations[font.digitAnimation.name]
+        let animation = SingleFrameAnimation(definition: definition!)
         
         sprite.animation = animation
         return sprite
