@@ -139,6 +139,9 @@
 		64BB3C2E1CE9F3450063958F /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C2C1CE9F3450063958F /* Menu.swift */; };
 		64BB3C2F1CE9FB560063958F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9101CD7B0E40029C1E0 /* Counter.swift */; };
 		64BB3C301CE9FB570063958F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9101CD7B0E40029C1E0 /* Counter.swift */; };
+		64BB3C321CEA464C0063958F /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9181CD7B0E40029C1E0 /* Input.swift */; };
+		64BB3C331CEA464D0063958F /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9181CD7B0E40029C1E0 /* Input.swift */; };
+		64BB3C341CEA4A1B0063958F /* TouchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9301CD7B0E40029C1E0 /* TouchController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -651,6 +654,7 @@
 				6429FF041CE87B850052ED4D /* Axe.swift in Sources */,
 				6429FF051CE87B850052ED4D /* Direction.swift in Sources */,
 				6429FF061CE87B850052ED4D /* Hitbox.swift in Sources */,
+				64BB3C331CEA464D0063958F /* Input.swift in Sources */,
 				6429FF081CE87B850052ED4D /* Sprite.swift in Sources */,
 				6429FF091CE87B850052ED4D /* SpriteFactory.swift in Sources */,
 				64BB3C2E1CE9F3450063958F /* Menu.swift in Sources */,
@@ -728,12 +732,14 @@
 				643818041CE7A1F1002C68F8 /* Animation.swift in Sources */,
 				643818231CE7A1F1002C68F8 /* Layer.swift in Sources */,
 				643818171CE7A1F1002C68F8 /* Hitbox.swift in Sources */,
+				64BB3C321CEA464C0063958F /* Input.swift in Sources */,
 				6438181D1CE7A1F1002C68F8 /* Palette.swift in Sources */,
 				643817F71CE7A1F1002C68F8 /* Scene.swift in Sources */,
 				6438180E1CE7A1F1002C68F8 /* SpriteDefinition.swift in Sources */,
 				643817F61CE7A1F1002C68F8 /* Director.swift in Sources */,
 				643818091CE7A1F1002C68F8 /* LoopingAnimation.swift in Sources */,
 				643818031CE7A1F1002C68F8 /* ColorQuadrilateral.swift in Sources */,
+				64BB3C341CEA4A1B0063958F /* TouchController.swift in Sources */,
 				643818081CE7A1F1002C68F8 /* SingleFrameAnimation.swift in Sources */,
 				6438180D1CE7A1F1002C68F8 /* AnimationDefinition.swift in Sources */,
 				643817F01CE7A1F1002C68F8 /* Streams.swift in Sources */,

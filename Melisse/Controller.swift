@@ -16,11 +16,10 @@ public enum GamePadButton {
 
 public protocol Controller {
     
-    var direction : GLfloat { get }
+    var direction: GLfloat { get }
     
     func pressed(button: GamePadButton) -> Bool
     func pressing(button: GamePadButton) -> Bool
     func draw()
-    func updateWithTouches(touches: [Int:Point<GLfloat>])
     
 }

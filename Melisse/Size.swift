@@ -28,3 +28,7 @@ public struct Size<Coordinate where Coordinate : Numeric> : Equatable {
 public func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> Bool {
     return left.width == right.width && left.height == right.height
 }
+
+public func *<Coordinate>(left: Size<Coordinate>, right: Coordinate) -> Size<Coordinate> {
+    return Size(width: left.width * right, height: left.height * right)
+}

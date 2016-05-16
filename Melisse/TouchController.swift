@@ -13,24 +13,61 @@ import GLKit
 /// Contrôle avec un pad virtuel sur l'écran tactile.
 public class TouchController : Controller {
     
-    static let instance = TouchController()
+    static public let instance = TouchController()
     
-    static let padButtonFrame = 2
-    static let jumpButtonFrame = 0
+    let padButtonFrame = 2
+    let jumpButtonFrame = 0
     
     private let factory = SpriteFactory(capacity: 5)
     
-    var direction : GLfloat = 0
-    var buttons = [GamePadButton:Button]()
+    public var direction: GLfloat = 0
+    public var buttons = [GamePadButton:Button]()
     
-    let zoom : GLfloat
+    public let zoom: GLfloat
     
-    init() {
+    public init() {
         self.zoom = View.instance.width / GLfloat(UIScreen.mainScreen().bounds.width)
+    }
+    
+    public func pressed(button: GamePadButton) -> Bool {
+        if let b = buttons[button] {
+            return b.pressed()
+        } else {
+            return false
+        }
+    }
+    
+    public func pressing(button: GamePadButton) -> Bool {
+        if let b = buttons[button] {
+            return b.pressing()
+        } else {
+            return false
+        }
+    }
+    
+    public func draw() {
+        factory.draw()
+    }
+    
+    public func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
+        for button in buttons.values {
+            button.updateWith(touches)
+        }
         
-        let leftButton = Button(factory: factory, frame: TouchController.padButtonFrame, zoom: zoom)
-        let rightButton = Button(factory: factory, frame: TouchController.padButtonFrame, zoom: zoom)
-        let jumpButton = Button(factory: factory, frame: TouchController.jumpButtonFrame, zoom: zoom)
+        if buttons[.Right] != nil && buttons[.Right]!.pressing() {
+            self.direction = 1
+        } else if buttons[.Left] != nil && buttons[.Left]!.pressing() {
+            self.direction = -1
+        } else {
+            self.direction = 0
+        }
+        factory.updateWithTimeSinceLastUpdate(0)
+    }
+    
+    public func createButtonsWith(definition: Int) {
+        let leftButton = Button(factory: factory, frame: padButtonFrame, zoom: zoom)
+        let rightButton = Button(factory: factory, frame: padButtonFrame, zoom: zoom)
+        let jumpButton = Button(factory: factory, frame: jumpButtonFrame, zoom: zoom)
         
         leftButton.sprite!.direction = .Left
         
@@ -48,42 +85,7 @@ public class TouchController : Controller {
         buttons[.R] = Button(left: GLfloat(View.instance.width - defaultSize), top: 0, width: defaultSize, height: defaultSize, zoom: zoom)
         buttons[.Start] = Button(left: GLfloat(View.instance.width - defaultSize) / 2, top: 0, width: defaultSize, height: defaultSize, zoom: zoom)
         
-        factory.updateWithTimeSinceLastUpdate(0)
-    }
-    
-    func pressed(button: GamePadButton) -> Bool {
-        if let b = buttons[button] {
-            return b.pressed()
-        } else {
-            return false
-        }
-    }
-    
-    func pressing(button: GamePadButton) -> Bool {
-        if let b = buttons[button] {
-            return b.pressing()
-        } else {
-            return false
-        }
-    }
-    
-    func draw() {
-        factory.drawUntranslated()
-    }
-    
-    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
-        for button in buttons.values {
-            button.updateWithTouches(touches)
-        }
-        
-        if buttons[.Right] != nil && buttons[.Right]!.pressing() {
-            self.direction = 1
-        } else if buttons[.Left] != nil && buttons[.Left]!.pressing() {
-            self.direction = -1
-        } else {
-            self.direction = 0
-        }
-        factory.updateWithTimeSinceLastUpdate(0)
+        factory.updateWith(0)
     }
     
 }
@@ -91,23 +93,22 @@ public class TouchController : Controller {
 /// Zone tactile sur l'écran servant de bouton
 class Button {
     
-    let zoom : GLfloat
+    let zoom: GLfloat
     
-    let hitbox : Hitbox
-    let sprite : Sprite?
-    let frame : Int
+    let hitbox: Hitbox
+    let sprite: Sprite?
+    let frame: Int
     
     var state = false
     var previousState = false
     
-    init(factory: SpriteFactory, frame: Int, zoom: GLfloat) {
-        let sprite = factory.sprite(Sprite.buttonGUIDefinition)
+    init(factory: SpriteFactory, definition: Int, frame: Int, zoom: GLfloat) {
+        let sprite = factory.sprite(definition)
         
         sprite.animation = SingleFrameAnimation(definition: sprite.animation.definition)
         sprite.animation.frameIndex = frame
         
-        sprite.width = GLfloat(sprite.animation.frame.width) * zoom
-        sprite.height = GLfloat(sprite.animation.frame.height) * zoom
+        sprite.frame.size = Size(width: GLfloat(sprite.animation.frame.width) * zoom, height: GLfloat(sprite.animation.frame.height) * zoom)
         
         let margin = 32 * zoom
         
@@ -128,7 +129,7 @@ class Button {
         sprite?.destroy()
     }
     
-    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
+    func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
         self.previousState = state
         self.state = false
         

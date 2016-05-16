@@ -8,54 +8,35 @@
 
 import GLKit
 
-class View : NSObject {
+public struct View {
     
-    static let instance = View()
+    static public var instance = View()
     
-    var width : GLfloat
-    var height : GLfloat
+    let width: GLfloat = 384
     
-    var zoomedWidth : GLfloat {
-        get {
-            return width * zoom
-        }
-    }
+    public private(set) var size = Size<GLfloat>(width: 384, height: 240)
     
-    var zoomedHeight : GLfloat {
-        get {
-            return height * zoom
-        }
-    }
-    
-    /// Rapport entre la taille de l'écran et la vue.
-    var ratio : GLfloat
+    /// Rapport entre la largeur et la hauteur.
+    public var ratio: GLfloat = 1
     
     /// Zoom général de la vue.
-    var zoom : GLfloat = 1
+    var zoom: GLfloat = 1
     
-    weak var factory : SpriteFactory?
+    weak var factory: SpriteFactory?
     
-    override init() {
-        #if os(iOS)
-            let screenWidth = GLfloat(UIScreen.mainScreen().bounds.width)
-            let screenHeight = GLfloat(UIScreen.mainScreen().bounds.height)
-        #else
-            // TODO: Faire différemment.
-            let screenWidth = GLfloat(320)
-            let screenHeight = GLfloat(240)
-        #endif
-        
-        self.width = 384
-        self.ratio = width / screenWidth
-        self.height = screenHeight * ratio
+    public mutating func setSize(size: Size<GLfloat>) {
+        self.ratio = width / size.width
+        self.size = Size(width: width, height: size.height * ratio)
     }
     
+    // TODO: Faire quelque chose de cette méthode.
     func applyZoom() {
         glLoadIdentity()
+        let zoomedSize = size * zoom
         #if os(iOS)
-            glOrthof(0, zoomedWidth, 0, zoomedHeight, -1, 1)
+            glOrthof(0, zoomedSize.width, 0, zoomedSize.height, -1, 1)
         #else
-            glOrtho(0, GLdouble(zoomedWidth), 0, GLdouble(zoomedHeight), -1, 1)
+            glOrtho(0, GLdouble(zoomedSize.width), 0, GLdouble(zoomedSize.height), -1, 1)
         #endif
         
         // TODO: Utiliser autre chose que factory pour pouvoir gérer les objets Text.
@@ -71,7 +52,8 @@ class View : NSObject {
         }
     }
     
-    func updateViewWithBounds(bounds: CGRect) {
+    // TODO: Faire quelque chose de cette méthode.
+    mutating func updateViewWithBounds(bounds: CGRect) {
         #if VIEW_UPDATE_WITH_ZOOM
             let zoom = max(
                 Float(bounds.width) / (12 * 32),
@@ -87,7 +69,7 @@ class View : NSObject {
             let screenHeight = GLfloat(bounds.height)
             
             self.ratio = width / screenWidth
-            self.height = screenHeight * ratio
+            self.size = Size(width: width, height: screenHeight * ratio)
         #endif
     }
     

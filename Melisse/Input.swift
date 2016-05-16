@@ -12,12 +12,12 @@ import GLKit
 
 public class Input : Controller {
     
-    static let instance = Input()
+    static public let instance = Input()
     
-    var touches = [Int:Point<GLfloat>]()
-    var controller : Controller
+    public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
+    public var controller: Controller
     
-    var direction : GLfloat {
+    public var direction: GLfloat {
         get {
             return controller.direction
         }
@@ -26,7 +26,7 @@ public class Input : Controller {
     private var touchCount = 0
     private var previousTouchCount = 0
     
-    override init() {
+    public init() {
         #if os(iOS)
             self.controller = TouchController.instance
         #else
@@ -38,24 +38,24 @@ public class Input : Controller {
         return touchCount > previousTouchCount
     }
     
-    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
+    func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
         self.touches = touches
         self.previousTouchCount = touchCount
         self.touchCount = touches.count
         
-        controller.updateWithTouches(touches)
+        (controller as? TouchController)?.updateWith(touches)
     }
     
-    func pressed(button: GamePadButton) -> Bool {
+    public func pressed(button: GamePadButton) -> Bool {
         // TODO: Inverser le fonctionnement de cette méthode. Enregistrer des listeners par scène plutôt que de faire du polling.
         return controller.pressed(button)
     }
     
-    func pressing(button: GamePadButton) -> Bool {
+    public func pressing(button: GamePadButton) -> Bool {
         return controller.pressing(button)
     }
     
-    func draw() {
+    public func draw() {
         controller.draw()
     }
     
