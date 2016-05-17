@@ -8,7 +8,7 @@
 
 import GLKit
 
-public class Sprite {
+public class Sprite : Equatable {
     
     public let definition: SpriteDefinition
     public let info: SpriteInfo?
@@ -166,6 +166,10 @@ public class Sprite {
         }
     }
     
+}
+
+public func ==(left: Sprite, right: Sprite) -> Bool {
+    return left === right
 }
 
 public func +=(inout left: GLfloat?, right: GLfloat) {

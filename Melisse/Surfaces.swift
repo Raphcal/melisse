@@ -8,8 +8,8 @@
 
 import GLKit
 
-let vertexesByQuad = 6
-let coordinatesByVertex = 2
-let coordinatesByTexture = 2
-let coordinatesByColor = 4
-let tileSize : Float = 32
+public let vertexesByQuad = 6
+public let coordinatesByVertex = 2
+public let coordinatesByTexture = 2
+public let coordinatesByColor = 4
+public let tileSize : GLfloat = 32

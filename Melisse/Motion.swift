@@ -18,3 +18,15 @@ public protocol Motion {
     mutating func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
     
 }
+
+public extension Motion {
+    
+    func load(sprite: Sprite) {
+        // Implémentation vide.
+    }
+    
+    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
+        // Implémentation vide.
+    }
+    
+}
