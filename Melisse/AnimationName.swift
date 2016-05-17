@@ -19,9 +19,9 @@ public enum DefaultAnimationName: AnimationName {
         get {
             switch self {
             case .Normal:
-                return "Normal"
+                return "normal"
             case .Disappear:
-                return "Disappear"
+                return "disappear"
             }
         }
     }
