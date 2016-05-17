@@ -94,10 +94,10 @@ public struct Map : Equatable {
     
     public func mapFromVisibleRect() -> Map {
         let layers = self.layers.map { (layer) -> Layer in
-            let left = Int(floor(Camera.instance.frame.left * layer.scrollRate.x / tileSize))
-            let right = Int(ceil(Camera.instance.frame.right * layer.scrollRate.x / tileSize))
-            let top = Int(floor(Camera.instance.frame.top * layer.scrollRate.y / tileSize))
-            let bottom = Int(ceil(Camera.instance.frame.bottom * layer.scrollRate.y / tileSize))
+            let left = Int(floor(Camera.instance!.frame.left * layer.scrollRate.x / tileSize))
+            let right = Int(ceil(Camera.instance!.frame.right * layer.scrollRate.x / tileSize))
+            let top = Int(floor(Camera.instance!.frame.top * layer.scrollRate.y / tileSize))
+            let bottom = Int(ceil(Camera.instance!.frame.bottom * layer.scrollRate.y / tileSize))
             
             var tiles = [Int?]()
             var count = 0

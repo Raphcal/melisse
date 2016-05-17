@@ -28,14 +28,14 @@ public class Backdrop {
         createVerticesAndTextureCoordinates()
     }
     
-    public func update(offset offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
+    public func updateWith(translation: Point<GLfloat>, offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             
-            let cameraLeft = (Camera.instance.frame.left + offset) * layer.scrollRate.x + square((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
+            let cameraLeft = (translation.x + offset) * layer.scrollRate.x + square((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
             
-            let cameraTop = Camera.instance.frame.top * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
+            let cameraTop = translation.y * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
             
             let left = Int(cameraLeft / tileSize)
             let top = Int(cameraTop / tileSize)

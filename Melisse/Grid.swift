@@ -43,17 +43,17 @@ public class Grid {
     
     // MARK: Affichage.
     
-    public func draw() {
-        draw(to: map.layers.count)
+    public func draw(at translation: Point<GLfloat> = Point()) {
+        draw(at: translation, to: map.layers.count)
     }
     
-    public func draw(from from: Int = 0, to: Int) {
+    public func draw(at translation: Point<GLfloat> = Point(), from: Int = 0, to: Int) {
         Draws.bindTexture(palette.texture)
         
         for index in from ..< to {
             let layer = map.layers[index]
             
-            Draws.translateTo(Camera.instance.frame.topLeft * layer.scrollRate)
+            Draws.translateTo(translation * layer.scrollRate)
             Draws.drawWithVertexPointer(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
         }
     }
