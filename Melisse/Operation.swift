@@ -29,9 +29,9 @@ enum ByteCode : UInt8 {
     case SpriteHitboxTop = 0x68
 }
 
-class Operation {
+public struct Operation {
     
-    class func execute(operation: [UInt8]?, x: GLfloat) -> GLfloat {
+    public static func execute(operation: [UInt8]?, x: GLfloat) -> GLfloat {
         if let bytes = operation {
             var stack = execute(bytes, x: x, sprite: nil)
             return stack.removeLast()
@@ -40,13 +40,13 @@ class Operation {
         }
     }
     
-    class func execute(operation: [UInt8]?, sprite: Sprite) {
+    public static func execute(operation: [UInt8]?, sprite: Sprite) {
         if let bytes = operation {
             execute(bytes, x: 0, sprite: sprite)
         }
     }
     
-    private class func execute(bytes: [UInt8], x: GLfloat, sprite: Sprite?) -> [GLfloat] {
+    private static func execute(bytes: [UInt8], x: GLfloat, sprite: Sprite?) -> [GLfloat] {
         var index = 0
         var stack = [GLfloat]()
         stack.reserveCapacity(bytes.count)
@@ -134,7 +134,7 @@ class Operation {
         return stack
     }
     
-    class func description(operation: [UInt8]?) -> String {
+    public static func description(operation: [UInt8]?) -> String {
         if let bytes = operation {
             var index = 0
             var stack = [String]()

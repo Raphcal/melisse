@@ -9,12 +9,12 @@
 import Foundation
 
 /// Description d'un gestionnaire de mouvements.
-protocol Motion {
+public protocol Motion {
     
     /// Initialisation du mouvement pour le sprite donné.
-    func load(sprite : Sprite)
+    mutating func load(sprite : Sprite)
     
     /// Calcul et application du mouvement pour le sprite donné.
-    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
+    mutating func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
     
 }

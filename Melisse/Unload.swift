@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Unloadable {
+public protocol UnloadableMotion {
     
     func unload(sprite: Sprite)
     

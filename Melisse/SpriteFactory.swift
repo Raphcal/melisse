@@ -162,7 +162,7 @@ public class SpriteFactory {
     func removeSprite(sprite: Sprite) {
         sprite.removed = true
         
-        (sprite.motion as? Unloadable)?.unload(sprite)
+        (sprite.motion as? UnloadableMotion)?.unload(sprite)
         pools[sprite.definition.distance.rawValue].release(sprite.reference)
         sprite.vertexSurface.clear()
         sprite.texCoordSurface.clear()

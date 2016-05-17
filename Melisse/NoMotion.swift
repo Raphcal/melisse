@@ -9,13 +9,13 @@
 import Foundation
 
 /// Gestionnaire vide, aucun mouvement.
-struct NoMotion : Motion {
+public struct NoMotion : Motion {
     
-    func load(sprite: Sprite) {
+    public func load(sprite: Sprite) {
         // Pas de chargement.
     }
     
-    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
+    public func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
         // Pas de mouvement.
     }
     

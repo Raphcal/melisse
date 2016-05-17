@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Melisse-Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Melisse-iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Melisse.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +23,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>51F8B8FC1CD78DF70029C1E0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6429FECF1CE879000052ED4D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>643817D71CE7A194002C68F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -10,33 +10,33 @@ import GLKit
 
 public class Sprite {
     
-    let definition: SpriteDefinition
-    let info: SpriteInfo?
-    var type: SpriteType = DefaultSpriteType.Decoration
+    public let definition: SpriteDefinition
+    public let info: SpriteInfo?
+    public var type: SpriteType = DefaultSpriteType.Decoration
     
-    var frame: Rectangle<GLfloat> {
+    public var frame: Rectangle<GLfloat> {
         didSet {
             vertexSurface.setQuadWith(frame)
         }
     }
-    var direction: Direction = .Right
+    public var direction: Direction = .Right
     
     let factory: SpriteFactory
     
     let reference: Int
-    let vertexSurface: Surface<GLfloat>
-    let texCoordSurface: Surface<GLshort>
+    public let vertexSurface: Surface<GLfloat>
+    public let texCoordSurface: Surface<GLshort>
     
-    var removed: Bool = false
+    public var removed: Bool = false
     
-    var hitbox: Hitbox
-    var motion: Motion = NoMotion()
+    public var hitbox: Hitbox
+    public var motion: Motion = NoMotion()
     
-    var currentAnimation: AnimationName?
-    var animation: Animation = NoAnimation()
+    public var currentAnimation: AnimationName?
+    public var animation: Animation = NoAnimation()
     
-    var variables = [String : GLfloat]()
-    var objects = [String : AnyObject]()
+    public var variables = [String : GLfloat]()
+    public var objects = [String : AnyObject]()
     
     public init() {
         definition = SpriteDefinition()
@@ -76,19 +76,19 @@ public class Sprite {
     
     // MARK: Gestion des mises à jour
     
-    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         motion.updateWith(timeSinceLastUpdate, sprite: self)
         animation.updateWith(timeSinceLastUpdate)
         animation.draw(self)
     }
     
-    func isLookingToward(point: Point<GLfloat>) -> Bool {
+    public func isLookingToward(point: Point<GLfloat>) -> Bool {
         return direction.isSameValue(point.x - frame.x)
     }
     
     // MARK: Méthodes de suppression du sprite
     
-    func destroy() {
+    public func destroy() {
         self.removed = true
         
         if definition.animations[DefaultAnimationName.Disappear.name]?.frames.count > 0 {
@@ -100,7 +100,7 @@ public class Sprite {
         }
     }
     
-    func explode(definition: Int) {
+    public func explode(definition: Int) {
         self.removed = true
         
         let explosion = factory.sprite(definition)
@@ -113,31 +113,31 @@ public class Sprite {
     
     // MARK: Gestion des animations
     
-    func setAnimation(animationName: AnimationName, force: Bool = false) {
+    public func setAnimation(animationName: AnimationName, force: Bool = false) {
         if animationName.name != currentAnimation?.name || force, let nextAnimation = definition.animations[animationName.name]?.toAnimation() {
             self.animation = animation.transitionTo(nextAnimation)
             self.currentAnimation = animationName
         }
     }
     
-    func setAnimation(animationName: AnimationName, onEnd: () -> Void) {
+    public func setAnimation(animationName: AnimationName, onEnd: () -> Void) {
         if let nextAnimation = definition.animations[animationName.name]?.toAnimation(onEnd) {
             self.animation = animation.transitionTo(nextAnimation)
             self.currentAnimation = animationName
         }
     }
     
-    func setBlinkingWith(duration duration: NSTimeInterval) {
+    public func setBlinkingWith(duration duration: NSTimeInterval) {
         self.animation = BlinkingAnimation(animation: animation, blinkRate: 0.2, duration: duration) { (animation) -> Void in
             self.animation = animation
         }
     }
     
-    func setBlinkingWith(rate rate: NSTimeInterval) {
+    public func setBlinkingWith(rate rate: NSTimeInterval) {
         self.animation = BlinkingAnimation(animation: animation, blinkRate: rate)
     }
     
-    func setBlinking(blinking: Bool) {
+    public func setBlinking(blinking: Bool) {
         if blinking {
             if !(animation is BlinkingAnimation) {
                 let blinkingAnimation = BlinkingAnimation(animation: animation)
@@ -150,7 +150,7 @@ public class Sprite {
     
     // MARK: Accès aux variables
     
-    func variable(name: String, or defaultValue: GLfloat = 0) -> GLfloat {
+    public func variable(name: String, or defaultValue: GLfloat = 0) -> GLfloat {
         if let value = self.variables[name] {
             return value
         } else {
@@ -158,7 +158,7 @@ public class Sprite {
         }
     }
     
-    func variable(name: String, or defaultValue: Int = 0) -> Int {
+    public func variable(name: String, or defaultValue: Int = 0) -> Int {
         if let value = self.variables[name] {
             return Int(value)
         } else {
@@ -168,7 +168,7 @@ public class Sprite {
     
 }
 
-func +=(inout left: GLfloat?, right: GLfloat) {
+public func +=(inout left: GLfloat?, right: GLfloat) {
     if let l = left {
         left = l + right
     } else {
@@ -176,7 +176,7 @@ func +=(inout left: GLfloat?, right: GLfloat) {
     }
 }
 
-func +=(inout left: Int?, right: Int) {
+public func +=(inout left: Int?, right: Int) {
     if let l = left {
         left = l + right
     } else {
