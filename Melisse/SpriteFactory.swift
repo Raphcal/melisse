@@ -30,7 +30,7 @@ public class SpriteFactory {
     
     var collisions = [Sprite]()
     
-    init() {
+    public init() {
         self.capacity = 0
         self.textureAtlas = GLKTextureInfo()
         self.pools = []
@@ -39,7 +39,7 @@ public class SpriteFactory {
         self.texCoordPointer = SurfaceArray()
     }
     
-    init(capacity: Int, textureAtlas: GLKTextureInfo, definitions: [SpriteDefinition], useMultiplePools: Bool = false) {
+    public init(capacity: Int, textureAtlas: GLKTextureInfo, definitions: [SpriteDefinition], useMultiplePools: Bool = false) {
         self.capacity = capacity
         self.definitions = definitions
         self.textureAtlas = textureAtlas
@@ -64,19 +64,19 @@ public class SpriteFactory {
         texCoordPointer.clear()
     }
     
-    convenience init(capacity: Int, useMultiplePools: Bool = false) {
+    public convenience init(capacity: Int, useMultiplePools: Bool = false) {
         self.init(capacity: capacity, textureAtlas: Resources.instance.textureAtlas, definitions: Resources.instance.definitions, useMultiplePools: useMultiplePools)
     }
     
     // MARK: Gestion des mises à jour
     
-    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         for sprite in sprites {
             sprite.updateWith(timeSinceLastUpdate)
         }
     }
     
-    func updateCollisionsForSprite(player: Sprite) {
+    public func updateCollisionsForSprite(player: Sprite) {
         self.collisions = collidables.flatMap { (sprite) -> Sprite? in
             return sprite !== player && sprite.hitbox.collidesWith(player.hitbox) ? sprite : nil
         }
@@ -85,25 +85,25 @@ public class SpriteFactory {
     // MARK: Gestion de l'affichage
     
     /// Dessine les sprites de cette factory.
-    func draw(at translation: Point<GLfloat> = Point()) {
+    public func draw(at translation: Point<GLfloat> = Point()) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
     /// Dessine les sprites de cette factory sans prendre en compte la camera.
-    func drawUntranslated() {
+    public func drawUntranslated() {
         Draws.bindTexture(textureAtlas)
         Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
     // MARK: Création de sprites
     
-    func sprite(definition: Int) -> Sprite {
+    public func sprite(definition: Int) -> Sprite {
         return sprite(definitions[definition])
     }
     
-    func sprite(definition: Int?) -> Sprite? {
+    public func sprite(definition: Int?) -> Sprite? {
         if let definition = definition {
             return sprite(definitions[definition])
         } else {
@@ -111,7 +111,7 @@ public class SpriteFactory {
         }
     }
     
-    func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
+    public func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
         let sprite = self.sprite(definition)
         sprite.frame.topLeft = Point(x: x, y: y)
         return sprite
@@ -123,7 +123,7 @@ public class SpriteFactory {
     /// - parameter animation: Nom de l'animation à sélectionner.
     /// - parameter frame: Indice de l'étape d'animation à utiliser. La taille du nouveau sprite sera celle de l'étape d'animation.
     /// - returns: Un nouveau sprite.
-    func sprite(parent: Sprite, animation: AnimationName, frame: Int) -> Sprite {
+    public func sprite(parent: Sprite, animation: AnimationName, frame: Int) -> Sprite {
         let sprite = self.sprite(parent.definition, info: nil, after: parent)
         
         sprite.animation = SingleFrameAnimation(definition: parent.definition.animations[animation.name]!)
@@ -144,7 +144,7 @@ public class SpriteFactory {
     /// - parameter info: Informations du loader sur le sprite à créer.
     /// - parameter after: Si non nil, la référence du nouveau sprite sera (si possible) supérieur à celle du sprite donné.
     /// - returns: Un nouveau sprite.
-    func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
+    public func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
         // TODO: Ajout Info !!
         let sprite = Sprite(definition: definition, reference: reference, factory: self)
@@ -159,10 +159,10 @@ public class SpriteFactory {
     
     // MARK: Suppression de sprites
     
-    func removeSprite(sprite: Sprite) {
+    public func removeSprite(sprite: Sprite) {
         sprite.removed = true
         
-        (sprite.motion as? UnloadableMotion)?.unload(sprite)
+        sprite.motion.unload(sprite)
         pools[sprite.definition.distance.rawValue].release(sprite.reference)
         sprite.vertexSurface.clear()
         sprite.texCoordSurface.clear()
@@ -176,7 +176,7 @@ public class SpriteFactory {
         }
     }
     
-    func removeOrphanSprites() {
+    public func removeOrphanSprites() {
         for sprite in sprites {
             // TODO: Gérer INFO
             if sprite.info == nil && !sprite.removed {
@@ -185,7 +185,7 @@ public class SpriteFactory {
         }
     }
     
-    func clear() {
+    public func clear() {
         for sprite in sprites {
             removeSprite(sprite)
         }

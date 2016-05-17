@@ -12,7 +12,10 @@ import Foundation
 public protocol Motion {
     
     /// Initialisation du mouvement pour le sprite donné.
-    mutating func load(sprite : Sprite)
+    mutating func load(sprite: Sprite)
+    
+    /// Nettoyage du mouvement pour le sprite donné.
+    mutating func unload(sprite: Sprite)
     
     /// Calcul et application du mouvement pour le sprite donné.
     mutating func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
@@ -22,6 +25,10 @@ public protocol Motion {
 public extension Motion {
     
     func load(sprite: Sprite) {
+        // Implémentation vide.
+    }
+    
+    func unload(sprite: Sprite) {
         // Implémentation vide.
     }
     

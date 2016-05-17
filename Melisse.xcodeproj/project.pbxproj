@@ -48,7 +48,6 @@
 		6429FEFD1CE87B850052ED4D /* SpriteDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9111CD7B0E40029C1E0 /* SpriteDefinition.swift */; };
 		6429FEFE1CE87B850052ED4D /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91D1CD7B0E40029C1E0 /* Motion.swift */; };
 		6429FEFF1CE87B850052ED4D /* NoMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6496DB311CDF71F900121F0A /* NoMotion.swift */; };
-		6429FF001CE87B850052ED4D /* Unload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6496DB331CDF729B00121F0A /* Unload.swift */; };
 		6429FF021CE87B850052ED4D /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB61CE4A21300E452C7 /* Font.swift */; };
 		6429FF031CE87B850052ED4D /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB41CE4A02000E452C7 /* Text.swift */; };
 		6429FF041CE87B850052ED4D /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BA6C191CE1127E0093E184 /* Axe.swift */; };
@@ -112,7 +111,6 @@
 		6438180E1CE7A1F1002C68F8 /* SpriteDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9111CD7B0E40029C1E0 /* SpriteDefinition.swift */; };
 		6438180F1CE7A1F1002C68F8 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91D1CD7B0E40029C1E0 /* Motion.swift */; };
 		643818101CE7A1F1002C68F8 /* NoMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6496DB311CDF71F900121F0A /* NoMotion.swift */; };
-		643818111CE7A1F1002C68F8 /* Unload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6496DB331CDF729B00121F0A /* Unload.swift */; };
 		643818131CE7A1F1002C68F8 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB61CE4A21300E452C7 /* Font.swift */; };
 		643818141CE7A1F1002C68F8 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A95EB41CE4A02000E452C7 /* Text.swift */; };
 		643818151CE7A1F1002C68F8 /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BA6C191CE1127E0093E184 /* Axe.swift */; };
@@ -217,7 +215,6 @@
 		6496DB2C1CDF2AE200121F0A /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		6496DB2E1CDF2B1700121F0A /* SpriteInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteInfo.swift; sourceTree = "<group>"; };
 		6496DB311CDF71F900121F0A /* NoMotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoMotion.swift; sourceTree = "<group>"; };
-		6496DB331CDF729B00121F0A /* Unload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unload.swift; sourceTree = "<group>"; };
 		64B6F74E1CDE662100CECE15 /* AnimationFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationFrame.swift; sourceTree = "<group>"; };
 		64B6F7501CDE678D00CECE15 /* AnimationName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationName.swift; sourceTree = "<group>"; };
 		64B6F7551CDE6D2800CECE15 /* AnimationDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationDefinition.swift; sourceTree = "<group>"; };
@@ -459,7 +456,6 @@
 			children = (
 				51F8B91D1CD7B0E40029C1E0 /* Motion.swift */,
 				6496DB311CDF71F900121F0A /* NoMotion.swift */,
-				6496DB331CDF729B00121F0A /* Unload.swift */,
 			);
 			name = Motion;
 			sourceTree = "<group>";
@@ -648,7 +644,6 @@
 				6429FEFD1CE87B850052ED4D /* SpriteDefinition.swift in Sources */,
 				6429FEFE1CE87B850052ED4D /* Motion.swift in Sources */,
 				6429FEFF1CE87B850052ED4D /* NoMotion.swift in Sources */,
-				6429FF001CE87B850052ED4D /* Unload.swift in Sources */,
 				6429FF021CE87B850052ED4D /* Font.swift in Sources */,
 				6429FF031CE87B850052ED4D /* Text.swift in Sources */,
 				6429FF041CE87B850052ED4D /* Axe.swift in Sources */,
@@ -721,7 +716,6 @@
 				6438180B1CE7A1F1002C68F8 /* PlayOnceAnimation.swift in Sources */,
 				643817FD1CE7A1F1002C68F8 /* Draws.swift in Sources */,
 				643818141CE7A1F1002C68F8 /* Text.swift in Sources */,
-				643818111CE7A1F1002C68F8 /* Unload.swift in Sources */,
 				643817E81CE7A1F1002C68F8 /* Quadrilateral.swift in Sources */,
 				6438181B1CE7A1F1002C68F8 /* SpriteInfo.swift in Sources */,
 				6438181E1CE7A1F1002C68F8 /* ImagePalette.swift in Sources */,
