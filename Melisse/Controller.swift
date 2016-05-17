@@ -11,7 +11,7 @@ import Foundation
 public enum GamePadButton {
     case Up, Down, Left, Right, Jump, L, R, Start
     
-    static let values = [Up, Down, Left, Right, Jump, L, R, Start]
+    static public let values = [Up, Down, Left, Right, Jump, L, R, Start]
 }
 
 public protocol Controller {

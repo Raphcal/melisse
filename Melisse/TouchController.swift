@@ -21,7 +21,7 @@ public class TouchController : Controller {
     private let factory = SpriteFactory(capacity: 5)
     
     public var direction: GLfloat = 0
-    public var buttons = [GamePadButton:Button]()
+    var buttons = [GamePadButton : Button]()
     
     public let zoom: GLfloat
     
@@ -61,22 +61,22 @@ public class TouchController : Controller {
         } else {
             self.direction = 0
         }
-        factory.updateWithTimeSinceLastUpdate(0)
+        factory.updateWith(0)
     }
     
     public func createButtonsWith(definition: Int) {
-        let leftButton = Button(factory: factory, frame: padButtonFrame, zoom: zoom)
-        let rightButton = Button(factory: factory, frame: padButtonFrame, zoom: zoom)
-        let jumpButton = Button(factory: factory, frame: jumpButtonFrame, zoom: zoom)
+        let leftButton = Button(factory: factory, definition: definition, frame: padButtonFrame, zoom: zoom)
+        let rightButton = Button(factory: factory, definition: definition, frame: padButtonFrame, zoom: zoom)
+        let jumpButton = Button(factory: factory, definition: definition, frame: jumpButtonFrame, zoom: zoom)
         
         leftButton.sprite!.direction = .Left
         
         let defaultSize = 48 * zoom
         let padY = View.instance.height - 64 * zoom
         
-        leftButton.sprite!.center = Point(x: 40 * zoom, y: padY)
-        rightButton.sprite!.center = Point(x: 120 * zoom, y: padY)
-        jumpButton.sprite!.center = Point(x: View.instance.width - defaultSize, y: padY)
+        leftButton.sprite!.frame.center = Point(x: 40 * zoom, y: padY)
+        rightButton.sprite!.frame.center = Point(x: 120 * zoom, y: padY)
+        jumpButton.sprite!.frame.center = Point(x: View.instance.width - defaultSize, y: padY)
         
         buttons[.Left] = leftButton
         buttons[.Right] = rightButton
@@ -108,13 +108,13 @@ class Button {
         sprite.animation = SingleFrameAnimation(definition: sprite.animation.definition)
         sprite.animation.frameIndex = frame
         
-        sprite.frame.size = Size(width: GLfloat(sprite.animation.frame.width) * zoom, height: GLfloat(sprite.animation.frame.height) * zoom)
+        sprite.frame.size = Size(width: GLfloat(sprite.animation.frame.frame.width) * zoom, height: GLfloat(sprite.animation.frame.frame.height) * zoom)
         
         let margin = 32 * zoom
         
         self.sprite = sprite
         self.zoom = zoom
-        self.hitbox = SimpleHitbox(center: sprite, width: sprite.width + margin, height: sprite.height + margin)
+        self.hitbox = SimpleHitbox(frame: Rectangle(center: sprite.frame.center, size: Size(width: sprite.frame.width + margin, height: sprite.frame.height + margin)))
         self.frame = frame
     }
     
@@ -122,7 +122,7 @@ class Button {
         self.sprite = nil
         self.frame = 0
         self.zoom = zoom
-        self.hitbox = SimpleHitbox(center: Point(x: left + width / 2, y: top + width / 2), width: width, height: height)
+        self.hitbox = SimpleHitbox(frame: Rectangle(x: left + width / 2, y: top + width / 2, width: width, height: height))
     }
     
     deinit {
@@ -134,7 +134,7 @@ class Button {
         self.state = false
         
         for touch in touches.values {
-            self.state = state || hitbox.collidesWith(touch.x * zoom, y: touch.y * zoom)
+            self.state = state || hitbox.collidesWith(Point(x: touch.x * zoom, y: touch.y * zoom))
         }
         
         if let sprite = self.sprite {

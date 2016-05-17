@@ -12,7 +12,12 @@ public struct View {
     
     static public var instance = View()
     
-    let width: GLfloat = 384
+    public let width: GLfloat = 384
+    public var height: GLfloat {
+        get {
+            return size.height
+        }
+    }
     
     public private(set) var size = Size<GLfloat>(width: 384, height: 240)
     

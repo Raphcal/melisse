@@ -43,7 +43,7 @@ public protocol Layout {
 public class VerticalLayout : Layout {
     
     private let origin: Point<GLfloat>
-    private let margin: GLfloat = 4
+    private let margin: GLfloat
     
     private var y: GLfloat
     
@@ -127,16 +127,18 @@ public class Menu {
     private func selectItemAt(index: Int) {
         self.selection = min(max(index, 0), items.count - 1)
         
-        let square = selectedItem.square
-        cursor.center = Spot(x: square.left - cursor.width - cursor.width, y: square.y)
+        if let cursor = cursor {
+            let frame = selectedItem.frame
+            cursor.frame.center = Point(x: frame.left - cursor.frame.width - cursor.frame.width, y: frame.y)
+        }
     }
     
-    private func itemIndexFor(touch: Spot) -> Int? {
+    private func itemIndexFor(touch: Point<GLfloat>) -> Int? {
         let ratio = View.instance.ratio
-        let point = Spot(x: touch.x * ratio, y: touch.y * ratio)
+        let point = Point(x: touch.x * ratio, y: touch.y * ratio)
         
         for index in 0..<items.count {
-            if SimpleHitbox(square: items[index].square).collidesWith(point) {
+            if SimpleHitbox(frame: items[index].frame).collidesWith(point) {
                 return index
             }
         }
