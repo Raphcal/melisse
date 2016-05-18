@@ -24,6 +24,10 @@ public extension Hitbox {
             point.y >= frame.top && point.y < frame.bottom
     }
     
+    func collidesWith(rectangle: Rectangle<GLfloat>) -> Bool {
+        return collidesWith(SimpleHitbox(frame: rectangle))
+    }
+    
     func collidesWith(other: Hitbox) -> Bool {
         return (frame.x - other.frame.x).absolute <= (frame.width + other.frame.width).half
             && (frame.y - other.frame.y).absolute <= (frame.height + other.frame.height).half
@@ -33,7 +37,11 @@ public extension Hitbox {
 
 public struct SimpleHitbox : Hitbox {
     
-    public var frame = Rectangle<GLfloat>()
+    public var frame: Rectangle<GLfloat>
+    
+    public init(frame: Rectangle<GLfloat> = Rectangle()) {
+        self.frame = frame
+    }
     
 }
 
