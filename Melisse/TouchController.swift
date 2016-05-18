@@ -8,8 +8,6 @@
 
 import GLKit
 
-// TODO: Revoir cette classe.
-
 /// Contrôle avec un pad virtuel sur l'écran tactile.
 public class TouchController : Controller {
     

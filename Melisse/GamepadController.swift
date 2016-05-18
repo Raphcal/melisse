@@ -8,13 +8,11 @@
 
 import GameController
 
-// TODO: Revoir cette classe.
-
 /// Contrôle avec une manette externe.
-class GamepadController : Controller {
+public class GamepadController : Controller {
     
-    let controller : GCController
-    var direction : GLfloat {
+    public let controller: GCController
+    public var direction: GLfloat {
         get {
             if let xAxisValue = controller.gamepad?.dpad.xAxis.value {
                 if xAxisValue < 0 {
@@ -27,13 +25,13 @@ class GamepadController : Controller {
         }
     }
     
-    private var states = [GamePadButton:Bool]()
+    private var states = [GamePadButton : Bool]()
     
-    init(controller: GCController) {
+    public init(controller: GCController) {
         self.controller = controller
     }
     
-    func pressed(button: GamePadButton) -> Bool {
+    public func pressed(button: GamePadButton) -> Bool {
         let previous = states[button]
         let current = pressing(button)
         
@@ -42,7 +40,7 @@ class GamepadController : Controller {
         return (previous == nil || previous == false) && current
     }
     
-    func pressing(button: GamePadButton) -> Bool {
+    public func pressing(button: GamePadButton) -> Bool {
         if let gamepad = controller.gamepad {
             switch button {
             case .Up:
@@ -66,14 +64,6 @@ class GamepadController : Controller {
         } else {
             return false
         }
-    }
-    
-    func draw() {
-        // Pas d'affichage quand une manette est branchée.
-    }
-    
-    func updateWithTouches(touches: [Int : Point]) {
-        // Pas de prise en compte de l'écran tactile.
     }
     
 }

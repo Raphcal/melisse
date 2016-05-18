@@ -8,8 +8,6 @@
 
 import GLKit
 
-// TODO: Revoir cette classe.
-
 public class Input : Controller {
     
     static public let instance = Input()

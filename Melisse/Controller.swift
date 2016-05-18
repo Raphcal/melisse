@@ -6,7 +6,7 @@
 //  Copyright © 2016 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
+import GLKit
 
 public enum GamePadButton {
     case Up, Down, Left, Right, Jump, L, R, Start
@@ -21,5 +21,13 @@ public protocol Controller {
     func pressed(button: GamePadButton) -> Bool
     func pressing(button: GamePadButton) -> Bool
     func draw()
+    
+}
+
+public extension Controller {
+    
+    func draw() {
+        // Pas d'affichage.
+    }
     
 }

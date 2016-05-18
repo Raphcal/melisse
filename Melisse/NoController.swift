@@ -8,29 +8,17 @@
 
 import GLKit
 
-// TODO: Revoir cette classe.
-
 /// Pas de contrôle.
-class NoController : Controller {
+public struct NoController : Controller {
     
-    static let instance = NoController()
+    public var direction: GLfloat = 0
     
-    var direction : GLfloat = 0
-    
-    func pressed(button: GamePadButton) -> Bool {
+    public func pressed(button: GamePadButton) -> Bool {
         return false
     }
     
-    func pressing(button: GamePadButton) -> Bool {
+    public func pressing(button: GamePadButton) -> Bool {
         return false
-    }
-    
-    func draw() {
-        // Pas de vue.
-    }
-    
-    func updateWithTouches(touches: [Int:Point<GLfloat>]) {
-        // Pas de traitement.
     }
     
 }
