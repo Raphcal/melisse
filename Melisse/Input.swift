@@ -12,7 +12,6 @@ public class Input : Controller {
     
     static public let instance = Input()
     
-    public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     public var controller: Controller
     
     public var direction: GLfloat {
@@ -32,16 +31,12 @@ public class Input : Controller {
         #endif
     }
     
-    func touchedScreen() -> Bool {
-        return touchCount > previousTouchCount
-    }
-    
-    func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
-        self.touches = touches
-        self.previousTouchCount = touchCount
-        self.touchCount = touches.count
-        
-        (controller as? TouchController)?.updateWith(touches)
+    public func touchedScreen() -> Bool {
+        #if os(iOS)
+            return TouchController.instance.touchedScreen()
+        #else
+            return false
+        #endif
     }
     
     public func pressed(button: GamePadButton) -> Bool {

@@ -19,9 +19,13 @@ public class TouchController : Controller {
     private let factory = SpriteFactory(capacity: 5)
     
     public var direction: GLfloat = 0
+    public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     var buttons = [GamePadButton : Button]()
     
     public let zoom: GLfloat
+    
+    private var touchCount = 0
+    private var previousTouchCount = 0
     
     public init() {
         self.zoom = View.instance.width / GLfloat(UIScreen.mainScreen().bounds.width)
@@ -43,11 +47,19 @@ public class TouchController : Controller {
         }
     }
     
+    public func touchedScreen() -> Bool {
+        return touchCount > previousTouchCount
+    }
+    
     public func draw() {
         factory.draw()
     }
     
     public func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
+        self.touches = touches
+        self.previousTouchCount = touchCount
+        self.touchCount = touches.count
+        
         for button in buttons.values {
             button.updateWith(touches)
         }

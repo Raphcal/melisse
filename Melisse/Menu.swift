@@ -109,13 +109,16 @@ public class Menu {
     }
     
     public func update() {
-        if Input.instance.touches.count == 1 {
-            let touch = Input.instance.touches.values.first!
-            if let index = itemIndexFor(touch) {
-                selectItemAt(index)
-                onSelection?(item: selectedItem)
+        #if os(iOS)
+            if let touch = TouchController.instance.touches.values.first {
+                if let index = itemIndexFor(touch) {
+                    selectItemAt(index)
+                    onSelection?(item: selectedItem)
+                    return
+                }
             }
-        } else if Input.instance.pressed(.Down) {
+        #endif
+        if Input.instance.pressed(.Down) {
             selectItemAt(selection + 1)
         } else if Input.instance.pressed(.Up) {
             selectItemAt(selection - 1)

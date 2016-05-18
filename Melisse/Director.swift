@@ -15,7 +15,7 @@ import OpenGL.GL
 
 public class Director {
     
-    static let instance = Director()
+    static public weak var instance: Director?
     
     static let fadeDuration: NSTimeInterval = 0.5
     static let fullProgress: Float = 1
@@ -30,6 +30,10 @@ public class Director {
     
     public init() {
         // Public initializer.
+    }
+    
+    public func makeCurrent() {
+        Director.instance = self
     }
     
     public func startWith(scene: Scene) {

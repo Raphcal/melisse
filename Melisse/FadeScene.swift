@@ -43,7 +43,7 @@ class FadeScene : Fade {
         self.progress = min(GLfloat(time / duration), fullProgress)
         
         if !firstScene && progress >= fullProgress {
-            Director.instance.nextScene = nextScene
+            Director.instance!.nextScene = nextScene
             
         } else if firstScene && progress >= halfProgress {
             firstScene = false
