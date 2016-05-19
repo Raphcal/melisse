@@ -59,7 +59,7 @@ public class ImagePalette : Palette {
     
     public func loadTexture() {
         do {
-            self.texture = try Resources.textureForResource(textureName + "-32", withExtension: "png")
+            self.texture = try textureForResource(textureName + "-32", extension: "png")
         } catch let error as NSError {
             NSLog("Erreur lors du chargement de la texture %@-32.png : %@", textureName, error)
         }

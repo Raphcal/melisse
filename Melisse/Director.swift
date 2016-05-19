@@ -15,7 +15,7 @@ import OpenGL.GL
 
 public class Director {
     
-    static public weak var instance: Director?
+    static public private(set) weak var instance: Director?
     
     static let fadeDuration: NSTimeInterval = 0.5
     static let fullProgress: Float = 1

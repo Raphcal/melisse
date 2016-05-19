@@ -39,10 +39,10 @@ public class SpriteFactory {
         self.texCoordPointer = SurfaceArray()
     }
     
-    public init(capacity: Int, textureAtlas: GLKTextureInfo, definitions: [SpriteDefinition], useMultiplePools: Bool = false) {
+    public init(capacity: Int, spriteAtlas: SpriteAtlas, useMultiplePools: Bool = false) {
         self.capacity = capacity
-        self.definitions = definitions
-        self.textureAtlas = textureAtlas
+        self.definitions = spriteAtlas.definitions
+        self.textureAtlas = spriteAtlas.texture
         
         if useMultiplePools {
             let middle = (capacity * 3) / 4
@@ -64,8 +64,8 @@ public class SpriteFactory {
         texCoordPointer.clear()
     }
     
-    public convenience init(capacity: Int, useMultiplePools: Bool = false) {
-        self.init(capacity: capacity, textureAtlas: Resources.instance.textureAtlas, definitions: Resources.instance.definitions, useMultiplePools: useMultiplePools)
+    convenience public init(capacity: Int, useMultiplePools: Bool = false) {
+        self.init(capacity: capacity, spriteAtlas: SpriteAtlas.currentAtlas!, useMultiplePools: useMultiplePools)
     }
     
     // MARK: Gestion des mises à jour

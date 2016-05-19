@@ -10,7 +10,7 @@ import GLKit
 
 public class Camera {
     
-    static public weak var instance: Camera?
+    static public private(set) weak var instance: Camera?
     
     public var frame: Rectangle<GLfloat>
     
