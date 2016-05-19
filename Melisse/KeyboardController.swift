@@ -30,17 +30,17 @@ public enum KeyCode : UInt16 {
 }
 
 /// Reçoit les événements du clavier et les dispatch vers le bon contrôleur.
-class KeyboardInputSource {
+public class KeyboardInputSource {
 
-    static let instance = KeyboardInputSource()
+    static public let instance = KeyboardInputSource()
 
-    var listeners = [UInt16:KeyboardController]()
+    public var listeners = [UInt16 : KeyboardController]()
     
-    func keyDown(keyCode: UInt16) {
+    public func keyDown(keyCode: UInt16) {
         listeners[keyCode]?.keyDown(keyCode)
     }
     
-    func keyUp(keyCode: UInt16) {
+    public func keyUp(keyCode: UInt16) {
         listeners[keyCode]?.keyUp(keyCode)
     }
 

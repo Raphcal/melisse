@@ -28,7 +28,7 @@ public class SpriteAtlas {
         self.texture = texture
     }
     
-    public init?(name: String, folder: String? = nil, animationNames: [AnimationName]) {
+    public init?(name: String, in folder: String? = nil, animationNames: [AnimationName]) {
         do {
             texture = try textureForResource(name, extension: "png", in: folder)
         } catch {
