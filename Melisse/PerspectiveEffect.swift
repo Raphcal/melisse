@@ -43,6 +43,10 @@ public struct PerspectiveEffect {
                              UIInterfaceOrientation.LandscapeLeft : MotionMetric(from: -1, to: 1)]
     #endif
     
+    public init() {
+        // Public initializer.
+    }
+    
     public func load() {
         #if os(iOS)
             motionManager.deviceMotionUpdateInterval = 1 / 60

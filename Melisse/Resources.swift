@@ -15,14 +15,14 @@ enum ResourceLoadError : ErrorType {
 class Resources {
     
     static let instance = Resources()
-    static var context : String?
+    static var context: String?
     
-    var textureAtlas : GLKTextureInfo
-    var definitions : [SpriteDefinition]
+    var textureAtlas: GLKTextureInfo
+    var definitions: [SpriteDefinition]
     
     var grid = Grid()
     
-    init() {
+    init(animationNames: [AnimationName] = []) {
         do {
             self.textureAtlas = try Resources.textureForResource("atlas", withExtension: "png")
         } catch {
@@ -32,7 +32,7 @@ class Resources {
         
         if let url = Resources.URLForResource("atlas", withExtension: "sprites"), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
-            self.definitions = SpriteDefinition.definitionsFrom(inputStream)
+            self.definitions = SpriteDefinition.definitionsFrom(inputStream, animationNames: animationNames)
             inputStream.close()
         } else {
             NSLog("Erreur de chargement des définitions.")

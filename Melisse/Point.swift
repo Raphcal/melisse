@@ -47,6 +47,8 @@ extension Point where Coordinate : FloatingPoint {
     
 }
 
+// MARK: - Opérations entre instances de Point
+
 public func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {
     return left.x == right.x && left.y == right.y
 }
@@ -74,4 +76,29 @@ public prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinat
 public func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
     left.x += right.x
     left.y += right.y
+}
+
+public func -=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
+    left.x -= right.x
+    left.y -= right.y
+}
+
+// MARK: - Opérations entre Point et une coordonée
+
+public func +<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
+    return Point(x: left.x + right, y: left.y + right)
+}
+
+public func -<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
+    return Point(x: left.x - right, y: left.y - right)
+}
+
+public func +=<Coordinate>(inout left: Point<Coordinate>, right: Coordinate) {
+    left.x += right
+    left.y += right
+}
+
+public func -=<Coordinate>(inout left: Point<Coordinate>, right: Coordinate) {
+    left.x -= right
+    left.y -= right
 }

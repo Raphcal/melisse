@@ -47,7 +47,7 @@ public class VerticalLayout : Layout {
     
     private var y: GLfloat
     
-    init(origin: Point<GLfloat>, margin: GLfloat = 4) {
+    public init(origin: Point<GLfloat>, margin: GLfloat = 4) {
         self.origin = origin
         self.margin = margin
         self.y = origin.y
@@ -77,7 +77,7 @@ public class Menu {
         }
     }
     
-    var onSelection: MenuItemListener?
+    public var onSelection: MenuItemListener?
     
     public init() {
         self.factory = SpriteFactory()

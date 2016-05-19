@@ -28,7 +28,7 @@ public class Backdrop {
         createVerticesAndTextureCoordinates()
     }
     
-    public func updateWith(translation: Point<GLfloat>, offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
+    public func updateWith(translation: Point<GLfloat> = Point(), offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]

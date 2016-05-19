@@ -84,21 +84,21 @@ public struct SpriteDefinition : Equatable {
         self.animations = animations
     }
     
-    public static func definitionsFrom(inputStream : NSInputStream) -> [SpriteDefinition] {
+    public static func definitionsFrom(inputStream : NSInputStream, animationNames: [AnimationName] = []) -> [SpriteDefinition] {
         var definitions : [SpriteDefinition] = []
         
         let definitionCount = Streams.readInt(inputStream)
         for index in 0..<definitionCount {
-            definitions.append(SpriteDefinition(inputStream: inputStream, index: index))
+            definitions.append(SpriteDefinition(inputStream: inputStream, index: index, animationNames: animationNames))
         }
         
         return definitions
     }
     
-    public static func definitionsFrom(resource: String, extension ext: String = defaultExtension) -> [SpriteDefinition]? {
+    public static func definitionsFrom(resource: String, extension ext: String = defaultExtension, animationNames: [AnimationName] = []) -> [SpriteDefinition]? {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: ext), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
-            let definitions = definitionsFrom(inputStream)
+            let definitions = definitionsFrom(inputStream, animationNames: animationNames)
             inputStream.close()
             
             return definitions
