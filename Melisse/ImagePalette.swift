@@ -12,27 +12,35 @@ public class ImagePalette : Palette {
     
     static let fileExtension = "pal"
     
-    public var texture = GLKTextureInfo()
+    public var texture = GLKTextureInfo() {
+        didSet {
+            self.tileSize = GLushort(Double(rawTileSize * 0xFF) / Double(texture.width))
+            self.padding = GLushort(Double(rawPadding * 0xFF) / Double(texture.width))
+        }
+    }
     public let textureName: String
-    public let tileSize: GLshort
-    public let padding: GLshort
+    public var tileSize: GLushort = 0
+    public var padding: GLushort = 0
     public let columns: Int
+    
+    let rawTileSize: Int
+    let rawPadding: Int
     
     public let functions: [[UInt8]?]
     
     public init() {
         self.textureName = ""
-        self.tileSize = 0
+        self.rawTileSize = 0
+        self.rawPadding = 0
         self.columns = 0
-        self.padding = 0
         self.functions = []
     }
     
     public init(inputStream : NSInputStream) {
         self.textureName = Streams.readString(inputStream)
         self.columns = Streams.readInt(inputStream)
-        self.tileSize = GLshort(Streams.readInt(inputStream))
-        self.padding = GLshort(Streams.readInt(inputStream))
+        self.rawTileSize = Streams.readInt(inputStream)
+        self.rawPadding = Streams.readInt(inputStream)
         
         let size = Streams.readInt(inputStream)
         self.functions = (0 ..< size).map { _ in

@@ -28,7 +28,7 @@ public protocol Numeric {
     
     init(_: Int)
     init(_: GLuint)
-    init(_: GLshort)
+    init(_: GLushort)
     init(_: GLfloat)
     
     static func min(a: Self, _ b: Self, _ c: Self, _ d: Self) -> Self
@@ -99,21 +99,21 @@ public func %(left: GLfloat, right: GLfloat) -> GLfloat {
     return (division - floor(division)) * right
 }
 
-extension GLshort : Numeric, Signed, Integer {
+extension GLushort : Numeric, Integer {
     
-    public var half: GLshort {
+    public var half: GLushort {
         return self / 2
     }
     
-    public var absolute: GLshort {
-        return abs(self)
+    public var absolute: GLushort {
+        return self
     }
     
-    public static func min(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
+    public static func min(a: GLushort, _ b: GLushort, _ c: GLushort, _ d: GLushort) -> GLushort {
         return Swift.min(a, b, c, d)
     }
     
-    public static func max(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
+    public static func max(a: GLushort, _ b: GLushort, _ c: GLushort, _ d: GLushort) -> GLushort {
         return Swift.max(a, b, c, d)
     }
     

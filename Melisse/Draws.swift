@@ -30,7 +30,7 @@ public class Draws {
         glDeleteTextures(1, &name)
     }
     
-    public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLshort>, count: GLsizei) {
+    public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLushort>, count: GLsizei) {
         if drawMode != .Texture {
             glDisableClientState(GLenum(GL_COLOR_ARRAY))
             glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
@@ -38,7 +38,7 @@ public class Draws {
             drawMode = .Texture
         }
         glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
-        glTexCoordPointer(GLint(coordinatesByTexture), GLenum(GL_SHORT), 0, texCoordPointer)
+        glTexCoordPointer(GLint(coordinatesByTexture), GLenum(GL_UNSIGNED_SHORT), 0, texCoordPointer)
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
     }
     

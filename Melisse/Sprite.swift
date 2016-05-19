@@ -25,7 +25,7 @@ public class Sprite : Equatable {
     
     let reference: Int
     public let vertexSurface: Surface<GLfloat>
-    public let texCoordSurface: Surface<GLshort>
+    public let texCoordSurface: Surface<GLushort>
     
     public var removed: Bool = false
     
