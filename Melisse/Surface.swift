@@ -83,7 +83,7 @@ public extension Surface where Element: FloatingPoint, Element: Signed {
     }
     
     func setQuadWith(rectangle: Rectangle<Element>) {
-        setQuadWith(left: rectangle.left, right: rectangle.right, top: rectangle.top, bottom: rectangle.bottom)
+        setQuadWith(left: rectangle.left, right: rectangle.right, top: -rectangle.top, bottom: -rectangle.bottom)
     }
     
     func setQuadWith(quadrilateral: Quadrilateral<Element>) {

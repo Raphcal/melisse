@@ -33,7 +33,7 @@ public struct AnimationFrame : Equatable {
         let y = Streams.readInt(inputStream)
         let width = Streams.readInt(inputStream)
         let height = Streams.readInt(inputStream)
-        self.frame = Rectangle(left: x, top: y, width: width, height: height)
+        self.frame = Rectangle(x: x, y: y, width: width, height: height)
         
         if Streams.readBoolean(inputStream) {
             let left = GLfloat(Streams.readInt(inputStream))
