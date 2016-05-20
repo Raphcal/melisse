@@ -11,12 +11,11 @@ import GLKit
 public struct Surface<Element : Numeric> {
     
     var memory: UnsafeMutablePointer<Element>
-    var cursor: Int
     var coordinates: Int
     var vertexesByQuad: Int
     
     public func clear() {
-        memset(memory, 0, vertexesByQuad * coordinates)
+        memset(memory, 0, vertexesByQuad * coordinates * sizeof(Element))
     }
     
     public func setQuadWith(left left: Element, top: Element, width: Element, height: Element) {
@@ -25,32 +24,32 @@ public struct Surface<Element : Numeric> {
     
     public func setQuadWith(left left: Element, right: Element, top: Element, bottom: Element) {
         // Bas gauche
-        memory[cursor] = left
-        memory[cursor + 1] = bottom
+        memory[0] = left
+        memory[1] = bottom
         
         // (idem)
-        memory[cursor + 2] = left
-        memory[cursor + 3] = bottom
+        memory[2] = left
+        memory[3] = bottom
         
         // Bas droite
-        memory[cursor + 4] = right
-        memory[cursor + 5] = bottom
+        memory[4] = right
+        memory[5] = bottom
         
         // Haut gauche
-        memory[cursor + 6] = left
-        memory[cursor + 7] = top
+        memory[6] = left
+        memory[7] = top
         
         // Haut droite
-        memory[cursor + 8] = right
-        memory[cursor + 9] = top
+        memory[8] = right
+        memory[9] = top
         
         // (idem)
-        memory[cursor + 10] = right
-        memory[cursor + 11] = top
+        memory[10] = right
+        memory[11] = top
     }
     
     public func setColor(color: Color<Element>) {
-        var index = cursor
+        var index = 0
         for _ in 0 ..< vertexesByQuad {
             memory[index] = color.red
             memory[index + 1] = color.green
@@ -61,7 +60,7 @@ public struct Surface<Element : Numeric> {
     }
     
     public func setColor(with white: Element, alpha: Element) {
-        var index = cursor
+        var index = 0
         for _ in 0 ..< vertexesByQuad {
             memory[index] = white
             memory[index + 1] = white
@@ -87,28 +86,28 @@ public extension Surface where Element: FloatingPoint, Element: Signed {
     }
     
     func setQuadWith(quadrilateral: Quadrilateral<Element>) {
-        memory[cursor] = quadrilateral.bottomLeft.x
-        memory[cursor + 1] = -quadrilateral.bottomLeft.y
+        memory[0] = quadrilateral.bottomLeft.x
+        memory[1] = -quadrilateral.bottomLeft.y
         
         // (idem)
-        memory[cursor + 2] = quadrilateral.bottomLeft.x
-        memory[cursor + 3] = -quadrilateral.bottomLeft.y
+        memory[2] = quadrilateral.bottomLeft.x
+        memory[3] = -quadrilateral.bottomLeft.y
         
         // bas droite
-        memory[cursor + 4] = quadrilateral.bottomRight.x
-        memory[cursor + 5] = -quadrilateral.bottomRight.y
+        memory[4] = quadrilateral.bottomRight.x
+        memory[5] = -quadrilateral.bottomRight.y
         
         // haut gauche
-        memory[cursor + 6] = quadrilateral.topLeft.x
-        memory[cursor + 7] = -quadrilateral.topLeft.y
+        memory[6] = quadrilateral.topLeft.x
+        memory[7] = -quadrilateral.topLeft.y
         
         // haut droite
-        memory[cursor + 8] = quadrilateral.topRight.x
-        memory[cursor + 9] = -quadrilateral.topRight.y
+        memory[8] = quadrilateral.topRight.x
+        memory[9] = -quadrilateral.topRight.y
         
         // (idem)
-        memory[cursor + 10] = quadrilateral.topRight.x
-        memory[cursor + 11] = -quadrilateral.topRight.y
+        memory[10] = quadrilateral.topRight.x
+        memory[11] = -quadrilateral.topRight.y
     }
     
 }

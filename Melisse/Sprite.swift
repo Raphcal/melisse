@@ -44,8 +44,8 @@ public class Sprite : Equatable {
         frame = Rectangle()
         factory = SpriteFactory()
         reference = -1
-        vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
-        texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), cursor: 0, coordinates: 0, vertexesByQuad: vertexesByQuad)
+        vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
+        texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
         hitbox = SimpleHitbox()
     }
     

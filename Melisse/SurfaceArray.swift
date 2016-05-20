@@ -53,7 +53,7 @@ public class SurfaceArray<Element where Element: Numeric> {
     }
     
     public func surfaceAt(index: Int) -> Surface<Element> {
-        return Surface<Element>(memory: memory, cursor: index * coordinates * vertexesByQuad, coordinates: coordinates, vertexesByQuad: vertexesByQuad)
+        return Surface<Element>(memory: memory.advancedBy(index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
     }
     
     public func reset() {
