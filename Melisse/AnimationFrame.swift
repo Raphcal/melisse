@@ -10,7 +10,7 @@ import GLKit
 
 public struct AnimationFrame : Equatable {
     
-    public var frame: Rectangle<GLshort>
+    public var frame: Rectangle<Int>
     public var hitbox: Rectangle<GLfloat>
     
     public init() {
@@ -18,21 +18,21 @@ public struct AnimationFrame : Equatable {
         self.hitbox = Rectangle()
     }
     
-    public init(width: GLshort, height: GLshort) {
+    public init(width: Int, height: Int) {
         self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
-    public init(x: GLshort, y: GLshort, width: GLshort, height: GLshort) {
+    public init(x: Int, y: Int, width: Int, height: Int) {
         self.frame = Rectangle(left: x, top: y, width: width, height: height)
         self.hitbox = Rectangle()
     }
     
     public init(inputStream : NSInputStream) {
-        let x = GLshort(Streams.readInt(inputStream))
-        let y = GLshort(Streams.readInt(inputStream))
-        let width = GLshort(Streams.readInt(inputStream))
-        let height = GLshort(Streams.readInt(inputStream))
+        let x = Streams.readInt(inputStream)
+        let y = Streams.readInt(inputStream)
+        let width = Streams.readInt(inputStream)
+        let height = Streams.readInt(inputStream)
         self.frame = Rectangle(left: x, top: y, width: width, height: height)
         
         if Streams.readBoolean(inputStream) {
@@ -51,12 +51,12 @@ public struct AnimationFrame : Equatable {
         sprite.texCoordSurface.setQuadWith(left: frame.x, top: frame.y, width: frame.width, height: frame.height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
     }
     
-    public func frameChunksFor(width width: GLshort, direction: Direction = .Right) -> [AnimationFrame] {
-        let start = frame.width * GLshort(direction.mirror)
-        let end = frame.width * (1 - GLshort(direction.mirror))
-        let width = GLshort(width) * GLshort(direction.value)
+    public func frameChunksFor(width width: Int, direction: Direction = .Right) -> [AnimationFrame] {
+        let start = frame.width * Int(direction.mirror)
+        let end = frame.width * (1 - Int(direction.mirror))
+        let width = width * Int(direction.value)
         
-        return start.stride(to: end, by: Int(width)).map { left in
+        return start.stride(to: end, by: width).map { left in
             AnimationFrame(x: frame.x + left, y: frame.y, width: width, height: frame.height)
         }
     }

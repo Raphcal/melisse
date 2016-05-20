@@ -26,7 +26,7 @@ public class SpriteFactory {
     public let definitions: [SpriteDefinition]
     
     public let vertexPointer: SurfaceArray<GLfloat>
-    public let texCoordPointer: SurfaceArray<GLshort>
+    public let texCoordPointer: SurfaceArray<GLfloat>
     
     var collisions = [Sprite]()
     

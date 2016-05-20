@@ -99,14 +99,14 @@ public func %(left: GLfloat, right: GLfloat) -> GLfloat {
     return (division - floor(division)) * right
 }
 
-extension GLshort : Numeric, Integer {
+extension GLshort : Numeric, Integer, Signed {
     
     public var half: GLshort {
         return self / 2
     }
     
     public var absolute: GLshort {
-        return self
+        return abs(self)
     }
     
     public static func min(a: GLshort, _ b: GLshort, _ c: GLshort, _ d: GLshort) -> GLshort {
@@ -139,11 +139,10 @@ extension GLubyte : Numeric, Integer {
     
 }
 
-/// Ajout d'une fonction permettant d'accéder aux chiffres d'un entier.
-public extension Int {
+extension Int : Numeric, Integer, Signed {
     
     /// Tableau des chiffres du nombre.
-    var digits: [Int] {
+    public var digits: [Int] {
         get {
             if self <= 0 {
                 return [0]
@@ -159,6 +158,22 @@ public extension Int {
             
             return result
         }
+    }
+    
+    public var half: Int {
+        return self / 2
+    }
+    
+    public var absolute: Int {
+        return abs(self)
+    }
+    
+    public static func min(a: Int, _ b: Int, _ c: Int, _ d: Int) -> Int {
+        return Swift.min(a, b, c, d)
+    }
+    
+    public static func max(a: Int, _ b: Int, _ c: Int, _ d: Int) -> Int {
+        return Swift.max(a, b, c, d)
     }
     
 }
