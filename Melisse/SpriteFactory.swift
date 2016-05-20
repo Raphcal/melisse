@@ -52,7 +52,8 @@ public class SpriteFactory {
                 ReferencePool(from: middle + 2, to: capacity)
             ]
         } else {
-            self.pools = [ReferencePool(capacity: capacity)]
+            let pool = ReferencePool(capacity: capacity)
+            self.pools = [pool, pool, pool]
         }
         
         let vertices = capacity * vertexesByQuad

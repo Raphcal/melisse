@@ -56,7 +56,7 @@ public class Text {
         let _ = Text(factory: factory, font: font, text: text, point: point)
     }
     
-    public init(factory: SpriteFactory = SpriteFactory(), font: Font = NoFont(), text: String = "", point: Point<GLfloat> = Point()) {
+    public init(factory: SpriteFactory = SpriteFactory(), font: Font, text: String = "", point: Point<GLfloat> = Point()) {
         self.factory = factory
         self.font = font
         self.value = text
