@@ -94,7 +94,7 @@ public class Text {
     }
 
     private func moveTo(point: Point<GLfloat>) {
-        let difference = _frame.center - point
+        let difference = point - _frame.center
         
         for sprite in sprites {
             sprite.frame.center += difference
@@ -102,6 +102,8 @@ public class Text {
     }
     
     private func displayText() {
+        let left = _frame.left
+        let top = _frame.top
         var width: GLfloat = 0
         var height: GLfloat = 0
         
@@ -115,7 +117,7 @@ public class Text {
                 // Création d'un sprite par lettre pour afficher le texte donné.
                 let sprite = spriteFor(index)
                 setFrameOf(sprite, toCharacter: Int8(c))
-                sprite.frame.topLeft = Point(x: _frame.x + width, y: _frame.y)
+                sprite.frame.topLeft = Point(x: left + width, y: top)
                 
                 sprites.append(sprite)
                 
@@ -130,7 +132,7 @@ public class Text {
             sprite.destroy()
         }
         
-        _frame = Rectangle(left: _frame.x, top: _frame.y, width: width, height: height)
+        _frame = Rectangle(left: left, top: top, width: width, height: height)
         self.sprites = sprites
     }
     

@@ -66,7 +66,7 @@ public extension MovableRectangle {
     
     var topLeft: Point<Coordinate> {
         get { return Point(x: left, y: top) }
-        set { center = Point(x: topLeft.x + size.width.half, y: topLeft.y + size.height.half) }
+        set { center = Point(x: newValue.x + size.width.half, y: newValue.y + size.height.half) }
     }
     
     public var x: Coordinate {
