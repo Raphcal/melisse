@@ -35,7 +35,7 @@ public struct View {
     }
     
     // TODO: Faire quelque chose de cette méthode.
-    func applyZoom() {
+    public func applyZoom() {
         glLoadIdentity()
         let zoomedSize = size * zoom
         #if os(iOS)

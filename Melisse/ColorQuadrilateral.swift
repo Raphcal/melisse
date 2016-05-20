@@ -8,9 +8,9 @@
 
 import GLKit
 
-struct ColoredQuadrilateral {
+public struct ColoredQuadrilateral {
     
-    var color: Color<GLubyte>? {
+    public var color: Color<GLubyte>? {
         didSet {
             if let color = self.color {
                 colorSurface.setColor(color)
@@ -19,7 +19,7 @@ struct ColoredQuadrilateral {
             }
         }
     }
-    var quadrilateral: Quadrilateral<GLfloat>? {
+    public var quadrilateral: Quadrilateral<GLfloat>? {
         didSet {
             if let quadrilateral = self.quadrilateral {
                 vertexSurface.setQuadWith(quadrilateral)

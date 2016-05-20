@@ -13,7 +13,7 @@ public class Backdrop {
     public let palette: ImagePalette
     public let map: Map
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
-    public private(set) var texCoordPointers = [SurfaceArray<GLushort>]()
+    public private(set) var texCoordPointers = [SurfaceArray<GLshort>]()
     
     private let width: Int
     private let height: Int
@@ -71,7 +71,7 @@ public class Backdrop {
         
         for _ in 0 ..< map.layers.count {
             let vertexPointer = SurfaceArray<GLfloat>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByVertex)
-            let texCoordPointer = SurfaceArray<GLushort>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
+            let texCoordPointer = SurfaceArray<GLshort>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
             
             vertexPointers.append(vertexPointer)
             texCoordPointers.append(texCoordPointer)

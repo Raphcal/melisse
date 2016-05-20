@@ -8,27 +8,27 @@
 
 import GLKit
 
-class Plane {
+public class Plane {
     
     let capacity: Int
     let vertexPointer: SurfaceArray<GLfloat>
     let colorPointer: SurfaceArray<GLubyte>
     
-    var count: Int = 0
+    public var count: Int = 0
     
-    init(capacity: Int) {
+    public init(capacity: Int) {
         self.capacity = capacity
         let vertices = capacity * vertexesByQuad
         self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
         self.colorPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
     }
     
-    func draw(at point: Point<GLfloat> = Point()) {
+    public func draw(at point: Point<GLfloat> = Point()) {
         Draws.translateTo(point)
         Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
     }
     
-    func coloredQuadrilateral() -> ColoredQuadrilateral {
+    public func coloredQuadrilateral() -> ColoredQuadrilateral {
         #if CHECK_CAPACITY
             if count >= capacity {
                 NSLog("coloredQuadrilateral: capacité insuffisante (requis \(count + 1), capacité \(capacity))")
