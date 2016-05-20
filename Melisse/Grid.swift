@@ -41,6 +41,14 @@ public class Grid {
         createVerticesAndTexturePointers()
     }
     
+    public convenience init?(palette: ImagePalette?, map: Map?) {
+        if let palette = palette, let map = map {
+            self.init(palette: palette, map: map)
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: Affichage.
     
     public func draw(at translation: Point<GLfloat> = Point()) {
