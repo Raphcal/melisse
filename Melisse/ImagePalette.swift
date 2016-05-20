@@ -14,8 +14,8 @@ public class ImagePalette : Palette {
     
     public var texture = GLKTextureInfo() {
         didSet {
-            self.tileSize = GLushort(Double(rawTileSize * 0xFF) / Double(texture.width))
-            self.padding = GLushort(Double(rawPadding * 0xFF) / Double(texture.width))
+            self.tileSize = GLushort(Double(rawTileSize * 0xFFFF) / Double(texture.width))
+            self.padding = GLushort(Double(rawPadding * 0xFFFF) / Double(texture.width))
         }
     }
     public let textureName: String
