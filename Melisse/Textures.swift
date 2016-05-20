@@ -24,7 +24,10 @@ public func textureForResource(name: String, extension ext: String, in folder: S
         #else
             let premultiplication = true
         #endif
-        return try GLKTextureLoader.textureWithContentsOfURL(url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
+        let texture = try GLKTextureLoader.textureWithContentsOfURL(url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
+        glTexParameteri(texture.target, GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
+        glTexParameteri(texture.target, GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
+        return texture
     } else {
         throw TextureLoadError.URLNotFound
     }
