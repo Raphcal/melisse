@@ -19,7 +19,7 @@ public class Grid {
     public let ground: Layer
     public let water: Layer?
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
-    public private(set) var texCoordPointers = [SurfaceArray<GLshort>]()
+    public private(set) var texCoordPointers = [SurfaceArray<GLfloat>]()
     
     public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
@@ -109,7 +109,7 @@ public class Grid {
     private func createVerticesAndTexturePointers() {
         for layer in map.layers {
             let vertexPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByVertex)
-            let texCoordPointer = SurfaceArray<GLshort>(capacity: layer.length, coordinates: coordinatesByTexture)
+            let texCoordPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByTexture)
             
             for y in 0..<layer.height {
                 for x in 0..<layer.width {

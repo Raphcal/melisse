@@ -14,13 +14,14 @@ public class ImagePalette : Palette {
     
     public var texture = GLKTextureInfo() {
         didSet {
-            self.tileSize = GLshort(Double(rawTileSize * 0x7FFF) / Double(texture.width))
-            self.padding = GLshort(Double(rawPadding * 0x7FFF) / Double(texture.width))
+            self.tileSize = GLfloat(rawTileSize) / GLfloat(texture.width)
+            self.padding = GLfloat(rawPadding) / GLfloat(texture.width)
         }
     }
+    
     public let textureName: String
-    public var tileSize: GLshort = 0
-    public var padding: GLshort = 0
+    public var tileSize: GLfloat = 0
+    public var padding: GLfloat = 0
     public let columns: Int
     
     let rawTileSize: Int

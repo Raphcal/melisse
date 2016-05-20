@@ -42,6 +42,18 @@ public class Draws {
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
     }
     
+    public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLfloat>, count: GLsizei) {
+        if drawMode != .Texture {
+            glDisableClientState(GLenum(GL_COLOR_ARRAY))
+            glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
+            glEnable(GLenum(GL_TEXTURE_2D))
+            drawMode = .Texture
+        }
+        glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
+        glTexCoordPointer(GLint(coordinatesByTexture), GLenum(GL_FLOAT), 0, texCoordPointer)
+        glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
+    }
+    
     public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, colorPointer: UnsafeMutablePointer<GLubyte>, count: GLsizei) {
         if drawMode != .Color {
             glDisable(GLenum(GL_TEXTURE_2D))
