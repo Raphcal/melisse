@@ -27,7 +27,7 @@ public struct Camera {
             } else {
                 self.motion = motion.to(NoCameraMotion())
             }
-            self.frame.center = motion.locationFor(self, timeSinceLastUpdate: 0)
+            self.frame.center = motion.locationFor(&self, timeSinceLastUpdate: 0)
         }
     }
     
@@ -37,7 +37,7 @@ public struct Camera {
     }
     
     public mutating func updateWith(timeSinceLastUpdate: NSTimeInterval) {
-        let center = motion.locationFor(self, timeSinceLastUpdate: timeSinceLastUpdate)
+        let center = motion.locationFor(&self, timeSinceLastUpdate: timeSinceLastUpdate)
         
         frame.x = max(min(center.x, bounds.right - frame.width / 2), bounds.left + frame.width / 2)
         frame.y = max(min(center.y, bounds.bottom - frame.height / 2), bounds.top + frame.height / 2) + offsetY
@@ -65,7 +65,7 @@ public struct Camera {
 
 protocol CameraMotion {
     
-    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat>
+    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat>
  
     mutating func to(other: CameraMotion) -> CameraMotion
     
@@ -73,7 +73,7 @@ protocol CameraMotion {
 
 struct NoCameraMotion : CameraMotion {
     
-    func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         return camera.frame.center
     }
     
@@ -87,7 +87,7 @@ struct LockedCameraMotion : CameraMotion {
     
     let target: Point<GLfloat>
     
-    func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         return target
     }
     
@@ -111,7 +111,7 @@ struct MovingToTargetCameraMotion : CameraMotion {
         self.onLock = onLock
     }
     
-    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         elapsed += timeSinceLastUpdate
         
         if elapsed >= duration {
@@ -138,15 +138,7 @@ struct EarthquakeCameraMotion : CameraMotion {
     let random = Random()
     let amplitude: GLfloat = 4
     
-    init() {
-        if let motion = Camera.instance?.motion {
-            self.motion = motion
-        } else {
-            self.motion = NoCameraMotion()
-        }
-    }
-    
-    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         let center = motion.locationFor(camera, timeSinceLastUpdate: timeSinceLastUpdate)
         return Point(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
     }
@@ -160,25 +152,16 @@ struct EarthquakeCameraMotion : CameraMotion {
 
 struct TimedEarthquakeCameraMotion : CameraMotion {
     
-    let random = Random()
-    let duration: NSTimeInterval
-    var time: NSTimeInterval = 0
     var motion: CameraMotion
+    let duration: NSTimeInterval
+    let random = Random()
+    var time: NSTimeInterval = 0
     
-    init(duration: NSTimeInterval) {
-        self.duration = duration
-        if let motion = Camera.instance?.motion {
-            self.motion = motion
-        } else {
-            self.motion = NoCameraMotion()
-        }
-    }
-    
-    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         self.time += timeSinceLastUpdate
         
         if time >= duration {
-            camera.motion = motion
+            camera.motion.to(motion)
         }
         
         let center = motion.locationFor(camera, timeSinceLastUpdate: timeSinceLastUpdate)
