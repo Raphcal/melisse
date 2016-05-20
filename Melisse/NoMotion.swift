@@ -11,6 +11,10 @@ import Foundation
 /// Gestionnaire vide, aucun mouvement.
 public struct NoMotion : Motion {
     
+    public init() {
+        // Pas d'initialisation.
+    }
+    
     public func load(sprite: Sprite) {
         // Pas de chargement.
     }

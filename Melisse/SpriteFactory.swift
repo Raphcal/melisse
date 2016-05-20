@@ -151,7 +151,7 @@ public class SpriteFactory {
         let sprite = Sprite(definition: definition, reference: reference, factory: self)
         self.sprites.append(sprite)
         
-        if definition.type.collidable {
+        if definition.type.isCollidable {
             collidables.append(sprite)
         }
         
@@ -172,7 +172,7 @@ public class SpriteFactory {
         }
         
         let definition = sprite.definition
-        if definition.type.collidable, let index = collidables.indexOf({ sprite === $0 }) {
+        if definition.type.isCollidable, let index = collidables.indexOf({ sprite === $0 }) {
             collidables.removeAtIndex(index)
         }
     }
