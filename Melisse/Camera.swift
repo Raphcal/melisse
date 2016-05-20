@@ -8,9 +8,7 @@
 
 import GLKit
 
-public class Camera {
-    
-    static public private(set) weak var instance: Camera?
+public struct Camera {
     
     public var frame: Rectangle<GLfloat>
     
@@ -38,22 +36,18 @@ public class Camera {
         self.bounds = frame
     }
     
-    public func makeCurrent() {
-        Camera.instance = self
-    }
-    
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public mutating func updateWith(timeSinceLastUpdate: NSTimeInterval) {
         let center = motion.locationFor(self, timeSinceLastUpdate: timeSinceLastUpdate)
         
         frame.x = max(min(center.x, bounds.right - frame.width / 2), bounds.left + frame.width / 2)
         frame.y = max(min(center.y, bounds.bottom - frame.height / 2), bounds.top + frame.height / 2) + offsetY
     }
     
-    public func center(width: GLfloat, height: GLfloat) {
+    public mutating func center(width: GLfloat, height: GLfloat) {
         self.frame.center = Point<GLfloat>(x: width / 2, y: height / 2)
     }
     
-    public func moveTo(target: Point<GLfloat>, time: NSTimeInterval = 1, onLock: (() -> Void)? = nil) {
+    public mutating func moveTo(target: Point<GLfloat>, time: NSTimeInterval = 1, onLock: (() -> Void)? = nil) {
         self.motion = motion.to(MovingToTargetCameraMotion(origin: frame.center, target: target, onLock: onLock))
     }
     
@@ -103,7 +97,7 @@ struct LockedCameraMotion : CameraMotion {
     
 }
 
-class MovingToTargetCameraMotion : CameraMotion {
+struct MovingToTargetCameraMotion : CameraMotion {
     
     let origin : Point<GLfloat>
     let target : Point<GLfloat>
@@ -117,8 +111,8 @@ class MovingToTargetCameraMotion : CameraMotion {
         self.onLock = onLock
     }
     
-    func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
-        self.elapsed += timeSinceLastUpdate
+    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+        elapsed += timeSinceLastUpdate
         
         if elapsed >= duration {
             onLock?()
