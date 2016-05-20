@@ -72,7 +72,7 @@ public struct Layer : Equatable {
         }
     }
     
-    public func tileAt(point point: Point<GLfloat>) -> Int? {
+    public func tileAt(point: Point<GLfloat>) -> Int? {
         return tileAt(x: Int(point.x / tileSize), y: Int(point.y / tileSize))
     }
     

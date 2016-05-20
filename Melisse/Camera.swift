@@ -139,7 +139,7 @@ struct EarthquakeCameraMotion : CameraMotion {
     let amplitude: GLfloat = 4
     
     mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
-        let center = motion.locationFor(camera, timeSinceLastUpdate: timeSinceLastUpdate)
+        let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
         return Point(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
@@ -164,7 +164,7 @@ struct TimedEarthquakeCameraMotion : CameraMotion {
             camera.motion.to(motion)
         }
         
-        let center = motion.locationFor(camera, timeSinceLastUpdate: timeSinceLastUpdate)
+        let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
         let amplitude = smoothStep(0, to: duration, value: time) * 4
         return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
@@ -178,27 +178,19 @@ struct TimedEarthquakeCameraMotion : CameraMotion {
 
 struct QuakeCameraMotion : CameraMotion {
     
+    var motion: CameraMotion
+    var amplitude: GLfloat
     let random = Random()
-    var amplitude : GLfloat
-    var motion : CameraMotion
     
-    init(amplitude: GLfloat) {
-        self.amplitude = amplitude
-        if let motion = Camera.instance?.motion {
-            self.motion = motion
-        } else {
-            self.motion = NoCameraMotion()
-        }
-    }
     
-    mutating func locationFor(camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         self.amplitude = max(amplitude - GLfloat(timeSinceLastUpdate * 10), 0)
         
         if amplitude == 0 {
             camera.motion = motion
         }
         
-        let center = motion.locationFor(camera, timeSinceLastUpdate: timeSinceLastUpdate)
+        let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
         return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     

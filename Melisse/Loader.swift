@@ -42,7 +42,7 @@ class Loader {
         self.motions = Loader.motionsWithGameScene(gameScene)
     }
     
-    init(inputStream : NSInputStream, spriteFactory : SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Spot) -> ()) {
+    init(inputStream : NSInputStream, spriteFactory : SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Point) -> ()) {
         self.spriteFactory = spriteFactory
         
         let motions = Loader.motionsWithGameScene(gameScene)
@@ -54,7 +54,7 @@ class Loader {
             let definition = info.definition
             
             if(definition.type == .Player) {
-                onStartPoint(startPoint: Spot(x: info.x, y: info.y))
+                onStartPoint(startPoint: Point(x: info.x, y: info.y))
             } else {
                 if(definition.type == .Collectable) {
                     info.motion = BubbleMotion.instance
@@ -73,7 +73,7 @@ class Loader {
         self.motions = motions
     }
     
-    convenience init?(resource : String, spriteFactory: SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Spot) -> ()) {
+    convenience init?(resource : String, spriteFactory: SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Point) -> ()) {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Loader.fileExtension), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             self.init(inputStream: inputStream, spriteFactory: spriteFactory, gameScene: gameScene, onStartPoint: onStartPoint)
@@ -103,7 +103,7 @@ class Loader {
             
             if(definition.type == .Player) {
                 let sprite = spriteFactory.sprite(definition, info: info)
-                sprite.topLeft = Spot(x: info.x, y: info.y)
+                sprite.topLeft = Point(x: info.x, y: info.y)
                 self.player = sprite
                 
             } else {

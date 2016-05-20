@@ -20,6 +20,11 @@ public class Sprite : Equatable {
         }
     }
     public var direction: Direction = .Right
+    public var front: GLfloat {
+        get {
+            return frame.x + frame.width * direction.value
+        }
+    }
     
     let factory: SpriteFactory
     
