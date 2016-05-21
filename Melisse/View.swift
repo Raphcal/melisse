@@ -27,8 +27,6 @@ public struct View {
     /// Zoom général de la vue.
     var zoom: GLfloat = 1
     
-    weak var factory: SpriteFactory?
-    
     public mutating func setSize(size: Size<GLfloat>) {
         self.ratio = width / size.width
         self.size = Size(width: width, height: size.height * ratio)
@@ -43,18 +41,6 @@ public struct View {
         #else
             glOrtho(0, GLdouble(zoomedSize.width), 0, GLdouble(zoomedSize.height), -1, 1)
         #endif
-        
-        // TODO: Utiliser autre chose que factory pour pouvoir gérer les objets Text.
-        if let factory = self.factory {
-            for sprite in factory.sprites {
-                var frame = sprite.frame
-                frame.width = GLfloat(sprite.animation.frame.frame.width) * zoom
-                frame.height = GLfloat(sprite.animation.frame.frame.height) * zoom
-                // TODO: Changer les positions Y
-                // sprite.frame.y =
-                sprite.frame = frame
-            }
-        }
     }
     
     // TODO: Faire quelque chose de cette méthode.
