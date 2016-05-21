@@ -28,6 +28,14 @@ public class Backdrop {
         createVerticesAndTextureCoordinates()
     }
     
+    convenience public init?(palette: ImagePalette?, map: Map?) {
+        if let palette = palette, let map = map {
+            self.init(palette: palette, map: map)
+        } else {
+            return nil
+        }
+    }
+    
     public func updateWith(translation: Point<GLfloat> = Point(), offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
         for (index, layer) in map.layers.enumerate() {
             let vertexPointer = vertexPointers[index]

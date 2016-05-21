@@ -20,7 +20,7 @@ public struct Camera {
     
     var motion: CameraMotion = NoCameraMotion()
     
-    public var target: Point<GLfloat>? {
+    public var target: Sprite? {
         didSet {
             if let target = self.target {
                 self.motion = motion.to(LockedCameraMotion(target: target))
@@ -47,7 +47,7 @@ public struct Camera {
         self.frame.center = Point<GLfloat>(x: width / 2, y: height / 2)
     }
     
-    public mutating func moveTo(target: Point<GLfloat>, time: NSTimeInterval = 1, onLock: (() -> Void)? = nil) {
+    public mutating func moveTo(target: Sprite, time: NSTimeInterval = 1, onLock: (() -> Void)? = nil) {
         self.motion = motion.to(MovingToTargetCameraMotion(origin: frame.center, target: target, onLock: onLock))
     }
     
@@ -85,10 +85,10 @@ struct NoCameraMotion : CameraMotion {
 
 struct LockedCameraMotion : CameraMotion {
     
-    let target: Point<GLfloat>
+    let target: Sprite
     
     func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
-        return target
+        return target.frame.center
     }
     
     func to(other: CameraMotion) -> CameraMotion {
@@ -99,13 +99,13 @@ struct LockedCameraMotion : CameraMotion {
 
 struct MovingToTargetCameraMotion : CameraMotion {
     
-    let origin : Point<GLfloat>
-    let target : Point<GLfloat>
-    let duration : NSTimeInterval = 1
-    var elapsed : NSTimeInterval = 0
-    var onLock : (() -> Void)?
+    let origin: Point<GLfloat>
+    let target: Sprite
+    let duration: NSTimeInterval = 1
+    var elapsed: NSTimeInterval = 0
+    var onLock: (() -> Void)?
     
-    init(origin: Point<GLfloat>, target: Point<GLfloat>, onLock: (() -> Void)?) {
+    init(origin: Point<GLfloat>, target: Sprite, onLock: (() -> Void)?) {
         self.origin = Point(point: origin)
         self.target = target
         self.onLock = onLock
@@ -123,7 +123,7 @@ struct MovingToTargetCameraMotion : CameraMotion {
         }
         
         let ratio = GLfloat(elapsed / duration)
-        return Point(x: target.x * ratio + origin.x * (1 - ratio), y: target.y * ratio + origin.y * (1 - ratio))
+        return Point(x: target.frame.x * ratio + origin.x * (1 - ratio), y: target.frame.y * ratio + origin.y * (1 - ratio))
     }
     
     func to(other: CameraMotion) -> CameraMotion {
