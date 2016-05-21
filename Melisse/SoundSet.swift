@@ -14,7 +14,7 @@ public class SoundSet {
     public var sound: Sound {
         get {
             let sound = sounds[current]
-            self.current = (current + 1) % sounds.count
+            current = (current + 1) % sounds.count
             return sound
         }
     }

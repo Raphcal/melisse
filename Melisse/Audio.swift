@@ -24,10 +24,20 @@ public protocol Audio {
     
     func play(sound: Sound)
     
+    func play(set: SoundSet)
+    
     func play(streamFrom URL: NSURL)
     
     func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void)
     
     func stopStream()
+    
+}
+
+public extension Audio {
+    
+    func play(set: SoundSet) {
+        play(set.sound)
+    }
     
 }

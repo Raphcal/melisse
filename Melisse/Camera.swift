@@ -229,12 +229,12 @@ class TwoPlayerCameraMotion : CameraMotion {
         let left = max(min(minX - width / 4, center.x - width / 2), center.x - width * 0.75)
         let right = min(max(maxX + width / 4, center.x + width / 2), center.x + width * 0.75)
         
-        Camera.instance.frame.width = right - left
-        View.instance.zoom = Camera.instance.frame.width / View.instance.frame.width
-        Camera.instance.frame.height = View.instance.zoomedHeight
+        gameScene.camera.frame.width = right - left
+        View.instance.zoom = gameScene.camera.frame.width / View.instance.frame.width
+        gameScene.camera.frame.height = View.instance.zoomedHeight
         View.instance.applyZoom()
         
-        Camera.instance.offsetY = (Camera.instance.height - View.instance.height) / 2
+        gameScene.camera.offsetY = (gameScene.camera.height - View.instance.height) / 2
         
         return center
     }

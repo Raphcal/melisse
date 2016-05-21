@@ -103,7 +103,7 @@ class Loader {
             
             if(definition.type == .Player) {
                 let sprite = spriteFactory.sprite(definition, info: info)
-                sprite.topLeft = Point(x: info.x, y: info.y)
+                sprite.frame.topLeft = Point(x: info.x, y: info.y)
                 self.player = sprite
                 
             } else {
@@ -126,9 +126,9 @@ class Loader {
     
     /// Créé ou supprime les sprites en fonction de la position de la caméra.
     func update(gameScene: GameScene) {
-        let left = Camera.instance.x - Loader.distance
-        let right = Camera.instance.x + Loader.distance
-        let comparison = Camera.instance.x - oldX
+        let left = gameScene.camera.x - Loader.distance
+        let right = gameScene.camera.x + Loader.distance
+        let comparison = gameScene.camera.x - oldX
         
         if comparison < 0 {
             movedLeft(gameScene, left: left, right: right)
@@ -136,7 +136,7 @@ class Loader {
             movedRight(gameScene, left: left, right: right)
         }
         
-        self.oldX = Camera.instance.x
+        self.oldX = gameScene.camera.x
     }
     
     /// Recharge tous les sprites.
@@ -212,7 +212,7 @@ class Loader {
     
     private func findLeft() -> Int {
         var index = 0
-        let left = Camera.instance.x - Loader.distance
+        let left = gameScene.camera.x - Loader.distance
         
         while index < infos.count && infos[index].x < left {
             index += 1
@@ -223,7 +223,7 @@ class Loader {
     
     private func findRightFrom(left: Int) -> Int {
         var index = left
-        let right = Camera.instance.x + Loader.distance
+        let right = gameScene.camera.x + Loader.distance
         
         while index < infos.count && infos[index].x < right {
             index += 1

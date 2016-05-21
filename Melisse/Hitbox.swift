@@ -59,7 +59,7 @@ public struct SpriteHitbox : Hitbox {
     
 }
 
-public struct RotatedHitbox : Hitbox {
+public class RotatedHitbox : Hitbox {
     
     public var hitbox: Hitbox
     public var frame: Rectangle<GLfloat>
@@ -69,11 +69,11 @@ public struct RotatedHitbox : Hitbox {
         self.frame = hitbox.frame
     }
     
-    mutating public func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
+    public func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
         self.frame = hitbox.frame.rotate(rotation, withPivot: pivot).enclosingRectangle()
     }
     
-    mutating public func cancelRotation() {
+    public func cancelRotation() {
         self.frame = hitbox.frame
     }
     

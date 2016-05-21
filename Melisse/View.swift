@@ -51,7 +51,7 @@ public struct View {
                 frame.width = GLfloat(sprite.animation.frame.frame.width) * zoom
                 frame.height = GLfloat(sprite.animation.frame.frame.height) * zoom
                 // TODO: Changer les positions Y
-                // sprite.y =
+                // sprite.frame.y =
                 sprite.frame = frame
             }
         }

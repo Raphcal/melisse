@@ -57,7 +57,7 @@ public class Counter {
         for index in 0 ..< digits.count {
             let sprite = sprites[index]
             
-            // Pour l'alignement à gauche, utiliser "+ index * sprite.width".
+            // Pour l'alignement à gauche, utiliser "+ index * sprite.frame.width".
             sprite.frame.topLeft = Point(x: topLeft.x - GLfloat(index) * sprite.frame.width, y: topLeft.y)
             
             // Pour l'alignement à gauche, utiliser "digits.count - index - 1".
