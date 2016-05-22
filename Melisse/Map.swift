@@ -67,13 +67,12 @@ public struct Map : Equatable {
         self.height = maxHeight
     }
     
-    public init?(resource : String) {
-        if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Map.fileExtension), let inputStream = NSInputStream(URL: url) {
+    public init?(resource : String?) {
+        if let resource = resource, let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Map.fileExtension), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()
         } else {
-            print("Map: resource '\(resource)' not found.")
             return nil
         }
     }

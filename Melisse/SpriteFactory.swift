@@ -112,9 +112,9 @@ public class SpriteFactory {
         }
     }
     
-    public func sprite(definition: Int, x: GLfloat, y: GLfloat) -> Sprite {
+    public func sprite(definition: Int, topLeft: Point<GLfloat>) -> Sprite {
         let sprite = self.sprite(definition)
-        sprite.frame.topLeft = Point(x: x, y: y)
+        sprite.frame.topLeft = topLeft
         return sprite
     }
     
