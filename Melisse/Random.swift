@@ -12,6 +12,10 @@ public struct Random {
 	
 	let maximumValue : Int64 = 0x100000000
 	
+    public init() {
+        // Pas d'initialisation.
+    }
+    
     /// Renvoi un nombre décimal compris entre 0.0 et range - 0.0...1
 	public func next(range: GLfloat) -> GLfloat {
 		return GLfloat(Double(arc4random()) / Double(maximumValue)) * range
