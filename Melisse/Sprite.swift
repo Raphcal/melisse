@@ -79,6 +79,11 @@ public class Sprite : Equatable {
         }
     }
     
+    public convenience init(factory: SpriteFactory, definition: Int) {
+        // TODO: Tester comme ça.
+        self.init(definition: factory.definitions[definition], reference: 0, factory: factory)
+    }
+    
     // MARK: Gestion des mises à jour
     
     public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
