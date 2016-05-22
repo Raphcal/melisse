@@ -98,7 +98,8 @@ public class Menu {
         item.value = value
         
         if let location = layout?.pointFor(item) {
-            item.text.setOrigin(location, with: alignment)
+            item.text.alignment = alignment
+            item.text.origin = location
         }
         
         self.items.append(item)

@@ -26,16 +26,32 @@ public class Text {
     let semicolon = Text.integerFromCharacter(":")
     let space = Text.integerFromCharacter(" ")
     
-    private var _frame: Rectangle<GLfloat>
-    public var frame: Rectangle<GLfloat> {
-        get {
-            return _frame
-        }
-        set {
-            moveTo(newValue.center)
-            _frame = newValue
+    public var origin: Point<GLfloat> {
+        didSet {
+            moveTo(origin)
         }
     }
+    public private(set) var size: Size<GLfloat>
+    
+    public var alignment = TextAlignment.Left {
+        didSet {
+            moveTo(Point(x: frame.left, y: frame.y))
+        }
+    }
+    
+    public var frame: Rectangle<GLfloat> {
+        get {
+            switch alignment {
+            case .Left:
+                return Rectangle(left: origin.x, top: origin.y, width: size.width, height: size.height)
+            case .Center:
+                return Rectangle(left: origin.x - size.width / 2, top: origin.y, width: size.width, height: size.height)
+            case .Right:
+                return Rectangle(left: origin.x - size.width, top: origin.y, width: size.width, height: size.height)
+            }
+        }
+    }
+    
     public var font: Font {
         didSet {
             displayText()
@@ -56,29 +72,14 @@ public class Text {
         let _ = Text(factory: factory, font: font, text: text, point: point)
     }
     
-    public init(factory: SpriteFactory = SpriteFactory(), font: Font = NoFont(), text: String = "", point: Point<GLfloat> = Point()) {
+    public init(text: String = "", font: Font = NoFont(), factory: SpriteFactory = SpriteFactory(), point: Point<GLfloat> = Point()) {
         self.factory = factory
         self.font = font
         self.value = text
-        _frame = Rectangle(center: point)
+        self.origin = point
+        self.size = Size()
         
         displayText()
-    }
-    
-    public func setOrigin(origin: Point<GLfloat>, with alignment: TextAlignment) {
-        var frame = self.frame
-        frame.top = origin.y
-        
-        switch alignment {
-        case .Left:
-            frame.left = origin.x
-        case .Center:
-            frame.x = origin.x
-        case .Right:
-            frame.right = origin.x
-        }
-        
-        self.frame = frame
     }
     
     public func setBlinking(blinking: Bool) {
@@ -94,7 +95,7 @@ public class Text {
     }
 
     private func moveTo(point: Point<GLfloat>) {
-        let difference = point - _frame.center
+        let difference = point - origin
         
         for sprite in sprites {
             sprite.frame.center += difference
@@ -102,8 +103,8 @@ public class Text {
     }
     
     private func displayText() {
-        let left = _frame.left
-        let top = _frame.top
+        let left = origin.x
+        let top = origin.y
         var width: GLfloat = 0
         var height: GLfloat = 0
         
@@ -132,7 +133,7 @@ public class Text {
             sprite.destroy()
         }
         
-        _frame = Rectangle(left: left, top: top, width: width, height: height)
+        self.size = Size(width: width, height: height)
         self.sprites = sprites
     }
     
