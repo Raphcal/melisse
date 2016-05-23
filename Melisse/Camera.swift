@@ -52,7 +52,7 @@ public struct Camera {
     }
     
     public func isSpriteInView(sprite: Sprite) -> Bool {
-        return SimpleHitbox(frame: frame).collidesWith(SimpleHitbox(frame: sprite.frame))
+        return StaticHitbox(frame: frame).collidesWith(StaticHitbox(frame: sprite.frame))
     }
     
     public func removeSpriteIfOutOfView(sprite: Sprite) {

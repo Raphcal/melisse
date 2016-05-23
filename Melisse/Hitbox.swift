@@ -25,7 +25,7 @@ public extension Hitbox {
     }
     
     func collidesWith(rectangle: Rectangle<GLfloat>) -> Bool {
-        return collidesWith(SimpleHitbox(frame: rectangle))
+        return collidesWith(StaticHitbox(frame: rectangle))
     }
     
     func collidesWith(other: Hitbox) -> Bool {
@@ -35,12 +35,28 @@ public extension Hitbox {
     
 }
 
-public struct SimpleHitbox : Hitbox {
+public struct StaticHitbox : Hitbox {
     
     public var frame: Rectangle<GLfloat>
     
     public init(frame: Rectangle<GLfloat> = Rectangle()) {
         self.frame = frame
+    }
+    
+}
+
+public struct SimpleSpriteHitbox : Hitbox {
+    
+    public var sprite: Sprite
+    
+    public var frame: Rectangle<GLfloat> {
+        get {
+            return sprite.frame
+        }
+    }
+    
+    public init(sprite: Sprite = Sprite()) {
+        self.sprite = sprite
     }
     
 }

@@ -147,8 +147,7 @@ public class SpriteFactory {
     /// - returns: Un nouveau sprite.
     public func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
-        // TODO: Ajout Info !!
-        let sprite = Sprite(definition: definition, reference: reference, factory: self)
+        let sprite = Sprite(definition: definition, reference: reference, factory: self, info: info)
         self.sprites.append(sprite)
         
         if definition.type.isCollidable {

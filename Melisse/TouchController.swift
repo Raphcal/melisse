@@ -124,7 +124,7 @@ class Button {
         
         self.sprite = sprite
         self.zoom = zoom
-        self.hitbox = SimpleHitbox(frame: Rectangle(center: sprite.frame.center, size: Size(width: sprite.frame.width + margin, height: sprite.frame.height + margin)))
+        self.hitbox = StaticHitbox(frame: Rectangle(center: sprite.frame.center, size: Size(width: sprite.frame.width + margin, height: sprite.frame.height + margin)))
         self.frame = frame
     }
     
@@ -132,7 +132,7 @@ class Button {
         self.sprite = nil
         self.frame = 0
         self.zoom = zoom
-        self.hitbox = SimpleHitbox(frame: Rectangle(x: left + width / 2, y: top + width / 2, width: width, height: height))
+        self.hitbox = StaticHitbox(frame: Rectangle(x: left + width / 2, y: top + width / 2, width: width, height: height))
     }
     
     deinit {

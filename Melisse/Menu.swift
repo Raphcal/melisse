@@ -142,7 +142,7 @@ public class Menu {
         let point = Point(x: touch.x * ratio, y: touch.y * ratio)
         
         for index in 0..<items.count {
-            if SimpleHitbox(frame: items[index].frame).collidesWith(point) {
+            if StaticHitbox(frame: items[index].frame).collidesWith(point) {
                 return index
             }
         }

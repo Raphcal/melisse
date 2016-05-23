@@ -34,7 +34,7 @@ public class Sprite : Equatable {
     
     public var removed: Bool = false
     
-    public var hitbox: Hitbox
+    public var hitbox: Hitbox = StaticHitbox()
     public var motion: Motion = NoMotion()
     
     public var currentAnimation: AnimationName?
@@ -51,7 +51,6 @@ public class Sprite : Equatable {
         reference = -1
         vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
         texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
-        hitbox = SimpleHitbox()
     }
     
     public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory, info: SpriteInfo? = nil) {
@@ -72,10 +71,11 @@ public class Sprite : Equatable {
         
         let size = animation.frame.frame.size
         self.frame = Rectangle(size: Size(width: GLfloat(size.width), height: GLfloat(size.height)))
-        self.hitbox = SimpleHitbox()
         
         if animation.frame.hitbox != Rectangle() {
             self.hitbox = SpriteHitbox(sprite: self)
+        } else {
+            self.hitbox = SimpleSpriteHitbox(sprite: self)
         }
     }
     
