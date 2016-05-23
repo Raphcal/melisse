@@ -13,8 +13,7 @@ public class Animator {
     public let durations: [NSTimeInterval]
     public let values: [String : [GLfloat]]
     public let animations: (values: [String : GLfloat]) -> Void
-    
-    public var completion: (() -> Void)?
+    public var onKeyFrame: [(() -> Void)?]
     
     var time: NSTimeInterval = 0
     var keyFrame = 0
@@ -23,6 +22,7 @@ public class Animator {
         self.durations = durations
         self.values = values
         self.animations = animations
+        self.onKeyFrame = Array(count: durations.count + 1, repeatedValue: nil)
     }
     
     public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
@@ -49,9 +49,9 @@ public class Animator {
             
             keyFrame += 1
             
-            if keyFrame >= durations.count, let completion = self.completion {
-                self.completion = nil
-                completion()
+            if let completionBlock = onKeyFrame[keyFrame] {
+                onKeyFrame[keyFrame] = nil
+                completionBlock()
             }
         }
     }
