@@ -59,9 +59,9 @@ public struct BlinkingAnimation : Animation {
         
         if time >= duration, let onEnd = self.onEnd {
             onEnd(animation: animation)
+        } else {
+            animation.updateWith(timeSinceLastUpdate)
         }
-        
-        animation.updateWith(timeSinceLastUpdate)
     }
     
     public func draw(sprite: Sprite) {

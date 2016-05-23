@@ -66,12 +66,12 @@ public class Grid {
         }
     }
     
-    public func drawBackground() {
-        draw(to: foreground)
+    public func drawBackground(at translation: Point<GLfloat> = Point()) {
+        draw(at: translation, to: foreground)
     }
     
-    public func drawForeground() {
-        draw(from: foreground, to: map.layers.count)
+    public func drawForeground(at translation: Point<GLfloat> = Point()) {
+        draw(at: translation, from: foreground, to: map.layers.count)
     }
     
     // MARK: Fonctions publiques.
