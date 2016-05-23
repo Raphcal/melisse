@@ -22,13 +22,6 @@ public struct Color<Component where Component : Numeric> : Equatable {
         self.alpha = alpha
     }
     
-    public init(white: Component, alpha: Component) {
-        self.red = white
-        self.green = white
-        self.blue = white
-        self.alpha = alpha
-    }
-    
 }
 
 public func ==<Component where Component : Numeric>(lhs: Color<Component>, rhs: Color<Component>) -> Bool {
@@ -58,6 +51,13 @@ public extension Color where Component : FloatingPoint {
         self.alpha = alpha
     }
     
+    public init(white: Component, alpha: Component = Component(1)) {
+        self.red = white
+        self.green = white
+        self.blue = white
+        self.alpha = alpha
+    }
+    
 }
 
 public extension Color where Component : Integer {
@@ -69,7 +69,7 @@ public extension Color where Component : Integer {
         self.alpha = Component(255)
     }
     
-    init(hex: Int, alpha: Component = Component(1)) {
+    init(hex: Int, alpha: Component = Component(255)) {
         let red = (hex & 0xFF0000) >> 16
         let green = (hex & 0xFF00) >> 8
         let blue = hex & 0xFF
@@ -77,6 +77,13 @@ public extension Color where Component : Integer {
         self.red = Component(red)
         self.green = Component(green)
         self.blue = Component(blue)
+        self.alpha = alpha
+    }
+    
+    public init(white: Component, alpha: Component = Component(255)) {
+        self.red = white
+        self.green = white
+        self.blue = white
         self.alpha = alpha
     }
     
