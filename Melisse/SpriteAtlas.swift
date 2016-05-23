@@ -28,7 +28,7 @@ public class SpriteAtlas {
         self.texture = texture
     }
     
-    public init?(name: String, in folder: String? = nil, animationNames: [AnimationName]) {
+    public init?(name: String, in folder: String? = nil, types: [SpriteType], animationNames: [AnimationName]) {
         do {
             texture = try textureForResource(name, extension: "png", in: folder)
         } catch {
@@ -37,7 +37,7 @@ public class SpriteAtlas {
         
         if let url = URLForResource(name, extension: "sprites", in: folder), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
-            definitions = SpriteDefinition.definitionsFrom(inputStream, animationNames: animationNames)
+            definitions = SpriteDefinition.definitionsFrom(inputStream, types: types, animationNames: animationNames)
             inputStream.close()
         } else {
             return nil
