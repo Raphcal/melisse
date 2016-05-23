@@ -48,6 +48,7 @@ public class Animator {
             animations(values: values)
             
             keyFrame += 1
+            time = 0
             
             if let completionBlock = onKeyFrame[keyFrame] {
                 onKeyFrame[keyFrame] = nil

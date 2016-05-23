@@ -28,14 +28,14 @@ public class Text {
     
     public var origin: Point<GLfloat> {
         didSet {
-            moveTo(origin)
+            moveBy(origin - oldValue)
         }
     }
     public private(set) var size: Size<GLfloat>
     
     public var alignment = TextAlignment.Left {
         didSet {
-            moveTo(Point(x: frame.left, y: frame.y))
+            moveBy(Point(x: frame.left, y: frame.top) - origin)
         }
     }
     
@@ -94,9 +94,7 @@ public class Text {
         }
     }
 
-    private func moveTo(point: Point<GLfloat>) {
-        let difference = point - origin
-        
+    private func moveBy(difference: Point<GLfloat>) {
         for sprite in sprites {
             sprite.frame.center += difference
         }
