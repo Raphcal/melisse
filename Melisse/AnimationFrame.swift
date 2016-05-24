@@ -10,21 +10,30 @@ import GLKit
 
 public struct AnimationFrame : Equatable {
     
-    public var frame: Rectangle<Int>
+    public var frame: Rectangle<Int> {
+		didSet {
+			size = Size(width: GLfloat(frame.width), height: GLfloat(frame.height))
+		}
+	}
     public var hitbox: Rectangle<GLfloat>
+	
+	public private(set) var size: Size<GLfloat>
     
     public init() {
         self.frame = Rectangle()
+		self.size = Size()
         self.hitbox = Rectangle()
     }
     
     public init(width: Int, height: Int) {
         self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
+		self.size = Size(width: GLfloat(width), height: GLfloat(height))
         self.hitbox = Rectangle()
     }
     
     public init(x: Int, y: Int, width: Int, height: Int) {
         self.frame = Rectangle(left: x, top: y, width: width, height: height)
+		self.size = Size(width: GLfloat(width), height: GLfloat(height))
         self.hitbox = Rectangle()
     }
     
@@ -34,6 +43,7 @@ public struct AnimationFrame : Equatable {
         let width = Streams.readInt(inputStream)
         let height = Streams.readInt(inputStream)
         self.frame = Rectangle(x: x, y: y, width: width, height: height)
+		self.size = Size(width: GLfloat(width), height: GLfloat(height))
         
         if Streams.readBoolean(inputStream) {
             let left = GLfloat(Streams.readInt(inputStream))
