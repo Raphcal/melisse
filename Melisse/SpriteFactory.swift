@@ -22,6 +22,7 @@ public class SpriteFactory {
     let pools: [ReferencePool]
     public var sprites = [Sprite]()
     public var collidables = [Sprite]()
+    private var removalPending = [Sprite]()
     
     public let definitions: [SpriteDefinition]
     
@@ -75,6 +76,7 @@ public class SpriteFactory {
         for sprite in sprites {
             sprite.updateWith(timeSinceLastUpdate)
         }
+        commitRemoval()
     }
     
     public func updateCollisionsForSprite(player: Sprite) {
@@ -162,13 +164,7 @@ public class SpriteFactory {
     public func removeSprite(sprite: Sprite) {
         sprite.removed = true
         
-        sprite.motion.unload(sprite)
-        pools[sprite.definition.distance.rawValue].release(sprite.reference)
-        sprite.vertexSurface.clear()
-        sprite.texCoordSurface.clear()
-        if let index = sprites.indexOf({ sprite === $0 }) {
-            sprites.removeAtIndex(index)
-        }
+        removalPending.append(sprite)
         
         let definition = sprite.definition
         if definition.type.isCollidable, let index = collidables.indexOf({ sprite === $0 }) {
@@ -178,11 +174,25 @@ public class SpriteFactory {
     
     public func removeOrphanSprites() {
         for sprite in sprites {
-            // TODO: Gérer INFO
             if sprite.info == nil && !sprite.removed {
                 removeSprite(sprite)
             }
         }
+    }
+    
+    public func commitRemoval() {
+        for sprite in removalPending {
+            if let index = sprites.indexOf({ sprite === $0 }) {
+                sprites.removeAtIndex(index)
+                sprite.motion.unload(sprite)
+                sprite.vertexSurface.clear()
+                sprite.texCoordSurface.clear()
+                pools[sprite.definition.distance.rawValue].release(sprite.reference)
+            } else {
+                print("commitRemoval: sprite #\(sprite.reference) not found. You may be trying to remove it twice.")
+            }
+        }
+        removalPending = []
     }
     
     public func clear() {
