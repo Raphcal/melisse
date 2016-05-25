@@ -114,6 +114,9 @@ struct MovingToTargetCameraMotion : CameraMotion {
     mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
         elapsed += timeSinceLastUpdate
         
+        let ratio = GLfloat(elapsed / duration)
+        let location = Point(x: target.frame.x * ratio + origin.x * (1 - ratio), y: target.frame.y * ratio + origin.y * (1 - ratio))
+        
         if elapsed >= duration {
             onLock?()
             self.onLock = nil
@@ -122,8 +125,7 @@ struct MovingToTargetCameraMotion : CameraMotion {
             camera.motion = LockedCameraMotion(target: target)
         }
         
-        let ratio = GLfloat(elapsed / duration)
-        return Point(x: target.frame.x * ratio + origin.x * (1 - ratio), y: target.frame.y * ratio + origin.y * (1 - ratio))
+        return location
     }
     
     func to(other: CameraMotion) -> CameraMotion {

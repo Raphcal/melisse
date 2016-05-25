@@ -10,6 +10,7 @@ import GLKit
 
 public struct AnimationFrame : Equatable {
     
+    // Remarque : le rectangle n'est pas tout à fait adapté car la valeur "centre" représente ici le coin en haut à gauche.
     public var frame: Rectangle<Int> {
 		didSet {
 			size = Size(width: GLfloat(frame.width), height: GLfloat(frame.height))
@@ -32,7 +33,7 @@ public struct AnimationFrame : Equatable {
     }
     
     public init(x: Int, y: Int, width: Int, height: Int) {
-        self.frame = Rectangle(left: x, top: y, width: width, height: height)
+        self.frame = Rectangle(x: x, y: y, width: width, height: height)
 		self.size = Size(width: GLfloat(width), height: GLfloat(height))
         self.hitbox = Rectangle()
     }

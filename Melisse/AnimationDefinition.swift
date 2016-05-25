@@ -19,11 +19,11 @@ public struct AnimationDefinition : Equatable {
     public var frequency: Int
     public var type: AnimationType
     
-    public init(frames: [AnimationFrame] = []) {
+    public init(frames: [AnimationFrame] = [], looping: Bool = false) {
         self.name = ""
         self.frames = frames
         self.frequency = 1
-        self.type = .None
+        self.type = AnimationDefinition.typeFor(frames.count, looping: looping)
     }
     
     public init(inputStream : NSInputStream) {
@@ -54,16 +54,7 @@ public struct AnimationDefinition : Equatable {
         }
         
         self.frames = mainFrames
-        
-        if looping {
-            self.type = .Looping
-        } else if frames.count > 1 {
-            self.type = .PlayOnce
-        } else if frames.count == 1 {
-            self.type = .SingleFrame
-        } else {
-            self.type = .None
-        }
+        self.type = AnimationDefinition.typeFor(frames.count, looping: looping)
     }
     
     public func toAnimation() -> Animation {
@@ -83,6 +74,18 @@ public struct AnimationDefinition : Equatable {
     
     func toAnimation(onEnd: () -> Void) -> Animation {
         return PlayOnceAnimation(definition: self, onEnd: onEnd)
+    }
+    
+    private static func typeFor(frameCount: Int, looping: Bool) -> AnimationType {
+        if looping {
+            return .Looping
+        } else if frameCount > 1 {
+            return .PlayOnce
+        } else if frameCount == 1 {
+            return .SingleFrame
+        } else {
+            return .None
+        }
     }
     
 }
