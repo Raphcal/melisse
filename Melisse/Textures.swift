@@ -13,10 +13,7 @@ enum TextureLoadError : ErrorType {
 }
 
 public func textureForResource(name: String, extension ext: String, in folder: String? = nil) throws -> GLKTextureInfo {
-    let error = glGetError()
-    if error != 0 {
-        NSLog("Erreur OpenGL : \(error)")
-    }
+    clearGLError()
     
     if let url = URLForResource(name, extension: ext, in: folder) {
         #if os(iOS)
@@ -25,6 +22,7 @@ public func textureForResource(name: String, extension ext: String, in folder: S
             let premultiplication = true
         #endif
         let texture = try GLKTextureLoader.textureWithContentsOfURL(url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
+        clearGLError()
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
         return texture
@@ -38,5 +36,12 @@ public func URLForResource(name: String, extension ext: String, in folder: Strin
         return NSURL(fileURLWithPath: folder + "/" + name + "." + ext)
     } else {
         return NSBundle.mainBundle().URLForResource(name, withExtension: ext)
+    }
+}
+
+private func clearGLError() {
+    let error = glGetError()
+    if error != 0 {
+        NSLog("Erreur OpenGL : \(error)")
     }
 }
