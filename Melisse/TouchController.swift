@@ -144,7 +144,7 @@ class Button {
         self.state = false
         
         for touch in touches.values {
-            self.state = state || hitbox.collidesWith(Point(x: touch.x * zoom, y: touch.y * zoom))
+            self.state = state || hitbox.collidesWith(touch)
         }
         
         if let sprite = self.sprite {
