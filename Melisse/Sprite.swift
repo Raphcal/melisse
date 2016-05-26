@@ -102,9 +102,10 @@ public class Sprite : Equatable {
         self.removed = true
         
         if definition.animations[DefaultAnimationName.Disappear.name]?.frames.count > 0 {
-            setAnimation(DefaultAnimationName.Disappear, onEnd: { self.factory.removeSprite(self) })
+            self.motion.unload(self)
             self.motion = NoMotion()
             self.type = DefaultSpriteType.Decoration
+            setAnimation(DefaultAnimationName.Disappear, onEnd: { self.factory.removeSprite(self) })
         } else {
             factory.removeSprite(self)
         }

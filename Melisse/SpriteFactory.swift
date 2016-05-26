@@ -164,10 +164,12 @@ public class SpriteFactory {
     public func removeSprite(sprite: Sprite) {
         sprite.removed = true
         
-        removalPending.append(sprite)
+        if let index = sprites.indexOf({ sprite === $0 }) {
+            sprites.removeAtIndex(index)
+            removalPending.append(sprite)
+        }
         
-        let definition = sprite.definition
-        if definition.type.isCollidable, let index = collidables.indexOf({ sprite === $0 }) {
+        if sprite.definition.type.isCollidable, let index = collidables.indexOf({ sprite === $0 }) {
             collidables.removeAtIndex(index)
         }
     }
@@ -182,15 +184,10 @@ public class SpriteFactory {
     
     public func commitRemoval() {
         for sprite in removalPending {
-            if let index = sprites.indexOf({ sprite === $0 }) {
-                sprites.removeAtIndex(index)
-                sprite.motion.unload(sprite)
-                sprite.vertexSurface.clear()
-                sprite.texCoordSurface.clear()
-                pools[sprite.definition.distance.rawValue].release(sprite.reference)
-            } else {
-                print("commitRemoval: sprite #\(sprite.reference) not found. You may be trying to remove it twice.")
-            }
+            sprite.motion.unload(sprite)
+            sprite.vertexSurface.clear()
+            sprite.texCoordSurface.clear()
+            pools[sprite.definition.distance.rawValue].release(sprite.reference)
         }
         removalPending = []
     }
