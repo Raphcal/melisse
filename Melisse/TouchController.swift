@@ -118,7 +118,7 @@ class Button {
         sprite.animation = SingleFrameAnimation(definition: sprite.animation.definition)
         sprite.animation.frameIndex = frame
         
-        sprite.frame.size = Size(width: GLfloat(sprite.animation.frame.frame.width) * zoom, height: GLfloat(sprite.animation.frame.frame.height) * zoom)
+        sprite.frame.size = sprite.animation.frame.size * zoom
         
         let margin = 32 * zoom
         

@@ -69,8 +69,7 @@ public class Sprite : Equatable {
             self.animation = NoAnimation()
         }
         
-        let size = animation.frame.frame.size
-        self.frame = Rectangle(size: Size(width: GLfloat(size.width), height: GLfloat(size.height)))
+        self.frame = Rectangle(size: animation.frame.size)
         
         if animation.frame.hitbox != Rectangle() {
             self.hitbox = SpriteHitbox(sprite: self)

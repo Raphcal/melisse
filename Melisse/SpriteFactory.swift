@@ -132,9 +132,7 @@ public class SpriteFactory {
         sprite.animation = SingleFrameAnimation(definition: parent.definition.animations[animation.name]!)
         sprite.animation.frameIndex = frame
         
-        let frame = sprite.animation.frame.frame
-        sprite.frame.width = GLfloat(frame.width)
-        sprite.frame.height = GLfloat(frame.height)
+        sprite.frame.size = sprite.animation.frame.size
         
         return sprite
     }

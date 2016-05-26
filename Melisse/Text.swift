@@ -151,31 +151,19 @@ public class Text {
     private func setFrameOf(sprite: Sprite, toCharacter value: Int8) {
         if value >= zero && value <= nine {
             // Chiffre.
-            sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[font.digitAnimation.name]!)
-            sprite.animation.frameIndex = value - zero
-            
-            resize(sprite)
+            configure(sprite, animation: font.digitAnimation, frameIndex: value - zero)
             
         } else if value >= upperCaseA && value <= upperCaseZ {
             // Lettre majuscule.
-            sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[font.upperCaseAnimation.name]!)
-            sprite.animation.frameIndex = value - upperCaseA
-            
-            resize(sprite)
+            configure(sprite, animation: font.upperCaseAnimation, frameIndex: value - upperCaseA)
             
         } else if value >= lowerCaseA && value <= lowerCaseZ {
             // Lettre minuscule.
-            sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[font.lowerCaseAnimation.name]!)
-            sprite.animation.frameIndex = value - lowerCaseA
-            
-            resize(sprite)
+            configure(sprite, animation: font.lowerCaseAnimation, frameIndex: value - lowerCaseA)
             
         } else if value == semicolon {
             // "Deux points".
-            sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[font.semicolonAnimation.name]!)
-            sprite.animation.frameIndex = 0
-            
-            resize(sprite)
+            configure(sprite, animation: font.semicolonAnimation, frameIndex: 0)
             
         } else {
             // Espace ou lettre non supportée.
@@ -183,9 +171,10 @@ public class Text {
         }
     }
     
-    private func resize(sprite: Sprite) {
-        let frame = sprite.animation.frame.frame
-        sprite.frame.size = Size(width: GLfloat(frame.width), height: GLfloat(frame.height))
+    private func configure(sprite: Sprite, animation: AnimationName, frameIndex: Int) {
+        sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[animation.name]!)
+        sprite.animation.frameIndex = frameIndex
+        sprite.frame.size = sprite.animation.frame.size
     }
     
     private static func integerFromCharacter(c: Character) -> Int8 {
