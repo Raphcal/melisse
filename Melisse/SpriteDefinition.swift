@@ -112,8 +112,4 @@ public struct SpriteDefinition : Equatable {
 
 public func ==(left: SpriteDefinition, right: SpriteDefinition) -> Bool {
     return left.index == right.index
-        && left.distance == right.distance
-        && left.name == right.name
-        && left.motionName == right.motionName
-        && left.animations == right.animations
 }
