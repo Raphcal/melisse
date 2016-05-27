@@ -130,7 +130,7 @@ public class OpenALAudio: Audio {
     }
     
     private func audioDataFor(URL: NSURL) -> AudioData {
-        var fileRef = ExtAudioFileRef(nilLiteral: ())
+        var fileRef: ExtAudioFileRef = nil
         var status = ExtAudioFileOpenURL(URL as CFURL, &fileRef)
         
         if status != 0 {
@@ -201,7 +201,7 @@ public class OpenALAudio: Audio {
         */
         
         // TODO: Écrire la méthode.
-        return AudioData(data: UnsafeMutablePointer(), size: 0, format: 0, frequence: 0)
+        return AudioData(data: nil, size: 0, format: 0, frequence: 0)
     }
     
 }
