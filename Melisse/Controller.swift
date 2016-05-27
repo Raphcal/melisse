@@ -20,14 +20,5 @@ public protocol Controller {
     
     func pressed(button: GamePadButton) -> Bool
     func pressing(button: GamePadButton) -> Bool
-    func draw()
-    
-}
-
-public extension Controller {
-    
-    func draw() {
-        // Pas d'affichage.
-    }
     
 }
