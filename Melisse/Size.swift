@@ -29,6 +29,18 @@ public func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> B
     return left.width == right.width && left.height == right.height
 }
 
+public func +<Coordinate>(left: Size<Coordinate>, right: Coordinate) -> Size<Coordinate> {
+    return Size(width: left.width + right, height: left.height + right)
+}
+
+public func -<Coordinate>(left: Size<Coordinate>, right: Coordinate) -> Size<Coordinate> {
+    return Size(width: left.width - right, height: left.height - right)
+}
+
 public func *<Coordinate>(left: Size<Coordinate>, right: Coordinate) -> Size<Coordinate> {
     return Size(width: left.width * right, height: left.height * right)
+}
+
+public func /<Coordinate>(left: Size<Coordinate>, right: Coordinate) -> Size<Coordinate> {
+    return Size(width: left.width / right, height: left.height / right)
 }

@@ -68,7 +68,7 @@ public class TouchController : Controller {
     }
     
     public func createButtonsWith(factory: SpriteFactory, definition: Int) {
-        let defaultSize: GLfloat = 48
+        let shoulderButtonSize = Size<GLfloat>(width: 48, height: 32)
         let padY = View.instance.height - 48
         
         let leftButton = Button(factory: factory, definition: definition, left: 10, y: padY, frameIndex: padButtonFrame, zoom: zoom)
@@ -80,9 +80,9 @@ public class TouchController : Controller {
         buttons[.Left] = leftButton
         buttons[.Right] = rightButton
         buttons[.Jump] = jumpButton
-        buttons[.L] = Button(left: 0, top: 0, width: defaultSize, height: defaultSize, zoom: zoom)
-        buttons[.R] = Button(left: GLfloat(View.instance.width - defaultSize), top: 0, width: defaultSize, height: defaultSize, zoom: zoom)
-        buttons[.Start] = Button(left: GLfloat(View.instance.width - defaultSize) / 2, top: 0, width: defaultSize, height: defaultSize, zoom: zoom)
+        buttons[.L] = Button(left: 0, top: 0, size: shoulderButtonSize, zoom: zoom)
+        buttons[.R] = Button(right: View.instance.width, top: 0, size: shoulderButtonSize, zoom: zoom)
+        buttons[.Start] = Button(x: View.instance.width / 2, top: 0, size: shoulderButtonSize, zoom: zoom)
         
         factory.updateWith(0)
     }
@@ -100,23 +100,6 @@ class Button {
     
     var state = false
     var previousState = false
-    
-    init(factory: SpriteFactory, definition: Int, center: Point<GLfloat>, frame: Int, zoom: GLfloat) {
-        let sprite = factory.sprite(definition)
-        
-        sprite.animation = SingleFrameAnimation(definition: sprite.animation.definition)
-        sprite.animation.frameIndex = frame
-        
-        sprite.frame = Rectangle(center: center, size: sprite.animation.frame.size * zoom)
-        
-        let margin: GLfloat = 16
-        
-        self.sprite = sprite
-        self.zoom = zoom
-        self.hitbox = StaticHitbox(frame: Rectangle(center: sprite.frame.center, size: Size(width: sprite.frame.width + margin, height: sprite.frame.height + margin)))
-     
-        self.frameIndex = frame
-    }
     
     init(factory: SpriteFactory, definition: Int, left: GLfloat? = nil, right: GLfloat? = nil, y: GLfloat, frameIndex: Int, zoom: GLfloat) {
         let sprite = factory.sprite(definition)
@@ -138,16 +121,28 @@ class Button {
         
         self.sprite = sprite
         self.zoom = zoom
-        self.hitbox = StaticHitbox(frame: Rectangle(center: sprite.frame.center, size: Size(width: sprite.frame.width + margin, height: sprite.frame.height + margin)))
+        self.hitbox = StaticHitbox(frame: Rectangle(center: sprite.frame.center, size: sprite.frame.size + margin))
         
         self.frameIndex = frameIndex
     }
     
-    init(left: GLfloat, top: GLfloat, width: GLfloat, height: GLfloat, zoom: GLfloat) {
+    init(x: GLfloat? = nil, left: GLfloat? = nil, right: GLfloat? = nil, top: GLfloat, size: Size<GLfloat>, zoom: GLfloat) {
         self.sprite = nil
         self.frameIndex = 0
         self.zoom = zoom
-        self.hitbox = StaticHitbox(frame: Rectangle(left: left, top: top, width: width, height: height))
+        
+        var frame = Rectangle(size: size)
+        frame.top = top
+        if let x = x {
+            frame.x = x
+        }
+        if let left = left {
+            frame.left = left
+        }
+        if let right = right {
+            frame.right = right
+        }
+        self.hitbox = StaticHitbox(frame: frame)
     }
     
     deinit {
