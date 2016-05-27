@@ -48,10 +48,6 @@ public class Input : Controller {
         return controller.pressing(button)
     }
     
-    public func draw() {
-        controller.draw()
-    }
-    
 }
 
 

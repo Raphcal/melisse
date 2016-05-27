@@ -16,8 +16,6 @@ public class TouchController : Controller {
     let padButtonFrame = 2
     let jumpButtonFrame = 0
     
-    private let factory = SpriteFactory(capacity: 5)
-    
     public var direction: GLfloat = 0
     public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     var buttons = [GamePadButton : Button]()
@@ -51,10 +49,6 @@ public class TouchController : Controller {
         return touchCount > previousTouchCount
     }
     
-    public func draw() {
-        factory.draw()
-    }
-    
     public func updateWith(touches: [UnsafePointer<Void> : Point<GLfloat>]) {
         self.touches = touches
         self.previousTouchCount = touchCount
@@ -71,10 +65,9 @@ public class TouchController : Controller {
         } else {
             self.direction = 0
         }
-        factory.updateWith(0)
     }
     
-    public func createButtonsWith(definition: Int) {
+    public func createButtonsWith(factory: SpriteFactory, definition: Int) {
         let leftButton = Button(factory: factory, definition: definition, frame: padButtonFrame, zoom: zoom)
         let rightButton = Button(factory: factory, definition: definition, frame: padButtonFrame, zoom: zoom)
         let jumpButton = Button(factory: factory, definition: definition, frame: jumpButtonFrame, zoom: zoom)
@@ -144,7 +137,7 @@ class Button {
         self.state = false
         
         for touch in touches.values {
-            self.state = state || hitbox.collidesWith(touch)
+            self.state = state || hitbox.collidesWith(touch * zoom)
         }
         
         if let sprite = self.sprite {
