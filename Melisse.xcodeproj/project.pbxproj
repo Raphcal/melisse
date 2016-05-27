@@ -17,6 +17,7 @@
 		5168964B1CEC92C800B23BD8 /* NoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91E1CD7B0E40029C1E0 /* NoController.swift */; };
 		519F80F51CECD14800211E4C /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519F80F31CECD14200211E4C /* KeyboardController.swift */; };
 		51B04AF41CF87D6800048E46 /* PerspectiveCalibrationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B04AF31CF87D6700048E46 /* PerspectiveCalibrationScene.swift */; };
+		51B04B001CF8942400048E46 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
 		641F29EC1CF07466000E85E3 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
 		6429FED31CE879010052ED4D /* Melisse Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 6429FED21CE879010052ED4D /* Melisse Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6429FED81CE87B850052ED4D /* PerspectiveEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */; };
@@ -648,6 +649,7 @@
 				6429FEED1CE87B850052ED4D /* ReferencePool.swift in Sources */,
 				6429FEEE1CE87B850052ED4D /* Surface.swift in Sources */,
 				64BB3B2F1CE8978F0063958F /* NoAudio.swift in Sources */,
+				51B04B001CF8942400048E46 /* OpenALAudio.swift in Sources */,
 				6429FEEF1CE87B850052ED4D /* SurfaceArray.swift in Sources */,
 				6429FEF01CE87B850052ED4D /* Surfaces.swift in Sources */,
 				519F80F51CECD14800211E4C /* KeyboardController.swift in Sources */,

@@ -13,6 +13,12 @@ public protocol Sound {
     /// Nom de la ressource correspondant au son.
     var resource: String { get }
     
+    /// Nom de la ressource correspondant au son.
+    var ext: String? { get }
+    
+    /// Index du son.
+    var rawValue: Int { get }
+    
 }
 
 public protocol Audio {
