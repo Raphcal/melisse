@@ -13,6 +13,12 @@ public struct Size<Coordinate where Coordinate : Numeric> : Equatable {
     public var width: Coordinate
     public var height: Coordinate
     
+    public var description: String {
+        get {
+            return "size[\(width)x\(height)]"
+        }
+    }
+    
     public init() {
         self.width = Coordinate(0)
         self.height = Coordinate(0)

@@ -20,14 +20,8 @@ public class TouchController : Controller {
     public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     var buttons = [GamePadButton : Button]()
     
-    public let zoom: GLfloat
-    
     private var touchCount = 0
     private var previousTouchCount = 0
-    
-    public init() {
-        self.zoom = View.instance.width / GLfloat(UIScreen.mainScreen().bounds.width)
-    }
     
     public func pressed(button: GamePadButton) -> Bool {
         if let b = buttons[button] {
@@ -68,6 +62,7 @@ public class TouchController : Controller {
     }
     
     public func createButtonsWith(factory: SpriteFactory, definition: Int) {
+        let zoom = View.instance.width / GLfloat(UIScreen.mainScreen().bounds.width)
         let shoulderButtonSize = Size<GLfloat>(width: 48, height: 32)
         let padY = View.instance.height - 48
         

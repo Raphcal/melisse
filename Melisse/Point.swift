@@ -13,6 +13,12 @@ public struct Point<Coordinate where Coordinate : Numeric> : Equatable {
     public var x: Coordinate
     public var y: Coordinate
     
+    public var description: String {
+        get {
+            return "point[\(x)x\(y)]"
+        }
+    }
+    
     public init() {
         self.x = Coordinate(0)
         self.y = Coordinate(0)
