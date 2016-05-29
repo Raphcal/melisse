@@ -219,14 +219,17 @@ public class OpenALAudio: Audio {
         size = UInt32(fileLengthInFrames)
         status = ExtAudioFileRead(fileReference, &size, &dataBuffer)
         
+        var audioData: AudioData?
         if status == noErr {
-            return AudioData(data: data, size: ALsizei(dataSize), format: outputFormat.mChannelsPerFrame > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, frequence: ALsizei(outputFormat.mSampleRate))
+            audioData = AudioData(data: data, size: ALsizei(dataSize), format: outputFormat.mChannelsPerFrame > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, frequence: ALsizei(outputFormat.mSampleRate))
         } else {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileRead FAILED, Error = \(status)")
             free(data)
-            ExtAudioFileDispose(fileReference)
-            return nil
+            audioData = nil
         }
+        
+        ExtAudioFileDispose(fileReference)
+        return audioData
     }
     
 }
