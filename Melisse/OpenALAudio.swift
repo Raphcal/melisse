@@ -44,7 +44,7 @@ public class OpenALAudio: Audio {
             return nil
         }
         
-        let proc = alcGetProcAddress(nil, "alBufferDataStatic")
+        let proc = alcGetProcAddress(device.device, "alBufferDataStatic")
         if proc == nil {
             print("Erreur OpenAL lors de la recherche de la fonction 'alBufferDataStatic'.")
             return nil
@@ -77,7 +77,7 @@ public class OpenALAudio: Audio {
         
         var error = alGetError()
         if error != AL_NO_ERROR {
-            print("Erreur \(error) lors de l'attachement du buffer \(sound.rawValue) à la source.")
+            print("Erreur \(error) lors de l'attachement du buffer \(sound) à la source.")
             return
         }
         
@@ -87,7 +87,7 @@ public class OpenALAudio: Audio {
         
         error = alGetError()
         if error != AL_NO_ERROR {
-            print("Erreur \(error) Erreur lors de la lecture du son \(sound.rawValue).")
+            print("Erreur \(error) Erreur lors de la lecture du son \(sound).")
             return
         }
     }
@@ -127,9 +127,19 @@ public class OpenALAudio: Audio {
         if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext), let audioData = audioDataFor(URL) {
             data[sound.rawValue] = audioData
             
+            var error = alGetError()
+            if error != AL_NO_ERROR {
+                print("Erreur OpenAL \(error) au chargement du son \(sound).")
+            }
+            
             alBufferDataStaticProc(ALint(buffers.buffers[sound.rawValue]), audioData.format, audioData.data, audioData.size, audioData.frequence)
+            
+            error = alGetError()
+            if error != AL_NO_ERROR {
+                print("Erreur OpenAL \(error) à l'attribution du son \(sound) au buffer.")
+            }
         } else {
-            print("Son \(sound.rawValue) non chargé.")
+            print("Son \(sound) non chargé.")
         }
     }
     
@@ -196,10 +206,15 @@ public class OpenALAudio: Audio {
         
         // Lecture du son en mémoire.
         let dataSize = UInt32(fileLengthInFrames * Int64(outputFormat.mBytesPerFrame))
-        let data = UnsafeMutablePointer<Void>.alloc(Int(dataSize))
+        let data = malloc(Int(dataSize))//UnsafeMutablePointer<Void>.alloc(Int(dataSize))
         
-        var dataBuffer = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
+        var dataBuffer = AudioBufferList()
         dataBuffer.mNumberBuffers = 1
+        dataBuffer.mBuffers.mDataByteSize = dataSize
+        dataBuffer.mBuffers.mNumberChannels = outputFormat.mChannelsPerFrame
+        dataBuffer.mBuffers.mData = data
+        
+        // mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
         
         size = UInt32(fileLengthInFrames)
         status = ExtAudioFileRead(fileReference, &size, &dataBuffer)
@@ -263,14 +278,14 @@ class AudioSources {
     
     let context: AudioContext
     let numberOfSources: ALsizei
-    var sources: [ALuint]
+    let sources: UnsafeMutablePointer<ALuint>
     
     init?(context: AudioContext, numberOfSources: Int) {
         self.context = context
         self.numberOfSources = ALsizei(numberOfSources)
         
-        sources = Array(count: numberOfSources, repeatedValue: 0)
-        alGenSources(self.numberOfSources, &sources)
+        sources = UnsafeMutablePointer.alloc(numberOfSources)
+        alGenSources(self.numberOfSources, sources)
         
         if alGetError() != AL_NO_ERROR {
             return nil
@@ -278,7 +293,7 @@ class AudioSources {
     }
     
     deinit {
-        alDeleteSources(self.numberOfSources, &sources)
+        alDeleteSources(self.numberOfSources, sources)
     }
     
 }
@@ -287,14 +302,14 @@ class AudioBuffers {
     
     let context: AudioContext
     let numberOfBuffers: ALsizei
-    var buffers: [ALuint]
+    let buffers: UnsafeMutablePointer<ALuint>
     
     init?(context: AudioContext, numberOfBuffers: Int) {
         self.context = context
         self.numberOfBuffers = ALsizei(numberOfBuffers)
         
-        buffers = Array(count: numberOfBuffers, repeatedValue: 0)
-        alGenSources(self.numberOfBuffers, &buffers)
+        buffers = UnsafeMutablePointer.alloc(numberOfBuffers)
+        alGenSources(self.numberOfBuffers, buffers)
         
         if alGetError() != AL_NO_ERROR {
             return nil
@@ -302,12 +317,12 @@ class AudioBuffers {
     }
     
     deinit {
-        alDeleteBuffers(numberOfBuffers, &buffers)
+        alDeleteBuffers(numberOfBuffers, buffers)
     }
     
 }
 
-struct AudioData {
+class AudioData {
     
     var data: UnsafeMutablePointer<Void>
     var size: ALsizei
@@ -326,6 +341,13 @@ struct AudioData {
         self.size = size
         self.format = format
         self.frequence = frequence
+    }
+    
+    deinit {
+        if data != nil {
+            data.destroy()
+            data = nil
+        }
     }
     
 }
