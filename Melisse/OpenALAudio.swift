@@ -17,6 +17,7 @@ public class OpenALAudio: Audio {
     
     let context: ALCcontext
     let device: ALCdevice
+    let alBufferDataStaticProc: alBufferDataStaticProcPtr
     
     let numberOfSources: ALsizei = 2
     let sources: UnsafeMutablePointer<ALuint>
@@ -28,7 +29,7 @@ public class OpenALAudio: Audio {
     var data = [AudioData]()
     
     var player: AVAudioPlayer?
-    var completion: (() -> Void)?
+    var audioPlayerDelegate: AudioPlayerDelegate?
     
     public init?(sounds: [Sound]) {
         self.sounds = sounds
@@ -42,9 +43,19 @@ public class OpenALAudio: Audio {
         context = alcCreateContext(device, nil)
         if context == nil {
             print("Erreur OpenAL, erreur lors de la création du context.")
+            alcCloseDevice(device)
             return nil
         }
         alcMakeContextCurrent(context)
+        
+        let proc = alcGetProcAddress(nil, "alBufferDataStatic")
+        if proc == nil {
+            print("Erreur OpenAL lors de la recherche de la fonction 'alBufferDataStatic'.")
+            alcDestroyContext(context)
+            alcCloseDevice(device)
+            return nil
+        }
+        alBufferDataStaticProc = unsafeBitCast(proc, alBufferDataStaticProcPtr.self)
         
         sources = UnsafeMutablePointer.alloc(Int(numberOfSources))
         alGenSources(numberOfSources, sources)
@@ -53,6 +64,8 @@ public class OpenALAudio: Audio {
         if error != AL_NO_ERROR {
             print("Erreur OpenAL \(error) pendant le chargement des sources.")
             sources.destroy()
+            alcDestroyContext(context)
+            alcCloseDevice(device)
             return nil
         }
         
@@ -62,13 +75,16 @@ public class OpenALAudio: Audio {
         error = alGetError()
         if error != AL_NO_ERROR {
             print("Erreur OpenAL \(error) pendant le chargement des buffers.")
+            alDeleteSources(numberOfSources, sources)
             sources.destroy()
             buffers.destroy()
+            alcDestroyContext(context)
+            alcCloseDevice(device)
             return nil
         }
         
         for sound in sounds {
-            
+            load(sound)
         }
     }
     
@@ -84,124 +100,144 @@ public class OpenALAudio: Audio {
     }
     
     public func play(sound: Sound) {
-        // TODO: Implémenter la méthode.
+        alSourceStop(sources[source])
+        alSourcei(sources[source], AL_BUFFER, ALint(buffers[sound.rawValue]))
+        
+        var error = alGetError()
+        if error != AL_NO_ERROR {
+            print("Erreur \(error) lors de l'attachement du buffer \(sound.rawValue) à la source.")
+            return
+        }
+        
+        // Possibilité de réduire le son ici en paramétrant AL_GAIN.
+        alSourcePlay(sources[source])
+        source = (source + 1) % Int(numberOfSources)
+        
+        error = alGetError()
+        if error != AL_NO_ERROR {
+            print("Erreur \(error) Erreur lors de la lecture du son \(sound.rawValue).")
+            return
+        }
     }
     
     public func play(streamFrom URL: NSURL) {
-        // TODO: Implémenter la méthode.
+        do {
+            player = try AVAudioPlayer(contentsOfURL: URL)
+            player!.numberOfLoops = -1
+            player!.play()
+        } catch {
+            print("Erreur au chargement du stream '\(URL)': \(error)")
+        }
     }
     
     public func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
-        // TODO: Implémenter la méthode.
+        let delegate = AudioPlayerDelegate(audio: self, completion: completionBlock)
+        self.audioPlayerDelegate = delegate
+        do {
+            player = try AVAudioPlayer(contentsOfURL: URL)
+            player!.numberOfLoops = 0
+            player!.delegate = delegate
+            player!.play()
+        } catch {
+            print("Erreur au chargement du stream '\(URL)': \(error)")
+        }
     }
     
     public func stopStream() {
-        // TODO: Implémenter la méthode.
+        player?.stop()
+        player = nil
+        audioPlayerDelegate = nil
     }
+    
+    // MARK: - OpenAL
     
     public func load(sound: Sound) {
-        if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext) {
-            data[sound.rawValue] = audioDataFor(URL)
+        if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext), let audioData = audioDataFor(URL) {
+            data[sound.rawValue] = audioData
+            
+            alBufferDataStaticProc(ALint(buffers[sound.rawValue]), audioData.format, audioData.data, audioData.size, audioData.frequence)
         }
-        
-        
-        /*NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:ext];
-        
-        if(url != nil) {
-            ALenum format = 0;
-            ALsizei size = 0;
-            ALsizei freq = 0;
-            _data[sound] = MyGetOpenALAudioData((__bridge CFURLRef)(url), &size, &format, &freq);
-            
-            ALenum error = alGetError();
-            if(error != AL_NO_ERROR) {
-                NSLog(@"Erreur %x pendant le chargement du fichier '%@' (url %@) pour le son %ld.", error, name, url, (long)sound);
-                return;
-            }
-            
-            alBufferDataStaticProc(_buffers[sound], format, _data[sound], size, freq);
-            error = alGetError();
-            if(error != AL_NO_ERROR) {
-                NSLog(@"Erreur %x pendant la création du buffer pour le son %ld.", error, (long)sound);
-            }
-        } else {
-            NSLog(@"Fichier '%@.%@' non trouvé lors du chargement du son %ld.", name, ext, (long)sound);
-        }*/
     }
     
-    private func audioDataFor(URL: NSURL) -> AudioData {
-        var fileRef: ExtAudioFileRef = nil
-        var status = ExtAudioFileOpenURL(URL as CFURL, &fileRef)
+    private func audioDataFor(URL: NSURL) -> AudioData? {
+        // Ouverture du fichier.
+        var fileReference: ExtAudioFileRef = nil
+        var status = ExtAudioFileOpenURL(URL as CFURL, &fileReference)
         
-        if status != 0 {
+        if status != noErr || fileReference == nil {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileOpenURL FAILED, Error = \(status)")
+            return nil
         }
         
-        /*
-         // Get the audio data format
-         err = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileDataFormat, &thePropertySize, &theFileFormat);
-         if(err) { printf("MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %d\n", (int)err); goto Exit; }
-         if (theFileFormat.mChannelsPerFrame > 2)  { printf("MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo\n"); goto Exit;}
-         
-         // Set the client format to 16 bit signed integer (native-endian) data
-         // Maintain the channel count and sample rate of the original source format
-         theOutputFormat.mSampleRate = theFileFormat.mSampleRate;
-         theOutputFormat.mChannelsPerFrame = theFileFormat.mChannelsPerFrame;
-         
-         theOutputFormat.mFormatID = kAudioFormatLinearPCM;
-         theOutputFormat.mBytesPerPacket = 2 * theOutputFormat.mChannelsPerFrame;
-         theOutputFormat.mFramesPerPacket = 1;
-         theOutputFormat.mBytesPerFrame = 2 * theOutputFormat.mChannelsPerFrame;
-         theOutputFormat.mBitsPerChannel = 16;
-         theOutputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger;
-         
-         // Set the desired client (output) data format
-         err = ExtAudioFileSetProperty(extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(theOutputFormat), &theOutputFormat);
-         if(err) { printf("MyGetOpenALAudioData: ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = %d\n", (int)err); goto Exit; }
-         
-         // Get the total frame count
-         thePropertySize = sizeof(theFileLengthInFrames);
-         err = ExtAudioFileGetProperty(extRef, kExtAudioFileProperty_FileLengthFrames, &thePropertySize, &theFileLengthInFrames);
-         if(err) { printf("MyGetOpenALAudioData: ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %d\n", (int)err); goto Exit; }
-         
-         // Read all the data into memory
-         UInt32		dataSize = (UInt32) (theFileLengthInFrames * theOutputFormat.mBytesPerFrame);
-         theData = malloc(dataSize);
-         if (theData)
-         {
-         AudioBufferList		theDataBuffer;
-         theDataBuffer.mNumberBuffers = 1;
-         theDataBuffer.mBuffers[0].mDataByteSize = dataSize;
-         theDataBuffer.mBuffers[0].mNumberChannels = theOutputFormat.mChannelsPerFrame;
-         theDataBuffer.mBuffers[0].mData = theData;
-         
-         // Read the data into an AudioBufferList
-         err = ExtAudioFileRead(extRef, (UInt32*)&theFileLengthInFrames, &theDataBuffer);
-         if(err == noErr)
-         {
-         // success
-         *outDataSize = (ALsizei)dataSize;
-         *outDataFormat = (theOutputFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
-         *outSampleRate = (ALsizei)theOutputFormat.mSampleRate;
-         }
-         else
-         {
-         // failure
-         free (theData);
-         theData = NULL; // make sure to return NULL
-         printf("MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %d\n", (int)err); goto Exit;
-         }
-         }
-         
-         Exit:
-         // Dispose the ExtAudioFileRef, it is no longer needed
-         if (extRef) ExtAudioFileDispose(extRef);
-         return theData;
-         }
-        */
+        // Identification du format du fichier.
+        var format = AudioStreamBasicDescription()
+        var size = UInt32(sizeof(AudioStreamBasicDescription))
+        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileDataFormat, &size, &format)
         
-        // TODO: Écrire la méthode.
-        return AudioData(data: nil, size: 0, format: 0, frequence: 0)
+        if status != noErr {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
+            return nil
+        }
+        
+        if format.mChannelsPerFrame > 2 {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', format non supporté car le nombre de pistes est supérieur à stéréo.")
+            ExtAudioFileDispose(fileReference)
+            return nil
+        }
+        
+        // Set the client format to 16 bit signed integer (native-endian) data
+        // Maintain the channel count and sample rate of the original source format
+        var outputFormat = AudioStreamBasicDescription()
+        outputFormat.mSampleRate = format.mSampleRate
+        outputFormat.mChannelsPerFrame = format.mChannelsPerFrame
+        
+        outputFormat.mFormatID = kAudioFormatLinearPCM
+        outputFormat.mBytesPerPacket = 2 * format.mChannelsPerFrame
+        outputFormat.mFramesPerPacket = 1
+        outputFormat.mBytesPerFrame = 2 * format.mChannelsPerFrame
+        outputFormat.mBitsPerChannel = 16
+        outputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger
+        
+        // Set the desired client (output) data format
+        size = UInt32(sizeof(AudioStreamBasicDescription))
+        status = ExtAudioFileSetProperty(fileReference, kExtAudioFileProperty_ClientDataFormat, size, &outputFormat)
+        
+        if status != noErr {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
+            return nil
+        }
+        
+        // Identification du nombre total de frames.
+        var fileLengthInFrames: Int64 = 0
+        size = UInt32(sizeof(Int64))
+        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthInFrames)
+        
+        if status != noErr {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
+            return nil
+        }
+        
+        // Lecture du son en mémoire.
+        let dataSize = UInt32(fileLengthInFrames * Int64(outputFormat.mBytesPerFrame))
+        let data = UnsafeMutablePointer<Void>.alloc(Int(dataSize))
+        
+        var dataBuffer = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
+        dataBuffer.mNumberBuffers = 1
+        
+        size = UInt32(fileLengthInFrames)
+        status = ExtAudioFileRead(fileReference, &size, &dataBuffer)
+        
+        if status == noErr {
+            return AudioData(data: data, size: ALsizei(dataSize), format: outputFormat.mChannelsPerFrame > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, frequence: ALsizei(outputFormat.mSampleRate))
+        } else {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileRead FAILED, Error = \(status)")
+            free(data)
+            ExtAudioFileDispose(fileReference)
+            return nil
+        }
     }
     
 }
@@ -211,4 +247,21 @@ struct AudioData {
     var size: ALsizei
     var format: ALenum
     var frequence: ALsizei
+}
+
+class AudioPlayerDelegate : NSObject, AVAudioPlayerDelegate {
+    
+    let audio: Audio
+    let completion: () -> Void
+    
+    init(audio: Audio, completion: () -> Void) {
+        self.audio = audio
+        self.completion = completion
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+        completion()
+        audio.stopStream()
+    }
+    
 }
