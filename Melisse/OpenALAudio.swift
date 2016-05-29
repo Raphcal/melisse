@@ -124,7 +124,9 @@ public class OpenALAudio: Audio {
     // MARK: - OpenAL
     
     public func load(sound: Sound) {
-        if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext), let audioData = audioDataFor(URL) {
+        if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext)
+            , let audioData = audioDataFor(URL)
+        {
             data[sound.rawValue] = audioData
             
             var error = alGetError()
@@ -133,7 +135,9 @@ public class OpenALAudio: Audio {
             }
             
             alBufferDataStaticProc(ALint(buffers.buffers[sound.rawValue]), audioData.format, audioData.data, audioData.size, audioData.frequence)
+//            storeAudioFor(URL, at: sound.rawValue)
             
+//            let
             error = alGetError()
             if error != AL_NO_ERROR {
                 print("Erreur OpenAL \(error) à l'attribution du son \(sound) au buffer.")
@@ -230,6 +234,34 @@ public class OpenALAudio: Audio {
         
         ExtAudioFileDispose(fileReference)
         return audioData
+    }
+    
+    private func storeAudioFor(URL: NSURL, at index: Int) {
+        var fileId: AudioFileID = nil
+        var status = AudioFileOpenURL(URL as CFURL, .ReadPermission, 0, &fileId)
+        if status != noErr {
+            print("Erreur \(status) à l'ouverture du fichier \(URL).")
+            return
+        }
+        
+        var dataSize: UInt64 = 0
+        var size: UInt32 = UInt32(sizeof(UInt64))
+        status = AudioFileGetProperty(fileId, kAudioFilePropertyAudioDataByteCount, &size, &dataSize)
+        if status != noErr {
+            print("Erreur \(status) à la lecture de la taille du fichier \(URL).")
+            return
+        }
+        
+        var numberOfBytes = UInt32(dataSize)
+        var data = malloc(Int(dataSize))
+        status = AudioFileReadBytes(fileId, false, 0, &numberOfBytes, &data)
+        AudioFileClose(fileId)
+        if status != noErr {
+            print("Erreur \(status) à la lecture du contenu du fichier \(URL).")
+            return
+        }
+        
+        alBufferData(buffers.buffers[index], AL_FORMAT_STEREO16, data, ALsizei(dataSize), 44100)
     }
     
 }
