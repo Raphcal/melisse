@@ -12,96 +12,68 @@ import AVFoundation
 
 public class OpenALAudio: Audio {
     
-    typealias ALCcontext = COpaquePointer
-    typealias ALCdevice = COpaquePointer
-    
-    let context: ALCcontext
-    let device: ALCdevice
+    let context: AudioContext
+    let device: AudioDevice
     let alBufferDataStaticProc: alBufferDataStaticProcPtr
     
-    let numberOfSources: ALsizei = 2
-    let sources: UnsafeMutablePointer<ALuint>
+    let sources: AudioSources
     var source = 0
     
     let sounds: [Sound]
-    let buffers: UnsafeMutablePointer<ALuint>
+    let buffers: AudioBuffers
     
-    var data = [AudioData]()
+    var data: [AudioData]
     
     var player: AVAudioPlayer?
     var audioPlayerDelegate: AudioPlayerDelegate?
     
-    public init?(sounds: [Sound]) {
+    public init?(sounds: [Sound], numberOfSources: Int = 2) {
         self.sounds = sounds
         
-        device = alcOpenDevice(nil)
-        if device == nil {
+        if let device = AudioDevice() {
+            self.device = device
+        } else {
             print("Erreur OpenAL, erreur lors de l'ouverture du device.")
             return nil
         }
         
-        context = alcCreateContext(device, nil)
-        if context == nil {
+        if let context = AudioContext(device: device) {
+            self.context = context
+        } else {
             print("Erreur OpenAL, erreur lors de la création du context.")
-            alcCloseDevice(device)
             return nil
         }
-        alcMakeContextCurrent(context)
         
         let proc = alcGetProcAddress(nil, "alBufferDataStatic")
         if proc == nil {
             print("Erreur OpenAL lors de la recherche de la fonction 'alBufferDataStatic'.")
-            alcDestroyContext(context)
-            alcCloseDevice(device)
             return nil
         }
         alBufferDataStaticProc = unsafeBitCast(proc, alBufferDataStaticProcPtr.self)
         
-        sources = UnsafeMutablePointer.alloc(Int(numberOfSources))
-        alGenSources(numberOfSources, sources)
-        
-        var error = alGetError()
-        if error != AL_NO_ERROR {
-            print("Erreur OpenAL \(error) pendant le chargement des sources.")
-            sources.destroy()
-            alcDestroyContext(context)
-            alcCloseDevice(device)
+        if let sources = AudioSources(context: context, numberOfSources: numberOfSources) {
+            self.sources = sources
+        } else {
+            print("Erreur OpenAL pendant le chargement des sources.")
             return nil
         }
         
-        buffers = UnsafeMutablePointer.alloc(sounds.count)
-        alGenBuffers(ALsizei(sounds.count), buffers)
-        
-        error = alGetError()
-        if error != AL_NO_ERROR {
-            print("Erreur OpenAL \(error) pendant le chargement des buffers.")
-            alDeleteSources(numberOfSources, sources)
-            sources.destroy()
-            buffers.destroy()
-            alcDestroyContext(context)
-            alcCloseDevice(device)
+        if let buffers = AudioBuffers(context: context, numberOfBuffers: sounds.count) {
+            self.buffers = buffers
+        } else {
+            print("Erreur OpenAL pendant le chargement des buffers.")
             return nil
         }
         
+        data = Array(count: sounds.count, repeatedValue: AudioData())
         for sound in sounds {
             load(sound)
         }
     }
     
-    deinit {
-        alDeleteSources(numberOfSources, sources)
-        alDeleteBuffers(ALsizei(sounds.count), buffers)
-        
-        alcDestroyContext(context)
-        alcCloseDevice(device)
-        
-        sources.destroy()
-        buffers.destroy()
-    }
-    
     public func play(sound: Sound) {
-        alSourceStop(sources[source])
-        alSourcei(sources[source], AL_BUFFER, ALint(buffers[sound.rawValue]))
+        alSourceStop(sources.sources[source])
+        alSourcei(sources.sources[source], AL_BUFFER, ALint(buffers.buffers[sound.rawValue]))
         
         var error = alGetError()
         if error != AL_NO_ERROR {
@@ -110,8 +82,8 @@ public class OpenALAudio: Audio {
         }
         
         // Possibilité de réduire le son ici en paramétrant AL_GAIN.
-        alSourcePlay(sources[source])
-        source = (source + 1) % Int(numberOfSources)
+        alSourcePlay(sources.sources[source])
+        source = (source + 1) % Int(sources.numberOfSources)
         
         error = alGetError()
         if error != AL_NO_ERROR {
@@ -155,7 +127,9 @@ public class OpenALAudio: Audio {
         if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext), let audioData = audioDataFor(URL) {
             data[sound.rawValue] = audioData
             
-            alBufferDataStaticProc(ALint(buffers[sound.rawValue]), audioData.format, audioData.data, audioData.size, audioData.frequence)
+            alBufferDataStaticProc(ALint(buffers.buffers[sound.rawValue]), audioData.format, audioData.data, audioData.size, audioData.frequence)
+        } else {
+            print("Son \(sound.rawValue) non chargé.")
         }
     }
     
@@ -242,11 +216,118 @@ public class OpenALAudio: Audio {
     
 }
 
+class AudioDevice {
+    
+    typealias ALCdevice = COpaquePointer
+    let device: ALCdevice
+    
+    init?() {
+        self.device = alcOpenDevice(nil)
+        if device == nil {
+            return nil
+        }
+    }
+    
+    deinit {
+        alcCloseDevice(device)
+    }
+    
+}
+
+class AudioContext {
+    
+    typealias ALCcontext = COpaquePointer
+    let device: AudioDevice
+    let context: ALCcontext
+    
+    init?(device: AudioDevice) {
+        self.device = device
+        
+        var attributes: ALCint = 0
+        self.context = alcCreateContext(device.device, &attributes)
+        
+        if context == nil {
+            return nil
+        }
+        
+        alcMakeContextCurrent(context)
+    }
+    
+    deinit {
+        alcDestroyContext(context)
+    }
+    
+}
+
+class AudioSources {
+    
+    let context: AudioContext
+    let numberOfSources: ALsizei
+    var sources: [ALuint]
+    
+    init?(context: AudioContext, numberOfSources: Int) {
+        self.context = context
+        self.numberOfSources = ALsizei(numberOfSources)
+        
+        sources = Array(count: numberOfSources, repeatedValue: 0)
+        alGenSources(self.numberOfSources, &sources)
+        
+        if alGetError() != AL_NO_ERROR {
+            return nil
+        }
+    }
+    
+    deinit {
+        alDeleteSources(self.numberOfSources, &sources)
+    }
+    
+}
+
+class AudioBuffers {
+    
+    let context: AudioContext
+    let numberOfBuffers: ALsizei
+    var buffers: [ALuint]
+    
+    init?(context: AudioContext, numberOfBuffers: Int) {
+        self.context = context
+        self.numberOfBuffers = ALsizei(numberOfBuffers)
+        
+        buffers = Array(count: numberOfBuffers, repeatedValue: 0)
+        alGenSources(self.numberOfBuffers, &buffers)
+        
+        if alGetError() != AL_NO_ERROR {
+            return nil
+        }
+    }
+    
+    deinit {
+        alDeleteBuffers(numberOfBuffers, &buffers)
+    }
+    
+}
+
 struct AudioData {
+    
     var data: UnsafeMutablePointer<Void>
     var size: ALsizei
     var format: ALenum
     var frequence: ALsizei
+    
+    init() {
+        data = nil
+        size = 0
+        format = 0
+        frequence = 0
+    }
+    
+    init(data: UnsafeMutablePointer<Void>, size: ALsizei, format: ALenum, frequence: ALsizei) {
+        self.data = data
+        self.size = size
+        self.format = format
+        self.frequence = frequence
+    }
+    
 }
 
 class AudioPlayerDelegate : NSObject, AVAudioPlayerDelegate {
