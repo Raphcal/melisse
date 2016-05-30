@@ -11,23 +11,23 @@ import Foundation
 public struct NoAudio: Audio {
     
     public func load(sound: Sound) {
-        // TODO: Implémenter la méthode.
+        // Pas d'effet.
     }
     
     public func play(sound: Sound) {
-        // TODO: Implémenter la méthode.
+        // Pas d'effet.
     }
     
     public func play(streamFrom URL: NSURL) {
-        // TODO: Implémenter la méthode.
+        // Pas d'effet.
     }
     
     public func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
-        // TODO: Implémenter la méthode.
+        completionBlock()
     }
     
     public func stopStream() {
-        // TODO: Implémenter la méthode.
+        // Pas d'effet.
     }
     
 }

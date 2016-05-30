@@ -12,9 +12,6 @@ import AVFoundation
 
 public class OpenALAudio: Audio {
     
-    let context: AudioContext
-    let device: AudioDevice
-    
     let sources: AudioSources
     var source = 0
     
@@ -26,32 +23,12 @@ public class OpenALAudio: Audio {
     
     public init?(sounds: [Sound], numberOfSources: Int = 2) {
         self.sounds = sounds
-        
-        if let device = AudioDevice() {
-            self.device = device
-        } else {
-            print("Erreur OpenAL, erreur lors de l'ouverture du device.")
-            return nil
-        }
-        
-        if let context = AudioContext(device: device) {
-            self.context = context
-        } else {
-            print("Erreur OpenAL, erreur lors de la création du context.")
-            return nil
-        }
-        
-        if let sources = AudioSources(context: context, numberOfSources: numberOfSources) {
+        let device = AudioDevice()
+        let context = AudioContext(device: device)
+        if let sources = AudioSources(context: context, numberOfSources: numberOfSources), let buffers = AudioBuffers(context: context, numberOfBuffers: sounds.count) {
             self.sources = sources
-        } else {
-            print("Erreur OpenAL pendant le chargement des sources.")
-            return nil
-        }
-        
-        if let buffers = AudioBuffers(context: context, numberOfBuffers: sounds.count) {
             self.buffers = buffers
         } else {
-            print("Erreur OpenAL pendant le chargement des buffers.")
             return nil
         }
 
@@ -66,7 +43,7 @@ public class OpenALAudio: Audio {
         
         var error = alGetError()
         if error != AL_NO_ERROR {
-            print("Erreur \(error) lors de l'attachement du buffer \(sound) à la source.")
+            print("Erreur \(error) lors de l'attachement du buffer \(sound) à la source \(source).")
             return
         }
         
@@ -114,10 +91,9 @@ public class OpenALAudio: Audio {
     
     public func load(sound: Sound) {
         if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext) {
-            //storeAudioFor(sound, at: URL)
             bufferize(sound, at: URL)
         } else {
-            print("Son \(sound) non chargé.")
+            print("Son \(sound) non trouvé.")
         }
     }
     
@@ -228,19 +204,20 @@ class AudioDevice {
 class AudioContext {
     
     typealias ALCcontext = COpaquePointer
-    let device: AudioDevice
+    let device: AudioDevice?
     let context: ALCcontext
     
-    init?(device: AudioDevice) {
+    init?(device: AudioDevice?) {
         self.device = device
-        
-        var attributes: ALCint = 0
-        self.context = alcCreateContext(device.device, &attributes)
-        
+        if let device = device {
+            var attributes: ALCint = 0
+            self.context = alcCreateContext(device.device, &attributes)
+        } else {
+            self.context = nil
+        }
         if context == nil {
             return nil
         }
-        
         alcMakeContextCurrent(context)
     }
     
@@ -252,11 +229,11 @@ class AudioContext {
 
 class AudioSources {
     
-    let context: AudioContext
+    let context: AudioContext?
     let numberOfSources: ALsizei
     let sources: UnsafeMutablePointer<ALuint>
     
-    init?(context: AudioContext, numberOfSources: Int) {
+    init?(context: AudioContext?, numberOfSources: Int) {
         self.context = context
         self.numberOfSources = ALsizei(numberOfSources)
         
@@ -270,17 +247,18 @@ class AudioSources {
     
     deinit {
         alDeleteSources(self.numberOfSources, sources)
+        sources.destroy()
     }
     
 }
 
 class AudioBuffers {
     
-    let context: AudioContext
+    let context: AudioContext?
     let numberOfBuffers: ALsizei
     let buffers: UnsafeMutablePointer<ALuint>
     
-    init?(context: AudioContext, numberOfBuffers: Int) {
+    init?(context: AudioContext?, numberOfBuffers: Int) {
         self.context = context
         self.numberOfBuffers = ALsizei(numberOfBuffers)
         
@@ -294,6 +272,7 @@ class AudioBuffers {
     
     deinit {
         alDeleteBuffers(numberOfBuffers, buffers)
+        buffers.destroy()
     }
     
 }
