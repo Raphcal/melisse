@@ -114,82 +114,95 @@ public class OpenALAudio: Audio {
     
     public func load(sound: Sound) {
         if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext) {
-            storeAudioFor(sound, at: URL)
+            //storeAudioFor(sound, at: URL)
+            bufferize(sound, at: URL)
         } else {
             print("Son \(sound) non chargé.")
         }
     }
     
-    private func storeAudioFor(sound: Sound, at URL: NSURL) {
-        var fileId: AudioFileID = nil
-        var status = AudioFileOpenURL(URL as CFURL, .ReadPermission, 0, &fileId)
-        if status != noErr {
-            print("Erreur \(status) à l'ouverture du fichier \(URL).")
+    private func bufferize(sound: Sound, at URL: NSURL) {
+        // Ouverture du fichier.
+        var fileReference: ExtAudioFileRef = nil
+        var status = ExtAudioFileOpenURL(URL as CFURL, &fileReference)
+        
+        if status != noErr || fileReference == nil {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileOpenURL FAILED, Error = \(status)")
             return
         }
         
-        var description = AudioStreamBasicDescription()
+        // Identification du format du fichier.
+        var format = AudioStreamBasicDescription()
         var size = UInt32(sizeof(AudioStreamBasicDescription))
-        status = AudioFileGetProperty(fileId, kAudioFilePropertyDataFormat, &size, &description)
+        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileDataFormat, &size, &format)
+        
         if status != noErr {
-            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', AudioFileGetProperty(kAudioFilePropertyDataFormat) FAILED, Error = \(status)")
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
             return
         }
         
-        let format: Int32
-        if let f = formatFor(description) {
-            format = f
-        } else {
-            print("Format non supporté pour le son \(sound).")
+        if format.mChannelsPerFrame > 2 {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', format non supporté car le nombre de pistes est supérieur à stéréo.")
+            ExtAudioFileDispose(fileReference)
             return
         }
         
-        var dataSize: UInt64 = 0
-        size = UInt32(sizeof(UInt64))
-        status = AudioFileGetProperty(fileId, kAudioFilePropertyAudioDataByteCount, &size, &dataSize)
+        // Définition du format de sortie du son en 16 bit signé (endian natif).
+        // Conservation du nombre de pistes (mono ou stéréo) et de la fréquence.
+        var outputFormat = AudioStreamBasicDescription()
+        outputFormat.mSampleRate = format.mSampleRate
+        outputFormat.mChannelsPerFrame = format.mChannelsPerFrame
+        
+        outputFormat.mFormatID = kAudioFormatLinearPCM
+        outputFormat.mBytesPerPacket = 2 * format.mChannelsPerFrame
+        outputFormat.mFramesPerPacket = 1
+        outputFormat.mBytesPerFrame = 2 * format.mChannelsPerFrame
+        outputFormat.mBitsPerChannel = 16
+        outputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger
+        
+        status = ExtAudioFileSetProperty(fileReference, kExtAudioFileProperty_ClientDataFormat, size, &outputFormat)
+        
         if status != noErr {
-            print("Erreur \(status) à la lecture de la taille du fichier \(URL).")
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
             return
         }
         
-        var numberOfBytes = UInt32(dataSize)
+        // Identification du nombre total de frames.
+        var fileLengthInFrames: Int64 = 0
+        size = UInt32(sizeof(Int64))
+        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthInFrames)
+        
+        if status != noErr {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = \(status)")
+            ExtAudioFileDispose(fileReference)
+            return
+        }
+        
+        // Lecture du son en mémoire.
+        let dataSize = UInt32(fileLengthInFrames * Int64(outputFormat.mBytesPerFrame))
         let data = UnsafeMutablePointer<Void>.alloc(Int(dataSize))
-        status = AudioFileReadBytes(fileId, false, 0, &numberOfBytes, data)
-        if status != noErr {
-            print("Erreur \(status) à la lecture du contenu du fichier \(URL).")
-            return
+        
+        var dataBuffer = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
+        
+        size = UInt32(fileLengthInFrames)
+        status = ExtAudioFileRead(fileReference, &size, &dataBuffer)
+        
+        if status == noErr {
+            alBufferData(buffers.buffers[sound.rawValue], outputFormat.mChannelsPerFrame > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, ALsizei(dataSize), ALsizei(outputFormat.mSampleRate))
+            
+            let error = alGetError()
+            if error != AL_NO_ERROR {
+                print("Erreur de placement dans le buffer pour le son '\(sound)'.")
+            }
+            
+        } else {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileRead FAILED, Error = \(status)")
         }
         
-        status = AudioFileClose(fileId)
-        if status != noErr {
-            print("Erreur \(status) à la fermeture du contenu du fichier \(URL).")
-            return
-        }
-        
-        alBufferData(buffers.buffers[sound.rawValue], format, data, ALsizei(dataSize), 44100)
         data.destroy()
-        
-        let error = alGetError()
-        if error != AL_NO_ERROR {
-            print("Erreur OpenAL \(error) à l'attribution du son \(sound) au buffer.")
-        }
-    }
-    
-    private func formatFor(description: AudioStreamBasicDescription) -> Int32? {
-        if description.mChannelsPerFrame == 1 {
-            if description.mBitsPerChannel == 8 {
-                return AL_FORMAT_MONO8
-            } else if description.mBitsPerChannel == 16 {
-                return AL_FORMAT_MONO16
-            }
-        } else if description.mChannelsPerFrame == 2 {
-            if description.mBitsPerChannel == 8 {
-                return AL_FORMAT_STEREO8
-            } else if description.mBitsPerChannel == 16 {
-                return AL_FORMAT_STEREO16
-            }
-        }
-        return nil
+        ExtAudioFileDispose(fileReference)
     }
     
 }
