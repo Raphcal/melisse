@@ -128,8 +128,24 @@ public class OpenALAudio: Audio {
             return
         }
         
+        var description = AudioStreamBasicDescription()
+        var size = UInt32(sizeof(AudioStreamBasicDescription))
+        status = AudioFileGetProperty(fileId, kAudioFilePropertyDataFormat, &size, &description)
+        if status != noErr {
+            print("Erreur lors de l'ouverture du son à l'URL '\(URL)', AudioFileGetProperty(kAudioFilePropertyDataFormat) FAILED, Error = \(status)")
+            return
+        }
+        
+        let format: Int32
+        if let f = formatFor(description) {
+            format = f
+        } else {
+            print("Format non supporté pour le son \(sound).")
+            return
+        }
+        
         var dataSize: UInt64 = 0
-        var size: UInt32 = UInt32(sizeof(UInt64))
+        size = UInt32(sizeof(UInt64))
         status = AudioFileGetProperty(fileId, kAudioFilePropertyAudioDataByteCount, &size, &dataSize)
         if status != noErr {
             print("Erreur \(status) à la lecture de la taille du fichier \(URL).")
@@ -150,13 +166,30 @@ public class OpenALAudio: Audio {
             return
         }
         
-        alBufferData(buffers.buffers[sound.rawValue], AL_FORMAT_STEREO16, data, ALsizei(dataSize), 44100)
+        alBufferData(buffers.buffers[sound.rawValue], format, data, ALsizei(dataSize), 44100)
         data.destroy()
         
         let error = alGetError()
         if error != AL_NO_ERROR {
             print("Erreur OpenAL \(error) à l'attribution du son \(sound) au buffer.")
         }
+    }
+    
+    private func formatFor(description: AudioStreamBasicDescription) -> Int32? {
+        if description.mChannelsPerFrame == 1 {
+            if description.mBitsPerChannel == 8 {
+                return AL_FORMAT_MONO8
+            } else if description.mBitsPerChannel == 16 {
+                return AL_FORMAT_MONO16
+            }
+        } else if description.mChannelsPerFrame == 2 {
+            if description.mBitsPerChannel == 8 {
+                return AL_FORMAT_STEREO8
+            } else if description.mBitsPerChannel == 16 {
+                return AL_FORMAT_STEREO16
+            }
+        }
+        return nil
     }
     
 }
