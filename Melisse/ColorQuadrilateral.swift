@@ -19,6 +19,15 @@ public struct ColoredQuadrilateral {
             }
         }
     }
+    public var gradient: Gradient<GLubyte>? {
+        didSet {
+            if let gradient = self.gradient {
+                colorSurface.setGradient(gradient)
+            } else {
+                colorSurface.clear()
+            }
+        }
+    }
     public var quadrilateral: Quadrilateral<GLfloat>? {
         didSet {
             if let quadrilateral = self.quadrilateral {

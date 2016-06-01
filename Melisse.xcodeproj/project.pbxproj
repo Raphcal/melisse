@@ -18,6 +18,8 @@
 		519F80F51CECD14800211E4C /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519F80F31CECD14200211E4C /* KeyboardController.swift */; };
 		51B04AF41CF87D6800048E46 /* PerspectiveCalibrationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B04AF31CF87D6700048E46 /* PerspectiveCalibrationScene.swift */; };
 		51B04B001CF8942400048E46 /* OpenALAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5771CD9E257000AB096 /* OpenALAudio.swift */; };
+		51C476B61CFED96D00C22A38 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C476B51CFED96D00C22A38 /* Gradient.swift */; };
+		51C476B71CFED96D00C22A38 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C476B51CFED96D00C22A38 /* Gradient.swift */; };
 		641F29EC1CF07466000E85E3 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
 		6429FED31CE879010052ED4D /* Melisse Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 6429FED21CE879010052ED4D /* Melisse Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6429FED81CE87B850052ED4D /* PerspectiveEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */; };
@@ -169,6 +171,7 @@
 		51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaColorPalette.swift; sourceTree = "<group>"; };
 		51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
 		51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorQuadrilateral.swift; sourceTree = "<group>"; };
+		51C476B51CFED96D00C22A38 /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		51CACEF41CE3253100F5B795 /* NoAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAnimation.swift; sourceTree = "<group>"; };
 		51CACEFB1CE352D900F5B795 /* SingleFrameAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleFrameAnimation.swift; sourceTree = "<group>"; };
 		51CACEFD1CE3579900F5B795 /* LoopingAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopingAnimation.swift; sourceTree = "<group>"; };
@@ -397,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				51F8B90F1CD7B0E40029C1E0 /* Color.swift */,
+				51C476B51CFED96D00C22A38 /* Gradient.swift */,
 				51F8B95C1CD7B15B0029C1E0 /* Draws.swift */,
 				51F8B9251CD7B0E40029C1E0 /* ReferencePool.swift */,
 				51D9F5921CDA0CA3000AB096 /* Surface.swift */,
@@ -693,6 +697,7 @@
 				6429FF121CE87B850052ED4D /* Layer.swift in Sources */,
 				6429FF141CE87B850052ED4D /* Map.swift in Sources */,
 				6429FF151CE87B850052ED4D /* View.swift in Sources */,
+				51C476B71CFED96D00C22A38 /* Gradient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +776,7 @@
 				643818081CE7A1F1002C68F8 /* SingleFrameAnimation.swift in Sources */,
 				6438180D1CE7A1F1002C68F8 /* AnimationDefinition.swift in Sources */,
 				643817F01CE7A1F1002C68F8 /* Streams.swift in Sources */,
+				51C476B61CFED96D00C22A38 /* Gradient.swift in Sources */,
 				643817F41CE7A1F1002C68F8 /* Random.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

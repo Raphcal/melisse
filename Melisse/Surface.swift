@@ -70,6 +70,44 @@ public struct Surface<Element : Numeric> {
         }
     }
     
+    public func setGradient(gradient: Gradient<Element>) {
+        // Bas gauche
+        memory[0] = gradient.bottomLeft.red
+        memory[1] = gradient.bottomLeft.green
+        memory[2] = gradient.bottomLeft.blue
+        memory[3] = gradient.bottomLeft.alpha
+        
+        // (idem)
+        memory[4] = gradient.bottomLeft.red
+        memory[5] = gradient.bottomLeft.green
+        memory[6] = gradient.bottomLeft.blue
+        memory[7] = gradient.bottomLeft.alpha
+        
+        // Bas droite
+        memory[8] = gradient.bottomRight.red
+        memory[9] = gradient.bottomRight.green
+        memory[10] = gradient.bottomRight.blue
+        memory[11] = gradient.bottomRight.alpha
+        
+        // Haut gauche
+        memory[12] = gradient.topLeft.red
+        memory[13] = gradient.topLeft.green
+        memory[14] = gradient.topLeft.blue
+        memory[15] = gradient.topLeft.alpha
+        
+        // Haut droite
+        memory[16] = gradient.topRight.red
+        memory[17] = gradient.topRight.green
+        memory[18] = gradient.topRight.blue
+        memory[19] = gradient.topRight.alpha
+        
+        // (idem)
+        memory[20] = gradient.topRight.red
+        memory[21] = gradient.topRight.green
+        memory[22] = gradient.topRight.blue
+        memory[23] = gradient.topRight.alpha
+    }
+    
 }
 
 public extension Surface where Element: FloatingPoint, Element: Signed {
