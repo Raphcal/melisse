@@ -59,6 +59,10 @@ public func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) ->
     return left.x == right.x && left.y == right.y
 }
 
+public func !=<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {
+    return left.x != right.x || left.y != right.y
+}
+
 public func *<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
     return Point(x: left.x * right, y: left.y * right)
 }

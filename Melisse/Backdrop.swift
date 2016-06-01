@@ -70,7 +70,7 @@ public class Backdrop {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             
-            Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: vertexPointer.count)
+            Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: vertexPointer.count)
         }
     }
     

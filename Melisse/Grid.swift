@@ -62,7 +62,7 @@ public class Grid {
             let layer = map.layers[index]
             
             Draws.translateTo(translation * layer.scrollRate)
-            Draws.drawWithVertexPointer(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
+            Draws.drawWith(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
         }
     }
     

@@ -25,7 +25,7 @@ public class Plane {
     
     public func draw(at point: Point<GLfloat> = Point()) {
         Draws.translateTo(point)
-        Draws.drawWithVertexPointer(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
+        Draws.drawWith(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
     }
     
     public func coloredQuadrilateral() -> ColoredQuadrilateral {

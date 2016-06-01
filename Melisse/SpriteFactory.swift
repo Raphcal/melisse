@@ -91,13 +91,13 @@ public class SpriteFactory {
     public func draw(at translation: Point<GLfloat> = Point()) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
-        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
+        Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
-    /// Dessine les sprites de cette factory sans prendre en compte la camera.
-    public func drawUntranslated() {
+    public func drawWith(tint: Color<GLubyte>, at translation: Point<GLfloat> = Point()) {
         Draws.bindTexture(textureAtlas)
-        Draws.drawWithVertexPointer(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
+        Draws.translateTo(translation)
+        Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
     // MARK: Création de sprites

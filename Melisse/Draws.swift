@@ -9,7 +9,7 @@
 import GLKit
 
 enum DrawMode {
-    case Texture, Color
+    case Texture, Color, TextureAndColor
 }
 
 public class Draws {
@@ -30,11 +30,13 @@ public class Draws {
         glDeleteTextures(1, &name)
     }
     
-    public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLfloat>, count: GLsizei) {
+    public static func drawWith(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLfloat>, count: GLsizei) {
         if drawMode != .Texture {
             glDisableClientState(GLenum(GL_COLOR_ARRAY))
-            glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
-            glEnable(GLenum(GL_TEXTURE_2D))
+            if drawMode != .TextureAndColor {
+                glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
+                glEnable(GLenum(GL_TEXTURE_2D))
+            }
             drawMode = .Texture
         }
         glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
@@ -42,15 +44,33 @@ public class Draws {
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
     }
     
-    public static func drawWithVertexPointer(vertexPointer: UnsafeMutablePointer<GLfloat>, colorPointer: UnsafeMutablePointer<GLubyte>, count: GLsizei) {
+    public static func drawWith(vertexPointer: UnsafeMutablePointer<GLfloat>, colorPointer: UnsafeMutablePointer<GLubyte>, count: GLsizei) {
         if drawMode != .Color {
             glDisable(GLenum(GL_TEXTURE_2D))
             glDisableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
-            glEnableClientState(GLenum(GL_COLOR_ARRAY))
+            if drawMode != .TextureAndColor {
+                glEnableClientState(GLenum(GL_COLOR_ARRAY))
+            }
             drawMode = .Color
         }
         
         glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
+        glColorPointer(GLint(coordinatesByColor), GLenum(GL_UNSIGNED_BYTE), 0, colorPointer)
+        glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
+    }
+    
+    public static func drawWith(vertexPointer: UnsafeMutablePointer<GLfloat>, texCoordPointer: UnsafeMutablePointer<GLfloat>, colorPointer: UnsafeMutablePointer<GLubyte>, count: GLsizei) {
+        if drawMode != .TextureAndColor {
+            if drawMode == .Texture {
+                glEnableClientState(GLenum(GL_COLOR_ARRAY))
+            } else if drawMode == .Color {
+                glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
+                glEnable(GLenum(GL_TEXTURE_2D))
+            }
+            drawMode = .TextureAndColor
+        }
+        glVertexPointer(GLint(coordinatesByVertex), GLenum(GL_FLOAT), 0, vertexPointer)
+        glTexCoordPointer(GLint(coordinatesByTexture), GLenum(GL_FLOAT), 0, texCoordPointer)
         glColorPointer(GLint(coordinatesByColor), GLenum(GL_UNSIGNED_BYTE), 0, colorPointer)
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, count)
     }
@@ -62,7 +82,9 @@ public class Draws {
     
     public static func translateTo(topLeft: Point<GLfloat>) {
         let translation = topLeft - lastTranslation
-        glTranslatef(-translation.x, translation.y, 0)
-        lastTranslation = topLeft
+        if translation != Point() {
+            glTranslatef(-translation.x, translation.y, 0)
+            lastTranslation = topLeft
+        }
     }
 }

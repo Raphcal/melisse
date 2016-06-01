@@ -22,6 +22,7 @@ public protocol Numeric {
     func <(lhs: Self, rhs: Self) -> Bool
     func <=(lhs: Self, rhs: Self) -> Bool
     func ==(lhs: Self, rhs: Self) -> Bool
+    func !=(lhs: Self, rhs: Self) -> Bool
     
     var half: Self { get }
     var absolute: Self { get }

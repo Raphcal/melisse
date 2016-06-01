@@ -15,6 +15,14 @@ public struct Gradient<Component where Component : Numeric> : Equatable {
     public var bottomLeft: Color<Component>
     public var bottomRight: Color<Component>
     
+    public init() {
+        let black = Color(red: Component(0), green: Component(0), blue: Component(0), alpha: Component(0))
+        self.topLeft = black
+        self.topRight = black
+        self.bottomLeft = black
+        self.bottomRight = black
+    }
+    
     public init(color: Color<Component>) {
         self.topLeft = color
         self.topRight = color
@@ -45,7 +53,7 @@ public struct Gradient<Component where Component : Numeric> : Equatable {
     
 }
 
-public func ==<Component where Component : Numeric>(lhs: Gradient<Component>, rhs: Gradient<Component>) -> Bool {
+public func ==<Component>(lhs: Gradient<Component>, rhs: Gradient<Component>) -> Bool {
     return lhs.topLeft == rhs.topLeft
         && lhs.topRight == rhs.topRight
         && lhs.bottomLeft == rhs.bottomLeft
