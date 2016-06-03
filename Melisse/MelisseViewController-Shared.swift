@@ -8,18 +8,36 @@
 
 import GLKit
 
-protocol GLViewController {
+public protocol MelisseViewControllerType {
     
-    func setupGL()
+    var director: Director { get }
+    var viewSize: Size<GLfloat> { get }
+    
+    func createGLContext()
+    func directorDidStart()
+    
+    func initialScene() -> Scene
     
 }
 
 extension MelisseViewController {
     
-    func setupGL() {
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        createGLContext()
         glEnable(GLenum(GL_BLEND))
         glBlendFunc(GLenum(GL_ONE), GLenum(GL_ONE_MINUS_SRC_ALPHA))
         glAlphaFunc(GLenum(GL_GREATER), 0.1)
+        
+        glEnableClientState(GLenum(GL_VERTEX_ARRAY))
+        
+        View.instance.setSize(self.viewSize)
+        
+        director.makeCurrent()
+        director.startWith(initialScene())
+        
+        directorDidStart()
     }
     
 }

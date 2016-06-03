@@ -10,33 +10,37 @@ import Foundation
 import Cocoa
 import OpenGL.GL
 
-class MelisseViewController : NSViewController, GLViewController {
+public class MelisseViewController : NSViewController, MelisseViewControllerType {
     
-    @IBOutlet weak var gameView: GameView?
-    let director = Director()
+    @IBOutlet weak public var gameView: GameView?
+    public let director = Director()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    public var viewSize: Size<GLfloat> {
+        get {
+            return Size(width: GLfloat(gameView!.bounds.width), height: GLfloat(gameView!.bounds.height))
+        }
+    }
+    
+    public func createGLContext() {
         if let context = gameView!.openGLContext {
             context.makeCurrentContext()
         } else {
             NSLog("Erreur de chargement du contexte OpenGL")
         }
-        
-        View.instance.setSize(Size(width: GLfloat(gameView!.bounds.width), height: GLfloat(gameView!.bounds.height)))
-        
-        setupGL()
-        
         gameView!.director = director
-        director.makeCurrent()
-        
+    }
+    
+    public func directorDidStart() {
         gameView!.initializeDisplayLink()
+    }
+    
+    public func initialScene() -> Scene {
+        return EmptyScene()
     }
     
 }
 
-class GameView: NSOpenGLView {
+public class GameView: NSOpenGLView {
     
     var director: Director?
     var displayLink: CVDisplayLink?
@@ -44,10 +48,6 @@ class GameView: NSOpenGLView {
     var previousTime: NSTimeInterval?
     
     var target: GameView?
-    
-    override func prepareOpenGL() {
-        super.prepareOpenGL()
-    }
     
     func initializeDisplayLink() {
         var swapInt: GLint = 1

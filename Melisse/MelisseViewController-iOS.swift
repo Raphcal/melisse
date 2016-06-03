@@ -9,59 +9,65 @@
 import Foundation
 import GLKit
 
-class MelisseViewController : GLKViewController, GLViewController {
+public class MelisseViewController : GLKViewController, MelisseViewControllerType {
     
-    let director = Director()
+    public let director = Director()
+    
+    public var viewSize: Size<GLfloat> {
+        get {
+            let screenBounds = UIScreen.mainScreen().bounds
+            return Size(width: GLfloat(screenBounds.width), height: GLfloat(screenBounds.height))
+        }
+    }
     
     var context: EAGLContext?
     var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    public func createGLContext() {
         self.context = EAGLContext(API: .OpenGLES1)
-        self.preferredFramesPerSecond = 60;
+        self.preferredFramesPerSecond = 60
         
         EAGLContext.setCurrentContext(context)
         
         let view = self.view as! GLKView
         view.context = self.context!
         view.drawableDepthFormat = .Format16
-        
-        setupGL()
-        
-        let screenBounds = UIScreen.mainScreen().bounds
-        View.instance.setSize(Size(width: GLfloat(screenBounds.width), height: GLfloat(screenBounds.height)))
-        
-        director.makeCurrent()
     }
     
-    func update() {
+    public func directorDidStart() {
+        // Pas d'action.
+    }
+    
+    public func initialScene() -> Scene {
+        return EmptyScene()
+    }
+    
+    public func update() {
         TouchController.instance.updateWith(touches)
         director.updateWith(self.timeSinceLastUpdate)
     }
     
-    override func glkView(view: GLKView, drawInRect rect: CGRect) {
+    override public func glkView(view: GLKView, drawInRect rect: CGRect) {
         director.draw()
     }
     
     // MARK: - Gestion du multi-touch
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override public func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if let touches = touches {
             removePointsFor(touches)
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         removePointsFor(touches)
     }
     
