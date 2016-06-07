@@ -8,9 +8,9 @@
 
 import Foundation
 
+let synchronizedLoopingAnimationReferenceDate = NSDate()
+
 public struct SynchronizedLoopingAnimation : Animation {
-    
-    static let referenceDate = NSDate()
     
     public var definition: AnimationDefinition
     public var frameIndex: Int = 0
@@ -21,7 +21,7 @@ public struct SynchronizedLoopingAnimation : Animation {
     }
     
     mutating public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
-        frameIndex = Int(NSDate().timeIntervalSinceDate(SynchronizedLoopingAnimation.referenceDate) * framesPerSecond) % definition.frames.count
+        frameIndex = Int(NSDate().timeIntervalSinceDate(synchronizedLoopingAnimationReferenceDate) * framesPerSecond) % definition.frames.count
     }
     
 }
