@@ -19,6 +19,12 @@ public struct AnimationDefinition : Equatable {
     public var frequency: Int
     public var type: AnimationType
     
+    public var duration: NSTimeInterval {
+        get {
+            return NSTimeInterval(frames.count) / NSTimeInterval(frequency)
+        }
+    }
+    
     public init(frames: [AnimationFrame] = [], looping: Bool = false) {
         self.name = ""
         self.frames = frames
