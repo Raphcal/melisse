@@ -19,6 +19,12 @@ public protocol Hitbox {
 
 public extension Hitbox {
     
+    var topHalfHitbox: StaticHitbox {
+        get {
+            return StaticHitbox(frame: Rectangle(left: frame.left, top: frame.top, width: frame.width, height: frame.height / 2))
+        }
+    }
+    
     func collidesWith(point: Point<GLfloat>) -> Bool {
         return point.x >= frame.left && point.x < frame.right &&
             point.y >= frame.top && point.y < frame.bottom
