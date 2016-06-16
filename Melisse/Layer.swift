@@ -64,6 +64,19 @@ public struct Layer : Equatable {
         self.length = length
     }
     
+    public mutating func setTilesAndLengthFrom(array: [Int]) {
+        var length = 0
+        self.tiles = array.map { tile in
+            if tile > -1 {
+                length += 1
+                return tile
+            } else {
+                return nil
+            }
+        }
+        self.length = length
+    }
+    
     public func tileAt(x x: Int, y: Int) -> Int? {
         if x >= 0 && x < width && y >= 0 && y < height {
             return tiles[y * width + x]
