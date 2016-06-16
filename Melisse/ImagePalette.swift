@@ -19,10 +19,11 @@ public class ImagePalette : Palette {
         }
     }
     
+    public var name = ""
     public let textureName: String
     public var tileSize: GLfloat = 0
     public var padding: GLfloat = 0
-    public let columns: Int
+    public var columns: Int
     
     let rawTileSize: Int
     let rawPadding: Int

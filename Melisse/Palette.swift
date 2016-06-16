@@ -11,7 +11,7 @@ import GLKit
 public protocol Palette {
 }
 
-public protocol ColorPalette {
+public protocol ColorPalette : Palette {
     
     func colorFor(tile: Int) -> Color<GLubyte>
     
