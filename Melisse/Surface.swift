@@ -8,11 +8,17 @@
 
 import GLKit
 
-public struct Surface<Element : Numeric> {
+public class Surface<Element : Numeric> {
     
-    var memory: UnsafeMutablePointer<Element>
-    var coordinates: Int
-    var vertexesByQuad: Int
+    let memory: UnsafeMutablePointer<Element>
+    let coordinates: Int
+    let vertexesByQuad: Int
+    
+    init(memory: UnsafeMutablePointer<Element>, coordinates: Int, vertexesByQuad: Int) {
+        self.memory = memory
+        self.coordinates = coordinates
+        self.vertexesByQuad = vertexesByQuad
+    }
     
     public func clear() {
         memset(memory, 0, vertexesByQuad * coordinates * sizeof(Element))
