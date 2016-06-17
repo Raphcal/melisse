@@ -25,8 +25,8 @@ public class ImagePalette : Palette {
     public var padding: GLfloat = 0
     public var columns: Int
     
-    let rawTileSize: Int
-    let rawPadding: Int
+    public var rawTileSize: Int
+    public var rawPadding: Int
     
     public let functions: [[UInt8]?]
     
