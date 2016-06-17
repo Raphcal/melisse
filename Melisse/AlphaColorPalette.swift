@@ -296,7 +296,7 @@ public class AlphaColorPalette : ColorPalette {
         }
     }
     
-    public func paintTile(tile: Int, inContext context: CGContext, inRect rect: CGRect) {
+    public func paint(tile: Int, in context: CGContext, rect: CGRect) {
         let baseColor = colorFor(tile)
         
         let red = CGFloat(baseColor.red) / 255
