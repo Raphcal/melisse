@@ -118,8 +118,8 @@ public extension SurfaceArray where Element: Signed {
     }
     
     func append(tile tile: Int, from palette: ImagePalette) {
-        append(width: Element(palette.tileSize), height: Element(palette.tileSize), left: Element(tile % palette.columns) * Element(palette.tileSize + palette.padding) + Element(palette.padding),
-               top: Element(tile / palette.columns) * Element(palette.tileSize + palette.padding) + Element(palette.padding))
+        append(width: Element(palette.textureTileSize), height: Element(palette.textureTileSize), left: Element(tile % palette.columns) * Element(palette.textureTileSize + palette.texturePadding) + Element(palette.texturePadding),
+               top: Element(tile / palette.columns) * Element(palette.textureTileSize + palette.texturePadding) + Element(palette.texturePadding))
     }
     
 }

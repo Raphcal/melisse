@@ -14,26 +14,26 @@ public class ImagePalette : Palette {
     
     public var texture = GLKTextureInfo() {
         didSet {
-            self.tileSize = GLfloat(rawTileSize) / GLfloat(texture.width)
-            self.padding = GLfloat(rawPadding) / GLfloat(texture.width)
+            self.textureTileSize = GLfloat(tileSize) / GLfloat(texture.width)
+            self.texturePadding = GLfloat(padding) / GLfloat(texture.width)
         }
     }
     
     public var name = ""
     public let textureName: String
-    public var tileSize: GLfloat = 0
-    public var padding: GLfloat = 0
+    public var textureTileSize: GLfloat = 0
+    public var texturePadding: GLfloat = 0
     public var columns: Int
     
-    public var rawTileSize: Int
-    public var rawPadding: Int
+    public var tileSize: Int
+    public var padding: Int
     
     public let functions: [[UInt8]?]
     
     public init() {
         self.textureName = ""
-        self.rawTileSize = 0
-        self.rawPadding = 0
+        self.tileSize = 0
+        self.padding = 0
         self.columns = 0
         self.functions = []
     }
@@ -41,8 +41,8 @@ public class ImagePalette : Palette {
     public init(inputStream : NSInputStream) {
         self.textureName = Streams.readString(inputStream)
         self.columns = Streams.readInt(inputStream)
-        self.rawTileSize = Streams.readInt(inputStream)
-        self.rawPadding = Streams.readInt(inputStream)
+        self.tileSize = Streams.readInt(inputStream)
+        self.padding = Streams.readInt(inputStream)
         
         let size = Streams.readInt(inputStream)
         self.functions = (0 ..< size).map { _ in

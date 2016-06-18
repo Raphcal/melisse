@@ -273,7 +273,7 @@ public class AlphaColorPalette : ColorPalette {
     static let alphas: [GLubyte] = [255, 224, 192, 160, 128, 96, 64, 32]
     static let mask = 1000
     
-    var tileSize = 8
+    public var tileSize = 8
     var size = 4
     
     public var colors: [Color<GLubyte>]
