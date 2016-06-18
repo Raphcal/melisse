@@ -32,6 +32,19 @@ public func mod(value: Int, by modulo: Int) -> Int {
     return ((value % modulo) + modulo) % modulo
 }
 
+public func nearestUpperPowerOfTwoFor(value: Int) -> Int {
+    var pot = 0
+    while true {
+        let power = Int(pow(2, Float(pot)))
+        let surface = power * power
+        
+        if surface >= value {
+            return power
+        }
+        pot += 1
+    }
+}
+
 extension GLfloat {
     
     public func differenceWith(angle: GLfloat) -> GLfloat {
