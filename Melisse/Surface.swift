@@ -24,11 +24,11 @@ public class Surface<Element : Numeric> {
         memset(memory, 0, vertexesByQuad * coordinates * sizeof(Element))
     }
     
-    public func setQuadWith(left left: Element, top: Element, width: Element, height: Element) {
+    public func setQuadWith(left: Element, top: Element, width: Element, height: Element) {
         setQuadWith(left: left, right: left + width, top: top, bottom: top + height)
     }
     
-    public func setQuadWith(left left: Element, right: Element, top: Element, bottom: Element) {
+    public func setQuadWith(left: Element, right: Element, top: Element, bottom: Element) {
         // Bas gauche
         memory[0] = left
         memory[1] = bottom
@@ -54,7 +54,7 @@ public class Surface<Element : Numeric> {
         memory[11] = top
     }
     
-    public func setColor(color: Color<Element>) {
+    public func setColor(_ color: Color<Element>) {
         var index = 0
         for _ in 0 ..< vertexesByQuad {
             memory[index] = color.red
@@ -76,7 +76,7 @@ public class Surface<Element : Numeric> {
         }
     }
     
-    public func setGradient(gradient: Gradient<Element>) {
+    public func setGradient(_ gradient: Gradient<Element>) {
         // Bas gauche
         memory[0] = gradient.bottomLeft.red
         memory[1] = gradient.bottomLeft.green
@@ -118,18 +118,18 @@ public class Surface<Element : Numeric> {
 
 public extension Surface where Element: FloatingPoint, Element: Signed {
     
-    func setQuadWith(left left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
+    func setQuadWith(left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
         setQuadWith(left: (Element(left) + Element(width) * direction.mirror) / Element(texture.width),
                     top: Element(top) / Element(texture.height),
                     width: (Element(width) * direction.value) / Element(texture.width),
                     height: Element(height) / Element(texture.height))
     }
     
-    func setQuadWith(rectangle: Rectangle<Element>) {
+    func setQuadWith(_ rectangle: Rectangle<Element>) {
         setQuadWith(left: rectangle.left, right: rectangle.right, top: -rectangle.top, bottom: -rectangle.bottom)
     }
     
-    func setQuadWith(quadrilateral: Quadrilateral<Element>) {
+    func setQuadWith(_ quadrilateral: Quadrilateral<Element>) {
         memory[0] = quadrilateral.bottomLeft.x
         memory[1] = -quadrilateral.bottomLeft.y
         
@@ -158,7 +158,7 @@ public extension Surface where Element: FloatingPoint, Element: Signed {
 
 public extension Surface where Element: Integer {
     
-    func setQuadWith(left left: Element, top: Element, width: Element, height: Element, direction: Direction, texture: GLKTextureInfo) {
+    func setQuadWith(left: Element, top: Element, width: Element, height: Element, direction: Direction, texture: GLKTextureInfo) {
         setQuadWith(left: left + width * Element(direction.mirror),
                     top: top,
                     width: width * Element(direction.value),

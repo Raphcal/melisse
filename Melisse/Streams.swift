@@ -18,11 +18,11 @@ public struct Streams {
     static let bitsInAByte : Int = 8
     static let maximumValueOfAByte : UInt8 = 0xFF
     
-    public static func inputStreams(resources: [(name: String, ext: String)]) -> [(url: NSURL, inputStream: NSInputStream)]? {
-        var inputStreams : [(url: NSURL, inputStream: NSInputStream)] = []
+    public static func inputStreams(_ resources: [(name: String, ext: String)]) -> [(url: URL, inputStream: InputStream)]? {
+        var inputStreams : [(url: URL, inputStream: InputStream)] = []
         
         for (name, ext) in resources {
-            if let url = NSBundle.mainBundle().URLForResource(name, withExtension: ext), let inputStream = NSInputStream(URL: url) {
+            if let url = Bundle.main().urlForResource(name, withExtension: ext), let inputStream = InputStream(url: url) {
                 inputStreams.append(url: url, inputStream: inputStream)
             } else {
                 return nil
@@ -32,8 +32,8 @@ public struct Streams {
         return inputStreams
     }
     
-    public static func readByte(inputStream: NSInputStream) -> UInt8 {
-        let buffer = UnsafeMutablePointer<UInt8>.alloc(byteSize)
+    public static func readByte(_ inputStream: InputStream) -> UInt8 {
+        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: byteSize)
         let read = inputStream.read(buffer, maxLength: byteSize)
         
         var result : UInt8 = 0
@@ -42,22 +42,22 @@ public struct Streams {
             result = buffer[0]
         }
         
-        buffer.destroy()
+        buffer.deinitialize()
         
         return result
     }
     
-    public static func writeBytes<T>(buffer: UnsafeMutablePointer<T>, count: Int, outputStream: NSOutputStream) {
+    public static func writeBytes<T>(_ buffer: UnsafeMutablePointer<T>, count: Int, outputStream: NSOutputStream) {
         let byteBuffer = UnsafeMutablePointer<UInt8>(buffer)
         outputStream.write(byteBuffer, maxLength: count)
     }
     
-    public static func readBoolean(inputStream : NSInputStream) -> Bool {
+    public static func readBoolean(_ inputStream : InputStream) -> Bool {
         return readByte(inputStream) == 1
     }
     
-    public static func readInt(inputStream : NSInputStream) -> Int {
-        let buffer = UnsafeMutablePointer<UInt8>.alloc(integerSize)
+    public static func readInt(_ inputStream : InputStream) -> Int {
+        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
         var result = 0
@@ -67,29 +67,29 @@ public struct Streams {
             result = Int(int32Buffer[0])
         }
         
-        buffer.destroy()
+        buffer.deinitialize()
         
         return result
     }
     
-    public static func writeInt(int: Int, outputStream: NSOutputStream) {
-        let buffer = UnsafeMutablePointer<Int32>.alloc(1)
+    public static func writeInt(_ int: Int, outputStream: NSOutputStream) {
+        let buffer = UnsafeMutablePointer<Int32>(allocatingCapacity: 1)
         buffer[0] = Int32(int)
         
         writeBytes(buffer, count: integerSize, outputStream: outputStream)
-        buffer.destroy()
+        buffer.deinitialize()
     }
     
-    public static func writeCharacter(character: Character, outputStream: NSOutputStream) {
-        let buffer = UnsafeMutablePointer<Character>.alloc(1)
+    public static func writeCharacter(_ character: Character, outputStream: NSOutputStream) {
+        let buffer = UnsafeMutablePointer<Character>(allocatingCapacity: 1)
         buffer[0] = character
         
         writeBytes(buffer, count: characterSize, outputStream: outputStream)
-        buffer.destroy()
+        buffer.deinitialize()
     }
     
-    public static func readFloat(inputStream : NSInputStream) -> Float {
-        let buffer = UnsafeMutablePointer<UInt8>.alloc(integerSize)
+    public static func readFloat(_ inputStream : InputStream) -> Float {
+        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
         var result : Float = 0
@@ -99,13 +99,13 @@ public struct Streams {
             result = floatBuffer[0]
         }
         
-        buffer.destroy()
+        buffer.deinitialize()
         
         return result
     }
     
-    public static func readDouble(inputStream : NSInputStream) -> Double {
-        let buffer = UnsafeMutablePointer<UInt8>.alloc(longSize)
+    public static func readDouble(_ inputStream : InputStream) -> Double {
+        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: longSize)
         let read = inputStream.read(buffer, maxLength: longSize)
         
         var result : Double = 0
@@ -115,12 +115,12 @@ public struct Streams {
             result = doubleBuffer[0]
         }
         
-        buffer.destroy()
+        buffer.deinitialize()
         
         return result
     }
     
-    public static func readByteArray(inputStream : NSInputStream) -> [UInt8] {
+    public static func readByteArray(_ inputStream : InputStream) -> [UInt8] {
         let count = readInt(inputStream)
         var result = [UInt8]()
         result.reserveCapacity(count)
@@ -132,7 +132,7 @@ public struct Streams {
         return result
     }
     
-    public static func readNullableByteArray(inputStream : NSInputStream) -> [UInt8]? {
+    public static func readNullableByteArray(_ inputStream : InputStream) -> [UInt8]? {
         if readBoolean(inputStream) {
             return readByteArray(inputStream)
         } else {
@@ -140,7 +140,7 @@ public struct Streams {
         }
     }
     
-    public static func readIntArray(inputStream : NSInputStream) -> [Int] {
+    public static func readIntArray(_ inputStream : InputStream) -> [Int] {
         let count = readInt(inputStream)
         var result = [Int]()
         result.reserveCapacity(count)
@@ -152,30 +152,30 @@ public struct Streams {
         return result
     }
     
-    public static func readString(inputStream : NSInputStream) -> String {
+    public static func readString(_ inputStream : InputStream) -> String {
         let length = readInt(inputStream) * characterSize
         
         if length == 0 {
             return ""
         }
         
-        let buffer = UnsafeMutablePointer<UInt8>.alloc(length)
+        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: length)
         let read = inputStream.read(buffer, maxLength: length)
         
         let string : String
         
         if read == length {
-            string = NSString(bytes: buffer, length: length, encoding: NSUTF16LittleEndianStringEncoding) as! String
+            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue) as! String
         } else {
             string = ""
         }
         
-        buffer.destroy()
+        buffer.deinitialize()
         
         return string
     }
     
-    public static func readNullableString(inputStream : NSInputStream) -> String? {
+    public static func readNullableString(_ inputStream : InputStream) -> String? {
         if readBoolean(inputStream) {
             return readString(inputStream)
         } else {
@@ -183,7 +183,7 @@ public struct Streams {
         }
     }
     
-    public static func readColor(inputStream : NSInputStream) -> Color<GLfloat> {
+    public static func readColor(_ inputStream : InputStream) -> Color<GLfloat> {
         let red = GLfloat(readInt(inputStream)) / 255
         let green = GLfloat(readInt(inputStream)) / 255
         let blue = GLfloat(readInt(inputStream)) / 255
@@ -192,14 +192,14 @@ public struct Streams {
         return Color(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    public static func readPoint(inputStream: NSInputStream) -> Point<GLfloat> {
+    public static func readPoint(_ inputStream: InputStream) -> Point<GLfloat> {
         let x = readFloat(inputStream)
         let y = readFloat(inputStream)
         return Point<GLfloat>(x: x, y: y)
     }
     
-    public static func readFloatFromByteArray(bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {
-        let pointer = UnsafeMutablePointer<UInt8>.alloc(4)
+    public static func readFloatFromByteArray(_ bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {
+        let pointer = UnsafeMutablePointer<UInt8>(allocatingCapacity: 4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
         pointer[2] = bytes[start + 2]
@@ -207,13 +207,13 @@ public struct Streams {
         
         let floatPointer = UnsafeMutablePointer<Float32>(pointer)
         let float = Float(floatPointer[0])
-        pointer.destroy()
+        pointer.deinitialize()
         
         return (float: float, readCount: 4)
     }
     
-    public static func readStringFromByteArray(bytes: [UInt8], atIndex start: Int) -> (string: String, readCount: Int) {
-        let pointer = UnsafeMutablePointer<UInt8>.alloc(4)
+    public static func readStringFromByteArray(_ bytes: [UInt8], atIndex start: Int) -> (string: String, readCount: Int) {
+        let pointer = UnsafeMutablePointer<UInt8>(allocatingCapacity: 4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
         pointer[2] = bytes[start + 2]
@@ -221,21 +221,21 @@ public struct Streams {
         
         let intPointer = UnsafeMutablePointer<Int32>(pointer)
         let length = Int(intPointer[0]) * Streams.characterSize
-        pointer.destroy()
+        pointer.deinitialize()
         
         var read = start + 4
         
         let string : String
         
         if length > 0 {
-            let buffer = UnsafeMutablePointer<UInt8>.alloc(length)
+            let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: length)
             for i in 0 ..< length {
                 buffer[i] = bytes[read + i]
             }
             read += length
             
-            string = NSString(bytes: buffer, length: length, encoding: NSUTF16LittleEndianStringEncoding) as! String
-            buffer.destroy()
+            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue) as! String
+            buffer.deinitialize()
             
         } else {
             string = ""

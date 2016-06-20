@@ -13,14 +13,14 @@ public protocol AnimationName {
 }
 
 public enum DefaultAnimationName: AnimationName {
-    case Normal, Disappear
+    case normal, disappear
     
     public var name: String {
         get {
             switch self {
-            case .Normal:
+            case .normal:
                 return "normal"
-            case .Disappear:
+            case .disappear:
                 return "disappear"
             }
         }

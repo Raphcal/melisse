@@ -17,17 +17,17 @@ public struct Random {
     }
     
     /// Renvoi un nombre décimal compris entre 0.0 et range - 0.0...1
-	public func next(range: GLfloat) -> GLfloat {
+	public func next(_ range: GLfloat) -> GLfloat {
 		return GLfloat(Double(arc4random()) / Double(maximumValue)) * range
 	}
 	
     /// Renvoi un nombre décimal compris entre 0.0 et range - 0.0...1
-	public func next(range: NSTimeInterval) -> NSTimeInterval {
-		return NSTimeInterval(Double(arc4random()) / Double(maximumValue)) * range
+	public func next(_ range: TimeInterval) -> TimeInterval {
+		return TimeInterval(Double(arc4random()) / Double(maximumValue)) * range
 	}
     
     /// Renvoi un entier généré pseudo aléatoirement entre 0 et range - 1
-    public func next(range: Int) -> Int {
+    public func next(_ range: Int) -> Int {
         return Int(arc4random() % UInt32(range))
     }
 	

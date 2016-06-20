@@ -25,7 +25,7 @@ public protocol Scene {
     func willAppear()
     
     /// Gestion de la mise à jour de la scène.
-    func updateWith(timeSinceLastUpdate: NSTimeInterval)
+    func updateWith(_ timeSinceLastUpdate: TimeInterval)
     
     /// Affichage de la scène.
     func draw()

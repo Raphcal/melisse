@@ -9,16 +9,16 @@
 import GLKit
 
 public enum GamePadButton {
-    case Up, Down, Left, Right, Jump, L, R, Start
+    case up, down, left, right, jump, l, r, start
     
-    static public let values = [Up, Down, Left, Right, Jump, L, R, Start]
+    static public let values = [up, down, left, right, jump, l, r, start]
 }
 
 public protocol Controller {
     
     var direction: GLfloat { get }
     
-    func pressed(button: GamePadButton) -> Bool
-    func pressing(button: GamePadButton) -> Bool
+    func pressed(_ button: GamePadButton) -> Bool
+    func pressing(_ button: GamePadButton) -> Bool
     
 }

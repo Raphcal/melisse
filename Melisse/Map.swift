@@ -44,7 +44,7 @@ public struct Map : Equatable {
         self.height = maxHeight
     }
     
-    public init(inputStream : NSInputStream) {
+    public init(inputStream : InputStream) {
         self.backgroundColor = Streams.readColor(inputStream)
         
         var maxWidth = 0
@@ -68,7 +68,7 @@ public struct Map : Equatable {
     }
     
     public init?(resource : String?) {
-        if let resource = resource, let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Map.fileExtension), let inputStream = NSInputStream(URL: url) {
+        if let resource = resource, let url = Bundle.main().urlForResource(resource, withExtension: Map.fileExtension), let inputStream = InputStream(url: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()
@@ -78,12 +78,12 @@ public struct Map : Equatable {
     }
     
     public func indexOfLayer(named name: String) -> Int? {
-        return layers.indexOf({ (layer) -> Bool in
+        return layers.index(where: { (layer) -> Bool in
             layer.name == name
         })
     }
     
-    public func layerNamed(name: String) -> Layer? {
+    public func layerNamed(_ name: String) -> Layer? {
         if let index = indexOfLayer(named: name) {
             return layers[index]
         } else {
@@ -91,7 +91,7 @@ public struct Map : Equatable {
         }
     }
     
-    public func mapFrom(rectangle: Rectangle<GLfloat>) -> Map {
+    public func mapFrom(_ rectangle: Rectangle<GLfloat>) -> Map {
         let layers = self.layers.map { (layer) -> Layer in
             let left = Int(floor(rectangle.left * layer.scrollRate.x / tileSize))
             let right = Int(ceil(rectangle.right * layer.scrollRate.x / tileSize))

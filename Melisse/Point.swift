@@ -43,11 +43,11 @@ public struct Point<Coordinate where Coordinate : Numeric> : Equatable {
 
 extension Point where Coordinate : FloatingPoint {
     
-    func distanceTo(other: Point<Coordinate>) -> Coordinate {
+    func distanceTo(_ other: Point<Coordinate>) -> Coordinate {
         return Coordinate.distance(x, y1: y, x2: other.x, y2: other.y)
     }
     
-    func angleTo(other: Point<Coordinate>) -> Coordinate {
+    func angleTo(_ other: Point<Coordinate>) -> Coordinate {
         return Coordinate.atan2(y - other.y, x - other.x)
     }
     
@@ -83,12 +83,12 @@ public prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinat
     return Point(x: -point.x, y: -point.y)
 }
 
-public func +=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
+public func +=<Coordinate>(left: inout Point<Coordinate>, right: Point<Coordinate>) {
     left.x += right.x
     left.y += right.y
 }
 
-public func -=<Coordinate>(inout left: Point<Coordinate>, right: Point<Coordinate>) {
+public func -=<Coordinate>(left: inout Point<Coordinate>, right: Point<Coordinate>) {
     left.x -= right.x
     left.y -= right.y
 }
@@ -103,12 +103,12 @@ public func -<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<C
     return Point(x: left.x - right, y: left.y - right)
 }
 
-public func +=<Coordinate>(inout left: Point<Coordinate>, right: Coordinate) {
+public func +=<Coordinate>(left: inout Point<Coordinate>, right: Coordinate) {
     left.x += right
     left.y += right
 }
 
-public func -=<Coordinate>(inout left: Point<Coordinate>, right: Coordinate) {
+public func -=<Coordinate>(left: inout Point<Coordinate>, right: Coordinate) {
     left.x -= right
     left.y -= right
 }

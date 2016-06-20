@@ -22,10 +22,10 @@ public struct SpriteDefinition : Equatable {
     public init() {
         self.index = -1
         self.name = ""
-        self.type = DefaultSpriteType.Decoration
+        self.type = DefaultSpriteType.decoration
         self.animations = [:]
         self.motionName = nil
-        self.distance = .Behind
+        self.distance = .behind
     }
     
     public init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
@@ -34,7 +34,7 @@ public struct SpriteDefinition : Equatable {
         self.type = type
         self.animations = animations
         self.motionName = nil
-        self.distance = .Behind
+        self.distance = .behind
     }
     
     public init(definition: SpriteDefinition, type: SpriteType, animation: AnimationName, frame frameIndex: Int) {
@@ -45,12 +45,12 @@ public struct SpriteDefinition : Equatable {
         self.index = -1
         self.name = ""
         self.type = type
-        self.animations = [DefaultAnimationName.Normal.name: singleFrameAnimation]
+        self.animations = [DefaultAnimationName.normal.name: singleFrameAnimation]
         self.motionName = nil
         self.distance = definition.distance
     }
     
-    public init(inputStream : NSInputStream, index: Int, types: [SpriteType] = [], animationNames: [AnimationName] = []) {
+    public init(inputStream : InputStream, index: Int, types: [SpriteType] = [], animationNames: [AnimationName] = []) {
         self.index = index
         self.name = Streams.readNullableString(inputStream)
         let _ = Streams.readInt(inputStream) // width
@@ -60,13 +60,13 @@ public struct SpriteDefinition : Equatable {
         if type >= 0 && type < types.count {
             self.type = types[type]
         } else {
-            self.type = DefaultSpriteType.Decoration
+            self.type = DefaultSpriteType.decoration
         }
         
         if let distance = Distance(rawValue: Streams.readInt(inputStream)) {
             self.distance = distance
         } else {
-            self.distance = .Behind
+            self.distance = .behind
         }
         
         self.motionName = Streams.readNullableString(inputStream)
@@ -84,7 +84,7 @@ public struct SpriteDefinition : Equatable {
         self.animations = animations
     }
     
-    public static func definitionsFrom(inputStream : NSInputStream, types: [SpriteType] = [], animationNames: [AnimationName] = []) -> [SpriteDefinition] {
+    public static func definitionsFrom(_ inputStream : InputStream, types: [SpriteType] = [], animationNames: [AnimationName] = []) -> [SpriteDefinition] {
         var definitions : [SpriteDefinition] = []
         
         let definitionCount = Streams.readInt(inputStream)
@@ -95,8 +95,8 @@ public struct SpriteDefinition : Equatable {
         return definitions
     }
     
-    public static func definitionsFrom(resource: String, extension ext: String = defaultExtension, types: [SpriteType] = [], animationNames: [AnimationName] = []) -> [SpriteDefinition]? {
-        if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: ext), let inputStream = NSInputStream(URL: url) {
+    public static func definitionsFrom(_ resource: String, extension ext: String = defaultExtension, types: [SpriteType] = [], animationNames: [AnimationName] = []) -> [SpriteDefinition]? {
+        if let url = Bundle.main().urlForResource(resource, withExtension: ext), let inputStream = InputStream(url: url) {
             inputStream.open()
             let definitions = definitionsFrom(inputStream, types: types, animationNames: animationNames)
             inputStream.close()

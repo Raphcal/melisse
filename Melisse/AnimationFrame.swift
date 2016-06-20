@@ -38,7 +38,7 @@ public struct AnimationFrame : Equatable {
         self.hitbox = Rectangle()
     }
     
-    public init(inputStream : NSInputStream) {
+    public init(inputStream : InputStream) {
         let x = Streams.readInt(inputStream)
         let y = Streams.readInt(inputStream)
         let width = Streams.readInt(inputStream)
@@ -58,16 +58,16 @@ public struct AnimationFrame : Equatable {
         }
     }
     
-    public func draw(sprite: Sprite) {
+    public func draw(_ sprite: Sprite) {
         sprite.texCoordSurface.setQuadWith(left: frame.x, top: frame.y, width: frame.width, height: frame.height, direction: sprite.direction, texture: sprite.factory.textureAtlas)
     }
     
-    public func frameChunksFor(width width: Int, direction: Direction = .Right) -> [AnimationFrame] {
+    public func frameChunksFor(width: Int, direction: Direction = .right) -> [AnimationFrame] {
         let start = frame.width * Int(direction.mirror)
         let end = frame.width * (1 - Int(direction.mirror))
         let width = width * Int(direction.value)
         
-        return start.stride(to: end, by: width).map { left in
+        return stride(from: start, to: end, by: width).map { left in
             AnimationFrame(x: frame.x + left, y: frame.y, width: width, height: frame.height)
         }
     }

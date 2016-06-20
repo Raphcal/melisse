@@ -40,7 +40,7 @@ public class ReferencePool {
         self.available = available
     }
     
-    public func next(other: Int?) -> Int {
+    public func next(_ other: Int?) -> Int {
         if let reference = other {
             return nextAfter(reference)
         } else {
@@ -52,12 +52,12 @@ public class ReferencePool {
         return available.removeLast()
     }
     
-    public func nextAfter(other: Int) -> Int {
+    public func nextAfter(_ other: Int) -> Int {
         for index in 1...available.count {
             let reference = available[available.count - index]
             
             if reference > other {
-                available.removeAtIndex(available.count - index)
+                available.remove(at: available.count - index)
                 return reference
             }
         }
@@ -65,7 +65,7 @@ public class ReferencePool {
         return next()
     }
     
-    public func release(reference: Int) {
+    public func release(_ reference: Int) {
         available.append(reference)
     }
     

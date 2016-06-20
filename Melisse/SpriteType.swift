@@ -16,7 +16,7 @@ public protocol SpriteType {
 
 public enum DefaultSpriteType: SpriteType {
     
-    case Decoration
+    case decoration
     
     public var isCollidable: Bool {
         get {

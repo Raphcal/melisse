@@ -10,12 +10,12 @@ import GLKit
 
 public enum Direction : Int {
     
-    case Left = 0, Right, Up, Down
+    case left = 0, right, up, down
     
     private static let values: [GLfloat] = [-1, 1, -1, 1]
     private static let mirror: [GLfloat] = [1, 0, 0, 0]
-    private static let reverses: [Direction] = [.Right, .Left, .Down, .Up]
-    private static let axes: [Axe] = [.Horizontal, .Horizontal, .Vertical, .Vertical]
+    private static let reverses: [Direction] = [.right, .left, .down, .up]
+    private static let axes: [Axe] = [.horizontal, .horizontal, .vertical, .vertical]
     private static let angles: [GLfloat] = [GLfloat(M_PI), 0, GLfloat(M_PI + M_PI_2), GLfloat(M_PI_2)]
     
     public var angle: GLfloat {
@@ -48,19 +48,19 @@ public enum Direction : Int {
     
     public var isMirror: Bool {
         get {
-            return self == .Left
+            return self == .left
         }
     }
     
-    public func isSameValue(value: GLfloat) -> Bool {
+    public func isSameValue(_ value: GLfloat) -> Bool {
         return value * self.value >= 0
     }
     
-    public static func directionFromSprite(from: Sprite, toSprite to: Sprite) -> Direction {
+    public static func directionFromSprite(_ from: Sprite, toSprite to: Sprite) -> Direction {
         if from.frame.x <= to.frame.x {
-            return .Right
+            return .right
         } else {
-            return .Left
+            return .left
         }
     }
     

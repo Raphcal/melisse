@@ -37,7 +37,7 @@ public class OpenALAudio: Audio {
         }
     }
     
-    public func play(sound: Sound) {
+    public func play(_ sound: Sound) {
         alSourceStop(sources.sources[source])
         alSourcei(sources.sources[source], AL_BUFFER, ALint(buffers.buffers[sound.rawValue]))
         
@@ -58,9 +58,9 @@ public class OpenALAudio: Audio {
         }
     }
     
-    public func play(streamFrom URL: NSURL) {
+    public func play(streamFrom URL: Foundation.URL) {
         do {
-            player = try AVAudioPlayer(contentsOfURL: URL)
+            player = try AVAudioPlayer(contentsOf: URL)
             player!.numberOfLoops = -1
             player!.play()
         } catch {
@@ -68,11 +68,11 @@ public class OpenALAudio: Audio {
         }
     }
     
-    public func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
+    public func playOnce(streamFrom URL: Foundation.URL, completionBlock: () -> Void) {
         let delegate = AudioPlayerDelegate(audio: self, completion: completionBlock)
         self.audioPlayerDelegate = delegate
         do {
-            player = try AVAudioPlayer(contentsOfURL: URL)
+            player = try AVAudioPlayer(contentsOf: URL)
             player!.numberOfLoops = 0
             player!.delegate = delegate
             player!.play()
@@ -89,17 +89,17 @@ public class OpenALAudio: Audio {
     
     // MARK: - OpenAL
     
-    public func load(sound: Sound) {
-        if let URL = NSBundle.mainBundle().URLForResource(sound.resource, withExtension: sound.ext) {
+    public func load(_ sound: Sound) {
+        if let URL = Bundle.main().urlForResource(sound.resource, withExtension: sound.ext) {
             bufferize(sound, at: URL)
         } else {
             print("Son \(sound) non trouvé.")
         }
     }
     
-    private func bufferize(sound: Sound, at URL: NSURL) {
+    private func bufferize(_ sound: Sound, at URL: Foundation.URL) {
         // Ouverture du fichier.
-        var fileReference: ExtAudioFileRef = nil
+        var fileReference: ExtAudioFileRef? = nil
         var status = ExtAudioFileOpenURL(URL as CFURL, &fileReference)
         
         if status != noErr || fileReference == nil {
@@ -110,17 +110,17 @@ public class OpenALAudio: Audio {
         // Identification du format du fichier.
         var format = AudioStreamBasicDescription()
         var size = UInt32(sizeof(AudioStreamBasicDescription))
-        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileDataFormat, &size, &format)
+        status = ExtAudioFileGetProperty(fileReference!, kExtAudioFileProperty_FileDataFormat, &size, &format)
         
         if status != noErr {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = \(status)")
-            ExtAudioFileDispose(fileReference)
+            ExtAudioFileDispose(fileReference!)
             return
         }
         
         if format.mChannelsPerFrame > 2 {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', format non supporté car le nombre de pistes est supérieur à stéréo.")
-            ExtAudioFileDispose(fileReference)
+            ExtAudioFileDispose(fileReference!)
             return
         }
         
@@ -137,33 +137,33 @@ public class OpenALAudio: Audio {
         outputFormat.mBitsPerChannel = 16
         outputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger
         
-        status = ExtAudioFileSetProperty(fileReference, kExtAudioFileProperty_ClientDataFormat, size, &outputFormat)
+        status = ExtAudioFileSetProperty(fileReference!, kExtAudioFileProperty_ClientDataFormat, size, &outputFormat)
         
         if status != noErr {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileSetProperty(kExtAudioFileProperty_ClientDataFormat) FAILED, Error = \(status)")
-            ExtAudioFileDispose(fileReference)
+            ExtAudioFileDispose(fileReference!)
             return
         }
         
         // Identification du nombre total de frames.
         var fileLengthInFrames: Int64 = 0
         size = UInt32(sizeof(Int64))
-        status = ExtAudioFileGetProperty(fileReference, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthInFrames)
+        status = ExtAudioFileGetProperty(fileReference!, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthInFrames)
         
         if status != noErr {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = \(status)")
-            ExtAudioFileDispose(fileReference)
+            ExtAudioFileDispose(fileReference!)
             return
         }
         
         // Lecture du son en mémoire.
         let dataSize = UInt32(fileLengthInFrames * Int64(outputFormat.mBytesPerFrame))
-        let data = UnsafeMutablePointer<Void>.alloc(Int(dataSize))
+        let data = UnsafeMutablePointer<Void>(allocatingCapacity: Int(dataSize))
         
         var dataBuffer = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
         
         size = UInt32(fileLengthInFrames)
-        status = ExtAudioFileRead(fileReference, &size, &dataBuffer)
+        status = ExtAudioFileRead(fileReference!, &size, &dataBuffer)
         
         if status == noErr {
             alBufferData(buffers.buffers[sound.rawValue], outputFormat.mChannelsPerFrame > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, ALsizei(dataSize), ALsizei(outputFormat.mSampleRate))
@@ -177,16 +177,16 @@ public class OpenALAudio: Audio {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileRead FAILED, Error = \(status)")
         }
         
-        data.destroy()
-        ExtAudioFileDispose(fileReference)
+        data.deinitialize()
+        ExtAudioFileDispose(fileReference!)
     }
     
 }
 
 class AudioDevice {
     
-    typealias ALCdevice = COpaquePointer
-    let device: ALCdevice
+    typealias ALCdevice = OpaquePointer
+    let device: ALCdevice?
     
     init?() {
         self.device = alcOpenDevice(nil)
@@ -203,9 +203,9 @@ class AudioDevice {
 
 class AudioContext {
     
-    typealias ALCcontext = COpaquePointer
+    typealias ALCcontext = OpaquePointer
     let device: AudioDevice?
-    let context: ALCcontext
+    let context: ALCcontext?
     
     init?(device: AudioDevice?) {
         self.device = device
@@ -237,7 +237,7 @@ class AudioSources {
         self.context = context
         self.numberOfSources = ALsizei(numberOfSources)
         
-        sources = UnsafeMutablePointer.alloc(numberOfSources)
+        sources = UnsafeMutablePointer(allocatingCapacity: numberOfSources)
         alGenSources(self.numberOfSources, sources)
         
         if alGetError() != AL_NO_ERROR {
@@ -247,7 +247,7 @@ class AudioSources {
     
     deinit {
         alDeleteSources(self.numberOfSources, sources)
-        sources.destroy()
+        sources.deinitialize()
     }
     
 }
@@ -262,7 +262,7 @@ class AudioBuffers {
         self.context = context
         self.numberOfBuffers = ALsizei(numberOfBuffers)
         
-        buffers = UnsafeMutablePointer.alloc(numberOfBuffers)
+        buffers = UnsafeMutablePointer(allocatingCapacity: numberOfBuffers)
         alGenBuffers(self.numberOfBuffers, buffers)
         
         if alGetError() != AL_NO_ERROR {
@@ -272,7 +272,7 @@ class AudioBuffers {
     
     deinit {
         alDeleteBuffers(numberOfBuffers, buffers)
-        buffers.destroy()
+        buffers.deinitialize()
     }
     
 }
@@ -287,7 +287,7 @@ class AudioPlayerDelegate : NSObject, AVAudioPlayerDelegate {
         self.completion = completion
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         completion()
         audio.stopStream()
     }

@@ -48,7 +48,7 @@ public class Counter {
     private func displayValue() {
         while sprites.count > digits.count {
             sprites[sprites.count - 1].destroy()
-            sprites.removeAtIndex(sprites.count - 1)
+            sprites.remove(at: sprites.count - 1)
         }
         while sprites.count < digits.count {
             sprites.append(digit())

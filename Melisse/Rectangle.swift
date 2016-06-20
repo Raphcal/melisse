@@ -162,11 +162,11 @@ public func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordin
 
 public extension Rectangular where Coordinate : FloatingPoint {
     
-    func rotate(rotation: Coordinate) -> Quadrilateral<Coordinate> {
+    func rotate(_ rotation: Coordinate) -> Quadrilateral<Coordinate> {
         return rotate(rotation, withPivot: center)
     }
     
-    func rotate(rotation: Coordinate, withPivot pivot: Point<Coordinate>) -> Quadrilateral<Coordinate> {
+    func rotate(_ rotation: Coordinate, withPivot pivot: Point<Coordinate>) -> Quadrilateral<Coordinate> {
         var vertices = [Point<Coordinate>]()
         let reference = Point<Coordinate>(x: pivot.x, y: pivot.y)
         for vertex in [Point<Coordinate>(x: left, y: top), Point<Coordinate>(x: right, y: top), Point<Coordinate>(x: left, y: bottom), Point<Coordinate>(x: right, y: bottom)] {

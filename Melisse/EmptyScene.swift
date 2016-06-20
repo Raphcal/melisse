@@ -12,7 +12,7 @@ public struct EmptyScene: Scene {
     
     public var backgroundColor = Color<GLfloat>()
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // Pas de mise à jour.
     }
     

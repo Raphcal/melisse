@@ -27,7 +27,7 @@ public struct View {
     /// Zoom général de la vue.
     var zoom: GLfloat = 1
     
-    public mutating func setSize(size: Size<GLfloat>) {
+    public mutating func setSize(_ size: Size<GLfloat>) {
         self.ratio = width / size.width
         self.size = Size(width: width, height: size.height * ratio)
     }
@@ -44,7 +44,7 @@ public struct View {
     }
     
     // TODO: Faire quelque chose de cette méthode.
-    mutating func updateViewWithBounds(bounds: CGRect) {
+    mutating func updateViewWithBounds(_ bounds: CGRect) {
         #if VIEW_UPDATE_WITH_ZOOM
             let zoom = max(
                 Float(bounds.width) / (12 * 32),

@@ -21,8 +21,8 @@ class FadeScene : Fade {
     var firstScene: Bool = true
     
     var progress: GLfloat = 0
-    var time : NSTimeInterval = 0
-    let duration : NSTimeInterval = 1
+    var time : TimeInterval = 0
+    let duration : TimeInterval = 1
     
     let plane = Plane(capacity: 1)
     var mask: ColoredQuadrilateral
@@ -38,7 +38,7 @@ class FadeScene : Fade {
         self.backgroundColor = previousScene.backgroundColor
     }
     
-    func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         self.time += timeSinceLastUpdate
         self.progress = min(GLfloat(time / duration), fullProgress)
         

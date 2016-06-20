@@ -8,11 +8,11 @@
 
 import GLKit
 
-enum TextureLoadError : ErrorType {
-    case URLNotFound
+enum TextureLoadError : ErrorProtocol {
+    case urlNotFound
 }
 
-public func textureForResource(name: String, extension ext: String, in folder: String? = nil) throws -> GLKTextureInfo {
+public func textureForResource(_ name: String, extension ext: String, in folder: String? = nil) throws -> GLKTextureInfo {
     clearGLError()
     
     if let url = URLForResource(name, extension: ext, in: folder) {
@@ -21,21 +21,21 @@ public func textureForResource(name: String, extension ext: String, in folder: S
         #else
             let premultiplication = true
         #endif
-        let texture = try GLKTextureLoader.textureWithContentsOfURL(url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
+        let texture = try GLKTextureLoader.texture(withContentsOf: url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
         clearGLError()
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
         return texture
     } else {
-        throw TextureLoadError.URLNotFound
+        throw TextureLoadError.urlNotFound
     }
 }
 
-public func URLForResource(name: String, extension ext: String, in folder: String? = nil) -> NSURL? {
-    if let folder = folder where NSFileManager.defaultManager().isReadableFileAtPath(folder + "/" + name + "." + ext) {
-        return NSURL(fileURLWithPath: folder + "/" + name + "." + ext)
+public func URLForResource(_ name: String, extension ext: String, in folder: String? = nil) -> URL? {
+    if let folder = folder where FileManager.default().isReadableFile(atPath: folder + "/" + name + "." + ext) {
+        return URL(fileURLWithPath: folder + "/" + name + "." + ext)
     } else {
-        return NSBundle.mainBundle().URLForResource(name, withExtension: ext)
+        return Bundle.main().urlForResource(name, withExtension: ext)
     }
 }
 

@@ -10,19 +10,19 @@ import Foundation
 
 public struct NoAudio: Audio {
     
-    public func load(sound: Sound) {
+    public func load(_ sound: Sound) {
         // Pas d'effet.
     }
     
-    public func play(sound: Sound) {
+    public func play(_ sound: Sound) {
         // Pas d'effet.
     }
     
-    public func play(streamFrom URL: NSURL) {
+    public func play(streamFrom URL: Foundation.URL) {
         // Pas d'effet.
     }
     
-    public func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void) {
+    public func playOnce(streamFrom URL: Foundation.URL, completionBlock: () -> Void) {
         completionBlock()
     }
     

@@ -11,7 +11,7 @@ import GLKit
 /// Alignement typographique de la valeur d'un objet Text.
 /// L'alignement se fait par rapport à la position x de l'objet.
 public enum TextAlignment {
-    case Left, Center, Right
+    case left, center, right
 }
 
 /// Affiche un texte aligné en haut à gauche en utilisant un sprite par lettre.
@@ -33,7 +33,7 @@ public class Text {
     }
     public private(set) var size: Size<GLfloat>
     
-    public var alignment = TextAlignment.Left {
+    public var alignment = TextAlignment.left {
         didSet {
             moveBy(Point(x: frame.left, y: frame.top) - origin)
         }
@@ -42,11 +42,11 @@ public class Text {
     public var frame: Rectangle<GLfloat> {
         get {
             switch alignment {
-            case .Left:
+            case .left:
                 return Rectangle(left: origin.x, top: origin.y, width: size.width, height: size.height)
-            case .Center:
+            case .center:
                 return Rectangle(left: origin.x - size.width / 2, top: origin.y, width: size.width, height: size.height)
-            case .Right:
+            case .right:
                 return Rectangle(left: origin.x - size.width, top: origin.y, width: size.width, height: size.height)
             }
         }
@@ -68,7 +68,7 @@ public class Text {
         }
     }
     
-    public static func display(text: String, font: Font, factory: SpriteFactory, at point: Point<GLfloat>) {
+    public static func display(_ text: String, font: Font, factory: SpriteFactory, at point: Point<GLfloat>) {
         let _ = Text(factory: factory, font: font, text: text, point: point)
     }
     
@@ -82,19 +82,19 @@ public class Text {
         displayText()
     }
     
-    public func setBlinking(blinking: Bool) {
+    public func setBlinking(_ blinking: Bool) {
         for sprite in sprites {
             sprite.setBlinking(blinking)
         }
     }
     
-    public func setBlinkingWithRate(blinkRate: NSTimeInterval) {
+    public func setBlinkingWithRate(_ blinkRate: TimeInterval) {
         for sprite in sprites {
             sprite.setBlinkingWith(rate: blinkRate)
         }
     }
 
-    private func moveBy(difference: Point<GLfloat>) {
+    private func moveBy(_ difference: Point<GLfloat>) {
         for sprite in sprites {
             sprite.frame.center += difference
         }
@@ -135,7 +135,7 @@ public class Text {
         self.sprites = sprites
     }
     
-    private func spriteFor(index: Int) -> Sprite {
+    private func spriteFor(_ index: Int) -> Sprite {
         let sprite : Sprite
         
         if index < sprites.count {
@@ -148,7 +148,7 @@ public class Text {
         return sprite
     }
     
-    private func setFrameOf(sprite: Sprite, toCharacter value: Int8) {
+    private func setFrameOf(_ sprite: Sprite, toCharacter value: Int8) {
         if value >= zero && value <= nine {
             // Chiffre.
             configure(sprite, animation: font.digitAnimation, frameIndex: value - zero)
@@ -171,18 +171,18 @@ public class Text {
         }
     }
     
-    private func configure(sprite: Sprite, animation: AnimationName, frameIndex: Int) {
+    private func configure(_ sprite: Sprite, animation: AnimationName, frameIndex: Int) {
         sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[animation.name]!)
         sprite.animation.frameIndex = frameIndex
         sprite.frame.size = sprite.animation.frame.size
     }
     
-    private static func integerFromCharacter(c: Character) -> Int8 {
+    private static func integerFromCharacter(_ c: Character) -> Int8 {
         let string = String(c)
         let nsString = NSString(string: string)
-        let utf8Pointer = nsString.UTF8String
+        let utf8Pointer = nsString.utf8String
         
-        return utf8Pointer[0]
+        return utf8Pointer![0]
     }
     
 }

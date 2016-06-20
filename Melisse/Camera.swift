@@ -36,26 +36,26 @@ public struct Camera {
         self.bounds = frame
     }
     
-    public mutating func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public mutating func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         let center = motion.locationFor(&self, timeSinceLastUpdate: timeSinceLastUpdate)
         
         frame.x = max(min(center.x, bounds.right - frame.width / 2), bounds.left + frame.width / 2)
         frame.y = max(min(center.y, bounds.bottom - frame.height / 2), bounds.top + frame.height / 2) + offsetY
     }
     
-    public mutating func center(width: GLfloat, height: GLfloat) {
+    public mutating func center(_ width: GLfloat, height: GLfloat) {
         self.frame.center = Point<GLfloat>(x: width / 2, y: height / 2)
     }
     
-    public mutating func moveTo(target: Sprite, time: NSTimeInterval = 1, onLock: (() -> Void)? = nil) {
+    public mutating func moveTo(_ target: Sprite, time: TimeInterval = 1, onLock: (() -> Void)? = nil) {
         self.motion = motion.to(MovingToTargetCameraMotion(origin: frame.center, target: target, onLock: onLock))
     }
     
-    public func isSpriteInView(sprite: Sprite) -> Bool {
+    public func isSpriteInView(_ sprite: Sprite) -> Bool {
         return StaticHitbox(frame: frame).collidesWith(StaticHitbox(frame: sprite.frame))
     }
     
-    public func removeSpriteIfOutOfView(sprite: Sprite) {
+    public func removeSpriteIfOutOfView(_ sprite: Sprite) {
         if !isSpriteInView(sprite) {
             sprite.destroy()
         }
@@ -65,19 +65,19 @@ public struct Camera {
 
 protocol CameraMotion {
     
-    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat>
+    mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat>
  
-    mutating func to(other: CameraMotion) -> CameraMotion
+    mutating func to(_ other: CameraMotion) -> CameraMotion
     
 }
 
 struct NoCameraMotion : CameraMotion {
     
-    func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         return camera.frame.center
     }
     
-    func to(other: CameraMotion) -> CameraMotion {
+    func to(_ other: CameraMotion) -> CameraMotion {
         return other
     }
     
@@ -87,11 +87,11 @@ struct LockedCameraMotion : CameraMotion {
     
     let target: Sprite
     
-    func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         return target.frame.center
     }
     
-    func to(other: CameraMotion) -> CameraMotion {
+    func to(_ other: CameraMotion) -> CameraMotion {
         return other
     }
     
@@ -101,8 +101,8 @@ struct MovingToTargetCameraMotion : CameraMotion {
     
     let origin: Point<GLfloat>
     let target: Sprite
-    let duration: NSTimeInterval = 1
-    var elapsed: NSTimeInterval = 0
+    let duration: TimeInterval = 1
+    var elapsed: TimeInterval = 0
     var onLock: (() -> Void)?
     
     init(origin: Point<GLfloat>, target: Sprite, onLock: (() -> Void)?) {
@@ -111,11 +111,11 @@ struct MovingToTargetCameraMotion : CameraMotion {
         self.onLock = onLock
     }
     
-    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         elapsed += timeSinceLastUpdate
         
         let ratio = GLfloat(elapsed / duration)
-        let location = Point(x: target.frame.x * ratio + origin.x * (1 - ratio), y: target.frame.y * ratio + origin.y * (1 - ratio))
+        let location = target.frame.center * ratio + origin * (1 - ratio)
         
         if elapsed >= duration {
             onLock?()
@@ -128,7 +128,7 @@ struct MovingToTargetCameraMotion : CameraMotion {
         return location
     }
     
-    func to(other: CameraMotion) -> CameraMotion {
+    func to(_ other: CameraMotion) -> CameraMotion {
         return other
     }
     
@@ -140,12 +140,12 @@ struct EarthquakeCameraMotion : CameraMotion {
     let random = Random()
     let amplitude: GLfloat = 4
     
-    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
         return Point(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
-    mutating func to(other: CameraMotion) -> CameraMotion {
+    mutating func to(_ other: CameraMotion) -> CameraMotion {
         self.motion = other
         return self
     }
@@ -155,15 +155,15 @@ struct EarthquakeCameraMotion : CameraMotion {
 struct TimedEarthquakeCameraMotion : CameraMotion {
     
     var motion: CameraMotion
-    let duration: NSTimeInterval
+    let duration: TimeInterval
     let random = Random()
-    var time: NSTimeInterval = 0
+    var time: TimeInterval = 0
     
-    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         self.time += timeSinceLastUpdate
         
         if time >= duration {
-            camera.motion.to(motion)
+            camera.motion = camera.motion.to(motion)
         }
         
         let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
@@ -171,7 +171,7 @@ struct TimedEarthquakeCameraMotion : CameraMotion {
         return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
-    mutating func to(other: CameraMotion) -> CameraMotion {
+    mutating func to(_ other: CameraMotion) -> CameraMotion {
         self.motion = other
         return self
     }
@@ -185,7 +185,7 @@ struct QuakeCameraMotion : CameraMotion {
     let random = Random()
     
     
-    mutating func locationFor(inout camera: Camera, timeSinceLastUpdate: NSTimeInterval) -> Point<GLfloat> {
+    mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         self.amplitude = max(amplitude - GLfloat(timeSinceLastUpdate * 10), 0)
         
         if amplitude == 0 {
@@ -196,7 +196,7 @@ struct QuakeCameraMotion : CameraMotion {
         return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
     }
     
-    mutating func to(other: CameraMotion) -> CameraMotion {
+    mutating func to(_ other: CameraMotion) -> CameraMotion {
         self.motion = other
         return self
     }

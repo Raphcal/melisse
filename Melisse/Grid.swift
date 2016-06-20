@@ -76,7 +76,7 @@ public class Grid {
     
     // MARK: Fonctions publiques.
     
-    public func angleAt(point: Point<GLfloat>, direction: Direction) -> GLfloat {
+    public func angleAt(_ point: Point<GLfloat>, direction: Direction) -> GLfloat {
         if let tile = ground.tileAt(point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAt(point)
             
@@ -89,7 +89,7 @@ public class Grid {
         }
     }
     
-    public func angleForVerticalRunAt(point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
+    public func angleForVerticalRunAt(_ point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
         if let x = xInTileAt(point, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
@@ -98,7 +98,7 @@ public class Grid {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    public func xInTileAt(point: Point<GLfloat>, direction: Direction) -> GLfloat? {
+    public func xInTileAt(_ point: Point<GLfloat>, direction: Direction) -> GLfloat? {
         if let tile = ground.tileAt(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {

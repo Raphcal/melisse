@@ -13,6 +13,6 @@ public protocol Palette {
 
 public protocol ColorPalette : Palette {
     
-    func colorFor(tile: Int) -> Color<GLubyte>
+    func colorFor(_ tile: Int) -> Color<GLubyte>
     
 }

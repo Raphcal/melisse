@@ -25,10 +25,10 @@ public struct NoFont : Font {
     
     public let definition = 0
     public let spaceWidth = GLfloat(0)
-    public let digitAnimation: AnimationName = DefaultAnimationName.Normal
-    public let upperCaseAnimation: AnimationName = DefaultAnimationName.Normal
-    public let lowerCaseAnimation: AnimationName = DefaultAnimationName.Normal
-    public let semicolonAnimation: AnimationName = DefaultAnimationName.Normal
+    public let digitAnimation: AnimationName = DefaultAnimationName.normal
+    public let upperCaseAnimation: AnimationName = DefaultAnimationName.normal
+    public let lowerCaseAnimation: AnimationName = DefaultAnimationName.normal
+    public let semicolonAnimation: AnimationName = DefaultAnimationName.normal
     
     public let cursorDefintion: Int? = nil
     

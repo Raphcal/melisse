@@ -15,7 +15,7 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
     
     public var viewSize: Size<GLfloat> {
         get {
-            let screenBounds = UIScreen.mainScreen().bounds
+            let screenBounds = UIScreen.main().bounds
             return Size(width: GLfloat(screenBounds.width), height: GLfloat(screenBounds.height))
         }
     }
@@ -24,14 +24,14 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
     var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
     
     public func createGLContext() {
-        self.context = EAGLContext(API: .OpenGLES1)
+        self.context = EAGLContext(api: .openGLES1)
         self.preferredFramesPerSecond = 60
         
-        EAGLContext.setCurrentContext(context)
+        EAGLContext.setCurrent(context)
         
         let view = self.view as! GLKView
         view.context = self.context!
-        view.drawableDepthFormat = .Format16
+        view.drawableDepthFormat = .format16
     }
     
     public func directorDidStart() {
@@ -47,40 +47,38 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
         director.updateWith(self.timeSinceLastUpdate)
     }
     
-    override public func glkView(view: GLKView, drawInRect rect: CGRect) {
+    override public func glkView(_ view: GLKView, drawIn rect: CGRect) {
         director.draw()
     }
     
     // MARK: - Gestion du multi-touch
     
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override public func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touches = touches {
-            removePointsFor(touches)
-        }
-    }
-    
-    override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         removePointsFor(touches)
     }
     
-    private func setPointsFor(touches: Set<UITouch>) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        removePointsFor(touches)
+    }
+    
+    private func setPointsFor(_ touches: Set<UITouch>) {
         for touch in touches {
-            let location = touch.locationInView(self.view)
-            self.touches[unsafeAddressOf(touch)] = Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(location.y))
+            let location = touch.location(in: self.view)
+            self.touches[unsafeAddress(of: touch)] = Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(location.y))
         }
     }
     
-    private func removePointsFor(touches: Set<UITouch>) {
+    private func removePointsFor(_ touches: Set<UITouch>) {
         for touch in touches {
-            self.touches.removeValueForKey(unsafeAddressOf(touch))
+            self.touches.removeValue(forKey: unsafeAddress(of: touch))
         }
     }
     

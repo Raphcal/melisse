@@ -26,15 +26,15 @@ public protocol Audio {
     /// Charge le son donné.
     ///
     /// - parameter sound: Son à charger.
-    func load(sound: Sound)
+    func load(_ sound: Sound)
     
-    func play(sound: Sound)
+    func play(_ sound: Sound)
     
-    func play(set: SoundSet)
+    func play(_ set: SoundSet)
     
-    func play(streamFrom URL: NSURL)
+    func play(streamFrom URL: URL)
     
-    func playOnce(streamFrom URL: NSURL, completionBlock: () -> Void)
+    func playOnce(streamFrom URL: URL, completionBlock: () -> Void)
     
     func stopStream()
     
@@ -42,7 +42,7 @@ public protocol Audio {
 
 public extension Audio {
     
-    func play(set: SoundSet) {
+    func play(_ set: SoundSet) {
         play(set.sound)
     }
     

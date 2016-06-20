@@ -31,7 +31,7 @@ public class GamepadController : Controller {
         self.controller = controller
     }
     
-    public func pressed(button: GamePadButton) -> Bool {
+    public func pressed(_ button: GamePadButton) -> Bool {
         let previous = states[button]
         let current = pressing(button)
         
@@ -40,26 +40,26 @@ public class GamepadController : Controller {
         return (previous == nil || previous == false) && current
     }
     
-    public func pressing(button: GamePadButton) -> Bool {
+    public func pressing(_ button: GamePadButton) -> Bool {
         if let gamepad = controller.gamepad {
             switch button {
-            case .Up:
-                return gamepad.dpad.up.pressed
-            case .Down:
-                return gamepad.dpad.down.pressed
-            case .Left:
-                return gamepad.dpad.left.pressed
-            case .Right:
-                return gamepad.dpad.right.pressed
-            case .Jump:
-                return gamepad.buttonA.pressed || gamepad.buttonB.pressed
-            case .L:
-                return gamepad.leftShoulder.pressed
-            case .R:
-                return gamepad.rightShoulder.pressed
-            case .Start:
+            case .up:
+                return gamepad.dpad.up.isPressed
+            case .down:
+                return gamepad.dpad.down.isPressed
+            case .left:
+                return gamepad.dpad.left.isPressed
+            case .right:
+                return gamepad.dpad.right.isPressed
+            case .jump:
+                return gamepad.buttonA.isPressed || gamepad.buttonB.isPressed
+            case .l:
+                return gamepad.leftShoulder.isPressed
+            case .r:
+                return gamepad.rightShoulder.isPressed
+            case .start:
                 // TODO: Utiliser controller.controllerPausedHandler pour la pause
-                return gamepad.buttonY.pressed
+                return gamepad.buttonY.isPressed
             }
         } else {
             return false

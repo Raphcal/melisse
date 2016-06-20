@@ -9,29 +9,29 @@
 import GLKit
 
 enum ByteCode : UInt8 {
-    case Add = 0x2b
-    case Substract = 0x2d
-    case Multiply = 0x2a
-    case Divide = 0x2f
-    case Negative = 0x6e
-    case Constant = 0x43
-    case X = 0x78
-    case Pi = 0x70
-    case E = 0x65
-    case Minimum = 0x6d
-    case Maximum = 0x4d
-    case Cosinus = 0x63
-    case Sinus = 0x73
-    case RectangleRoot = 0x53
-    case Zoom = 0x7a
-    case SpriteVariable = 0x76
-    case SpriteDirection = 0x64
-    case SpriteHitboxTop = 0x68
+    case add = 0x2b
+    case substract = 0x2d
+    case multiply = 0x2a
+    case divide = 0x2f
+    case negative = 0x6e
+    case constant = 0x43
+    case x = 0x78
+    case pi = 0x70
+    case e = 0x65
+    case minimum = 0x6d
+    case maximum = 0x4d
+    case cosinus = 0x63
+    case sinus = 0x73
+    case rectangleRoot = 0x53
+    case zoom = 0x7a
+    case spriteVariable = 0x76
+    case spriteDirection = 0x64
+    case spriteHitboxTop = 0x68
 }
 
 public struct Operation {
     
-    public static func execute(operation: [UInt8]?, x: GLfloat) -> GLfloat {
+    public static func execute(_ operation: [UInt8]?, x: GLfloat) -> GLfloat {
         if let bytes = operation {
             var stack = execute(bytes, x: x, sprite: nil)
             return stack.removeLast()
@@ -40,13 +40,13 @@ public struct Operation {
         }
     }
     
-    public static func execute(operation: [UInt8]?, sprite: Sprite) {
+    public static func execute(_ operation: [UInt8]?, sprite: Sprite) {
         if let bytes = operation {
-            execute(bytes, x: 0, sprite: sprite)
+            _ = execute(bytes, x: 0, sprite: sprite)
         }
     }
     
-    private static func execute(bytes: [UInt8], x: GLfloat, sprite: Sprite?) -> [GLfloat] {
+    private static func execute(_ bytes: [UInt8], x: GLfloat, sprite: Sprite?) -> [GLfloat] {
         var index = 0
         var stack = [GLfloat]()
         stack.reserveCapacity(bytes.count)
@@ -55,50 +55,50 @@ public struct Operation {
             if let b = ByteCode(rawValue: bytes[index]) {
                 index += 1
                 switch b  {
-                case .Add:
+                case .add:
                     stack.append(stack.removeLast() + stack.removeLast())
                     
-                case .Substract:
+                case .substract:
                     let substracted = stack.removeLast()
                     stack.append(stack.removeLast() - substracted)
                     
-                case .Multiply:
+                case .multiply:
                     stack.append(stack.removeLast() * stack.removeLast())
                     
-                case .Divide:
+                case .divide:
                     let divisor = stack.removeLast()
                     stack.append(stack.removeLast() / divisor)
                     
-                case .Negative:
+                case .negative:
                     stack.append(-stack.removeLast())
                     
-                case .Constant:
+                case .constant:
                     let value = Streams.readFloatFromByteArray(bytes, atIndex: index)
                     stack.append(value.float)
                     index += value.readCount
                     
-                case .X:
+                case .x:
                     stack.append(x)
                     
-                case .Pi:
+                case .pi:
                     stack.append(GLfloat(M_PI))
                     
-                case .E:
+                case .e:
                     stack.append(GLfloat(M_E))
                     
-                case .Minimum:
+                case .minimum:
                     stack.append(min(stack.removeLast(), stack.removeLast()))
                     
-                case .Maximum:
+                case .maximum:
                     stack.append(max(stack.removeLast(), stack.removeLast()))
                     
-                case .Cosinus:
+                case .cosinus:
                     stack.append(cos(stack.removeLast()))
                     
-                case .Sinus:
+                case .sinus:
                     stack.append(sin(stack.removeLast()))
                     
-                case .RectangleRoot:
+                case .rectangleRoot:
                     let last = stack.removeLast()
                     if last >= 0 {
                         stack.append(sqrt(last))
@@ -106,18 +106,18 @@ public struct Operation {
                         stack.append(-1)
                     }
                      
-                case .Zoom:
+                case .zoom:
                     break
                     
-                case .SpriteVariable:
+                case .spriteVariable:
                     let value = Streams.readStringFromByteArray(bytes, atIndex: index)
                     sprite!.variables[value.string] = stack.removeLast()
                     index += value.readCount
                     
-                case .SpriteDirection:
+                case .spriteDirection:
                     sprite!.direction = Direction(rawValue: Int(stack.removeLast()))!
                     
-                case .SpriteHitboxTop:
+                case .spriteHitboxTop:
                     /*
                     let hitboxTop = stack.removeLast()
                     
@@ -134,7 +134,7 @@ public struct Operation {
         return stack
     }
     
-    public static func description(operation: [UInt8]?) -> String {
+    public static func description(_ operation: [UInt8]?) -> String {
         if let bytes = operation {
             var index = 0
             var stack = [String]()
@@ -143,68 +143,68 @@ public struct Operation {
                 if let b = ByteCode(rawValue: bytes[index]) {
                     index += 1
                     switch b  {
-                    case .Add:
+                    case .add:
                         let added = stack.removeLast()
                         stack.append("\(stack.removeLast()) + \(added)")
                         
-                    case .Substract:
+                    case .substract:
                         let substracted = stack.removeLast()
                         stack.append("\(stack.removeLast()) - \(substracted)")
                         
-                    case .Multiply:
+                    case .multiply:
                         let multiplicated = stack.removeLast()
                         stack.append("\(stack.removeLast()) * \(multiplicated)")
                         
-                    case .Divide:
+                    case .divide:
                         let divisor = stack.removeLast()
                         stack.append("\(stack.removeLast()) / \(divisor)")
                         
-                    case .Negative:
+                    case .negative:
                         stack.append("-\(stack.removeLast())")
                         
-                    case .Constant:
+                    case .constant:
                         let value = Streams.readFloatFromByteArray(bytes, atIndex: index)
                         stack.append("\(value.float)")
                         index += value.readCount
                         
-                    case .X:
+                    case .x:
                         stack.append("x")
                         
-                    case .Pi:
+                    case .pi:
                         stack.append("π")
                         
-                    case .E:
+                    case .e:
                         stack.append("e")
                         
-                    case .Minimum:
+                    case .minimum:
                         let minRight = stack.removeLast()
                         stack.append("min(\(stack.removeLast()), \(minRight))")
                         
-                    case .Maximum:
+                    case .maximum:
                         let maxRight = stack.removeLast()
                         stack.append("max(\(stack.removeLast()), \(maxRight))")
                         
-                    case .Cosinus:
+                    case .cosinus:
                         stack.append("cos(\(stack.removeLast()))")
                         
-                    case .Sinus:
+                    case .sinus:
                         stack.append("sin(\(stack.removeLast()))")
                         
-                    case .RectangleRoot:
+                    case .rectangleRoot:
                         stack.append("sqrt(\(stack.removeLast()))")
                         
-                    case .Zoom:
+                    case .zoom:
                         stack.append("zoom(\(stack.removeLast()))")
                         
-                    case .SpriteVariable:
+                    case .spriteVariable:
                         let value = Streams.readStringFromByteArray(bytes, atIndex: index)
                         stack.append("sprite.variables[\(value.string)] = \(stack.removeLast())")
                         index += value.readCount
                         
-                    case .SpriteDirection:
+                    case .spriteDirection:
                         stack.append("sprite.direction = \(stack.removeLast())")
                         
-                    case .SpriteHitboxTop:
+                    case .spriteHitboxTop:
                         stack.append("sprite.hitbox.top = \(stack.removeLast())")
                     }
                 }

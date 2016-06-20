@@ -19,7 +19,7 @@ public struct NoFade: Fade {
         // Pas de dessin.
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         nextScene.willAppear()
         Director.instance!.nextScene = nextScene
     }

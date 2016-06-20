@@ -36,8 +36,8 @@ public class Backdrop {
         }
     }
     
-    public func updateWith(translation translation: Point<GLfloat> = Point(), offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
-        for (index, layer) in map.layers.enumerate() {
+    public func updateWith(translation: Point<GLfloat> = Point(), offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
+        for (index, layer) in map.layers.enumerated() {
             let vertexPointer = vertexPointers[index]
             let texCoordPointer = texCoordPointers[index]
             

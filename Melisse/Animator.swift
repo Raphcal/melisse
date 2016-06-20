@@ -10,22 +10,22 @@ import GLKit
 
 public class Animator {
     
-    public let durations: [NSTimeInterval]
+    public let durations: [TimeInterval]
     public let values: [String : [GLfloat]]
     public let animations: (values: [String : GLfloat]) -> Void
     public var onKeyFrame: [(() -> Void)?]
     
-    var time: NSTimeInterval = 0
+    var time: TimeInterval = 0
     var keyFrame = 0
     
-    public init(durations: [NSTimeInterval], values: [String : [GLfloat]], animations: (values: [String : GLfloat]) -> Void) {
+    public init(durations: [TimeInterval], values: [String : [GLfloat]], animations: (values: [String : GLfloat]) -> Void) {
         self.durations = durations
         self.values = values
         self.animations = animations
-        self.onKeyFrame = Array(count: durations.count + 1, repeatedValue: nil)
+        self.onKeyFrame = Array(repeating: nil, count: durations.count + 1)
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         time += timeSinceLastUpdate
         
         if keyFrame >= durations.count {
@@ -57,7 +57,7 @@ public class Animator {
         }
     }
     
-    func valueFor(progress: GLfloat, from: GLfloat, to: GLfloat) -> GLfloat {
+    func valueFor(_ progress: GLfloat, from: GLfloat, to: GLfloat) -> GLfloat {
         return from + (to - from) * progress
     }
     

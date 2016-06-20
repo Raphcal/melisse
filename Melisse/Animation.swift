@@ -11,11 +11,11 @@ import Foundation
 
 public protocol Animation {
     
-    mutating func updateWith(timeSinceLastUpdate: NSTimeInterval)
-    func draw(sprite: Sprite)
+    mutating func updateWith(_ timeSinceLastUpdate: TimeInterval)
+    func draw(_ sprite: Sprite)
     
     mutating func start()
-    mutating func transitionTo(nextAnimation: Animation) -> Animation
+    mutating func transitionTo(_ nextAnimation: Animation) -> Animation
     
     var definition: AnimationDefinition { get set }
     var frameIndex: Int { get set }
@@ -32,13 +32,13 @@ public extension Animation {
         }
     }
     
-    var framesPerSecond: NSTimeInterval {
+    var framesPerSecond: TimeInterval {
         get {
-            return NSTimeInterval(definition.frequency) * NSTimeInterval(speed)
+            return TimeInterval(definition.frequency) * TimeInterval(speed)
         }
     }
     
-    func draw(sprite: Sprite) {
+    func draw(_ sprite: Sprite) {
         frame.draw(sprite)
     }
     
@@ -46,7 +46,7 @@ public extension Animation {
         self.frameIndex = 0
     }
     
-    func transitionTo(nextAnimation: Animation) -> Animation {
+    func transitionTo(_ nextAnimation: Animation) -> Animation {
         return nextAnimation
     }
     

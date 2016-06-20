@@ -16,7 +16,7 @@ struct MotionMetric {
     var from: Double
     var to: Double
     
-    func valueFor(attitude: Double) -> GLfloat {
+    func valueFor(_ attitude: Double) -> GLfloat {
         let value = GLfloat((attitude - from) / (to - from))
         
         if value <= -1 {
@@ -37,10 +37,10 @@ public struct PerspectiveEffect {
     
     #if os(iOS)
     let motionManager = CMMotionManager()
-    let verticalMetrics = [UIInterfaceOrientation.LandscapeRight: MotionMetric(from: 0.4, to: -1.2),
-                           UIInterfaceOrientation.LandscapeLeft: MotionMetric(from: -0.3, to: 1.5)]
-    let horizontalMetrics = [UIInterfaceOrientation.LandscapeRight : MotionMetric(from: -1, to: 1),
-                             UIInterfaceOrientation.LandscapeLeft : MotionMetric(from: -1, to: 1)]
+    let verticalMetrics = [UIInterfaceOrientation.landscapeRight: MotionMetric(from: 0.4, to: -1.2),
+                           UIInterfaceOrientation.landscapeLeft: MotionMetric(from: -0.3, to: 1.5)]
+    let horizontalMetrics = [UIInterfaceOrientation.landscapeRight : MotionMetric(from: -1, to: 1),
+                             UIInterfaceOrientation.landscapeLeft : MotionMetric(from: -1, to: 1)]
     #endif
     
     public init() {
@@ -64,7 +64,7 @@ public struct PerspectiveEffect {
         #if os(iOS)
             let tilt: Point<GLfloat>
             if let motion = motionManager.deviceMotion {
-                let orientation = UIApplication.sharedApplication().statusBarOrientation
+                let orientation = UIApplication.shared().statusBarOrientation
                 let horizontalMetric = horizontalMetrics[orientation]!
                 let verticalMetric = verticalMetrics[orientation]!
                 tilt = Point(x: horizontalMetric.valueFor(motion.attitude.pitch), y: verticalMetric.valueFor(motion.attitude.roll))

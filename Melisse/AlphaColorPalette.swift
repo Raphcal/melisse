@@ -283,7 +283,7 @@ public class AlphaColorPalette : ColorPalette {
         self.colors = colors
     }
     
-    public func colorFor(tile: Int) -> Color<GLubyte> {
+    public func colorFor(_ tile: Int) -> Color<GLubyte> {
         let colorIndex = colorIndexFromTile(tile)
         let alphaIndex = alphaIndexFromTile(tile)
         
@@ -296,7 +296,7 @@ public class AlphaColorPalette : ColorPalette {
         }
     }
     
-    public func paint(tile: Int, in context: CGContext, rect: CGRect) {
+    public func paint(_ tile: Int, in context: CGContext, rect: CGRect) {
         let baseColor = colorFor(tile)
         
         let red = CGFloat(baseColor.red) / 255
@@ -308,23 +308,23 @@ public class AlphaColorPalette : ColorPalette {
         #else
             let color = NSColor(red: red, green: green, blue: blue, alpha: alpha)
         #endif
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
     }
     
-    private func alphaIndexFromTile(tile: Int) -> Int {
+    private func alphaIndexFromTile(_ tile: Int) -> Int {
         return tile / AlphaColorPalette.mask
     }
     
-    private func colorIndexFromTile(tile: Int) -> Int {
+    private func colorIndexFromTile(_ tile: Int) -> Int {
         return tile % AlphaColorPalette.mask
     }
     
-    private func isColorIndexInBounds(colorIndex: Int) -> Bool {
+    private func isColorIndexInBounds(_ colorIndex: Int) -> Bool {
         return colorIndex >= 0 && colorIndex < colors.count
     }
     
-    private func isAlphaIndexInBounds(alphaIndex: Int) -> Bool {
+    private func isAlphaIndexInBounds(_ alphaIndex: Int) -> Bool {
         return alphaIndex >= 0 && alphaIndex < AlphaColorPalette.alphas.count
     }
     

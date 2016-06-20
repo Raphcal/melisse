@@ -12,27 +12,27 @@ import Foundation
 public protocol Motion {
     
     /// Initialisation du mouvement pour le sprite donné.
-    mutating func load(sprite: Sprite)
+    mutating func load(_ sprite: Sprite)
     
     /// Nettoyage du mouvement pour le sprite donné.
-    mutating func unload(sprite: Sprite)
+    mutating func unload(_ sprite: Sprite)
     
     /// Calcul et application du mouvement pour le sprite donné.
-    mutating func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite)
+    mutating func updateWith(_ timeSinceLastUpdate: TimeInterval, sprite: Sprite)
     
 }
 
 public extension Motion {
     
-    func load(sprite: Sprite) {
+    func load(_ sprite: Sprite) {
         // Implémentation vide.
     }
     
-    func unload(sprite: Sprite) {
+    func unload(_ sprite: Sprite) {
         // Implémentation vide.
     }
     
-    func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
+    func updateWith(_ timeSinceLastUpdate: TimeInterval, sprite: Sprite) {
         // Implémentation vide.
     }
     

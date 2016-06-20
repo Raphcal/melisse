@@ -14,10 +14,10 @@ public struct BlinkingAnimation : Animation {
     
     public var animation: Animation
     public var onEnd: ((animation: Animation) -> Void)?
-    public var duration: NSTimeInterval
+    public var duration: TimeInterval
     
-    public var time: NSTimeInterval = 0
-    public var blinkRate: NSTimeInterval
+    public var time: TimeInterval = 0
+    public var blinkRate: TimeInterval
     
     private var visible = true
     
@@ -46,14 +46,14 @@ public struct BlinkingAnimation : Animation {
         }
     }
     
-    public init(animation: Animation, blinkRate: NSTimeInterval = 0.2, duration: NSTimeInterval = 0, onEnd:((animation: Animation) -> Void)? = nil) {
+    public init(animation: Animation, blinkRate: TimeInterval = 0.2, duration: TimeInterval = 0, onEnd:((animation: Animation) -> Void)? = nil) {
         self.animation = animation
         self.onEnd = onEnd
         self.duration = duration
         self.blinkRate = blinkRate
     }
     
-    mutating public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    mutating public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         time += timeSinceLastUpdate
         visible = (Int(time / blinkRate) % BlinkingAnimation.Pair) == 0
         
@@ -64,7 +64,7 @@ public struct BlinkingAnimation : Animation {
         }
     }
     
-    public func draw(sprite: Sprite) {
+    public func draw(_ sprite: Sprite) {
         if visible {
             animation.draw(sprite)
         } else {
@@ -72,7 +72,7 @@ public struct BlinkingAnimation : Animation {
         }
     }
     
-    mutating public func transitionTo(nextAnimation: Animation) -> Animation {
+    mutating public func transitionTo(_ nextAnimation: Animation) -> Animation {
         self.animation = nextAnimation
         return self
     }

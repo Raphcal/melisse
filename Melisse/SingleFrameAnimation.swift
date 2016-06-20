@@ -22,7 +22,7 @@ public struct SingleFrameAnimation : Animation {
         self.init(definition: sprite.definition.animations[animation.name]!)
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // Pas de traitement
     }
     

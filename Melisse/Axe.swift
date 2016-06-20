@@ -10,7 +10,7 @@ import Foundation
 
 public enum Axe {
     
-    case Horizontal, Vertical
+    case horizontal, vertical
     
     static public let count = 2
     

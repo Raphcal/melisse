@@ -39,12 +39,12 @@ public class Input : Controller {
         #endif
     }
     
-    public func pressed(button: GamePadButton) -> Bool {
+    public func pressed(_ button: GamePadButton) -> Bool {
         // TODO: Inverser le fonctionnement de cette méthode. Enregistrer des listeners par scène plutôt que de faire du polling.
         return controller.pressed(button)
     }
     
-    public func pressing(button: GamePadButton) -> Bool {
+    public func pressing(_ button: GamePadButton) -> Bool {
         return controller.pressing(button)
     }
     

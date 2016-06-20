@@ -36,7 +36,7 @@ public struct TextMenuItem : MenuItem {
 
 public protocol Layout {
     
-    func pointFor(item: MenuItem) -> Point<GLfloat>
+    func pointFor(_ item: MenuItem) -> Point<GLfloat>
     
 }
 
@@ -53,7 +53,7 @@ public class VerticalLayout : Layout {
         self.y = origin.y
     }
     
-    public func pointFor(item: MenuItem) -> Point<GLfloat> {
+    public func pointFor(_ item: MenuItem) -> Point<GLfloat> {
         let point = Point(x: origin.x, y: y + margin)
         self.y += item.frame.height + margin + margin
         return point
@@ -93,7 +93,7 @@ public class Menu {
         self.font = font
     }
     
-    public func add(text: String, withValue value: Any? = nil, alignment: TextAlignment = .Left) {
+    public func add(_ text: String, withValue value: Any? = nil, alignment: TextAlignment = .left) {
         var item = TextMenuItem(text: text, font: font, factory: factory)
         item.value = value
         
@@ -119,16 +119,16 @@ public class Menu {
                 }
             }
         #endif
-        if Input.instance.pressed(.Down) {
+        if Input.instance.pressed(.down) {
             selectItemAt(selection + 1)
-        } else if Input.instance.pressed(.Up) {
+        } else if Input.instance.pressed(.up) {
             selectItemAt(selection - 1)
-        } else if Input.instance.pressed(.Start) || Input.instance.pressed(.Jump) {
+        } else if Input.instance.pressed(.start) || Input.instance.pressed(.jump) {
             onSelection?(item: selectedItem)
         }
     }
     
-    private func selectItemAt(index: Int) {
+    private func selectItemAt(_ index: Int) {
         self.selection = min(max(index, 0), items.count - 1)
         
         if let cursor = cursor {
@@ -137,7 +137,7 @@ public class Menu {
         }
     }
     
-    private func itemIndexFor(touch: Point<GLfloat>) -> Int? {
+    private func itemIndexFor(_ touch: Point<GLfloat>) -> Int? {
         let ratio = View.instance.ratio
         let point = Point(x: touch.x * ratio, y: touch.y * ratio)
         

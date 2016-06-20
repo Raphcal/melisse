@@ -9,7 +9,7 @@
 import GLKit
 
 public enum Distance : Int {
-    case Behind, Middle, Front
+    case behind, middle, front
 }
 
 /// Gère la création, l'affichage et la mise à jour d'un ensemble de sprites.
@@ -72,14 +72,14 @@ public class SpriteFactory {
     
     // MARK: Gestion des mises à jour
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         for sprite in sprites {
             sprite.updateWith(timeSinceLastUpdate)
         }
         commitRemoval()
     }
     
-    public func updateCollisionsForSprite(player: Sprite) {
+    public func updateCollisionsForSprite(_ player: Sprite) {
         self.collisions = collidables.flatMap { (sprite) -> Sprite? in
             return sprite !== player && sprite.hitbox.collidesWith(player.hitbox) ? sprite : nil
         }
@@ -94,7 +94,7 @@ public class SpriteFactory {
         Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
     }
     
-    public func drawWith(tint: Color<GLubyte>, at translation: Point<GLfloat> = Point()) {
+    public func drawWith(_ tint: Color<GLubyte>, at translation: Point<GLfloat> = Point()) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
@@ -102,11 +102,11 @@ public class SpriteFactory {
     
     // MARK: Création de sprites
     
-    public func sprite(definition: Int) -> Sprite {
+    public func sprite(_ definition: Int) -> Sprite {
         return sprite(definitions[definition])
     }
     
-    public func sprite(definition: Int?) -> Sprite? {
+    public func sprite(_ definition: Int?) -> Sprite? {
         if let definition = definition {
             return sprite(definitions[definition])
         } else {
@@ -114,7 +114,7 @@ public class SpriteFactory {
         }
     }
     
-    public func sprite(definition: Int, topLeft: Point<GLfloat>) -> Sprite {
+    public func sprite(_ definition: Int, topLeft: Point<GLfloat>) -> Sprite {
         let sprite = self.sprite(definition)
         sprite.frame.topLeft = topLeft
         return sprite
@@ -126,7 +126,7 @@ public class SpriteFactory {
     /// - parameter animation: Nom de l'animation à sélectionner.
     /// - parameter frame: Indice de l'étape d'animation à utiliser. La taille du nouveau sprite sera celle de l'étape d'animation.
     /// - returns: Un nouveau sprite.
-    public func sprite(parent: Sprite, animation: AnimationName, frame: Int) -> Sprite {
+    public func sprite(_ parent: Sprite, animation: AnimationName, frame: Int) -> Sprite {
         let sprite = self.sprite(parent.definition, info: nil, after: parent)
         
         sprite.animation = SingleFrameAnimation(definition: parent.definition.animations[animation.name]!)
@@ -145,7 +145,7 @@ public class SpriteFactory {
     /// - parameter info: Informations du loader sur le sprite à créer.
     /// - parameter after: Si non nil, la référence du nouveau sprite sera (si possible) supérieur à celle du sprite donné.
     /// - returns: Un nouveau sprite.
-    public func sprite(definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
+    public func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
         let sprite = Sprite(definition: definition, reference: reference, factory: self, info: info)
         self.sprites.append(sprite)
@@ -159,16 +159,16 @@ public class SpriteFactory {
     
     // MARK: Suppression de sprites
     
-    public func removeSprite(sprite: Sprite) {
+    public func removeSprite(_ sprite: Sprite) {
         sprite.removed = true
         
-        if let index = sprites.indexOf({ sprite === $0 }) {
-            sprites.removeAtIndex(index)
+        if let index = sprites.index(where: { sprite === $0 }) {
+            sprites.remove(at: index)
             removalPending.append(sprite)
         }
         
-        if sprite.definition.type.isCollidable, let index = collidables.indexOf({ sprite === $0 }) {
-            collidables.removeAtIndex(index)
+        if sprite.definition.type.isCollidable, let index = collidables.index(where: { sprite === $0 }) {
+            collidables.remove(at: index)
         }
     }
     

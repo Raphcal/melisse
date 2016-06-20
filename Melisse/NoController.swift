@@ -17,11 +17,11 @@ public struct NoController : Controller {
         // Pas d'initialisation.
     }
     
-    public func pressed(button: GamePadButton) -> Bool {
+    public func pressed(_ button: GamePadButton) -> Bool {
         return false
     }
     
-    public func pressing(button: GamePadButton) -> Bool {
+    public func pressing(_ button: GamePadButton) -> Bool {
         return false
     }
     

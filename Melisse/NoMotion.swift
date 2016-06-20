@@ -15,11 +15,11 @@ public struct NoMotion : Motion {
         // Pas d'initialisation.
     }
     
-    public func load(sprite: Sprite) {
+    public func load(_ sprite: Sprite) {
         // Pas de chargement.
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval, sprite: Sprite) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval, sprite: Sprite) {
         // Pas de mouvement.
     }
     

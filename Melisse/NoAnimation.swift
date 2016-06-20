@@ -20,11 +20,11 @@ public struct NoAnimation : Animation {
         self.frame = frame
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // Pas de traitement
     }
     
-    public func draw(sprite: Sprite) {
+    public func draw(_ sprite: Sprite) {
         // Pas de traitement
     }
     

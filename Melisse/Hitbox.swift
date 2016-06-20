@@ -12,8 +12,8 @@ public protocol Hitbox {
     
     var frame: Rectangle<GLfloat> { get }
     
-    func collidesWith(point: Point<GLfloat>) -> Bool
-    func collidesWith(other: Hitbox) -> Bool
+    func collidesWith(_ point: Point<GLfloat>) -> Bool
+    func collidesWith(_ other: Hitbox) -> Bool
     
 }
 
@@ -25,18 +25,19 @@ public extension Hitbox {
         }
     }
     
-    func collidesWith(point: Point<GLfloat>) -> Bool {
+    func collidesWith(_ point: Point<GLfloat>) -> Bool {
         return point.x >= frame.left && point.x < frame.right &&
             point.y >= frame.top && point.y < frame.bottom
     }
     
-    func collidesWith(rectangle: Rectangle<GLfloat>) -> Bool {
+    func collidesWith(_ rectangle: Rectangle<GLfloat>) -> Bool {
         return collidesWith(StaticHitbox(frame: rectangle))
     }
     
-    func collidesWith(other: Hitbox) -> Bool {
-        return (frame.x - other.frame.x).absolute <= (frame.width + other.frame.width).half
-            && (frame.y - other.frame.y).absolute <= (frame.height + other.frame.height).half
+    func collidesWith(_ other: Hitbox) -> Bool {
+        let x = (frame.x - other.frame.x).absolute <= (frame.width + other.frame.width).half
+        let y = (frame.y - other.frame.y).absolute <= (frame.height + other.frame.height).half
+        return x && y
     }
     
 }
@@ -91,7 +92,7 @@ public class RotatedHitbox : Hitbox {
         self.frame = hitbox.frame
     }
     
-    public func rotate(rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
+    public func rotate(_ rotation: GLfloat, withPivot pivot: Point<GLfloat>) {
         self.frame = hitbox.frame.rotate(rotation, withPivot: pivot).enclosingRectangle()
     }
     

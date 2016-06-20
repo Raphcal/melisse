@@ -32,35 +32,35 @@ public class SurfaceArray<Element where Element: Numeric> {
         
         self.capacity = total
         self.coordinates = coordinates
-        self.memory = UnsafeMutablePointer.alloc(total)
+        self.memory = UnsafeMutablePointer(allocatingCapacity: total)
         self.vertexesByQuad = vertexesByQuad
     }
     
     deinit {
-        memory.destroy()
+        memory.deinitialize()
     }
     
     public func clear() {
         memset(UnsafeMutablePointer<Int8>(memory), 0, capacity * sizeof(Element))
     }
     
-    public func clearFrom(index: Int, count: Int) {
-        memset(UnsafeMutablePointer<Int8>(memory.advancedBy(index * coordinates)), 0, count * coordinates * sizeof(GLfloat))
+    public func clearFrom(_ index: Int, count: Int) {
+        memset(UnsafeMutablePointer<Int8>(memory.advanced(by: index * coordinates)), 0, count * coordinates * sizeof(GLfloat))
     }
     
-    public func clearQuadAt(index: Int) {
+    public func clearQuadAt(_ index: Int) {
         clearFrom(index * vertexesByQuad, count: vertexesByQuad)
     }
     
-    public func surfaceAt(index: Int) -> Surface<Element> {
-        return Surface<Element>(memory: memory.advancedBy(index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
+    public func surfaceAt(_ index: Int) -> Surface<Element> {
+        return Surface<Element>(memory: memory.advanced(by: index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
     }
     
     public func reset() {
         cursor = 0
     }
     
-    public func append(value: Element) {
+    public func append(_ value: Element) {
         #if CHECK_CAPACITY
             if cursor < capacity {
                 memory[cursor] = value
@@ -74,7 +74,7 @@ public class SurfaceArray<Element where Element: Numeric> {
         #endif
     }
     
-    public func append(width width: Element, height: Element, left: Element, top: Element) {
+    public func append(width: Element, height: Element, left: Element, top: Element) {
         // Bas gauche
         append(left)
         append(top + height)
@@ -100,7 +100,7 @@ public class SurfaceArray<Element where Element: Numeric> {
         append(top)
     }
     
-    public func append(color color: Color<Element>) {
+    public func append(color: Color<Element>) {
         for _ in 0 ..< vertexesByQuad {
             append(color.red)
             append(color.green)
@@ -113,11 +113,11 @@ public class SurfaceArray<Element where Element: Numeric> {
 
 public extension SurfaceArray where Element: Signed {
     
-    func appendQuad(width width: Element, height: Element, left: Element, top: Element) {
+    func appendQuad(width: Element, height: Element, left: Element, top: Element) {
         append(width: width, height: -height, left: left, top: -top)
     }
     
-    func append(tile tile: Int, from palette: ImagePalette) {
+    func append(tile: Int, from palette: ImagePalette) {
         append(width: Element(palette.textureTileSize), height: Element(palette.textureTileSize), left: Element(tile % palette.columns) * Element(palette.textureTileSize + palette.texturePadding) + Element(palette.texturePadding),
                top: Element(tile / palette.columns) * Element(palette.textureTileSize + palette.texturePadding) + Element(palette.texturePadding))
     }

@@ -38,7 +38,7 @@ public class ImagePalette : Palette {
         self.functions = []
     }
     
-    public init(inputStream : NSInputStream) {
+    public init(inputStream : InputStream) {
         self.textureName = Streams.readString(inputStream)
         self.columns = Streams.readInt(inputStream)
         self.tileSize = Streams.readInt(inputStream)
@@ -51,7 +51,7 @@ public class ImagePalette : Palette {
     }
     
     convenience public init?(resource : String) {
-        if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: ImagePalette.fileExtension), let inputStream = NSInputStream(URL: url) {
+        if let url = Bundle.main().urlForResource(resource, withExtension: ImagePalette.fileExtension), let inputStream = InputStream(url: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()

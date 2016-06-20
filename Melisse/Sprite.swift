@@ -12,14 +12,14 @@ public class Sprite : Equatable {
     
     public let definition: SpriteDefinition
     public let info: SpriteInfo?
-    public var type: SpriteType = DefaultSpriteType.Decoration
+    public var type: SpriteType = DefaultSpriteType.decoration
     
     public var frame: Rectangle<GLfloat> {
         didSet {
             vertexSurface.setQuadWith(frame)
         }
     }
-    public var direction: Direction = .Right
+    public var direction: Direction = .right
     public var front: GLfloat {
         get {
             return frame.x + frame.width * direction.value
@@ -49,8 +49,8 @@ public class Sprite : Equatable {
         frame = Rectangle()
         factory = SpriteFactory()
         reference = -1
-        vertexSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
-        texCoordSurface = Surface(memory: UnsafeMutablePointer.alloc(0), coordinates: 0, vertexesByQuad: vertexesByQuad)
+        vertexSurface = Surface(memory: UnsafeMutablePointer(allocatingCapacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
+        texCoordSurface = Surface(memory: UnsafeMutablePointer(allocatingCapacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
     }
     
     public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory, info: SpriteInfo? = nil) {
@@ -62,9 +62,9 @@ public class Sprite : Equatable {
         self.vertexSurface = factory.vertexPointer.surfaceAt(reference)
         self.texCoordSurface = factory.texCoordPointer.surfaceAt(reference)
         
-        if let normalAnimationDefinition = definition.animations[DefaultAnimationName.Normal.name] {
+        if let normalAnimationDefinition = definition.animations[DefaultAnimationName.normal.name] {
             self.animation = normalAnimationDefinition.toAnimation()
-            self.currentAnimation = DefaultAnimationName.Normal
+            self.currentAnimation = DefaultAnimationName.normal
         } else {
             self.animation = NoAnimation()
         }
@@ -85,13 +85,13 @@ public class Sprite : Equatable {
     
     // MARK: Gestion des mises à jour
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         motion.updateWith(timeSinceLastUpdate, sprite: self)
         animation.updateWith(timeSinceLastUpdate)
         animation.draw(self)
     }
     
-    public func isLookingToward(point: Point<GLfloat>) -> Bool {
+    public func isLookingToward(_ point: Point<GLfloat>) -> Bool {
         return direction.isSameValue(point.x - frame.x)
     }
     
@@ -100,54 +100,54 @@ public class Sprite : Equatable {
     public func destroy() {
         self.removed = true
         
-        if definition.animations[DefaultAnimationName.Disappear.name]?.frames.count > 0 {
+        if definition.animations[DefaultAnimationName.disappear.name]?.frames.count > 0 {
             self.motion.unload(self)
             self.motion = NoMotion()
-            self.type = DefaultSpriteType.Decoration
-            setAnimation(DefaultAnimationName.Disappear, onEnd: { self.factory.removeSprite(self) })
+            self.type = DefaultSpriteType.decoration
+            setAnimation(DefaultAnimationName.disappear, onEnd: { self.factory.removeSprite(self) })
         } else {
             factory.removeSprite(self)
         }
     }
     
-    public func explode(definition: Int) {
+    public func explode(_ definition: Int) {
         self.removed = true
         
         let explosion = factory.sprite(definition)
         explosion.frame.center = self.frame.center
         explosion.motion = NoMotion()
-        explosion.setAnimation(DefaultAnimationName.Normal, onEnd: { self.factory.removeSprite(explosion) })
+        explosion.setAnimation(DefaultAnimationName.normal, onEnd: { self.factory.removeSprite(explosion) })
         
         factory.removeSprite(self)
     }
     
     // MARK: Gestion des animations
     
-    public func setAnimation(animationName: AnimationName, force: Bool = false) {
+    public func setAnimation(_ animationName: AnimationName, force: Bool = false) {
         if animationName.name != currentAnimation?.name || force, let nextAnimation = definition.animations[animationName.name]?.toAnimation() {
             self.animation = animation.transitionTo(nextAnimation)
             self.currentAnimation = animationName
         }
     }
     
-    public func setAnimation(animationName: AnimationName, onEnd: () -> Void) {
+    public func setAnimation(_ animationName: AnimationName, onEnd: () -> Void) {
         if let nextAnimation = definition.animations[animationName.name]?.toAnimation(onEnd) {
             self.animation = animation.transitionTo(nextAnimation)
             self.currentAnimation = animationName
         }
     }
     
-    public func setBlinkingWith(duration duration: NSTimeInterval) {
+    public func setBlinkingWith(duration: TimeInterval) {
         self.animation = BlinkingAnimation(animation: animation, blinkRate: 0.2, duration: duration) { (animation) -> Void in
             self.animation = animation
         }
     }
     
-    public func setBlinkingWith(rate rate: NSTimeInterval) {
+    public func setBlinkingWith(rate: TimeInterval) {
         self.animation = BlinkingAnimation(animation: animation, blinkRate: rate)
     }
     
-    public func setBlinking(blinking: Bool) {
+    public func setBlinking(_ blinking: Bool) {
         if blinking {
             if !(animation is BlinkingAnimation) {
                 let blinkingAnimation = BlinkingAnimation(animation: animation)
@@ -160,7 +160,7 @@ public class Sprite : Equatable {
     
     // MARK: Accès aux variables
     
-    public func variable(name: String, or defaultValue: GLfloat = 0) -> GLfloat {
+    public func variable(_ name: String, or defaultValue: GLfloat = 0) -> GLfloat {
         if let value = self.variables[name] {
             return value
         } else {
@@ -168,7 +168,7 @@ public class Sprite : Equatable {
         }
     }
     
-    public func variable(name: String, or defaultValue: Int = 0) -> Int {
+    public func variable(_ name: String, or defaultValue: Int = 0) -> Int {
         if let value = self.variables[name] {
             return Int(value)
         } else {
@@ -182,7 +182,7 @@ public func ==(left: Sprite, right: Sprite) -> Bool {
     return left === right
 }
 
-public func +=(inout left: GLfloat?, right: GLfloat) {
+public func +=(left: inout GLfloat?, right: GLfloat) {
     if let l = left {
         left = l + right
     } else {
@@ -190,7 +190,7 @@ public func +=(inout left: GLfloat?, right: GLfloat) {
     }
 }
 
-public func +=(inout left: Int?, right: Int) {
+public func +=(left: inout Int?, right: Int) {
     if let l = left {
         left = l + right
     } else {

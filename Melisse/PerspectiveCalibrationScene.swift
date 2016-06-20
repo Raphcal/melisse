@@ -12,7 +12,7 @@ public class PerspectiveCalibrationScene : Scene {
     
     public let backgroundColor = Color<GLfloat>(white: 1)
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // TODO: Mise à jour.
     }
     

@@ -17,7 +17,7 @@ public class Director {
     
     static public private(set) weak var instance: Director?
     
-    static let fadeDuration: NSTimeInterval = 0.5
+    static let fadeDuration: TimeInterval = 0.5
     static let fullProgress: Float = 1
     static let halfProgress: Float = 0.5
     
@@ -36,7 +36,7 @@ public class Director {
         Director.instance = self
     }
     
-    public func startWith(scene: Scene) {
+    public func startWith(_ scene: Scene) {
         View.instance.applyZoom()
         
         self.scene = scene
@@ -48,7 +48,7 @@ public class Director {
         scene.reload()
     }
     
-    public func updateWith(timeSinceLastUpdate: NSTimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         if var nextScene = self.nextScene {
             if !(self.scene is Fade) {
                 audio.stopStream()

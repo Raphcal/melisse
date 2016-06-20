@@ -9,7 +9,7 @@
 import Foundation
 
 public enum AnimationType {
-    case None, SingleFrame, PlayOnce, Looping, Synchronized
+    case none, singleFrame, playOnce, looping, synchronized
 }
 
 public struct AnimationDefinition : Equatable {
@@ -19,9 +19,9 @@ public struct AnimationDefinition : Equatable {
     public var frequency: Int
     public var type: AnimationType
     
-    public var duration: NSTimeInterval {
+    public var duration: TimeInterval {
         get {
-            return NSTimeInterval(frames.count) / NSTimeInterval(frequency)
+            return TimeInterval(frames.count) / TimeInterval(frequency)
         }
     }
     
@@ -32,7 +32,7 @@ public struct AnimationDefinition : Equatable {
         self.type = AnimationDefinition.typeFor(frames.count, looping: looping)
     }
     
-    public init(inputStream : NSInputStream) {
+    public init(inputStream : InputStream) {
         self.name = Streams.readString(inputStream)
         self.frequency = Streams.readInt(inputStream)
         let looping = Streams.readBoolean(inputStream)
@@ -65,32 +65,32 @@ public struct AnimationDefinition : Equatable {
     
     public func toAnimation() -> Animation {
         switch type {
-        case .None:
+        case .none:
             return NoAnimation(definition: self)
-        case .SingleFrame:
+        case .singleFrame:
             return SingleFrameAnimation(definition: self)
-        case .PlayOnce:
+        case .playOnce:
             return PlayOnceAnimation(definition: self)
-        case .Looping:
+        case .looping:
             return LoopingAnimation(definition: self)
-        case .Synchronized:
+        case .synchronized:
             return SynchronizedLoopingAnimation(definition: self)
         }
     }
     
-    func toAnimation(onEnd: () -> Void) -> Animation {
+    func toAnimation(_ onEnd: () -> Void) -> Animation {
         return PlayOnceAnimation(definition: self, onEnd: onEnd)
     }
     
-    private static func typeFor(frameCount: Int, looping: Bool) -> AnimationType {
+    private static func typeFor(_ frameCount: Int, looping: Bool) -> AnimationType {
         if looping {
-            return .Looping
+            return .looping
         } else if frameCount > 1 {
-            return .PlayOnce
+            return .playOnce
         } else if frameCount == 1 {
-            return .SingleFrame
+            return .singleFrame
         } else {
-            return .None
+            return .none
         }
     }
     

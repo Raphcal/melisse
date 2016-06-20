@@ -35,7 +35,7 @@ public class SpriteAtlas {
             return nil
         }
         
-        if let url = URLForResource(name, extension: "sprites", in: folder), let inputStream = NSInputStream(URL: url) {
+        if let url = URLForResource(name, extension: "sprites", in: folder), let inputStream = InputStream(url: url) {
             inputStream.open()
             definitions = SpriteDefinition.definitionsFrom(inputStream, types: types, animationNames: animationNames)
             inputStream.close()
