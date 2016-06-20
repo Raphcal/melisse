@@ -10,23 +10,23 @@ import GLKit
 
 /// Valeurs des touches du clavier.
 public enum KeyCode : UInt16 {
-    case R = 15
-    case Enter = 36
-    case L = 37
-    case Space = 49
-    case Left = 123
-    case Right = 124
-    case Down = 125
-    case Up = 126
+    case r = 15
+    case enter = 36
+    case l = 37
+    case space = 49
+    case left = 123
+    case right = 124
+    case down = 125
+    case up = 126
     
-    case A = 12
-    case C = 8
-    case D = 2
-    case F = 3
-    case Q = 0
-    case V = 9
-    case W = 6
-    case X = 7
+    case a = 12
+    case c = 8
+    case d = 2
+    case f = 3
+    case q = 0
+    case v = 9
+    case w = 6
+    case x = 7
 }
 
 /// Reçoit les événements du clavier et les dispatch vers le bon contrôleur.
@@ -36,11 +36,11 @@ public class KeyboardInputSource {
 
     public var listeners = [UInt16 : KeyboardController]()
     
-    public func keyDown(keyCode: UInt16) {
+    public func keyDown(_ keyCode: UInt16) {
         listeners[keyCode]?.keyDown(keyCode)
     }
     
-    public func keyUp(keyCode: UInt16) {
+    public func keyUp(_ keyCode: UInt16) {
         listeners[keyCode]?.keyUp(keyCode)
     }
 
@@ -86,7 +86,7 @@ public class KeyboardController : Controller {
         ])
     }
     
-    public func pressed(button: GamePadButton) -> Bool {
+    public func pressed(_ button: GamePadButton) -> Bool {
         let wasPressed = previousStates[button]!
         let pressed = buttons.contains(button)
         previousStates[button] = pressed
@@ -94,18 +94,18 @@ public class KeyboardController : Controller {
         return pressed && !wasPressed
     }
     
-    public func pressing(button: GamePadButton) -> Bool {
+    public func pressing(_ button: GamePadButton) -> Bool {
         return buttons.contains(button)
     }
     
-    func keyDown(keyCode: UInt16) {
+    func keyDown(_ keyCode: UInt16) {
         if let button = buttonForKeyCode[keyCode] {
             previousStates[button] = buttons.contains(button)
             buttons.insert(button)
         }
     }
     
-    func keyUp(keyCode: UInt16) {
+    func keyUp(_ keyCode: UInt16) {
         if let button = buttonForKeyCode[keyCode] {
             buttons.remove(button)
             previousStates[button] = false
@@ -120,11 +120,11 @@ public class KeyboardController : Controller {
     
     func removeListenersForKeys() {
         for keyCode in self.buttonForKeyCode.keys {
-            KeyboardInputSource.instance.listeners.removeValueForKey(keyCode)
+            KeyboardInputSource.instance.listeners.removeValue(forKey: keyCode)
         }
     }
     
-    private func key(keyCode: KeyCode) -> UInt16 {
+    private func key(_ keyCode: KeyCode) -> UInt16 {
         return keyCode.rawValue
     }
     
@@ -136,7 +136,7 @@ class KeyState {
     var pushed = false
     var wasPushed = false
     
-    func update(pushed: Bool) {
+    func update(_ pushed: Bool) {
         self.wasPushed = self.pushed
         self.pushed = pushed
     }

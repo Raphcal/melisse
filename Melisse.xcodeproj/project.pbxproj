@@ -589,6 +589,7 @@
 					6429FECF1CE879000052ED4D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = E6H8T594R7;
+						LastSwiftMigration = 0800;
 					};
 					643817D71CE7A194002C68F8 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -908,6 +909,7 @@
 				PRODUCT_NAME = Melisse;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -930,6 +932,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

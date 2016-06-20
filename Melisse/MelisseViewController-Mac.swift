@@ -45,13 +45,13 @@ public class GameView: NSOpenGLView {
     var director: Director?
     var displayLink: CVDisplayLink?
     
-    var previousTime: NSTimeInterval?
+    var previousTime: TimeInterval?
     
     var target: GameView?
     
     func initializeDisplayLink() {
         var swapInt: GLint = 1
-        openGLContext?.setValues(&swapInt, forParameter: NSOpenGLContextParameter.GLCPSwapInterval)
+        openGLContext?.setValues(&swapInt, for: NSOpenGLContextParameter.swapInterval)
         
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
         
@@ -61,27 +61,27 @@ public class GameView: NSOpenGLView {
             return gameViewRef[0].frameForTime(outputTime[0])
             }, &target)
         
-        CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink!, openGLContext!.CGLContextObj, pixelFormat!.CGLPixelFormatObj)
+        CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink!, openGLContext!.cglContextObj!, pixelFormat!.cglPixelFormatObj!)
         
         CVDisplayLinkStart(displayLink!)
     }
     
-    func frameForTime(outputTime: CVTimeStamp) -> CVReturn {
+    func frameForTime(_ outputTime: CVTimeStamp) -> CVReturn {
         openGLContext?.makeCurrentContext()
         
-        CGLLockContext(openGLContext!.CGLContextObj)
+        CGLLockContext(openGLContext!.cglContextObj!)
         
         director?.updateWith(timeSinceLastUpdate(outputTime))
         director?.draw()
         
-        CGLFlushDrawable(openGLContext!.CGLContextObj);
-        CGLUnlockContext(openGLContext!.CGLContextObj);
+        CGLFlushDrawable(openGLContext!.cglContextObj!);
+        CGLUnlockContext(openGLContext!.cglContextObj!);
         
         return kCVReturnSuccess
     }
     
-    func timeSinceLastUpdate(outputTime: CVTimeStamp) -> NSTimeInterval {
-        let now = NSTimeInterval(outputTime.videoTime) / NSTimeInterval(outputTime.videoTimeScale)
+    func timeSinceLastUpdate(_ outputTime: CVTimeStamp) -> TimeInterval {
+        let now = TimeInterval(outputTime.videoTime) / TimeInterval(outputTime.videoTimeScale)
         let before = self.previousTime
         
         self.previousTime = now
