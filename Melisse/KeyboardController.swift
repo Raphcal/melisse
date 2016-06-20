@@ -55,9 +55,9 @@ public class KeyboardController : Controller {
     var previousStates = [GamePadButton:Bool]()
     
     public var direction: GLfloat {
-        if pressing(.Right) {
+        if pressing(.right) {
             return 1
-        } else if pressing(.Left) {
+        } else if pressing(.left) {
             return -1
         } else {
             return 0
@@ -75,14 +75,14 @@ public class KeyboardController : Controller {
     
     public convenience init() {
         self.init(buttons: [
-            .Up: .Up,
-            .Down: .Down,
-            .Left: .Left,
-            .Right: .Right,
-            .Space: .Jump,
-            .Enter: .Start,
-            .L: .L,
-            .R: .R,
+            .up: .up,
+            .down: .down,
+            .left: .left,
+            .right: .right,
+            .space: .jump,
+            .enter: .start,
+            .l: .l,
+            .r: .r,
         ])
     }
     
