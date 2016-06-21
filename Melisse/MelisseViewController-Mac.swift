@@ -56,8 +56,8 @@ public class GameView: NSOpenGLView {
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
         
         target = self
-        CVDisplayLinkSetOutputCallback(displayLink!, { (displayLink: CVDisplayLink, now: UnsafePointer<CVTimeStamp>, outputTime: UnsafePointer<CVTimeStamp>, flagsIn: CVOptionFlags, flagsOut: UnsafeMutablePointer<CVOptionFlags>, displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn in
-            let gameViewRef = UnsafeMutablePointer<GameView>(displayLinkContext)
+        CVDisplayLinkSetOutputCallback(displayLink!, { (displayLink, now, outputTime, flagsIn, flagsOut, displayLinkContext) -> CVReturn in
+            let gameViewRef = UnsafeMutablePointer<GameView>(displayLinkContext!)
             return gameViewRef[0].frameForTime(outputTime[0])
             }, &target)
         
