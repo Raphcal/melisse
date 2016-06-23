@@ -13,10 +13,15 @@ public protocol MelisseViewControllerType {
     var director: Director { get }
     var viewSize: Size<GLfloat> { get }
     
+    var updater: Director { get set }
+    
     func createGLContext()
     func directorDidStart()
     
     func initialScene() -> Scene
+    
+    func pause()
+    func resume()
     
 }
 
@@ -38,6 +43,14 @@ extension MelisseViewController {
         director.startWith(initialScene())
         
         directorDidStart()
+    }
+    
+    public func pause() {
+        updater = Director()
+    }
+    
+    public func resume() {
+        updater = director
     }
     
 }

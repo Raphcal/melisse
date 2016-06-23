@@ -14,6 +14,7 @@ public class MelisseViewController : NSViewController, MelisseViewControllerType
     
     @IBOutlet weak public var gameView: GameView?
     public let director = Director()
+    public var updater = Director()
     
     public var viewSize: Size<GLfloat> {
         get {
@@ -27,10 +28,11 @@ public class MelisseViewController : NSViewController, MelisseViewControllerType
         } else {
             NSLog("Erreur de chargement du contexte OpenGL")
         }
-        gameView!.director = director
+        gameView!.controller = self
     }
     
     public func directorDidStart() {
+        updater = director
         gameView!.initializeDisplayLink()
     }
     
@@ -42,7 +44,7 @@ public class MelisseViewController : NSViewController, MelisseViewControllerType
 
 public class GameView: NSOpenGLView {
     
-    var director: Director?
+    var controller: MelisseViewControllerType?
     var displayLink: CVDisplayLink?
     
     var previousTime: TimeInterval?
@@ -71,8 +73,8 @@ public class GameView: NSOpenGLView {
         
         CGLLockContext(openGLContext!.cglContextObj!)
         
-        director?.updateWith(timeSinceLastUpdate(outputTime))
-        director?.draw()
+        controller?.updater.updateWith(timeSinceLastUpdate(outputTime))
+        controller?.director.draw()
         
         CGLFlushDrawable(openGLContext!.cglContextObj!);
         CGLUnlockContext(openGLContext!.cglContextObj!);

@@ -12,6 +12,7 @@ import GLKit
 public class MelisseViewController : GLKViewController, MelisseViewControllerType {
     
     public let director = Director()
+    public var updater = Director()
     
     public var viewSize: Size<GLfloat> {
         get {
@@ -35,7 +36,7 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
     }
     
     public func directorDidStart() {
-        // Pas d'action.
+        updater = director
     }
     
     public func initialScene() -> Scene {
@@ -44,7 +45,7 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
     
     public func update() {
         TouchController.instance.updateWith(touches)
-        director.updateWith(self.timeSinceLastUpdate)
+        updater.updateWith(self.timeSinceLastUpdate)
     }
     
     override public func glkView(_ view: GLKView, drawIn rect: CGRect) {
