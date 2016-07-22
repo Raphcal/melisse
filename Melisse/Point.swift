@@ -41,7 +41,7 @@ public struct Point<Coordinate where Coordinate : Numeric> : Equatable {
     
 }
 
-extension Point where Coordinate : FloatingPoint {
+public extension Point where Coordinate : FloatingPoint {
     
     func distanceTo(_ other: Point<Coordinate>) -> Coordinate {
         return Coordinate.distance(x, y1: y, x2: other.x, y2: other.y)
