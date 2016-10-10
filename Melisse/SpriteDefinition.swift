@@ -96,7 +96,7 @@ public struct SpriteDefinition : Equatable {
     }
     
     public static func definitionsFrom(_ resource: String, extension ext: String = defaultExtension, types: [SpriteType] = [], animationNames: [AnimationName] = []) -> [SpriteDefinition]? {
-        if let url = Bundle.main().urlForResource(resource, withExtension: ext), let inputStream = InputStream(url: url) {
+        if let url = Bundle.main.url(forResource: resource, withExtension: ext), let inputStream = InputStream(url: url) {
             inputStream.open()
             let definitions = definitionsFrom(inputStream, types: types, animationNames: animationNames)
             inputStream.close()

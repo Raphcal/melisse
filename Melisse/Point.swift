@@ -8,7 +8,7 @@
 
 import GLKit
 
-public struct Point<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Point<Coordinate> : Equatable where Coordinate : Numeric {
     
     public var x: Coordinate
     public var y: Coordinate
@@ -79,7 +79,7 @@ public func -<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> 
     return Point(x: left.x - right.x, y: left.y - right.y)
 }
 
-public prefix func -<Coordinate where Coordinate: Signed>(point: Point<Coordinate>) -> Point<Coordinate> {
+public prefix func -<Coordinate>(point: Point<Coordinate>) -> Point<Coordinate> where Coordinate: Signed {
     return Point(x: -point.x, y: -point.y)
 }
 

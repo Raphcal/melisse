@@ -124,7 +124,7 @@ public extension ResizableRectangle {
     
 }
 
-public struct Rectangle<Coordinate where Coordinate : Numeric> : MovableRectangle, ResizableRectangle, Equatable {
+public struct Rectangle<Coordinate> : MovableRectangle, ResizableRectangle, Equatable where Coordinate : Numeric {
     
     public var center: Point<Coordinate>
     public var size: Size<Coordinate>

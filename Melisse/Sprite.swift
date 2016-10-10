@@ -49,8 +49,8 @@ public class Sprite : Equatable {
         frame = Rectangle()
         factory = SpriteFactory()
         reference = -1
-        vertexSurface = Surface(memory: UnsafeMutablePointer(allocatingCapacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
-        texCoordSurface = Surface(memory: UnsafeMutablePointer(allocatingCapacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
+        vertexSurface = Surface(memory: UnsafeMutablePointer.allocate(capacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
+        texCoordSurface = Surface(memory: UnsafeMutablePointer.allocate(capacity: 0), coordinates: 0, vertexesByQuad: vertexesByQuad)
     }
     
     public init(definition: SpriteDefinition = SpriteDefinition(), reference: Int, factory: SpriteFactory, info: SpriteInfo? = nil) {
@@ -100,7 +100,7 @@ public class Sprite : Equatable {
     public func destroy() {
         self.removed = true
         
-        if definition.animations[DefaultAnimationName.disappear.name]?.frames.count > 0 {
+        if let count = definition.animations[DefaultAnimationName.disappear.name]?.frames.count, count > 0 {
             self.motion.unload(self)
             self.motion = NoMotion()
             self.type = DefaultSpriteType.decoration
@@ -130,7 +130,7 @@ public class Sprite : Equatable {
         }
     }
     
-    public func setAnimation(_ animationName: AnimationName, onEnd: () -> Void) {
+    public func setAnimation(_ animationName: AnimationName, onEnd: @escaping () -> Void) {
         if let nextAnimation = definition.animations[animationName.name]?.toAnimation(onEnd) {
             self.animation = animation.transitionTo(nextAnimation)
             self.currentAnimation = animationName

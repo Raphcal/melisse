@@ -34,7 +34,7 @@ public protocol Audio {
     
     func play(streamFrom URL: URL)
     
-    func playOnce(streamFrom URL: URL, completionBlock: () -> Void)
+    func playOnce(streamFrom URL: URL, completionBlock: @escaping () -> Void)
     
     func stopStream()
     

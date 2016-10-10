@@ -78,7 +78,7 @@ public struct AnimationDefinition : Equatable {
         }
     }
     
-    func toAnimation(_ onEnd: () -> Void) -> Animation {
+    func toAnimation(_ onEnd: @escaping () -> Void) -> Animation {
         return PlayOnceAnimation(definition: self, onEnd: onEnd)
     }
     

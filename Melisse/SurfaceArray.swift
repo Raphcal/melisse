@@ -8,7 +8,7 @@
 
 import GLKit
 
-public class SurfaceArray<Element where Element: Numeric> {
+public class SurfaceArray<Element> where Element: Numeric {
     
     public let memory: UnsafeMutablePointer<Element>
     public let capacity: Int
@@ -32,7 +32,7 @@ public class SurfaceArray<Element where Element: Numeric> {
         
         self.capacity = total
         self.coordinates = coordinates
-        self.memory = UnsafeMutablePointer(allocatingCapacity: total)
+        self.memory = UnsafeMutablePointer.allocate(capacity: total)
         self.vertexesByQuad = vertexesByQuad
     }
     
@@ -41,11 +41,17 @@ public class SurfaceArray<Element where Element: Numeric> {
     }
     
     public func clear() {
-        memset(UnsafeMutablePointer<Int8>(memory), 0, capacity * sizeof(Element))
+        let size = capacity * MemoryLayout<Element>.size
+        memory.withMemoryRebound(to: Int8.self, capacity: size) { (pointer) -> Void in
+            memset(pointer, 0, size)
+        }
     }
     
     public func clearFrom(_ index: Int, count: Int) {
-        memset(UnsafeMutablePointer<Int8>(memory.advanced(by: index * coordinates)), 0, count * coordinates * sizeof(GLfloat))
+        let size = count * coordinates * MemoryLayout<Element>.size
+        memory.advanced(by: index * coordinates).withMemoryRebound(to: Int8.self, capacity: size) { (pointer) -> Void in
+            memset(pointer, 0, size)
+        }
     }
     
     public func clearQuadAt(_ index: Int) {

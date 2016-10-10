@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Size<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Size<Coordinate> : Equatable where Coordinate : Numeric {
     
     public var width: Coordinate
     public var height: Coordinate

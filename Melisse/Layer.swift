@@ -35,7 +35,7 @@ public struct Layer : Equatable {
         
         var length = 0
         for tile in tiles {
-            if tile > -1 {
+            if let tile = tile, tile > -1 {
                 length += 1
             }
         }

@@ -68,7 +68,7 @@ public struct Map : Equatable {
     }
     
     public init?(resource : String?) {
-        if let resource = resource, let url = Bundle.main().urlForResource(resource, withExtension: Map.fileExtension), let inputStream = InputStream(url: url) {
+        if let resource = resource, let url = Bundle.main.url(forResource: resource, withExtension: Map.fileExtension), let inputStream = InputStream(url: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()

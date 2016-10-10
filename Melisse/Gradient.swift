@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Gradient<Component where Component : Numeric> : Equatable {
+public struct Gradient<Component> : Equatable where Component : Numeric {
     
     public var topLeft: Color<Component>
     public var topRight: Color<Component>

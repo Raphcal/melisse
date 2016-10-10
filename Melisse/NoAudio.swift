@@ -22,7 +22,7 @@ public struct NoAudio: Audio {
         // Pas d'effet.
     }
     
-    public func playOnce(streamFrom URL: Foundation.URL, completionBlock: () -> Void) {
+    public func playOnce(streamFrom URL: Foundation.URL, completionBlock: @escaping () -> Void) {
         completionBlock()
     }
     

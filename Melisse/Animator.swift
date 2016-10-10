@@ -12,13 +12,13 @@ public class Animator {
     
     public let durations: [TimeInterval]
     public let values: [String : [GLfloat]]
-    public let animations: (values: [String : GLfloat]) -> Void
+    public let animations: (_ values: [String : GLfloat]) -> Void
     public var onKeyFrame: [(() -> Void)?]
     
     var time: TimeInterval = 0
     var keyFrame = 0
     
-    public init(durations: [TimeInterval], values: [String : [GLfloat]], animations: (values: [String : GLfloat]) -> Void) {
+    public init(durations: [TimeInterval], values: [String : [GLfloat]], animations: @escaping (_ values: [String : GLfloat]) -> Void) {
         self.durations = durations
         self.values = values
         self.animations = animations
@@ -39,13 +39,13 @@ public class Animator {
             for (key, value) in self.values {
                 values[key] = valueFor(progress, from: value[keyFrame], to: value[keyFrame + 1])
             }
-            animations(values: values)
+            animations(values)
         } else {
             var values = [String : GLfloat]()
             for (key, value) in self.values {
                 values[key] = value[keyFrame + 1]
             }
-            animations(values: values)
+            animations(values)
             
             keyFrame += 1
             time = 0

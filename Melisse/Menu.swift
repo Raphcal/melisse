@@ -8,7 +8,7 @@
 
 import GLKit
 
-public typealias MenuItemListener = (item: MenuItem) -> Void
+public typealias MenuItemListener = (_ item: MenuItem) -> Void
 
 public protocol MenuItem {
     
@@ -29,7 +29,7 @@ public struct TextMenuItem : MenuItem {
     let padding: GLfloat = 4
     
     public init(text: String, font: Font, factory: SpriteFactory) {
-        self.text = Text(factory: factory, font: font, text: text)
+        self.text = Text(text: text, font: font, factory: factory)
     }
     
 }
@@ -124,7 +124,7 @@ public class Menu {
         } else if Input.instance.pressed(.up) {
             selectItemAt(selection - 1)
         } else if Input.instance.pressed(.start) || Input.instance.pressed(.jump) {
-            onSelection?(item: selectedItem)
+            onSelection?(selectedItem)
         }
     }
     

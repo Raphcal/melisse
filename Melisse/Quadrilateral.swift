@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Quadrilateral<Coordinate where Coordinate : Numeric> : Equatable {
+public struct Quadrilateral<Coordinate> : Equatable where Coordinate : Numeric {
     
     public var topLeft: Point<Coordinate>
     public var topRight: Point<Coordinate>
@@ -58,13 +58,13 @@ public struct Quadrilateral<Coordinate where Coordinate : Numeric> : Equatable {
     
 }
 
-public func ==<Coordinate where Coordinate : Numeric>(left: Quadrilateral<Coordinate>, right: Quadrilateral<Coordinate>) -> Bool {
+public func ==<Coordinate>(left: Quadrilateral<Coordinate>, right: Quadrilateral<Coordinate>) -> Bool where Coordinate : Numeric {
     return left.topLeft == right.topLeft
         && left.topRight == right.topRight
         && left.bottomLeft == right.bottomLeft
         && left.bottomRight == right.bottomRight
 }
 
-public func +<Coordinate where Coordinate : Numeric>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> {
+public func +<Coordinate>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> where Coordinate : Numeric {
     return Quadrilateral(topLeft: left.topLeft + right, topRight: left.topRight + right, bottomLeft: left.bottomLeft + right, bottomRight: left.bottomRight + right)
 }

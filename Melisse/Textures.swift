@@ -8,7 +8,7 @@
 
 import GLKit
 
-enum TextureLoadError : ErrorProtocol {
+enum TextureLoadError : Error {
     case urlNotFound
 }
 
@@ -17,11 +17,11 @@ public func textureForResource(_ name: String, extension ext: String, in folder:
     
     if let url = URLForResource(name, extension: ext, in: folder) {
         #if os(iOS)
-            let premultiplication = false
+            let premultiplication: NSNumber = false
         #else
-            let premultiplication = true
+            let premultiplication: NSNumber = true
         #endif
-        let texture = try GLKTextureLoader.texture(withContentsOf: url, options: [GLKTextureLoaderOriginBottomLeft: false, GLKTextureLoaderApplyPremultiplication: premultiplication])
+        let texture = try GLKTextureLoader.texture(withContentsOf: url, options: [GLKTextureLoaderOriginBottomLeft: false as NSNumber, GLKTextureLoaderApplyPremultiplication: premultiplication])
         clearGLError()
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
         glTexParameteri(texture.target, GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
@@ -32,10 +32,10 @@ public func textureForResource(_ name: String, extension ext: String, in folder:
 }
 
 public func URLForResource(_ name: String, extension ext: String, in folder: String? = nil) -> URL? {
-    if let folder = folder where FileManager.default().isReadableFile(atPath: folder + "/" + name + "." + ext) {
+    if let folder = folder, FileManager.default.isReadableFile(atPath: folder + "/" + name + "." + ext) {
         return URL(fileURLWithPath: folder + "/" + name + "." + ext)
     } else {
-        return Bundle.main().urlForResource(name, withExtension: ext)
+        return Bundle.main.url(forResource: name, withExtension: ext)
     }
 }
 

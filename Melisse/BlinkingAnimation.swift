@@ -13,7 +13,7 @@ public struct BlinkingAnimation : Animation {
     static let Pair = 2
     
     public var animation: Animation
-    public var onEnd: ((animation: Animation) -> Void)?
+    public var onEnd: ((_ animation: Animation) -> Void)?
     public var duration: TimeInterval
     
     public var time: TimeInterval = 0
@@ -46,7 +46,7 @@ public struct BlinkingAnimation : Animation {
         }
     }
     
-    public init(animation: Animation, blinkRate: TimeInterval = 0.2, duration: TimeInterval = 0, onEnd:((animation: Animation) -> Void)? = nil) {
+    public init(animation: Animation, blinkRate: TimeInterval = 0.2, duration: TimeInterval = 0, onEnd:((_ animation: Animation) -> Void)? = nil) {
         self.animation = animation
         self.onEnd = onEnd
         self.duration = duration
@@ -58,7 +58,7 @@ public struct BlinkingAnimation : Animation {
         visible = (Int(time / blinkRate) % BlinkingAnimation.Pair) == 0
         
         if time >= duration, let onEnd = self.onEnd {
-            onEnd(animation: animation)
+            onEnd(animation)
         } else {
             animation.updateWith(timeSinceLastUpdate)
         }

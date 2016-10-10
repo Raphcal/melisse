@@ -21,7 +21,7 @@ public class Surface<Element : Numeric> {
     }
     
     public func clear() {
-        memset(memory, 0, vertexesByQuad * coordinates * sizeof(Element))
+        memset(memory, 0, vertexesByQuad * coordinates * MemoryLayout<Element>.size)
     }
     
     public func setQuadWith(left: Element, top: Element, width: Element, height: Element) {

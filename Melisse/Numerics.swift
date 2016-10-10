@@ -9,20 +9,20 @@
 import GLKit
 
 public protocol Numeric {
-    func +(lhs: Self, rhs: Self) -> Self
-    func -(lhs: Self, rhs: Self) -> Self
-    func *(lhs: Self, rhs: Self) -> Self
-    func /(lhs: Self, rhs: Self) -> Self
+    static func +(lhs: Self, rhs: Self) -> Self
+    static func -(lhs: Self, rhs: Self) -> Self
+    static func *(lhs: Self, rhs: Self) -> Self
+    static func /(lhs: Self, rhs: Self) -> Self
     
-    func +=(lhs: inout Self, rhs: Self)
-    func -=(lhs: inout Self, rhs: Self)
+    static func +=(lhs: inout Self, rhs: Self)
+    static func -=(lhs: inout Self, rhs: Self)
     
-    func >(lhs: Self, rhs: Self) -> Bool
-    func >=(lhs: Self, rhs: Self) -> Bool
-    func <(lhs: Self, rhs: Self) -> Bool
-    func <=(lhs: Self, rhs: Self) -> Bool
-    func ==(lhs: Self, rhs: Self) -> Bool
-    func !=(lhs: Self, rhs: Self) -> Bool
+    static func >(lhs: Self, rhs: Self) -> Bool
+    static func >=(lhs: Self, rhs: Self) -> Bool
+    static func <(lhs: Self, rhs: Self) -> Bool
+    static func <=(lhs: Self, rhs: Self) -> Bool
+    static func ==(lhs: Self, rhs: Self) -> Bool
+    static func !=(lhs: Self, rhs: Self) -> Bool
     
     var half: Self { get }
     var absolute: Self { get }
@@ -37,12 +37,12 @@ public protocol Numeric {
 }
 
 public protocol Signed {
-    prefix func -(lhs: Self) -> Self
+    prefix static func -(lhs: Self) -> Self
 }
 
-public protocol FloatingPoint {
-    func *(lhs: Self, rhs: GLfloat) -> Self
-    func /(lhs: Self, rhs: GLfloat) -> Self
+public protocol FloatingPoint: ExpressibleByFloatLiteral {
+    static func *(lhs: Self, rhs: GLfloat) -> Self
+    static func /(lhs: Self, rhs: GLfloat) -> Self
     
     var squareRoot: Self { get }
     var cosinus: Self { get }
@@ -52,7 +52,7 @@ public protocol FloatingPoint {
     static func distance(_ x1: Self, y1: Self, x2: Self, y2: Self) -> Self
 }
 
-public protocol Integer {
+public protocol Integer: ExpressibleByIntegerLiteral {
 }
 
 extension GLfloat : Numeric, Signed, FloatingPoint {

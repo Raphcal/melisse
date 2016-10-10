@@ -51,7 +51,7 @@ public class ImagePalette : Palette {
     }
     
     convenience public init?(resource : String) {
-        if let url = Bundle.main().urlForResource(resource, withExtension: ImagePalette.fileExtension), let inputStream = InputStream(url: url) {
+        if let url = Bundle.main.url(forResource: resource, withExtension: ImagePalette.fileExtension), let inputStream = InputStream(url: url) {
             inputStream.open()
             self.init(inputStream: inputStream)
             inputStream.close()

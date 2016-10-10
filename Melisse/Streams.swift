@@ -22,7 +22,7 @@ public struct Streams {
         var inputStreams : [(url: URL, inputStream: InputStream)] = []
         
         for (name, ext) in resources {
-            if let url = Bundle.main().urlForResource(name, withExtension: ext), let inputStream = InputStream(url: url) {
+            if let url = Bundle.main.url(forResource: name, withExtension: ext), let inputStream = InputStream(url: url) {
                 inputStreams.append(url: url, inputStream: inputStream)
             } else {
                 return nil
@@ -33,7 +33,7 @@ public struct Streams {
     }
     
     public static func readByte(_ inputStream: InputStream) -> UInt8 {
-        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: byteSize)
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: byteSize)
         let read = inputStream.read(buffer, maxLength: byteSize)
         
         var result : UInt8 = 0
@@ -47,9 +47,10 @@ public struct Streams {
         return result
     }
     
-    public static func writeBytes<T>(_ buffer: UnsafeMutablePointer<T>, count: Int, outputStream: NSOutputStream) {
-        let byteBuffer = UnsafeMutablePointer<UInt8>(buffer)
-        outputStream.write(byteBuffer, maxLength: count)
+    public static func writeBytes<T>(_ buffer: UnsafeMutablePointer<T>, count: Int, outputStream: OutputStream) {
+        buffer.withMemoryRebound(to: UInt8.self, capacity: count) { (byteBuffer) -> Void in
+            outputStream.write(byteBuffer, maxLength: count)
+        }
     }
     
     public static func readBoolean(_ inputStream : InputStream) -> Bool {
@@ -57,14 +58,15 @@ public struct Streams {
     }
     
     public static func readInt(_ inputStream : InputStream) -> Int {
-        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: integerSize)
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
-        var result = 0
+        let result: Int
         
         if read == integerSize {
-            let int32Buffer = UnsafeMutablePointer<Int32>(buffer)
-            result = Int(int32Buffer[0])
+            result = buffer.withMemoryRebound(to: Int32.self, capacity: 1) { Int($0[0]) }
+        } else {
+            result = 0
         }
         
         buffer.deinitialize()
@@ -72,16 +74,16 @@ public struct Streams {
         return result
     }
     
-    public static func writeInt(_ int: Int, outputStream: NSOutputStream) {
-        let buffer = UnsafeMutablePointer<Int32>(allocatingCapacity: 1)
+    public static func writeInt(_ int: Int, outputStream: OutputStream) {
+        let buffer = UnsafeMutablePointer<Int32>.allocate(capacity: 1)
         buffer[0] = Int32(int)
         
         writeBytes(buffer, count: integerSize, outputStream: outputStream)
         buffer.deinitialize()
     }
     
-    public static func writeCharacter(_ character: Character, outputStream: NSOutputStream) {
-        let buffer = UnsafeMutablePointer<Character>(allocatingCapacity: 1)
+    public static func writeCharacter(_ character: Character, outputStream: OutputStream) {
+        let buffer = UnsafeMutablePointer<Character>.allocate(capacity: 1)
         buffer[0] = character
         
         writeBytes(buffer, count: characterSize, outputStream: outputStream)
@@ -89,14 +91,15 @@ public struct Streams {
     }
     
     public static func readFloat(_ inputStream : InputStream) -> Float {
-        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: integerSize)
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: integerSize)
         let read = inputStream.read(buffer, maxLength: integerSize)
         
-        var result : Float = 0
+        let result: Float
         
         if read == integerSize {
-            let floatBuffer = UnsafeMutablePointer<Float32>(buffer)
-            result = floatBuffer[0]
+            result = buffer.withMemoryRebound(to: Float32.self, capacity: 1) { $0[0] }
+        } else {
+            result = 0
         }
         
         buffer.deinitialize()
@@ -105,14 +108,15 @@ public struct Streams {
     }
     
     public static func readDouble(_ inputStream : InputStream) -> Double {
-        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: longSize)
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: longSize)
         let read = inputStream.read(buffer, maxLength: longSize)
         
-        var result : Double = 0
+        let result: Double
         
         if read == longSize {
-            let doubleBuffer = UnsafeMutablePointer<Float64>(buffer)
-            result = doubleBuffer[0]
+            result = buffer.withMemoryRebound(to: Float64.self, capacity: 1) { $0[0] }
+        } else {
+            result = 0
         }
         
         buffer.deinitialize()
@@ -159,7 +163,7 @@ public struct Streams {
             return ""
         }
         
-        let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: length)
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
         let read = inputStream.read(buffer, maxLength: length)
         
         let string : String
@@ -199,28 +203,28 @@ public struct Streams {
     }
     
     public static func readFloatFromByteArray(_ bytes: [UInt8], atIndex start: Int) -> (float: Float, readCount: Int) {
-        let pointer = UnsafeMutablePointer<UInt8>(allocatingCapacity: 4)
+        let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
         pointer[2] = bytes[start + 2]
         pointer[3] = bytes[start + 3]
         
-        let floatPointer = UnsafeMutablePointer<Float32>(pointer)
-        let float = Float(floatPointer[0])
+        let float = pointer.withMemoryRebound(to: Float32.self, capacity: 1) { $0[0] }
         pointer.deinitialize()
         
         return (float: float, readCount: 4)
     }
     
     public static func readStringFromByteArray(_ bytes: [UInt8], atIndex start: Int) -> (string: String, readCount: Int) {
-        let pointer = UnsafeMutablePointer<UInt8>(allocatingCapacity: 4)
+        let pointer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4)
         pointer[0] = bytes[start + 0]
         pointer[1] = bytes[start + 1]
         pointer[2] = bytes[start + 2]
         pointer[3] = bytes[start + 3]
         
-        let intPointer = UnsafeMutablePointer<Int32>(pointer)
-        let length = Int(intPointer[0]) * Streams.characterSize
+        let length = pointer.withMemoryRebound(to: Int32.self, capacity: 1) {
+            Int($0[0]) * Streams.characterSize
+        }
         pointer.deinitialize()
         
         var read = start + 4
@@ -228,7 +232,7 @@ public struct Streams {
         let string : String
         
         if length > 0 {
-            let buffer = UnsafeMutablePointer<UInt8>(allocatingCapacity: length)
+            let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
             for i in 0 ..< length {
                 buffer[i] = bytes[read + i]
             }

@@ -69,7 +69,7 @@ public class Text {
     }
     
     public static func display(_ text: String, font: Font, factory: SpriteFactory, at point: Point<GLfloat>) {
-        let _ = Text(factory: factory, font: font, text: text, point: point)
+        let _ = Text(text: text, font: font, factory: factory, point: point)
     }
     
     public init(text: String = "", font: Font = NoFont(), factory: SpriteFactory = SpriteFactory(), point: Point<GLfloat> = Point()) {
