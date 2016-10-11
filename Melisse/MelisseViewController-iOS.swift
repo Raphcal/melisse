@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-public class MelisseViewController : GLKViewController, MelisseViewControllerType {
+open class MelisseViewController : GLKViewController, MelisseViewControllerType {
     
     public let director = Director()
     public var updater = Director()
@@ -39,7 +39,7 @@ public class MelisseViewController : GLKViewController, MelisseViewControllerTyp
         updater = director
     }
     
-    public func initialScene() -> Scene {
+    open func initialScene() -> Scene {
         return EmptyScene()
     }
     

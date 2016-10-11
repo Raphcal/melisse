@@ -27,7 +27,7 @@ public protocol MelisseViewControllerType {
 
 extension MelisseViewController {
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         createGLContext()

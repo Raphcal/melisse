@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 import OpenGL.GL
 
-public class MelisseViewController : NSViewController, MelisseViewControllerType {
+open class MelisseViewController : NSViewController, MelisseViewControllerType {
     
     @IBOutlet weak public var gameView: GameView?
     public let director = Director()
@@ -36,7 +36,7 @@ public class MelisseViewController : NSViewController, MelisseViewControllerType
         gameView!.initializeDisplayLink()
     }
     
-    public func initialScene() -> Scene {
+    open func initialScene() -> Scene {
         return EmptyScene()
     }
     
