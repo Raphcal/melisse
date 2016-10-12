@@ -31,6 +31,14 @@ public struct Size<Coordinate> : Equatable where Coordinate : Numeric {
     
 }
 
+public extension Size where Coordinate : FloatingPoint {
+    
+    func floored() -> Size<Coordinate> {
+        return Size(width: width.floored, height: height.floored)
+    }
+    
+}
+
 public func ==<Coordinate>(left: Size<Coordinate>, right: Size<Coordinate>) -> Bool {
     return left.width == right.width && left.height == right.height
 }

@@ -177,4 +177,8 @@ public extension Rectangular where Coordinate : FloatingPoint {
         return Quadrilateral<Coordinate>(vertices: vertices)
     }
     
+    public func floored() -> Rectangle<Coordinate> {
+        return Rectangle(center: center.floored(), size: size.floored())
+    }
+    
 }

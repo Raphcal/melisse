@@ -51,6 +51,10 @@ public extension Point where Coordinate : FloatingPoint {
         return Coordinate.atan2(y - other.y, x - other.x)
     }
     
+    func floored() -> Point<Coordinate> {
+        return Point(x: x.floored, y: y.floored)
+    }
+    
 }
 
 // MARK: - Opérations entre instances de Point

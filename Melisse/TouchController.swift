@@ -17,7 +17,7 @@ public class TouchController : Controller {
     let jumpButtonFrame = 0
     
     public var direction: GLfloat = 0
-    public var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
+    public var touches: [UnsafeRawPointer : Point<GLfloat>] = [:]
     var buttons = [GamePadButton : Button]()
     
     private var touchCount = 0
@@ -43,7 +43,7 @@ public class TouchController : Controller {
         return touchCount > previousTouchCount
     }
     
-    public func updateWith(_ touches: [UnsafePointer<Void> : Point<GLfloat>]) {
+    public func updateWith(_ touches: [UnsafeRawPointer : Point<GLfloat>]) {
         self.touches = touches
         self.previousTouchCount = touchCount
         self.touchCount = touches.count
@@ -62,7 +62,7 @@ public class TouchController : Controller {
     }
     
     public func createButtonsWith(_ factory: SpriteFactory, definition: Int) {
-        let zoom = View.instance.width / GLfloat(UIScreen.main().bounds.width)
+        let zoom = View.instance.width / GLfloat(UIScreen.main.bounds.width)
         let shoulderButtonSize = Size<GLfloat>(width: 48, height: 32)
         let padY = View.instance.height - 48
         
@@ -144,7 +144,7 @@ class Button {
         sprite?.destroy()
     }
     
-    func updateWith(_ touches: [UnsafePointer<Void> : Point<GLfloat>]) {
+    func updateWith(_ touches: [UnsafeRawPointer : Point<GLfloat>]) {
         self.previousState = state
         self.state = false
         

@@ -12,7 +12,7 @@ import GLKit
 public class TouchSensitiveZone {
     
     public var frame: Rectangle<GLfloat>
-    public var selection: ((sender: TouchSensitiveZone) -> Void)?
+    public var selection: ((_ sender: TouchSensitiveZone) -> Void)?
     
     var hitbox = StaticHitbox()
     
@@ -35,7 +35,7 @@ public class TouchSensitiveZone {
         self.frame = frame
     }
     
-    public func update(with touches: [UnsafePointer<Void> : Point<GLfloat>]) {
+    public func update(with touches: [UnsafeRawPointer : Point<GLfloat>]) {
         // TODO: Implémenter le zoom ?
         let zoom: GLfloat = 1
         for touch in touches.values {

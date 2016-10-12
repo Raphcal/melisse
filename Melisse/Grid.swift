@@ -60,8 +60,10 @@ public class Grid {
         
         for index in from ..< to {
             let layer = map.layers[index]
+            let layerTranslation = translation * layer.scrollRate
             
-            Draws.translateTo(translation * layer.scrollRate)
+            // Utiliser floored() pour avoir un affichage pixel-perfect.
+            Draws.translateTo(layerTranslation)
             Draws.drawWith(vertexPointers[index].memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointers[index].count)
         }
     }

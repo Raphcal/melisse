@@ -16,13 +16,13 @@ open class MelisseViewController : GLKViewController, MelisseViewControllerType 
     
     public var viewSize: Size<GLfloat> {
         get {
-            let screenBounds = UIScreen.main().bounds
+            let screenBounds = UIScreen.main.bounds
             return Size(width: GLfloat(screenBounds.width), height: GLfloat(screenBounds.height))
         }
     }
     
     var context: EAGLContext?
-    var touches: [UnsafePointer<Void> : Point<GLfloat>] = [:]
+    var touches: [UnsafeRawPointer : Point<GLfloat>] = [:]
     
     public func createGLContext() {
         self.context = EAGLContext(api: .openGLES1)
@@ -48,38 +48,38 @@ open class MelisseViewController : GLKViewController, MelisseViewControllerType 
         updater.updateWith(self.timeSinceLastUpdate)
     }
     
-    override public func glkView(_ view: GLKView, drawIn rect: CGRect) {
+    override open func glkView(_ view: GLKView, drawIn rect: CGRect) {
         director.draw()
     }
     
     // MARK: - Gestion du multi-touch
     
-    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         setPointsFor(touches)
     }
     
-    override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         removePointsFor(touches)
     }
     
-    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         removePointsFor(touches)
     }
     
     private func setPointsFor(_ touches: Set<UITouch>) {
         for touch in touches {
             let location = touch.location(in: self.view)
-            self.touches[unsafeAddress(of: touch)] = Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(location.y))
+            self.touches[Unmanaged.passUnretained(touch).toOpaque()] = Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(location.y))
         }
     }
     
     private func removePointsFor(_ touches: Set<UITouch>) {
         for touch in touches {
-            self.touches.removeValue(forKey: unsafeAddress(of: touch))
+            self.touches.removeValue(forKey: Unmanaged.passUnretained(touch).toOpaque())
         }
     }
     

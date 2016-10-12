@@ -47,6 +47,7 @@ public protocol FloatingPoint: ExpressibleByFloatLiteral {
     var squareRoot: Self { get }
     var cosinus: Self { get }
     var sinus: Self { get }
+    var floored: Self { get }
     
     static func atan2(_ lhs: Self, _ rhs: Self) -> Self
     static func distance(_ x1: Self, y1: Self, x2: Self, y2: Self) -> Self
@@ -75,6 +76,10 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
     
     public var sinus: GLfloat {
         return sin(self)
+    }
+    
+    public var floored: GLfloat {
+        return floor(self)
     }
     
     public static func atan2(_ lhs: GLfloat, _ rhs: GLfloat) -> GLfloat {
