@@ -12,7 +12,23 @@ enum TextureLoadError : Error {
     case urlNotFound
 }
 
-public func textureForResource(_ name: String, extension ext: String, in folder: String? = nil) throws -> GLKTextureInfo {
+public func textureAt(path: String) throws -> GLKTextureInfo {
+    clearGLError()
+    
+    #if os(iOS)
+        let premultiplication: NSNumber = false
+    #else
+        let premultiplication: NSNumber = true
+    #endif
+    
+    let texture = try GLKTextureLoader.texture(withContentsOfFile: path, options:[GLKTextureLoaderOriginBottomLeft: false as NSNumber, GLKTextureLoaderApplyPremultiplication: premultiplication])
+    clearGLError()
+    glTexParameteri(texture.target, GLenum(GL_TEXTURE_MIN_FILTER), GL_NEAREST)
+    glTexParameteri(texture.target, GLenum(GL_TEXTURE_MAG_FILTER), GL_NEAREST)
+    return texture
+}
+
+public func textureFor(resource name: String, extension ext: String, in folder: String? = nil) throws -> GLKTextureInfo {
     clearGLError()
     
     if let url = URLForResource(name, extension: ext, in: folder) {

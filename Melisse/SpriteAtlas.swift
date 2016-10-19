@@ -30,7 +30,7 @@ public class SpriteAtlas {
     
     public init?(name: String, in folder: String? = nil, types: [SpriteType], animationNames: [AnimationName]) {
         do {
-            texture = try textureForResource(name, extension: "png", in: folder)
+            self.texture = try textureFor(resource: name, extension: "png", in: folder)
         } catch {
             return nil
         }

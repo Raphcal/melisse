@@ -30,19 +30,23 @@ public class ImagePalette : Palette {
     
     public let functions: [[UInt8]?]
     
+    public let parentPath: String?
+    
     public init() {
         self.textureName = ""
         self.tileSize = 0
         self.padding = 0
         self.columns = 0
         self.functions = []
+        self.parentPath = nil
     }
     
-    public init(inputStream : InputStream) {
+    public init(inputStream: InputStream, parentPath: String? = nil) {
         self.textureName = Streams.readString(inputStream)
         self.columns = Streams.readInt(inputStream)
         self.tileSize = Streams.readInt(inputStream)
         self.padding = Streams.readInt(inputStream)
+        self.parentPath = parentPath
         
         let size = Streams.readInt(inputStream)
         self.functions = (0 ..< size).map { _ in
@@ -69,7 +73,11 @@ public class ImagePalette : Palette {
     
     public func loadTexture() {
         do {
-            self.texture = try textureForResource(textureName + "-32", extension: "png")
+            if let parentPath = parentPath {
+                self.texture = try textureAt(path: parentPath + "/" + textureName + "-32.png")
+            } else {
+                self.texture = try textureFor(resource: textureName + "-32", extension: "png")
+            }
         } catch let error as NSError {
             NSLog("Erreur lors du chargement de la texture %@-32.png : %@", textureName, error)
         }
