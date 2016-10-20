@@ -54,7 +54,11 @@ public class Backdrop {
             for y in top ..< top + height {
                 for x in left ..< left + width {
                     if let tile = layer.tileAt(x: x % layer.width, y: y % layer.height) {
-                        vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop)
+                        #if PIXEL_PERFECT
+                            vertexPointer.appendQuad(width: tileSize, height: tileSize, left: (GLfloat(x) * tileSize - cameraLeft).floored, top: (GLfloat(y) * tileSize - cameraTop).floored)
+                        #else
+                            vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop)
+                        #endif
                         texCoordPointer.append(tile: tile, from: palette)
                     }
                 }
