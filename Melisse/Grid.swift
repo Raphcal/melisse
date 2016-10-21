@@ -18,7 +18,7 @@ public class Grid {
     public let map: Map
     public let foreground: Int
     public let ground: Layer
-    // TODO: Trouver un meilleur nom.
+    // TODO: Trouver un meilleur nom. passthrough ?
     public let platform: Layer?
     public let water: Layer?
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
