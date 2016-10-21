@@ -16,8 +16,11 @@ public class Sprite : Equatable {
     
     public var frame: Rectangle<GLfloat> {
         didSet {
-            // Utiliser floored() pour avoir un affichage pixel-perfect.
-            vertexSurface.setQuadWith(frame)
+            #if PIXEL_PERFECT
+                vertexSurface.setQuadWith(frame.floored())
+            #else
+                vertexSurface.setQuadWith(frame)
+            #endif
         }
     }
     public var direction: Direction = .right
