@@ -11,12 +11,15 @@ import GLKit
 public class Grid {
     
     let groundLayerName = "Piste"
+    let platformLayerName = "Plateforme"
     let waterLayerName = "Eau"
     
     public let palette: ImagePalette
     public let map: Map
     public let foreground: Int
     public let ground: Layer
+    // TODO: Trouver un meilleur nom.
+    public let platform: Layer?
     public let water: Layer?
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
     public private(set) var texCoordPointers = [SurfaceArray<GLfloat>]()
@@ -36,6 +39,7 @@ public class Grid {
             self.ground = Layer()
         }
         
+        self.platform = map.layerNamed(platformLayerName)
         self.water = map.layerNamed(waterLayerName)
         
         createVerticesAndTexturePointers()
