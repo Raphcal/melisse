@@ -114,7 +114,7 @@ public class Menu {
             if let touch = TouchController.instance.touches.values.first {
                 if let index = itemIndexFor(touch) {
                     selectItemAt(index)
-                    onSelection?(item: selectedItem)
+                    onSelection?(selectedItem)
                     return
                 }
             }

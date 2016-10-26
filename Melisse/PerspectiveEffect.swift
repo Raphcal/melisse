@@ -64,7 +64,7 @@ public struct PerspectiveEffect {
         #if os(iOS)
             let tilt: Point<GLfloat>
             if let motion = motionManager.deviceMotion {
-                let orientation = UIApplication.shared().statusBarOrientation
+                let orientation = UIApplication.shared.statusBarOrientation
                 let horizontalMetric = horizontalMetrics[orientation]!
                 let verticalMetric = verticalMetrics[orientation]!
                 tilt = Point(x: horizontalMetric.valueFor(motion.attitude.pitch), y: verticalMetric.valueFor(motion.attitude.roll))
