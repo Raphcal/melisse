@@ -85,8 +85,8 @@ public class Grid {
     
     // MARK: Fonctions publiques.
     
-    public func angleAt(_ point: Point<GLfloat>, direction: Direction) -> GLfloat {
-        if let tile = ground.tileAt(point), let tileHitbox = palette.functions[tile] {
+    public func angleAt(_ point: Point<GLfloat>, layer: Layer, direction: Direction) -> GLfloat {
+        if let tile = layer.tileAt(point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAt(point)
             
             let backY = Operation.execute(tileHitbox, x: pixel.x)
