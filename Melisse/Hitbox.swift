@@ -25,6 +25,13 @@ public extension Hitbox {
         }
     }
     
+    var bottomHalfHitbox: StaticHitbox {
+        get {
+            let halfHeight = frame.height / 2
+            return StaticHitbox(frame: Rectangle(left: frame.left, top: frame.top + halfHeight, width: frame.width, height: halfHeight))
+        }
+    }
+    
     func collidesWith(_ point: Point<GLfloat>) -> Bool {
         return point.x >= frame.left && point.x < frame.right &&
             point.y >= frame.top && point.y < frame.bottom

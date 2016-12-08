@@ -23,6 +23,8 @@ public class Grid {
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
     public private(set) var texCoordPointers = [SurfaceArray<GLfloat>]()
     
+    public let grounds: [Layer]
+    
     public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
@@ -37,6 +39,8 @@ public class Grid {
             self.foreground = 0
             self.ground = Layer()
         }
+        
+        self.grounds = map.layers.filter({ $0.name == "Piste" })
         
         self.softGround = map.layerNamed(softGroundLayerName)
         self.water = map.layerNamed(waterLayerName)
