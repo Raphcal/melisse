@@ -8,42 +8,17 @@
 
 import GLKit
 
-public class Grid {
-    
-    let groundLayerName = "Piste"
-    let softGroundLayerName = "Plateforme"
-    let waterLayerName = "Eau"
+open class Grid {
     
     public let palette: ImagePalette
     public let map: Map
-    public let foreground: Int
-    public let ground: Layer
-    public let softGround: Layer?
-    public let water: Layer?
+    
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
     public private(set) var texCoordPointers = [SurfaceArray<GLfloat>]()
-    
-    public let grounds: [Layer]
     
     public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
-        
-        if let ground = map.indexOfLayer(named: groundLayerName) {
-            self.foreground = ground + 1
-            self.ground = map.layers[ground]
-        } else if map.layers.count > 0 {
-            self.foreground = 0
-            self.ground = map.layers[0]
-        } else {
-            self.foreground = 0
-            self.ground = Layer()
-        }
-        
-        self.grounds = map.layers.filter({ $0.name == "Piste" })
-        
-        self.softGround = map.layerNamed(softGroundLayerName)
-        self.water = map.layerNamed(waterLayerName)
         
         createVerticesAndTexturePointers()
     }
@@ -79,14 +54,6 @@ public class Grid {
         }
     }
     
-    public func drawBackground(at translation: Point<GLfloat> = Point()) {
-        draw(at: translation, to: foreground)
-    }
-    
-    public func drawForeground(at translation: Point<GLfloat> = Point()) {
-        draw(at: translation, from: foreground, to: map.layers.count)
-    }
-    
     // MARK: Fonctions publiques.
     
     public func angleAt(_ point: Point<GLfloat>, layer: Layer, direction: Direction) -> GLfloat {
@@ -102,8 +69,8 @@ public class Grid {
         }
     }
     
-    public func angleForVerticalRunAt(_ point: Point<GLfloat>, forDirection direction: Direction, verticalDirection: Direction) -> GLfloat {
-        if let x = xInTileAt(point, direction: direction) {
+    public func angleForVerticalRunAt(_ point: Point<GLfloat>, layer: Layer, direction: Direction, verticalDirection: Direction) -> GLfloat {
+        if let x = xInTileAt(point, layer: layer, direction: direction) {
             return atan2(verticalDirection.value, x - point.x)
         } else {
             return verticalDirection.angle
@@ -111,8 +78,8 @@ public class Grid {
     }
     
     /// Recherche l'emplacement x en fonction de la hauteur du point donné.
-    public func xInTileAt(_ point: Point<GLfloat>, direction: Direction) -> GLfloat? {
-        if let tile = ground.tileAt(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
+    public func xInTileAt(_ point: Point<GLfloat>, layer: Layer, direction: Direction) -> GLfloat? {
+        if let tile = layer.tileAt(Point(x: point.x + direction.value * tileSize / 2, y: point.y)), let tileHitbox = palette.functions[tile] {
             let halfTileSize = Int(tileSize / 2)
             for index in 0 ..< halfTileSize {
                 let x = point.x + GLfloat(index) * direction.value
