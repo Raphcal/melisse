@@ -147,6 +147,9 @@ public class SpriteFactory {
     /// - returns: Un nouveau sprite.
     public func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
+        #if SHOW_SPRITE_MANAGEMENT
+            NSLog("Pool \(definition.distance.rawValue) : \(pools[definition.distance.rawValue].available.count)")
+        #endif
         let sprite = Sprite(definition: definition, reference: reference, factory: self, info: info)
         self.sprites.append(sprite)
         
@@ -186,6 +189,9 @@ public class SpriteFactory {
             sprite.vertexSurface.clear()
             sprite.texCoordSurface.clear()
             pools[sprite.definition.distance.rawValue].release(sprite.reference)
+            #if SHOW_SPRITE_MANAGEMENT
+                NSLog("Pool \(sprite.definition.distance.rawValue) : \(pools[sprite.definition.distance.rawValue].available.count)")
+            #endif
         }
         removalPending = []
     }

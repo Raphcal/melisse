@@ -10,7 +10,7 @@ import Foundation
 
 public class ReferencePool {
     
-    private var available: [Int]
+    var available: [Int]
     
     public init() {
         self.available = []
