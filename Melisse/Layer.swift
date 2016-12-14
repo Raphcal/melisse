@@ -8,7 +8,7 @@
 
 import GLKit
 
-public struct Layer : Equatable {
+public struct Layer : Equatable, Hashable {
     
     public var name: String
     public var width: Int
@@ -16,6 +16,12 @@ public struct Layer : Equatable {
     public var tiles: [Int?]
     public var scrollRate: Point<GLfloat>
     public var length: Int
+    
+    public var hashValue: Int {
+        get {
+            return name.hashValue &* 3 + length.hashValue &* 11
+        }
+    }
     
     public init() {
         self.name = ""
