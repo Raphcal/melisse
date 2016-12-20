@@ -60,6 +60,10 @@ public struct Camera {
             sprite.destroy()
         }
     }
+    
+    public func convertToCameraCoordinates(point: Point<GLfloat>) -> Point<GLfloat> {
+        return point - frame.topLeft
+    }
 
 }
 
