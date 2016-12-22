@@ -31,12 +31,12 @@ enum ByteCode : UInt8 {
 
 public struct Operation {
     
-    public static func execute(_ operation: [UInt8]?, x: GLfloat) -> GLfloat {
+    public static func execute(_ operation: [UInt8]?, x: GLfloat, or defaultValue: GLfloat = 0) -> GLfloat {
         if let bytes = operation {
             var stack = execute(bytes, x: x, sprite: nil)
             return stack.removeLast()
         } else {
-            return 0
+            return defaultValue
         }
     }
     
