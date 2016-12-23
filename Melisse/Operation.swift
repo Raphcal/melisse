@@ -13,6 +13,7 @@ enum ByteCode : UInt8 {
     case substract = 0x2d
     case multiply = 0x2a
     case divide = 0x2f
+    case pow = 0x5e
     case negative = 0x6e
     case constant = 0x43
     case x = 0x78
@@ -22,7 +23,7 @@ enum ByteCode : UInt8 {
     case maximum = 0x4d
     case cosinus = 0x63
     case sinus = 0x73
-    case rectangleRoot = 0x53
+    case squareRoot = 0x53
     case zoom = 0x7a
     case spriteVariable = 0x76
     case spriteDirection = 0x64
@@ -69,6 +70,10 @@ public struct Operation {
                     let divisor = stack.removeLast()
                     stack.append(stack.removeLast() / divisor)
                     
+                case .pow:
+                    let exponent = stack.removeLast()
+                    stack.append(pow(stack.removeLast(), exponent))
+                    
                 case .negative:
                     stack.append(-stack.removeLast())
                     
@@ -98,7 +103,7 @@ public struct Operation {
                 case .sinus:
                     stack.append(sin(stack.removeLast()))
                     
-                case .rectangleRoot:
+                case .squareRoot:
                     let last = stack.removeLast()
                     if last >= 0 {
                         stack.append(sqrt(last))
@@ -159,6 +164,10 @@ public struct Operation {
                         let divisor = stack.removeLast()
                         stack.append("\(stack.removeLast()) / \(divisor)")
                         
+                    case .pow:
+                        let exponent = stack.removeLast()
+                        stack.append("\(stack.removeLast()) ^ \(exponent)")
+                        
                     case .negative:
                         stack.append("-\(stack.removeLast())")
                         
@@ -190,7 +199,7 @@ public struct Operation {
                     case .sinus:
                         stack.append("sin(\(stack.removeLast()))")
                         
-                    case .rectangleRoot:
+                    case .squareRoot:
                         stack.append("sqrt(\(stack.removeLast()))")
                         
                     case .zoom:
