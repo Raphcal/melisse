@@ -37,6 +37,11 @@ extension MelisseViewController {
         
         glEnableClientState(GLenum(GL_VERTEX_ARRAY))
         
+        #if ENABLE_FBO
+            var framebuffer: GLuint = 0
+            glGenFramebuffersEXT(GL_FRAMEBUFFER_EXT, &framebuffer)
+        #endif
+        
         View.instance.setSize(self.viewSize)
         
         director.makeCurrent()
