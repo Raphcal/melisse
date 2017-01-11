@@ -16,6 +16,8 @@ public protocol Numeric {
     
     static func +=(lhs: inout Self, rhs: Self)
     static func -=(lhs: inout Self, rhs: Self)
+    static func *=(lhs: inout Self, rhs: Self)
+    static func /=(lhs: inout Self, rhs: Self)
     
     static func >(lhs: Self, rhs: Self) -> Bool
     static func >=(lhs: Self, rhs: Self) -> Bool
