@@ -81,7 +81,7 @@ public class SpriteFactory {
     
     public func updateCollisionsForSprite(_ player: Sprite) {
         self.collisions = collidables.flatMap { (sprite) -> Sprite? in
-            return sprite !== player && sprite.hitbox.collidesWith(player.hitbox) ? sprite : nil
+            return sprite !== player && sprite.hitbox.collides(with: player.hitbox) ? sprite : nil
         }
     }
     

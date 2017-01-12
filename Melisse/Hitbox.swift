@@ -12,8 +12,8 @@ public protocol Hitbox {
     
     var frame: Rectangle<GLfloat> { get }
     
-    func collidesWith(_ point: Point<GLfloat>) -> Bool
-    func collidesWith(_ other: Hitbox) -> Bool
+    func collides(with point: Point<GLfloat>) -> Bool
+    func collides(with other: Hitbox) -> Bool
     
 }
 
@@ -32,16 +32,16 @@ public extension Hitbox {
         }
     }
     
-    func collidesWith(_ point: Point<GLfloat>) -> Bool {
+    func collides(with point: Point<GLfloat>) -> Bool {
         return point.x >= frame.left && point.x < frame.right &&
             point.y >= frame.top && point.y < frame.bottom
     }
     
-    func collidesWith(_ rectangle: Rectangle<GLfloat>) -> Bool {
-        return collidesWith(StaticHitbox(frame: rectangle))
+    func collides(with rectangle: Rectangle<GLfloat>) -> Bool {
+        return collides(with: StaticHitbox(frame: rectangle))
     }
     
-    func collidesWith(_ other: Hitbox) -> Bool {
+    func collides(with other: Hitbox) -> Bool {
         let x = (frame.x - other.frame.x).absolute <= (frame.width + other.frame.width).half
         let y = (frame.y - other.frame.y).absolute <= (frame.height + other.frame.height).half
         return x && y

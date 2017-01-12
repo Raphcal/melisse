@@ -39,7 +39,7 @@ public class TouchSensitiveZone {
         // TODO: Implémenter le zoom ?
         let zoom: GLfloat = 1
         for touch in touches.values {
-            self.state = state || hitbox.collidesWith(touch * zoom)
+            self.state = state || hitbox.collides(with: touch * zoom)
         }
     }
     

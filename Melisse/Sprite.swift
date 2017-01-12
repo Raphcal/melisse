@@ -8,7 +8,7 @@
 
 import GLKit
 
-public class Sprite : Equatable {
+public class Sprite : Equatable, HasHitbox {
     
     public let definition: SpriteDefinition
     public let info: SpriteInfo?
