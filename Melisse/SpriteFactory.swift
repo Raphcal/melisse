@@ -163,7 +163,7 @@ public class SpriteFactory {
     // MARK: Suppression de sprites
     
     public func removeSprite(_ sprite: Sprite) {
-        sprite.removed = true
+        sprite.isRemoved = true
         
         if let index = sprites.index(where: { sprite === $0 }) {
             sprites.remove(at: index)
@@ -177,7 +177,7 @@ public class SpriteFactory {
     
     public func removeOrphanSprites() {
         for sprite in sprites {
-            if sprite.info == nil && !sprite.removed {
+            if sprite.info == nil && !sprite.isRemoved {
                 removeSprite(sprite)
             }
         }

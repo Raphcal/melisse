@@ -36,7 +36,7 @@ public class Sprite : Equatable {
     public let vertexSurface: Surface<GLfloat>
     public let texCoordSurface: Surface<GLfloat>
     
-    public var removed: Bool = false
+    public var isRemoved: Bool = false
     
     public var hitbox: Hitbox = StaticHitbox()
     public var motion: Motion = NoMotion()
@@ -102,7 +102,7 @@ public class Sprite : Equatable {
     // MARK: Méthodes de suppression du sprite
     
     public func destroy() {
-        self.removed = true
+        self.isRemoved = true
         
         if let count = definition.animations[DefaultAnimationName.disappear.name]?.frames.count, count > 0 {
             self.motion.unload(self)
@@ -115,7 +115,7 @@ public class Sprite : Equatable {
     }
     
     public func explode(_ definition: Int) {
-        self.removed = true
+        self.isRemoved = true
         
         let explosion = factory.sprite(definition)
         explosion.frame.center = self.frame.center
