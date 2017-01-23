@@ -47,6 +47,12 @@ public func nearestUpperPowerOfTwoFor(_ value: Int) -> Int {
 
 extension GLfloat {
     
+    public var selfOrZeroIfNegligible: GLfloat {
+        get {
+            return abs(self) >= 0.1 ? self : 0
+        }
+    }
+    
     public func differenceWith(_ angle: GLfloat) -> GLfloat {
         let difference = angle - self
         let π = GLfloat(M_PI)
