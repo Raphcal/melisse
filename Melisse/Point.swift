@@ -55,6 +55,10 @@ public extension Point where Coordinate : FloatingPoint {
         return Point(x: x.floored, y: y.floored)
     }
     
+    func point(distance: Coordinate, angle: Coordinate) -> Point<Coordinate> {
+        return Point(x: x + angle.cosinus * distance, y: y + angle.sinus * distance)
+    }
+    
 }
 
 // MARK: - Opérations entre instances de Point
