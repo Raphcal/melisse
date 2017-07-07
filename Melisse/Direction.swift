@@ -16,7 +16,7 @@ public enum Direction : Int {
     private static let mirror: [GLfloat] = [1, 0, 0, 0]
     private static let reverses: [Direction] = [.right, .left, .down, .up]
     private static let axes: [Axe] = [.horizontal, .horizontal, .vertical, .vertical]
-    private static let angles: [GLfloat] = [GLfloat(M_PI), 0, GLfloat(M_PI + M_PI_2), GLfloat(M_PI_2)]
+    private static let angles   = [GLfloat.pi, 0, GLfloat.pi * 1.5, GLfloat.pi / 2]
     
     public var angle: GLfloat {
         get {

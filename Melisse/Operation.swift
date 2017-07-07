@@ -86,7 +86,7 @@ public struct Operation {
                     stack.append(x)
                     
                 case .pi:
-                    stack.append(GLfloat(M_PI))
+                    stack.append(GLfloat.pi)
                     
                 case .e:
                     stack.append(GLfloat(M_E))

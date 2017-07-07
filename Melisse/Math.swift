@@ -9,11 +9,11 @@
 import GLKit
 
 public func smoothStep(_ from: GLfloat, to: GLfloat, value: GLfloat) -> GLfloat {
-	return pow(sin(GLfloat(M_PI / 2) * min(max(value - from, 0) / to, 1)), 2)
+	return pow(sin(GLfloat.pi / 2 * min(max(value - from, 0) / to, 1)), 2)
 }
     
 public func smoothStep(_ from: TimeInterval, to: TimeInterval, value: TimeInterval) -> GLfloat {
-    return GLfloat(pow(sin(TimeInterval(M_PI / 2) * min(max(value - from, 0) / to, 1)), 2))
+    return GLfloat(pow(sin(TimeInterval(TimeInterval.pi / 2) * min(max(value - from, 0) / to, 1)), 2))
 }
     
 public func square(_ value: GLfloat) -> GLfloat {
@@ -21,11 +21,11 @@ public func square(_ value: GLfloat) -> GLfloat {
 }
 	
 public func toRadian(_ degree: GLfloat) -> GLfloat {
-    return degree * GLfloat(M_PI / 180)
+    return degree * GLfloat.pi / 180
 }
 
 public func toDegree(_ radian: GLfloat) -> GLfloat {
-    return radian * GLfloat(180 / M_PI)
+    return radian * 180 / GLfloat.pi
 }
     
 public func mod(_ value: Int, by modulo: Int) -> Int {
@@ -55,7 +55,7 @@ extension GLfloat {
     
     public func differenceWith(_ angle: GLfloat) -> GLfloat {
         let difference = angle - self
-        let π = GLfloat(M_PI)
+        let π = GLfloat.pi
         
         if difference < -π {
             return difference + π * 2

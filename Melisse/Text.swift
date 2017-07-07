@@ -151,15 +151,15 @@ public class Text {
     private func setFrameOf(_ sprite: Sprite, toCharacter value: Int8) {
         if value >= zero && value <= nine {
             // Chiffre.
-            configure(sprite, animation: font.digitAnimation, frameIndex: value - zero)
+            configure(sprite, animation: font.digitAnimation, frameIndex: Int(value - zero))
             
         } else if value >= upperCaseA && value <= upperCaseZ {
             // Lettre majuscule.
-            configure(sprite, animation: font.upperCaseAnimation, frameIndex: value - upperCaseA)
+            configure(sprite, animation: font.upperCaseAnimation, frameIndex: Int(value - upperCaseA))
             
         } else if value >= lowerCaseA && value <= lowerCaseZ {
             // Lettre minuscule.
-            configure(sprite, animation: font.lowerCaseAnimation, frameIndex: value - lowerCaseA)
+            configure(sprite, animation: font.lowerCaseAnimation, frameIndex: Int(value - lowerCaseA))
             
         } else if value == semicolon {
             // "Deux points".

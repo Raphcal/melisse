@@ -166,10 +166,10 @@ public struct Streams {
         let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
         let read = inputStream.read(buffer, maxLength: length)
         
-        let string : String
+        let string: String
         
         if read == length {
-            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue) as! String
+            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue)! as String
         } else {
             string = ""
         }
@@ -238,7 +238,7 @@ public struct Streams {
             }
             read += length
             
-            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue) as! String
+            string = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf16LittleEndian.rawValue)! as String
             buffer.deinitialize()
             
         } else {
