@@ -99,8 +99,11 @@ open class Grid {
             let vertexPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByVertex)
             let texCoordPointer = SurfaceArray<GLfloat>(capacity: layer.length, coordinates: coordinatesByTexture)
             
-            for y in 0..<layer.height {
-                for x in 0..<layer.width {
+            let width = layer.width
+            let height = layer.height
+            
+            for y in 0 ..< height {
+                for x in 0 ..< width {
                     if let tile = layer.tileAt(x: x, y: y) {
                         vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
                         texCoordPointer.append(tile: tile, from: palette)

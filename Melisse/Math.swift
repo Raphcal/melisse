@@ -19,6 +19,10 @@ public func smoothStep(_ from: TimeInterval, to: TimeInterval, value: TimeInterv
 public func square(_ value: GLfloat) -> GLfloat {
     return value * value
 }
+
+public func square(_ point: Point<GLfloat>) -> Point<GLfloat> {
+    return Point(x: point.x * point.x, y: point.y * point.y)
+}
 	
 public func toRadian(_ degree: GLfloat) -> GLfloat {
     return degree * GLfloat.pi / 180
@@ -26,10 +30,6 @@ public func toRadian(_ degree: GLfloat) -> GLfloat {
 
 public func toDegree(_ radian: GLfloat) -> GLfloat {
     return radian * 180 / GLfloat.pi
-}
-    
-public func mod(_ value: Int, by modulo: Int) -> Int {
-    return ((value % modulo) + modulo) % modulo
 }
 
 public func nearestUpperPowerOfTwoFor(_ value: Int) -> Int {
@@ -66,4 +66,8 @@ extension GLfloat {
         }
     }
     
+}
+
+public func %(left: GLfloat, right: Int) -> GLfloat {
+    return left + GLfloat(Int(-left) + Int(left) % right)
 }

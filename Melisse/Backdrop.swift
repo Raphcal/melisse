@@ -14,16 +14,13 @@ public class Backdrop {
     public let map: Map
     public private(set) var vertexPointers = [SurfaceArray<GLfloat>]()
     public private(set) var texCoordPointers = [SurfaceArray<GLfloat>]()
+    fileprivate var layerSizes = [Point<Int>]()
     
-    private let width: Int
-    private let height: Int
+    fileprivate let tiltEffect = Point(x: tileSize / 4, y: tileSize / 6)
     
     public init(palette: ImagePalette = ImagePalette(), map: Map = Map()) {
         self.palette = palette
         self.map = map
-        
-        self.width = Int(ceil(View.instance.width / tileSize) + 2)
-        self.height = Int(ceil(View.instance.height / tileSize) + 2)
         
         createVerticesAndTextureCoordinates()
     }
@@ -36,57 +33,48 @@ public class Backdrop {
         }
     }
     
-    public func updateWith(translation: Point<GLfloat> = Point(), offset: GLfloat = 0, tilt: Point<GLfloat> = Point()) {
-        for (index, layer) in map.layers.enumerated() {
-            let vertexPointer = vertexPointers[index]
-            let texCoordPointer = texCoordPointers[index]
-            
-            let cameraLeft = (translation.x + offset) * layer.scrollRate.x + square((1 - layer.scrollRate.x) * tilt.x * tileSize / 4)
-            
-            let cameraTop = translation.y * layer.scrollRate.y + (1 - layer.scrollRate.y) * tilt.y * tileSize / 2
-            
-            let left = Int(cameraLeft / tileSize)
-            let top = Int(cameraTop / tileSize)
-            
-            vertexPointer.reset()
-            texCoordPointer.reset()
-            
-            for y in top ..< top + height {
-                for x in left ..< left + width {
-                    if let tile = layer.tileAt(x: x % layer.width, y: y % layer.height) {
-                        #if PIXEL_PERFECT
-                            vertexPointer.appendQuad(width: tileSize, height: tileSize, left: (GLfloat(x) * tileSize - cameraLeft).floored, top: (GLfloat(y) * tileSize - cameraTop).floored)
-                        #else
-                            vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize - cameraLeft, top: GLfloat(y) * tileSize - cameraTop)
-                        #endif
-                        texCoordPointer.append(tile: tile, from: palette)
-                    }
-                }
-            }
-        }
-    }
-    
-    public func draw() {
+    public func draw(at translation: Point<GLfloat> = Point(), tilt: Point<GLfloat> = Point()) {
         Draws.bindTexture(palette.texture)
-        Draws.translateTo(Point())
         
         for index in 0 ..< map.layers.count {
-            let vertexPointer = vertexPointers[index]
-            let texCoordPointer = texCoordPointers[index]
+            let layer = map.layers[index]
             
-            Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: vertexPointer.count)
+            #if PIXEL_PERFECT
+                let layerTranslation = (translation * layer.scrollRate + square((1 - layer.scrollRate) * tilt * tiltEffect)).floored() % layerSizes[index]
+            #else
+                let layerTranslation = (translation * layer.scrollRate + square((1 - layer.scrollRate) * tilt * tiltEffect)) % layerSizes[index]
+            #endif
+            
+            Draws.translateTo(layerTranslation)
+            
+            let vertexPointer = vertexPointers[index]
+            Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointers[index].memory, count: vertexPointer.count)
         }
     }
     
     private func createVerticesAndTextureCoordinates() {
-        let maximumLength = width * height
-        
-        for _ in 0 ..< map.layers.count {
-            let vertexPointer = SurfaceArray<GLfloat>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByVertex)
-            let texCoordPointer = SurfaceArray<GLfloat>(capacity: maximumLength * vertexesByQuad, coordinates: coordinatesByTexture)
+        for layer in map.layers {
+            let vertexPointer = SurfaceArray<GLfloat>(capacity: layer.length * 2, coordinates: coordinatesByVertex)
+            let texCoordPointer = SurfaceArray<GLfloat>(capacity: layer.length * 2, coordinates: coordinatesByTexture)
+            
+            let width = layer.width
+            let height = layer.height
+            
+            for y in 0 ..< height {
+                for x in 0 ..< width {
+                    if let tile = layer.tileAt(x: x, y: y) {
+                        vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(x) * tileSize, top: GLfloat(y) * tileSize)
+                        texCoordPointer.append(tile: tile, from: palette)
+
+                        vertexPointer.appendQuad(width: tileSize, height: tileSize, left: GLfloat(width + x) * tileSize, top: GLfloat(y) * tileSize)
+                        texCoordPointer.append(tile: tile, from: palette)
+                    }
+                }
+            }
             
             vertexPointers.append(vertexPointer)
             texCoordPointers.append(texCoordPointer)
+            layerSizes.append(Point(x: width * Int(tileSize), y: height * Int(tileSize)))
         }
     }
     

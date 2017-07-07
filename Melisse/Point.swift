@@ -111,7 +111,7 @@ public func /=<Coordinate>(left: inout Point<Coordinate>, right: Point<Coordinat
     left.y /= right.y
 }
 
-// MARK: - Opérations entre Point et une coordonée
+// MARK: - Opérations entre Point et une coordonnée
 
 public func +<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
     return Point(x: left.x + right, y: left.y + right)
@@ -119,6 +119,10 @@ public func +<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<C
 
 public func -<Coordinate>(left: Point<Coordinate>, right: Coordinate) -> Point<Coordinate> {
     return Point(x: left.x - right, y: left.y - right)
+}
+
+public func -<Coordinate>(left: Coordinate, right: Point<Coordinate>) -> Point<Coordinate> {
+    return Point(x: left - right.x, y: left - right.y)
 }
 
 public func +=<Coordinate>(left: inout Point<Coordinate>, right: Coordinate) {
@@ -139,4 +143,10 @@ public func *=<Coordinate>(left: inout Point<Coordinate>, right: Coordinate) {
 public func /=<Coordinate>(left: inout Point<Coordinate>, right: Coordinate) {
     left.x /= right
     left.y /= right
+}
+
+// MARK: Opérations spécifiques
+
+public func %(left: Point<GLfloat>, right: Point<Int>) -> Point<GLfloat> {
+    return Point(x: left.x % right.x, y: left.y % right.y)
 }
