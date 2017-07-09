@@ -8,7 +8,7 @@
 
 import GLKit
 
-public class AlphaColorPalette : ColorPalette {
+open class AlphaColorPalette : ColorPalette {
     
     static let defaultPalette = AlphaColorPalette()
     

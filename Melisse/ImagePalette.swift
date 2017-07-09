@@ -8,7 +8,7 @@
 
 import GLKit
 
-public class ImagePalette : Palette {
+open class ImagePalette : Palette {
     
     static let fileExtension = "pal"
     
