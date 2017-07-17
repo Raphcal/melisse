@@ -18,6 +18,12 @@ public class Draws {
     static weak var lastTexture: GLKTextureInfo?
     static var drawMode: DrawMode?
     
+    public static func clearState() {
+        self.lastTranslation = Point<GLfloat>()
+        self.lastTexture = nil
+        self.drawMode = nil
+    }
+    
     public static func bindTexture(_ texture: GLKTextureInfo) {
         if texture !== lastTexture {
             glBindTexture(texture.target, texture.name)
