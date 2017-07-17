@@ -14,8 +14,13 @@ open class ImagePalette : Palette {
     
     public var texture = GLKTextureInfo() {
         didSet {
-            self.textureTileSize = GLfloat(tileSize) / GLfloat(texture.width)
-            self.texturePadding = GLfloat(padding) / GLfloat(texture.width)
+            if texture.width > 0 {
+                self.textureTileSize = GLfloat(tileSize) / GLfloat(texture.width)
+                self.texturePadding = GLfloat(padding) / GLfloat(texture.width)
+            } else {
+                self.textureTileSize = 0
+                self.texturePadding = 0
+            }
         }
     }
     
