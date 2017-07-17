@@ -64,6 +64,11 @@ public struct Camera {
     public func convertToCameraCoordinates(point: Point<GLfloat>) -> Point<GLfloat> {
         return point - frame.topLeft
     }
+    
+    public mutating func setFrameCenter(_ center: Point<GLfloat>) {
+        frame.x = max(min(center.x, bounds.right - frame.width / 2), bounds.left + frame.width / 2)
+        frame.y = max(min(center.y, bounds.bottom - frame.height / 2), bounds.top + frame.height / 2) + offsetY
+    }
 
 }
 
