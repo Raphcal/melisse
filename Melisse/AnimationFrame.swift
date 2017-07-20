@@ -10,15 +10,18 @@ import GLKit
 
 public struct AnimationFrame : Equatable {
     
-    // Remarque : le rectangle n'est pas tout à fait adapté car la valeur "centre" représente ici le coin en haut à gauche.
-    public var frame: Rectangle<Int> {
-		didSet {
-			size = Size(width: GLfloat(frame.width), height: GLfloat(frame.height))
-		}
-	}
+    /// Emplacement de l'image dans l'atlas.
+    ///
+    /// La propriété `center` du rectangle représente le coin en haut à gauche.
+    public var frame: Rectangle<Int>
+    
+    /// Zone de collision à l'intérieur de cette étape d'animation.
     public var hitbox: Rectangle<GLfloat>
 	
-	public private(set) var size: Size<GLfloat>
+    /// Taille de l'image.
+    ///
+    /// Peut être différent de `frame.size` si l'atlas est retina.
+	public var size: Size<GLfloat>
     
     public init() {
         self.frame = Rectangle()
@@ -36,6 +39,12 @@ public struct AnimationFrame : Equatable {
         self.frame = Rectangle(x: x, y: y, width: width, height: height)
 		self.size = Size(width: GLfloat(width), height: GLfloat(height))
         self.hitbox = Rectangle()
+    }
+    
+    public init(frame: Rectangle<Int>, size: Size<GLfloat>, hitbox: Rectangle<GLfloat> = Rectangle()) {
+        self.frame = frame
+        self.size = size
+        self.hitbox = hitbox
     }
     
     public init(inputStream : InputStream) {
