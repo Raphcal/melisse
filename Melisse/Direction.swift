@@ -56,6 +56,19 @@ public enum Direction : Int {
         return value * self.value >= 0
     }
     
+    public func point(of rectangle: Rectangle<GLfloat>) -> Point<GLfloat> {
+        switch self {
+        case .left:
+            return Point(x: rectangle.left, y: rectangle.center.y)
+        case .right:
+            return Point(x: rectangle.right, y: rectangle.center.y)
+        case .up:
+            return Point(x: rectangle.center.x, y: rectangle.top)
+        case .down:
+            return Point(x: rectangle.center.x, y: rectangle.bottom)
+        }
+    }
+    
     public static func directionFromSprite(_ from: Sprite, toSprite to: Sprite) -> Direction {
         if from.frame.x <= to.frame.x {
             return .right
