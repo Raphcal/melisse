@@ -28,6 +28,10 @@ public class Director {
     
     public var fade: Fade = NoFade()
     
+    #if os(iOS)
+    public var viewController: UIViewController?
+    #endif
+    
     public init() {
         // Public initializer.
     }

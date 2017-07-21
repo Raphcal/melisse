@@ -36,6 +36,7 @@ open class MelisseViewController : GLKViewController, MelisseViewControllerType 
     }
     
     public func directorDidStart() {
+        director.viewController = self
         updater = director
     }
     
