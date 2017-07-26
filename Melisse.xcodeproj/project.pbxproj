@@ -148,6 +148,7 @@
 		643818231CE7A1F1002C68F8 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9191CD7B0E40029C1E0 /* Layer.swift */; };
 		643818251CE7A1F1002C68F8 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91B1CD7B0E40029C1E0 /* Map.swift */; };
 		643818261CE7A1F1002C68F8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
+		6439EE741F288C8900BAB051 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6439EE731F288C8900BAB051 /* AVFoundation.framework */; };
 		649D28331CF208C400207AFC /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D28321CF208C400207AFC /* Animator.swift */; };
 		649D28341CF208C400207AFC /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D28321CF208C400207AFC /* Animator.swift */; };
 		64BB3B2E1CE897860063958F /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
@@ -239,6 +240,7 @@
 		643817D81CE7A194002C68F8 /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		643817DA1CE7A194002C68F8 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Melisse.h; sourceTree = "<group>"; };
 		643817DC1CE7A194002C68F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6439EE731F288C8900BAB051 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6440EA351CDCC89300190C3D /* Offset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offset.swift; sourceTree = "<group>"; };
 		6440EA381CDCE85500190C3D /* SpriteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteType.swift; sourceTree = "<group>"; };
 		6457C1621CDB946D00794F1D /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6439EE741F288C8900BAB051 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +435,7 @@
 				643817CC1CE7A131002C68F8 /* Melisse */,
 				6429FED11CE879010052ED4D /* Melisse Mac */,
 				51F8B8FE1CD78DF70029C1E0 /* Products */,
+				6439EE721F288C8900BAB051 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -469,6 +473,14 @@
 				643817DC1CE7A194002C68F8 /* Info.plist */,
 			);
 			path = Melisse;
+			sourceTree = "<group>";
+		};
+		6439EE721F288C8900BAB051 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6439EE731F288C8900BAB051 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		6440EA371CDCE84100190C3D /* Sprite */ = {
