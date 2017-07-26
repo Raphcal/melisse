@@ -146,12 +146,11 @@ struct MovingToTargetCameraMotion : CameraMotion {
 struct EarthquakeCameraMotion : CameraMotion {
     
     var motion: CameraMotion
-    let random = Random()
     let amplitude: GLfloat = 4
     
     mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
         let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
-        return Point(x: center.x + random.next(amplitude) - amplitude / 2, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x + random(amplitude) - amplitude / 2, y: center.y + random(amplitude) - amplitude / 2)
     }
     
     mutating func to(_ other: CameraMotion) -> CameraMotion {
@@ -165,7 +164,6 @@ struct TimedEarthquakeCameraMotion : CameraMotion {
     
     var motion: CameraMotion
     let duration: TimeInterval
-    let random = Random()
     var time: TimeInterval = 0
     
     mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
@@ -177,7 +175,7 @@ struct TimedEarthquakeCameraMotion : CameraMotion {
         
         let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
         let amplitude = smoothStep(0, to: duration, value: time) * 4
-        return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x, y:  random(from: center.y - amplitude / 2, to: center.y + amplitude / 2))
     }
     
     mutating func to(_ other: CameraMotion) -> CameraMotion {
@@ -191,7 +189,6 @@ struct QuakeCameraMotion : CameraMotion {
     
     var motion: CameraMotion
     var amplitude: GLfloat
-    let random = Random()
     
     
     mutating func locationFor(_ camera: inout Camera, timeSinceLastUpdate: TimeInterval) -> Point<GLfloat> {
@@ -202,7 +199,7 @@ struct QuakeCameraMotion : CameraMotion {
         }
         
         let center = motion.locationFor(&camera, timeSinceLastUpdate: timeSinceLastUpdate)
-        return Point(x: center.x, y: center.y + random.next(amplitude) - amplitude / 2)
+        return Point(x: center.x, y: random(from: center.y - amplitude / 2, to: center.y + amplitude / 2))
     }
     
     mutating func to(_ other: CameraMotion) -> CameraMotion {
