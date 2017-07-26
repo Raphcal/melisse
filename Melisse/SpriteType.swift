@@ -10,7 +10,7 @@ import Foundation
 
 public protocol SpriteType {
     
-    var isCollidable: Bool { get }
+    var group: String { get }
     
 }
 
@@ -18,10 +18,8 @@ public enum DefaultSpriteType: SpriteType {
     
     case decoration
     
-    public var isCollidable: Bool {
-        get {
-            return false
-        }
+    public var group: String {
+        return "decoration"
     }
     
 }

@@ -21,7 +21,6 @@ public class SpriteFactory {
     
     let pools: [ReferencePool]
     public var sprites = [Sprite]()
-    public var collidables = [Sprite]()
     private var removalPending = [Sprite]()
     
     public let definitions: [SpriteDefinition]
@@ -29,7 +28,7 @@ public class SpriteFactory {
     public let vertexPointer: SurfaceArray<GLfloat>
     public let texCoordPointer: SurfaceArray<GLfloat>
     
-    var collisions = [Sprite]()
+    public var groups = [String : [Sprite]]()
     
     public init() {
         self.capacity = 0
@@ -77,12 +76,6 @@ public class SpriteFactory {
             sprite.updateWith(timeSinceLastUpdate)
         }
         commitRemoval()
-    }
-    
-    public func updateCollisionsForSprite(_ player: Sprite) {
-        self.collisions = collidables.flatMap { (sprite) -> Sprite? in
-            return sprite !== player && sprite.hitbox.collides(with: player.hitbox) ? sprite : nil
-        }
     }
     
     // MARK: Gestion de l'affichage
@@ -153,9 +146,9 @@ public class SpriteFactory {
         let sprite = Sprite(definition: definition, reference: reference, factory: self, info: info)
         self.sprites.append(sprite)
         
-        if definition.type.isCollidable {
-            collidables.append(sprite)
-        }
+        var group = groups[definition.type.group] ?? []
+        group.append(sprite)
+        groups[definition.type.group] = group
         
         return sprite
     }
@@ -170,8 +163,11 @@ public class SpriteFactory {
             removalPending.append(sprite)
         }
         
-        if sprite.definition.type.isCollidable, let index = collidables.index(where: { sprite === $0 }) {
-            collidables.remove(at: index)
+        let typeGroup = sprite.definition.type.group
+        var group = groups[typeGroup]!
+        if let index = group.index(where: { sprite === $0 }) {
+            group.remove(at: index)
+            groups[typeGroup] = group
         }
     }
     
