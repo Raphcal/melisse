@@ -12,7 +12,7 @@ public struct View {
     
     static public var instance = View()
     
-    public let width: GLfloat = 384
+    public var width: GLfloat = 384
     public var height: GLfloat {
         get {
             return size.height
@@ -33,7 +33,7 @@ public struct View {
     }
     
     // TODO: Faire quelque chose de cette méthode.
-    public func applyZoom() {
+    func applyZoom() {
         glLoadIdentity()
         let zoomedSize = size * zoom
         #if os(iOS)
