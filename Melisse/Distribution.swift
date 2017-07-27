@@ -12,17 +12,17 @@ import Foundation
 /// objet peut posséder un poids qui modifiera sa probabilité d'être tiré.
 public struct Distribution<T: Hashable> {
     
-    var top: Int
-    var ceils: [Int]
-    var items: [T]
+    public var top: Int
+    public var ceils: [Int]
+    public var items: [T]
     
-    init() {
+    public init() {
         top = 0
         ceils = []
         items = []
     }
     
-    init(itemsWithProbabilities: [T : Int]) {
+    public init(itemsWithProbabilities: [T : Int]) {
         var top = 0
         var ceils = [Int]()
         var items = [T]()
@@ -36,7 +36,7 @@ public struct Distribution<T: Hashable> {
         self.items = items
     }
     
-    init(items: [T], ceils: [Int]) {
+    public init(items: [T], ceils: [Int]) {
         self.items = items
         self.ceils = ceils
         self.top = ceils.last ?? 0
@@ -46,7 +46,7 @@ public struct Distribution<T: Hashable> {
     ///
     /// L'objet renvoyé n'est pas supprimé de la liste, il pourra donc être tiré
     /// plusieurs fois.
-    var randomItem: T {
+    public var randomItem: T {
         return items[randomIndex]
     }
     
@@ -55,7 +55,7 @@ public struct Distribution<T: Hashable> {
     /// - Parameter item: Objet à ajouter.
     /// - Parameter chances: Poids de l'objet. Plus la valeur est grande et plus
     /// l'objet sera tiré souvent.
-    mutating func add(item: T, withChances chances: Int) {
+    public mutating func add(item: T, withChances chances: Int) {
         top += chances
         ceils.append(top)
         items.append(item)
@@ -66,7 +66,7 @@ public struct Distribution<T: Hashable> {
     /// L'objet renvoyé est supprimé de cette liste et ne pourra plus être tiré.
     ///
     /// - Returns: Un objet tiré aléatoirement.
-    mutating func pop() -> T {
+    public mutating func pop() -> T {
         let index = randomIndex
         let item = items.remove(at: index)
         
