@@ -13,11 +13,11 @@ public enum Distance : Int {
 }
 
 /// Gère la création, l'affichage et la mise à jour d'un ensemble de sprites.
-public class SpriteFactory {
+open class SpriteFactory {
     
     public let capacity: Int
     
-    let textureAtlas: GLKTextureInfo
+    public let textureAtlas: GLKTextureInfo
     
     let pools: [ReferencePool]
     public var sprites = [Sprite]()
@@ -81,13 +81,7 @@ public class SpriteFactory {
     // MARK: Gestion de l'affichage
     
     /// Dessine les sprites de cette factory.
-    public func draw(at translation: Point<GLfloat> = Point()) {
-        Draws.bindTexture(textureAtlas)
-        Draws.translateTo(translation)
-        Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
-    }
-    
-    public func drawWith(_ tint: Color<GLubyte>, at translation: Point<GLfloat> = Point()) {
+    open func draw(at translation: Point<GLfloat> = Point()) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, count: GLsizei(capacity * vertexesByQuad))
