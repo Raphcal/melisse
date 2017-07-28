@@ -26,8 +26,16 @@ class TranslucentSpriteFactory : SpriteFactory {
     
     /// Défini la transparence du sprite donné.
     /// - Parameter alpha: Valeur de la transparence. Entre 0 (invisible) et 255 (opaque).
+    /// - Parameter sprite: Sprite à modifier.
     func setAlpha(_ alpha: GLubyte, of sprite: Sprite) {
         colorPointer.surfaceAt(sprite.reference).setColor(with: 255, alpha: alpha)
+    }
+    
+    /// Modifie la teinte d'un sprite donné.
+    /// - Parameter tint: Teinte à appliquer.
+    /// - Parameter sprite: Sprite à modifier.
+    func setTint(_ tint: Color<GLubyte>, of sprite: Sprite) {
+        colorPointer.surfaceAt(sprite.reference).setColor(tint)
     }
     
     override func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
