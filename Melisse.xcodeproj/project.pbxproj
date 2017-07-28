@@ -153,6 +153,8 @@
 		649D28341CF208C400207AFC /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D28321CF208C400207AFC /* Animator.swift */; };
 		64BB38721F29D3CB00CAB9FC /* Distribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB38711F29D3CB00CAB9FC /* Distribution.swift */; };
 		64BB38731F29D3CB00CAB9FC /* Distribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB38711F29D3CB00CAB9FC /* Distribution.swift */; };
+		64BB38B11F2B53F600CAB9FC /* TranslucentSpriteFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB38B01F2B53F600CAB9FC /* TranslucentSpriteFactory.swift */; };
+		64BB38B21F2B53F600CAB9FC /* TranslucentSpriteFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB38B01F2B53F600CAB9FC /* TranslucentSpriteFactory.swift */; };
 		64BB3B2E1CE897860063958F /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		64BB3B2F1CE8978F0063958F /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
 		64BB3C281CE9F2630063958F /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BB3C271CE9F2630063958F /* Controller.swift */; };
@@ -255,6 +257,7 @@
 		64B6F7551CDE6D2800CECE15 /* AnimationDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationDefinition.swift; sourceTree = "<group>"; };
 		64BA6C191CE1127E0093E184 /* Axe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
 		64BB38711F29D3CB00CAB9FC /* Distribution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Distribution.swift; sourceTree = "<group>"; };
+		64BB38B01F2B53F600CAB9FC /* TranslucentSpriteFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslucentSpriteFactory.swift; sourceTree = "<group>"; };
 		64BB3C271CE9F2630063958F /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		64BB3C2C1CE9F3450063958F /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -504,6 +507,7 @@
 				51F8B9291CD7B0E40029C1E0 /* SpriteFactory.swift */,
 				6496DB2E1CDF2B1700121F0A /* SpriteInfo.swift */,
 				6440EA381CDCE85500190C3D /* SpriteType.swift */,
+				64BB38B01F2B53F600CAB9FC /* TranslucentSpriteFactory.swift */,
 			);
 			name = Sprite;
 			sourceTree = "<group>";
@@ -686,6 +690,7 @@
 				5161412B1CEDD4630037C6E9 /* Textures.swift in Sources */,
 				6429FEEB1CE87B850052ED4D /* Color.swift in Sources */,
 				516896481CEC92B400B23BD8 /* GamepadController.swift in Sources */,
+				64BB38B21F2B53F600CAB9FC /* TranslucentSpriteFactory.swift in Sources */,
 				6429FEEC1CE87B850052ED4D /* Draws.swift in Sources */,
 				6429FEED1CE87B850052ED4D /* ReferencePool.swift in Sources */,
 				6429FEEE1CE87B850052ED4D /* Surface.swift in Sources */,
@@ -813,6 +818,7 @@
 				56ACEBC61D1ACD3F00038CA4 /* TouchSensitiveZone.swift in Sources */,
 				643817F71CE7A1F1002C68F8 /* Scene.swift in Sources */,
 				6438180E1CE7A1F1002C68F8 /* SpriteDefinition.swift in Sources */,
+				64BB38B11F2B53F600CAB9FC /* TranslucentSpriteFactory.swift in Sources */,
 				643817F61CE7A1F1002C68F8 /* Director.swift in Sources */,
 				643818091CE7A1F1002C68F8 /* LoopingAnimation.swift in Sources */,
 				643818031CE7A1F1002C68F8 /* ColorQuadrilateral.swift in Sources */,

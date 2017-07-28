@@ -132,7 +132,7 @@ open class SpriteFactory {
     /// - parameter info: Informations du loader sur le sprite à créer.
     /// - parameter after: Si non nil, la référence du nouveau sprite sera (si possible) supérieur à celle du sprite donné.
     /// - returns: Un nouveau sprite.
-    public func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
+    open func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let reference = pools[definition.distance.rawValue].next(after?.reference)
         #if SHOW_SPRITE_MANAGEMENT
             NSLog("Pool \(definition.distance.rawValue) : \(pools[definition.distance.rawValue].available.count)")

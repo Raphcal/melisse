@@ -72,6 +72,10 @@ public class Draws {
             } else if drawMode == .color {
                 glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
                 glEnable(GLenum(GL_TEXTURE_2D))
+            } else {
+                glEnableClientState(GLenum(GL_COLOR_ARRAY))
+                glEnableClientState(GLenum(GL_TEXTURE_COORD_ARRAY))
+                glEnable(GLenum(GL_TEXTURE_2D))
             }
             drawMode = .textureAndColor
         }
