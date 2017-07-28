@@ -9,17 +9,17 @@
 import GLKit
 
 /// Version spécifique de `SpriteFactory` permettant de rendre semi-transparent et de teinter les sprites.
-class TranslucentSpriteFactory : SpriteFactory {
+public class TranslucentSpriteFactory : SpriteFactory {
     
     /// Surface stockant la couleur des sprites.
     public let colorPointer: SurfaceArray<GLubyte>
     
-    override init() {
+    override public init() {
         self.colorPointer = SurfaceArray()
         super.init()
     }
     
-    override init(capacity: Int, spriteAtlas: SpriteAtlas, useMultiplePools: Bool = false) {
+    override public init(capacity: Int, spriteAtlas: SpriteAtlas, useMultiplePools: Bool = false) {
         self.colorPointer = SurfaceArray(capacity: capacity * vertexesByQuad, coordinates: coordinatesByColor)
         super.init(capacity: capacity, spriteAtlas: spriteAtlas, useMultiplePools: useMultiplePools)
     }
@@ -27,24 +27,24 @@ class TranslucentSpriteFactory : SpriteFactory {
     /// Défini la transparence du sprite donné.
     /// - Parameter alpha: Valeur de la transparence. Entre 0 (invisible) et 255 (opaque).
     /// - Parameter sprite: Sprite à modifier.
-    func setAlpha(_ alpha: GLubyte, of sprite: Sprite) {
-        colorPointer.surfaceAt(sprite.reference).setColor(with: 255, alpha: alpha)
+    public func setAlpha(_ alpha: GLubyte, of sprite: Sprite) {
+        colorPointer.surfaceAt(sprite.reference).setAlpha(alpha)
     }
     
     /// Modifie la teinte d'un sprite donné.
     /// - Parameter tint: Teinte à appliquer.
     /// - Parameter sprite: Sprite à modifier.
-    func setTint(_ tint: Color<GLubyte>, of sprite: Sprite) {
+    public func setTint(_ tint: Color<GLubyte>, of sprite: Sprite) {
         colorPointer.surfaceAt(sprite.reference).setColor(tint)
     }
     
-    override func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
+    override public func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let sprite = super.sprite(definition, info: info, after: after)
-        setAlpha(255, of: sprite)
+        colorPointer.surfaceAt(sprite.reference).setColor(with: 255, alpha: 255)
         return sprite
     }
     
-    override func draw(at translation: Point<GLfloat>) {
+    override public func draw(at translation: Point<GLfloat>) {
         Draws.bindTexture(textureAtlas)
         Draws.translateTo(translation)
         Draws.drawWith(vertexPointer.memory, texCoordPointer: texCoordPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(capacity * vertexesByQuad))
