@@ -16,6 +16,10 @@ public struct Distribution<T: Hashable> {
     public var ceils: [Int]
     public var items: [T]
     
+    public var isEmpty: Bool {
+        return top == 0
+    }
+    
     public init() {
         top = 0
         ceils = []
@@ -53,9 +57,9 @@ public struct Distribution<T: Hashable> {
     /// Ajoute l'objet donné à la distribution avec le poids donné.
     ///
     /// - Parameter item: Objet à ajouter.
-    /// - Parameter chances: Poids de l'objet. Plus la valeur est grande et plus
+    /// - Parameter chances: Poids de l'objet, `10` par défaut. Plus la valeur est grande et plus
     /// l'objet sera tiré souvent.
-    public mutating func add(item: T, withChances chances: Int) {
+    public mutating func add(item: T, withChances chances: Int = 10) {
         top += chances
         ceils.append(top)
         items.append(item)

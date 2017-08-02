@@ -8,7 +8,7 @@
 
 import GLKit
 
-public struct Point<Coordinate> : Equatable where Coordinate : Numeric {
+public struct Point<Coordinate> : Equatable, Hashable where Coordinate : Numeric {
     
     public var x: Coordinate
     public var y: Coordinate
@@ -17,6 +17,10 @@ public struct Point<Coordinate> : Equatable where Coordinate : Numeric {
         get {
             return "point[\(x)x\(y)]"
         }
+    }
+    
+    public var hashValue: Int {
+        return x.hashValue * 43 + y.hashValue * 17
     }
     
     public init() {

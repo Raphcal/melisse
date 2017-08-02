@@ -44,3 +44,10 @@ public func random(from lower: Int, to upper: Int) -> Int {
 public func random<T>(itemFrom array: [T]) -> T {
     return array[random(array.count)]
 }
+
+public extension Array {
+    /// Renvoi et supprime un élément tiré aléatoirement dans le tableau.
+    mutating func removeAtRandom() -> Element {
+        return self.remove(at: random(count))
+    }
+}

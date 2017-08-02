@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Size<Coordinate> : Equatable where Coordinate : Numeric {
+public struct Size<Coordinate> : Equatable, Hashable where Coordinate : Numeric {
     
     public var width: Coordinate
     public var height: Coordinate
@@ -17,6 +17,10 @@ public struct Size<Coordinate> : Equatable where Coordinate : Numeric {
         get {
             return "size[\(width)x\(height)]"
         }
+    }
+    
+    public var hashValue: Int {
+        return width.hashValue * 47 + height.hashValue * 23
     }
     
     public init() {

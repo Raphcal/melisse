@@ -124,10 +124,14 @@ public extension ResizableRectangle {
     
 }
 
-public struct Rectangle<Coordinate> : MovableRectangle, ResizableRectangle, Equatable where Coordinate : Numeric {
+public struct Rectangle<Coordinate> : MovableRectangle, ResizableRectangle, Equatable, Hashable where Coordinate : Numeric {
     
     public var center: Point<Coordinate>
     public var size: Size<Coordinate>
+    
+    public var hashValue: Int {
+        return center.hashValue * 11 + size.hashValue * 13
+    }
     
     public init(center: Point<Coordinate> = Point(), size: Size<Coordinate> = Size()) {
         self.center = center
