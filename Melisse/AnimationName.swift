@@ -12,17 +12,9 @@ public protocol AnimationName {
     var name: String { get }
 }
 
-public enum DefaultAnimationName: AnimationName {
-    case normal, disappear
+public struct DefaultAnimationName: AnimationName {
+    public static let normal = DefaultAnimationName(name: "normal")
+    public static let disappear = DefaultAnimationName(name: "disappear")
     
-    public var name: String {
-        get {
-            switch self {
-            case .normal:
-                return "normal"
-            case .disappear:
-                return "disappear"
-            }
-        }
-    }
+    public let name: String
 }
