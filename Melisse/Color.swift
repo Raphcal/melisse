@@ -33,6 +33,13 @@ public func ==<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Bool 
 
 public extension Color where Component : FloatingPoint {
     
+    static var white: Color<Component> {
+        return Color<Component>(white: Component(1))
+    }
+    static var black: Color<Component> {
+        return Color<Component>(white: Component(0))
+    }
+    
     init() {
         self.red = Component(0)
         self.green = Component(0)
@@ -61,6 +68,13 @@ public extension Color where Component : FloatingPoint {
 }
 
 public extension Color where Component : Integer {
+    
+    static var white: Color<Component> {
+        return Color<Component>(white: Component(0x255))
+    }
+    static var black: Color<Component> {
+        return Color<Component>(white: Component(0))
+    }
     
     init() {
         self.red = Component(0)
