@@ -14,17 +14,25 @@ public enum TextAlignment {
     case left, center, right
 }
 
+fileprivate func integerFromCharacter(_ c: Character) -> UInt16 {
+    return String(c).utf16.first!
+}
+
+fileprivate let zero = integerFromCharacter("0")
+fileprivate let nine = integerFromCharacter("9")
+fileprivate let upperCaseA = integerFromCharacter("A")
+fileprivate let upperCaseZ = integerFromCharacter("Z")
+fileprivate let lowerCaseA = integerFromCharacter("a")
+fileprivate let lowerCaseZ = integerFromCharacter("z")
+fileprivate let hiraganaあ = integerFromCharacter("あ")
+fileprivate let hiraganaゟ = integerFromCharacter("ゟ")
+fileprivate let katakanaア = integerFromCharacter("あ")
+fileprivate let katakanaヿ = integerFromCharacter("ヿ")
+fileprivate let semicolon = integerFromCharacter(":")
+fileprivate let space = integerFromCharacter(" ")
+
 /// Affiche un texte aligné en haut à gauche en utilisant un sprite par lettre.
 public class Text {
-    
-    let zero = Text.integerFromCharacter("0")
-    let nine = Text.integerFromCharacter("9")
-    let upperCaseA = Text.integerFromCharacter("A")
-    let upperCaseZ = Text.integerFromCharacter("Z")
-    let lowerCaseA = Text.integerFromCharacter("a")
-    let lowerCaseZ = Text.integerFromCharacter("z")
-    let semicolon = Text.integerFromCharacter(":")
-    let space = Text.integerFromCharacter(" ")
     
     public var origin: Point<GLfloat> {
         didSet {
@@ -109,13 +117,13 @@ public class Text {
         var sprites = [Sprite]()
         
         var index = 0
-        for c in value.utf8 {
-            if Int8(c) == space {
+        for character in value.utf16 {
+            if character == space {
                 width += font.spaceWidth
             } else {
                 // Création d'un sprite par lettre pour afficher le texte donné.
                 let sprite = spriteFor(index)
-                setFrameOf(sprite, toCharacter: Int8(c))
+                setFrameOf(sprite, toCharacter: character)
                 sprite.frame.topLeft = Point(x: left + width, y: top)
                 
                 sprites.append(sprite)
@@ -148,25 +156,33 @@ public class Text {
         return sprite
     }
     
-    private func setFrameOf(_ sprite: Sprite, toCharacter value: Int8) {
+    private func setFrameOf(_ sprite: Sprite, toCharacter value: UInt16) {
+        // Chiffre.
         if value >= zero && value <= nine {
-            // Chiffre.
             configure(sprite, animation: font.digitAnimation, frameIndex: Int(value - zero))
-            
-        } else if value >= upperCaseA && value <= upperCaseZ {
-            // Lettre majuscule.
+        }
+        // Lettre majuscule.
+        else if value >= upperCaseA && value <= upperCaseZ {
             configure(sprite, animation: font.upperCaseAnimation, frameIndex: Int(value - upperCaseA))
-            
-        } else if value >= lowerCaseA && value <= lowerCaseZ {
-            // Lettre minuscule.
+        }
+        // Lettre minuscule.
+        else if value >= lowerCaseA && value <= lowerCaseZ {
             configure(sprite, animation: font.lowerCaseAnimation, frameIndex: Int(value - lowerCaseA))
-            
-        } else if value == semicolon {
-            // "Deux points".
+        }
+        // "Deux points".
+        else if value == semicolon {
             configure(sprite, animation: font.semicolonAnimation, frameIndex: 0)
-            
-        } else {
-            // Espace ou lettre non supportée.
+        }
+        // Hiragana.
+        else if value >= hiraganaあ && value <= hiraganaゟ {
+            configure(sprite, animation: font.hiraganaAnimation, frameIndex: Int(value - hiraganaあ))
+        }
+        // Katakana.
+        else if value >= katakanaア && value <= katakanaヿ {
+            configure(sprite, animation: font.katakanaAnimation, frameIndex: Int(value - katakanaア))
+        }
+        // Lettre non supportée.
+        else {
             sprite.animation = NoAnimation()
         }
     }
@@ -175,14 +191,6 @@ public class Text {
         sprite.animation = SingleFrameAnimation(definition: sprite.definition.animations[animation.name]!)
         sprite.animation.frameIndex = frameIndex
         sprite.frame.size = sprite.animation.frame.size
-    }
-    
-    private static func integerFromCharacter(_ c: Character) -> Int8 {
-        let string = String(c)
-        let nsString = NSString(string: string)
-        let utf8Pointer = nsString.utf8String
-        
-        return utf8Pointer![0]
     }
     
 }
