@@ -45,7 +45,7 @@ public class Sprite : Equatable, HasHitbox {
     public var animation: Animation = NoAnimation()
     
     public var variables = [String : GLfloat]()
-    public var objects = [String : AnyObject]()
+    public var objects = [String : Any]()
     
     public init() {
         definition = SpriteDefinition()
