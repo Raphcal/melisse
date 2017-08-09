@@ -23,22 +23,10 @@ public struct AnimationFrame : Equatable {
     /// Peut être différent de `frame.size` si l'atlas est retina.
 	public var size: Size<GLfloat>
     
-    public init() {
-        self.frame = Rectangle()
-		self.size = Size()
-        self.hitbox = Rectangle()
-    }
-    
-    public init(width: Int, height: Int) {
-        self.frame = Rectangle(x: 0, y: 0, width: width, height: height)
-		self.size = Size(width: GLfloat(width), height: GLfloat(height))
-        self.hitbox = Rectangle()
-    }
-    
-    public init(x: Int, y: Int, width: Int, height: Int) {
+    public init(x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, hitbox: Rectangle<GLfloat> = Rectangle()) {
         self.frame = Rectangle(x: x, y: y, width: width, height: height)
 		self.size = Size(width: GLfloat(width), height: GLfloat(height))
-        self.hitbox = Rectangle()
+        self.hitbox = hitbox
     }
     
     public init(frame: Rectangle<Int>, size: Size<GLfloat>, hitbox: Rectangle<GLfloat> = Rectangle()) {
