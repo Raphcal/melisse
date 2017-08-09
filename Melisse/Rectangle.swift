@@ -130,7 +130,7 @@ public struct Rectangle<Coordinate> : MovableRectangle, ResizableRectangle, Equa
     public var size: Size<Coordinate>
     
     public var hashValue: Int {
-        return center.hashValue * 11 + size.hashValue * 13
+        return center.hashValue &* 11 &+ size.hashValue &* 13
     }
     
     public init(center: Point<Coordinate> = Point(), size: Size<Coordinate> = Size()) {

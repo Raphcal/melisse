@@ -19,7 +19,7 @@ public struct Layer : Equatable, Hashable {
     
     public var hashValue: Int {
         get {
-            return name.hashValue &* 3 + length.hashValue &* 11
+            return name.hashValue &* 3 &+ length.hashValue &* 11
         }
     }
     

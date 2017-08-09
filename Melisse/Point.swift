@@ -20,7 +20,7 @@ public struct Point<Coordinate> : Equatable, Hashable where Coordinate : Numeric
     }
     
     public var hashValue: Int {
-        return x.hashValue * 43 + y.hashValue * 17
+        return x.hashValue &* 43 &+ y.hashValue &* 17
     }
     
     public init() {

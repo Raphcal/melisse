@@ -20,7 +20,7 @@ public struct Size<Coordinate> : Equatable, Hashable where Coordinate : Numeric 
     }
     
     public var hashValue: Int {
-        return width.hashValue * 47 + height.hashValue * 23
+        return width.hashValue &* 47 &+ height.hashValue &* 23
     }
     
     public init() {

@@ -8,12 +8,19 @@
 
 import GLKit
 
-public struct Color<Component> : Equatable where Component : Numeric {
+public struct Color<Component> : Equatable, Hashable where Component : Numeric {
     
     public var red: Component
     public var green: Component
     public var blue: Component
     public var alpha: Component
+    
+    public var hashValue: Int {
+        return red.hashValue &* 5
+            &+ green.hashValue &* 193
+            &+ blue.hashValue &* 73
+            &+ alpha.hashValue &* 59
+    }
     
     public init(red: Component, green: Component, blue: Component, alpha: Component) {
         self.red = red
