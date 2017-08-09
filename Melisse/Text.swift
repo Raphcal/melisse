@@ -67,7 +67,7 @@ public class Text {
     }
     public let factory: SpriteFactory
     
-    private var sprites = [Sprite]()
+    public private(set) var sprites = [Sprite]()
     public var value = "" {
         didSet {
             if value != oldValue {
