@@ -30,7 +30,7 @@ public class Sprite : Equatable, HasHitbox {
         }
     }
     
-    let factory: SpriteFactory
+    public let factory: SpriteFactory
     
     public let reference: Int
     public let vertexSurface: Surface<GLfloat>

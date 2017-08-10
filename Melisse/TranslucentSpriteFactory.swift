@@ -24,6 +24,10 @@ public class TranslucentSpriteFactory : SpriteFactory {
         super.init(capacity: capacity, spriteAtlas: spriteAtlas, useMultiplePools: useMultiplePools)
     }
     
+    public func alpha(of sprite: Sprite) -> GLubyte {
+        return colorPointer.surfaceAt(sprite.reference).memory[3]
+    }
+    
     /// Défini la transparence du sprite donné.
     /// - Parameter alpha: Valeur de la transparence. Entre 0 (invisible) et 255 (opaque).
     /// - Parameter sprite: Sprite à modifier.
