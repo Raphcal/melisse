@@ -65,6 +65,20 @@ open class SpriteFactory {
         texCoordPointer.clear()
     }
     
+    public init(spriteAtlas: SpriteAtlas, pools: [ReferencePool]) {
+        self.capacity = pools.reduce(0) { $0 + $1.available.count }
+        self.definitions = spriteAtlas.definitions
+        self.textureAtlas = spriteAtlas.texture
+        self.pools = pools
+        
+        let vertices = capacity * vertexesByQuad
+        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
+        self.texCoordPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByTexture)
+        
+        vertexPointer.clear()
+        texCoordPointer.clear()
+    }
+    
     convenience public init(capacity: Int, useMultiplePools: Bool = false) {
         self.init(capacity: capacity, spriteAtlas: SpriteAtlas.currentAtlas!, useMultiplePools: useMultiplePools)
     }

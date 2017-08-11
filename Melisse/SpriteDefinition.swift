@@ -37,6 +37,7 @@ public struct SpriteDefinition : Equatable {
         self.distance = .behind
     }
     
+    /// Créé une copie de la définition donnée en ne gardant qu'une seule frame de l'animation donnée en tant qu'animation principale.
     public init(definition: SpriteDefinition, type: SpriteType, animation: AnimationName, frame frameIndex: Int) {
         let animation = definition.animations[animation.name]!
         let frame = animation.frames[frameIndex]

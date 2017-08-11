@@ -24,6 +24,12 @@ public class TranslucentSpriteFactory : SpriteFactory {
         super.init(capacity: capacity, spriteAtlas: spriteAtlas, useMultiplePools: useMultiplePools)
     }
     
+    override public init(spriteAtlas: SpriteAtlas, pools: [ReferencePool]) {
+        let capacity = pools.reduce(0) { $0 + $1.available.count }
+        self.colorPointer = SurfaceArray(capacity: capacity * vertexesByQuad, coordinates: coordinatesByColor)
+        super.init(spriteAtlas: spriteAtlas, pools: pools)
+    }
+    
     public func alpha(of sprite: Sprite) -> GLubyte {
         return colorPointer.surfaceAt(sprite.reference).memory[3]
     }
