@@ -8,7 +8,7 @@
 
 import GLKit
 
-public protocol Numeric : Hashable, Comparable {
+public protocol Numeric : Hashable, Comparable, Strideable, ExpressibleByIntegerLiteral {
     static func +(lhs: Self, rhs: Self) -> Self
     static func -(lhs: Self, rhs: Self) -> Self
     static func *(lhs: Self, rhs: Self) -> Self

@@ -45,6 +45,10 @@ public func nearestUpperPowerOfTwoFor(_ value: Int) -> Int {
     }
 }
 
+public func fence<N>(_ lower: N, _ value: N, _ upper: N) -> N where N : Numeric {
+    return min(max(value, lower), upper)
+}
+
 extension GLfloat {
     
     public var selfOrZeroIfNegligible: GLfloat {

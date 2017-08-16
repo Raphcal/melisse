@@ -74,10 +74,42 @@ public extension Color where Component : FloatingPoint {
     
 }
 
+public func +<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red + rhs.red, 1), green: fence(0, lhs.green + rhs.green, 1), blue: fence(0, lhs.blue + rhs.blue, 1), alpha: fence(0, lhs.alpha + rhs.alpha, 1))
+}
+
+public func +<Component>(lhs: Color<Component>, rhs: Component) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red + rhs, 1), green: fence(0, lhs.green + rhs, 1), blue: fence(0, lhs.blue + rhs, 1), alpha: fence(0, lhs.alpha + rhs, 1))
+}
+
+public func -<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red - rhs.red, 1), green: fence(0, lhs.green - rhs.green, 1), blue: fence(0, lhs.blue - rhs.blue, 1), alpha: fence(0, lhs.alpha - rhs.alpha, 1))
+}
+
+public func -<Component>(lhs: Color<Component>, rhs: Component) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red - rhs, 1), green: fence(0, lhs.green - rhs, 1), blue: fence(0, lhs.blue - rhs, 1), alpha: fence(0, lhs.alpha - rhs, 1))
+}
+
+public func *<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red * rhs.red, 1), green: fence(0, lhs.green * rhs.green, 1), blue: fence(0, lhs.blue * rhs.blue, 1), alpha: fence(0, lhs.alpha * rhs.alpha, 1))
+}
+
+public func *<Component>(lhs: Color<Component>, rhs: Component) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red * rhs, 1), green: fence(0, lhs.green * rhs, 1), blue: fence(0, lhs.blue * rhs, 1), alpha: fence(0, lhs.alpha * rhs, 1))
+}
+
+public func /<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red / rhs.red, 1), green: fence(0, lhs.green / rhs.green, 1), blue: fence(0, lhs.blue / rhs.blue, 1), alpha: fence(0, lhs.alpha / rhs.alpha, 1))
+}
+
+public func /<Component>(lhs: Color<Component>, rhs: Component) -> Color<Component> where Component : Numeric {
+    return Color(red: fence(0, lhs.red / rhs, 1), green: fence(0, lhs.green / rhs, 1), blue: fence(0, lhs.blue / rhs, 1), alpha: fence(0, lhs.alpha / rhs, 1))
+}
+
 public extension Color where Component : Integer {
     
     static var white: Color<Component> {
-        return Color<Component>(white: Component(0x255))
+        return Color<Component>(white: Component(255))
     }
     static var black: Color<Component> {
         return Color<Component>(white: Component(0))
