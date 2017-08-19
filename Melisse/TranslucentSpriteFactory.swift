@@ -24,33 +24,33 @@ public class TranslucentSpriteFactory : SpriteFactory {
         super.init(capacity: capacity, spriteAtlas: spriteAtlas, useMultiplePools: useMultiplePools)
     }
     
-    override public init(spriteAtlas: SpriteAtlas, pools: [ReferencePool]) {
+    public init(spriteAtlas: SpriteAtlas, pools: [ReferencePool], vertexPointer: SurfaceArray<GLfloat>? = nil, texCoordPointer: SurfaceArray<GLfloat>? = nil, colorPointer: SurfaceArray<GLubyte>? = nil) {
         let capacity = pools.reduce(0) { $0 + $1.available.count }
-        self.colorPointer = SurfaceArray(capacity: capacity * vertexesByQuad, coordinates: coordinatesByColor)
+        self.colorPointer = colorPointer ?? SurfaceArray(capacity: capacity * vertexesByQuad, coordinates: coordinatesByColor)
         super.init(spriteAtlas: spriteAtlas, pools: pools)
     }
     
     public func alpha(of sprite: Sprite) -> GLubyte {
-        return colorPointer.surfaceAt(sprite.reference).memory[3]
+        return colorPointer.surface(at: sprite.reference).memory[3]
     }
     
     /// Défini la transparence du sprite donné.
     /// - Parameter alpha: Valeur de la transparence. Entre 0 (invisible) et 255 (opaque).
     /// - Parameter sprite: Sprite à modifier.
     public func setAlpha(_ alpha: GLubyte, of sprite: Sprite) {
-        colorPointer.surfaceAt(sprite.reference).setAlpha(alpha)
+        colorPointer.surface(at: sprite.reference).setAlpha(alpha)
     }
     
     /// Modifie la teinte d'un sprite donné.
     /// - Parameter tint: Teinte à appliquer.
     /// - Parameter sprite: Sprite à modifier.
     public func setTint(_ tint: Color<GLubyte>, of sprite: Sprite) {
-        colorPointer.surfaceAt(sprite.reference).setColor(tint)
+        colorPointer.surface(at: sprite.reference).setColor(tint)
     }
     
     override public func sprite(_ definition: SpriteDefinition, info: SpriteInfo? = nil, after: Sprite? = nil) -> Sprite {
         let sprite = super.sprite(definition, info: info, after: after)
-        colorPointer.surfaceAt(sprite.reference).setColor(with: 255, alpha: 255)
+        colorPointer.surface(at: sprite.reference).setColor(with: 255, alpha: 255)
         return sprite
     }
     

@@ -36,8 +36,8 @@ public class Plane {
             }
         #endif
         
-        let vertexSurface = vertexPointer.surfaceAt(count)
-        let colorSurface = colorPointer.surfaceAt(count)
+        let vertexSurface = vertexPointer.surface(at: count)
+        let colorSurface = colorPointer.surface(at: count)
         count = count + 1
         return ColoredQuadrilateral(vertexSurface: vertexSurface, colorSurface: colorSurface)
     }

@@ -63,8 +63,8 @@ public class Sprite : Equatable, HasHitbox {
         self.factory = factory
         self.type = definition.type
         self.reference = reference
-        self.vertexSurface = factory.vertexPointer.surfaceAt(reference)
-        self.texCoordSurface = factory.texCoordPointer.surfaceAt(reference)
+        self.vertexSurface = factory.vertexPointer.surface(at: reference)
+        self.texCoordSurface = factory.texCoordPointer.surface(at: reference)
         
         if let normalAnimationDefinition = definition.animations[DefaultAnimationName.normal.name] {
             self.animation = normalAnimationDefinition.toAnimation()

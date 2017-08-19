@@ -23,6 +23,8 @@ public class SurfaceArray<Element> where Element: Numeric {
     
     private var cursor: Int = 0
     
+    private var didAllocateMemory: Bool
+    
     public convenience init() {
         self.init(capacity: 0, coordinates: 0)
     }
@@ -33,11 +35,22 @@ public class SurfaceArray<Element> where Element: Numeric {
         self.capacity = total
         self.coordinates = coordinates
         self.memory = UnsafeMutablePointer.allocate(capacity: total)
+        self.didAllocateMemory = true
         self.vertexesByQuad = vertexesByQuad
     }
     
+    public init(parent: SurfaceArray<Element>, start: Int, capacity: Int) {
+        self.coordinates = parent.coordinates
+        self.vertexesByQuad = parent.vertexesByQuad
+        self.capacity = capacity * coordinates * vertexesByQuad
+        self.memory = parent.memory.advanced(by: start * coordinates * vertexesByQuad)
+        self.didAllocateMemory = false
+    }
+    
     deinit {
-        memory.deinitialize()
+        if didAllocateMemory {
+            memory.deinitialize()
+        }
     }
     
     public func clear() {
@@ -47,19 +60,34 @@ public class SurfaceArray<Element> where Element: Numeric {
         }
     }
     
-    public func clearFrom(_ index: Int, count: Int) {
+    public func clear(from index: Int, count: Int) {
         let size = count * coordinates * MemoryLayout<Element>.size
         memory.advanced(by: index * coordinates).withMemoryRebound(to: Int8.self, capacity: size) { (pointer) -> Void in
             memset(pointer, 0, size)
         }
     }
     
-    public func clearQuadAt(_ index: Int) {
-        clearFrom(index * vertexesByQuad, count: vertexesByQuad)
+    @available(*, deprecated, message: "Use clear(from:, count:)")
+    public func clearFrom(_ index: Int, count: Int) {
+        clear(from: index, count: count)
     }
     
-    public func surfaceAt(_ index: Int) -> Surface<Element> {
+    public func clear(quadAt index: Int) {
+        clear(from: index * vertexesByQuad, count: vertexesByQuad)
+    }
+    
+    @available(*, deprecated, message: "Use clear(quadAt:)")
+    public func clearQuadAt(_ index: Int) {
+        clear(quadAt: index)
+    }
+    
+    public func surface(at index: Int) -> Surface<Element> {
         return Surface<Element>(memory: memory.advanced(by: index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
+    }
+    
+    @available(*, deprecated, message: "Use surface(at:)")
+    public func surfaceAt(_ index: Int) -> Surface<Element> {
+        return surface(at: index)
     }
     
     public func reset() {
