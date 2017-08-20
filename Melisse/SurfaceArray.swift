@@ -67,27 +67,12 @@ public class SurfaceArray<Element> where Element: Numeric {
         }
     }
     
-    @available(*, deprecated, message: "Use clear(from:, count:)")
-    public func clearFrom(_ index: Int, count: Int) {
-        clear(from: index, count: count)
-    }
-    
     public func clear(quadAt index: Int) {
         clear(from: index * vertexesByQuad, count: vertexesByQuad)
     }
     
-    @available(*, deprecated, message: "Use clear(quadAt:)")
-    public func clearQuadAt(_ index: Int) {
-        clear(quadAt: index)
-    }
-    
     public func surface(at index: Int) -> Surface<Element> {
         return Surface<Element>(memory: memory.advanced(by: index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
-    }
-    
-    @available(*, deprecated, message: "Use surface(at:)")
-    public func surfaceAt(_ index: Int) -> Surface<Element> {
-        return surface(at: index)
     }
     
     public func reset() {
