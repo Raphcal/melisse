@@ -41,7 +41,7 @@ public struct ColoredQuadrilateral {
     let vertexSurface: Surface<GLfloat>
     let colorSurface: Surface<GLubyte>
     
-    init(vertexSurface: Surface<GLfloat>, colorSurface: Surface<GLubyte>) {
+    public init(vertexSurface: Surface<GLfloat>, colorSurface: Surface<GLubyte>) {
         self.vertexSurface = vertexSurface
         self.colorSurface = colorSurface
     }

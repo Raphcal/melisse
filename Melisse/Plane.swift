@@ -16,11 +16,11 @@ public class Plane {
     
     public var count: Int = 0
     
-    public init(capacity: Int) {
+    public init(capacity: Int, vertexPointer: SurfaceArray<GLfloat>? = nil, colorPointer: SurfaceArray<GLubyte>? = nil) {
         self.capacity = capacity
         let vertices = capacity * vertexesByQuad
-        self.vertexPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
-        self.colorPointer = SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
+        self.vertexPointer = vertexPointer ?? SurfaceArray(capacity: vertices, coordinates: coordinatesByVertex)
+        self.colorPointer = colorPointer ?? SurfaceArray(capacity: vertices, coordinates: coordinatesByColor)
     }
     
     public func draw(at point: Point<GLfloat> = Point()) {
