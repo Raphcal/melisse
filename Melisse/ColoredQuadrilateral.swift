@@ -1,5 +1,5 @@
 //
-//  ColorQuadrilateral.swift
+//  ColoredQuadrilateral.swift
 //  Melisse
 //
 //  Created by Raphaël Calabro on 10/05/2016.

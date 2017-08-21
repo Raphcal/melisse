@@ -54,7 +54,7 @@
 		6429FEEF1CE87B850052ED4D /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
 		6429FEF01CE87B850052ED4D /* Surfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */; };
 		6429FEF11CE87B850052ED4D /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9221CD7B0E40029C1E0 /* Plane.swift */; };
-		6429FEF21CE87B850052ED4D /* ColorQuadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */; };
+		6429FEF21CE87B850052ED4D /* ColoredQuadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABE1CE20FE50024A2CA /* ColoredQuadrilateral.swift */; };
 		6429FEF31CE87B850052ED4D /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90A1CD7B0E40029C1E0 /* Animation.swift */; };
 		6429FEF41CE87B850052ED4D /* AnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B6F74E1CDE662100CECE15 /* AnimationFrame.swift */; };
 		6429FEF51CE87B850052ED4D /* AnimationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B6F7501CDE678D00CECE15 /* AnimationName.swift */; };
@@ -116,7 +116,7 @@
 		643818001CE7A1F1002C68F8 /* SurfaceArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F57A1CD9E48E000AB096 /* SurfaceArray.swift */; };
 		643818011CE7A1F1002C68F8 /* Surfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B92F1CD7B0E40029C1E0 /* Surfaces.swift */; };
 		643818021CE7A1F1002C68F8 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9221CD7B0E40029C1E0 /* Plane.swift */; };
-		643818031CE7A1F1002C68F8 /* ColorQuadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */; };
+		643818031CE7A1F1002C68F8 /* ColoredQuadrilateral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51BD8ABE1CE20FE50024A2CA /* ColoredQuadrilateral.swift */; };
 		643818041CE7A1F1002C68F8 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B90A1CD7B0E40029C1E0 /* Animation.swift */; };
 		643818051CE7A1F1002C68F8 /* AnimationFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B6F74E1CDE662100CECE15 /* AnimationFrame.swift */; };
 		643818061CE7A1F1002C68F8 /* AnimationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B6F7501CDE678D00CECE15 /* AnimationName.swift */; };
@@ -183,7 +183,7 @@
 		51BD8AB81CE1FD830024A2CA /* ImagePalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePalette.swift; sourceTree = "<group>"; };
 		51BD8ABA1CE1FDAA0024A2CA /* AlphaColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaColorPalette.swift; sourceTree = "<group>"; };
 		51BD8ABC1CE207FD0024A2CA /* ColorGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorGrid.swift; sourceTree = "<group>"; };
-		51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorQuadrilateral.swift; sourceTree = "<group>"; };
+		51BD8ABE1CE20FE50024A2CA /* ColoredQuadrilateral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColoredQuadrilateral.swift; sourceTree = "<group>"; };
 		51C476B51CFED96D00C22A38 /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		51CACEF41CE3253100F5B795 /* NoAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoAnimation.swift; sourceTree = "<group>"; };
 		51CACEFB1CE352D900F5B795 /* SingleFrameAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleFrameAnimation.swift; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				51F8B9221CD7B0E40029C1E0 /* Plane.swift */,
-				51BD8ABE1CE20FE50024A2CA /* ColorQuadrilateral.swift */,
+				51BD8ABE1CE20FE50024A2CA /* ColoredQuadrilateral.swift */,
 			);
 			name = Plane;
 			sourceTree = "<group>";
@@ -700,7 +700,7 @@
 				6429FEF01CE87B850052ED4D /* Surfaces.swift in Sources */,
 				519F80F51CECD14800211E4C /* KeyboardController.swift in Sources */,
 				6429FEF11CE87B850052ED4D /* Plane.swift in Sources */,
-				6429FEF21CE87B850052ED4D /* ColorQuadrilateral.swift in Sources */,
+				6429FEF21CE87B850052ED4D /* ColoredQuadrilateral.swift in Sources */,
 				64BB3B2E1CE897860063958F /* Audio.swift in Sources */,
 				5168964B1CEC92C800B23BD8 /* NoController.swift in Sources */,
 				6429FEF31CE87B850052ED4D /* Animation.swift in Sources */,
@@ -821,7 +821,7 @@
 				64BB38B11F2B53F600CAB9FC /* TranslucentSpriteFactory.swift in Sources */,
 				643817F61CE7A1F1002C68F8 /* Director.swift in Sources */,
 				643818091CE7A1F1002C68F8 /* LoopingAnimation.swift in Sources */,
-				643818031CE7A1F1002C68F8 /* ColorQuadrilateral.swift in Sources */,
+				643818031CE7A1F1002C68F8 /* ColoredQuadrilateral.swift in Sources */,
 				64BB3C341CEA4A1B0063958F /* TouchController.swift in Sources */,
 				643818081CE7A1F1002C68F8 /* SingleFrameAnimation.swift in Sources */,
 				6438180D1CE7A1F1002C68F8 /* AnimationDefinition.swift in Sources */,
