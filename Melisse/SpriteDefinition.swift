@@ -17,7 +17,7 @@ public struct SpriteDefinition : Equatable {
     public var type: SpriteType
     public var animations: [String:AnimationDefinition]
     public var motionName: String?
-    public var distance: Distance
+    public var distance: PoolIndex
     
     public init() {
         self.index = -1
@@ -25,7 +25,7 @@ public struct SpriteDefinition : Equatable {
         self.type = DefaultSpriteType.decoration
         self.animations = [:]
         self.motionName = nil
-        self.distance = .behind
+        self.distance = Distance.behind
     }
     
     public init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
@@ -34,7 +34,7 @@ public struct SpriteDefinition : Equatable {
         self.type = type
         self.animations = animations
         self.motionName = nil
-        self.distance = .behind
+        self.distance = Distance.behind
     }
     
     /// Créé une copie de la définition donnée en ne gardant qu'une seule frame de l'animation donnée en tant qu'animation principale.
@@ -67,7 +67,7 @@ public struct SpriteDefinition : Equatable {
         if let distance = Distance(rawValue: Streams.readInt(inputStream)) {
             self.distance = distance
         } else {
-            self.distance = .behind
+            self.distance = Distance.behind
         }
         
         self.motionName = Streams.readNullableString(inputStream)

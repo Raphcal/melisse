@@ -8,7 +8,11 @@
 
 import GLKit
 
-public enum Distance : Int {
+public protocol PoolIndex {
+    var rawValue: Int { get }
+}
+
+public enum Distance : Int, PoolIndex {
     case behind, middle, front
 }
 
