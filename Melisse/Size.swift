@@ -28,6 +28,11 @@ public struct Size<Coordinate> : Equatable, Hashable where Coordinate : Numeric 
         self.height = Coordinate(0)
     }
     
+    public init(size: Coordinate) {
+        self.width = size
+        self.height = size
+    }
+    
     public init(width: Coordinate, height: Coordinate) {
         self.width = width
         self.height = height
