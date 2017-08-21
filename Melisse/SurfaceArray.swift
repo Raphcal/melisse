@@ -39,12 +39,14 @@ public class SurfaceArray<Element> where Element: Numeric {
         self.vertexesByQuad = vertexesByQuad
     }
     
-    public init(parent: SurfaceArray<Element>, start: Int, capacity: Int) {
+    public init(parent: SurfaceArray<Element>, capacity: Int) {
         self.coordinates = parent.coordinates
         self.vertexesByQuad = parent.vertexesByQuad
         self.capacity = capacity * coordinates * vertexesByQuad
-        self.memory = parent.memory.advanced(by: start * coordinates * vertexesByQuad)
+        self.memory = parent.memory.advanced(by: parent.cursor)
         self.didAllocateMemory = false
+        
+        parent.cursor += capacity * coordinates * vertexesByQuad
     }
     
     deinit {
@@ -126,6 +128,12 @@ public class SurfaceArray<Element> where Element: Numeric {
             append(color.blue)
             append(color.alpha)
         }
+    }
+    
+    public func referencePool(capacity: Int) -> ReferencePool {
+        let start = cursor / (vertexesByQuad * coordinates)
+        self.cursor += capacity * vertexesByQuad * coordinates
+        return ReferencePool(from: start, to: start + capacity)
     }
     
 }
