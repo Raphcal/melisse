@@ -40,6 +40,15 @@ public class ReferencePool {
         self.available = available
     }
     
+    public static func pools(capacities: [Int]) -> [ReferencePool] {
+        var end = 0
+        return capacities.map {
+            let start = end
+            end = start + $0
+            return ReferencePool(from: start, to: end)
+        }
+    }
+    
     public func next(_ other: Int?) -> Int {
         if let reference = other {
             return nextAfter(reference)
