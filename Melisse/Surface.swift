@@ -77,11 +77,7 @@ public class Surface<Element : Numeric> {
     }
     
     public func setAlpha(_ alpha: Element) {
-        var index = 0
-        for _ in 0 ..< vertexesByQuad {
-            memory[index + 3] = alpha
-            index += 4
-        }
+        setColor(with: alpha, alpha: alpha)
     }
     
     public func setGradient(_ gradient: Gradient<Element>) {
