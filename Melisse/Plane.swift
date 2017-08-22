@@ -16,6 +16,10 @@ public class Plane {
     
     public var count: Int = 0
     
+    public var isEmpty: Bool {
+        return count == 0
+    }
+    
     public init(capacity: Int, vertexPointer: SurfaceArray<GLfloat>? = nil, colorPointer: SurfaceArray<GLubyte>? = nil) {
         self.capacity = capacity
         let vertices = capacity * vertexesByQuad
@@ -24,6 +28,9 @@ public class Plane {
     }
     
     public func draw(at point: Point<GLfloat> = Point()) {
+        if isEmpty {
+            return
+        }
         Draws.translateTo(point)
         Draws.drawWith(vertexPointer.memory, colorPointer: colorPointer.memory, count: GLsizei(count * vertexesByQuad))
     }
@@ -40,6 +47,10 @@ public class Plane {
         let colorSurface = colorPointer.surface(at: count)
         count = count + 1
         return ColoredQuadrilateral(vertexSurface: vertexSurface, colorSurface: colorSurface)
+    }
+    
+    public func release(quadrilateral: ColoredQuadrilateral) {
+        // TODO: Utiliser une reference pool ?
     }
     
 }

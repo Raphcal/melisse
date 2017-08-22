@@ -77,6 +77,10 @@ public class SurfaceArray<Element> where Element: Numeric {
         return Surface<Element>(memory: memory.advanced(by: index * coordinates * vertexesByQuad), coordinates: coordinates, vertexesByQuad: vertexesByQuad)
     }
     
+    public func index(of surface: Surface<Element>) -> Int {
+        return memory.distance(to: surface.memory) / (coordinates * vertexesByQuad)
+    }
+    
     public func reset() {
         cursor = 0
     }
