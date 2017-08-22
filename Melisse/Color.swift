@@ -40,13 +40,49 @@ public func ==<Component>(lhs: Color<Component>, rhs: Color<Component>) -> Bool 
 
 public extension Color where Component : FloatingPoint {
     
-    static var white: Color<Component> {
-        return Color<Component>(white: Component(1))
-    }
     static var black: Color<Component> {
-        return Color<Component>(white: Component(0))
+        return Color<Component>(white: 0)
     }
-    
+    static var darkGray: Color<Component> {
+        return Color<Component>(white: 0.333)
+    }
+    static var lightGray: Color<Component> {
+        return Color<Component>(white: 0.667)
+    }
+    static var white: Color<Component> {
+        return Color<Component>(white: 1)
+    }
+    static var red: Color<Component> {
+        return Color<Component>(red: 1, green: 0, blue: 0, alpha: 1)
+    }
+    static var green: Color<Component> {
+        return Color<Component>(red: 0, green: 1, blue: 0, alpha: 1)
+    }
+    static var blue: Color<Component> {
+        return Color<Component>(red: 0, green: 0, blue: 1, alpha: 1)
+    }
+    static var cyan: Color<Component> {
+        return Color<Component>(red: 0, green: 1, blue: 1, alpha: 1)
+    }
+    static var yellow: Color<Component> {
+        return Color<Component>(red: 1, green: 1, blue: 0, alpha: 1)
+    }
+    static var magenta: Color<Component> {
+        return Color<Component>(red: 1, green: 0, blue: 1, alpha: 1)
+    }
+    static var orange: Color<Component> {
+        return Color<Component>(red: 1, green: 0.5, blue: 0, alpha: 1)
+    }
+    static var purple: Color<Component> {
+        return Color<Component>(red: 0.5, green: 0, blue: 0.5, alpha: 1)
+    }
+    static var brown: Color<Component> {
+        return Color<Component>(red: 0.6, green: 0.4, blue: 0.2, alpha: 1)
+    }
+    static var clear: Color<Component> {
+        return Color<Component>(red: 0, green: 0, blue: 0, alpha: 0)
+    }
+ 
     init() {
         self.red = Component(0)
         self.green = Component(0)
@@ -108,11 +144,47 @@ public func /<Component>(lhs: Color<Component>, rhs: Component) -> Color<Compone
 
 public extension Color where Component : Integer {
     
-    static var white: Color<Component> {
-        return Color<Component>(white: Component(255))
-    }
     static var black: Color<Component> {
-        return Color<Component>(white: Component(0))
+        return Color<Component>(white: 0)
+    }
+    static var darkGray: Color<Component> {
+        return Color<Component>(white: 85)
+    }
+    static var lightGray: Color<Component> {
+        return Color<Component>(white: 170)
+    }
+    static var white: Color<Component> {
+        return Color<Component>(white: 0)
+    }
+    static var red: Color<Component> {
+        return Color<Component>(red: 255, green: 0, blue: 0, alpha: 255)
+    }
+    static var green: Color<Component> {
+        return Color<Component>(red: 0, green: 255, blue: 0, alpha: 255)
+    }
+    static var blue: Color<Component> {
+        return Color<Component>(red: 0, green: 0, blue: 255, alpha: 255)
+    }
+    static var cyan: Color<Component> {
+        return Color<Component>(red: 0, green: 255, blue: 255, alpha: 255)
+    }
+    static var yellow: Color<Component> {
+        return Color<Component>(red: 255, green: 255, blue: 0, alpha: 255)
+    }
+    static var magenta: Color<Component> {
+        return Color<Component>(red: 255, green: 0, blue: 255, alpha: 255)
+    }
+    static var orange: Color<Component> {
+        return Color<Component>(red: 255, green: 128, blue: 0, alpha: 255)
+    }
+    static var purple: Color<Component> {
+        return Color<Component>(red: 128, green: 0, blue: 128, alpha: 255)
+    }
+    static var brown: Color<Component> {
+        return Color<Component>(red: 154, green: 102, blue: 51, alpha: 255)
+    }
+    static var clear: Color<Component> {
+        return Color<Component>(red: 0, green: 0, blue: 0, alpha: 0)
     }
     
     init() {
