@@ -164,6 +164,10 @@ public func ==<Coordinate>(left: Rectangle<Coordinate>, right: Rectangle<Coordin
     return left.center == right.center && left.size == right.size
 }
 
+public func *<Coordinate>(left: Rectangle<Coordinate>, right: Coordinate) -> Rectangle<Coordinate> {
+    return Rectangle(center: left.center * right, size: left.size * right)
+}
+
 public extension Rectangular where Coordinate : FloatingPoint {
     
     func rotate(_ rotation: Coordinate) -> Quadrilateral<Coordinate> {
