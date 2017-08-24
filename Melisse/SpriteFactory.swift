@@ -169,6 +169,7 @@ open class SpriteFactory {
     
     public func removeSprite(_ sprite: Sprite) {
         sprite.isRemoved = true
+        sprite.hitbox = StaticHitbox()
         
         if let index = sprites.index(where: { sprite === $0 }) {
             sprites.remove(at: index)
