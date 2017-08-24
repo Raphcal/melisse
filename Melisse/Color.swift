@@ -95,9 +95,9 @@ public extension Color where Component : FloatingPoint {
         let green = (hex & 0xFF00) >> 8
         let blue = hex & 0xFF
         
-        self.red = Component(red) / GLfloat(255)
-        self.green = Component(green) / GLfloat(255)
-        self.blue = Component(blue) / GLfloat(255)
+        self.red = Component(red) / 255
+        self.green = Component(green) / 255
+        self.blue = Component(blue) / 255
         self.alpha = alpha
     }
     
