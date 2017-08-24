@@ -12,6 +12,10 @@ public struct EmptyScene: Scene {
     
     public var backgroundColor = Color<GLfloat>()
     
+    public init() {
+        // Pas de valeur à initialiser.
+    }
+    
     public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // Pas de mise à jour.
     }
