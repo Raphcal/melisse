@@ -123,9 +123,9 @@ public class Surface<Element : Numeric> {
 public extension Surface where Element: FloatingPoint, Element: Signed {
     
     func setQuadWith(left: Int, top: Int, width: Int, height: Int, direction: Direction, texture: GLKTextureInfo) {
-        setQuadWith(left: (Element(left) + Element(width) * direction.mirror) / Element(texture.width),
+        setQuadWith(left: (Element(left) + Element(width) * Element(direction.mirror)) / Element(texture.width),
                     top: Element(top) / Element(texture.height),
-                    width: (Element(width) * direction.value) / Element(texture.width),
+                    width: (Element(width) * Element(direction.value)) / Element(texture.width),
                     height: Element(height) / Element(texture.height))
     }
     

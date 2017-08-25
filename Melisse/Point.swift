@@ -65,6 +65,12 @@ public extension Point where Coordinate : FloatingPoint {
     
 }
 
+public extension Point where Coordinate == CGFloat {
+    var cgPoint: CGPoint {
+        return CGPoint(x: x, y: y)
+    }
+}
+
 // MARK: - Opérations entre instances de Point
 
 public func ==<Coordinate>(left: Point<Coordinate>, right: Point<Coordinate>) -> Bool {

@@ -43,9 +43,6 @@ public protocol Signed {
 }
 
 public protocol FloatingPoint: ExpressibleByFloatLiteral {
-    static func *(lhs: Self, rhs: GLfloat) -> Self
-    static func /(lhs: Self, rhs: GLfloat) -> Self
-    
     var squareRoot: Self { get }
     var cosinus: Self { get }
     var sinus: Self { get }
@@ -103,6 +100,55 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
 }
 
 public func %(left: GLfloat, right: GLfloat) -> GLfloat {
+    let division = left / right
+    return (division - floor(division)) * right
+}
+
+extension CGFloat : Numeric, Signed, FloatingPoint {
+    
+    public var half: CGFloat {
+        return self / 2
+    }
+    
+    public var absolute: CGFloat {
+        return abs(self)
+    }
+    
+    public var squareRoot: CGFloat {
+        return sqrt(self)
+    }
+    
+    public var cosinus: CGFloat {
+        return cos(self)
+    }
+    
+    public var sinus: CGFloat {
+        return sin(self)
+    }
+    
+    public var floored: CGFloat {
+        return floor(self)
+    }
+    
+    public static func atan2(_ lhs: CGFloat, _ rhs: CGFloat) -> CGFloat {
+        return CGFloat(Darwin.atan2(Double(lhs), Double(rhs)))
+    }
+    
+    public static func distance(_ x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat {
+        return CGFloat(simd.distance(double2(Double(x1), Double(y1)), double2(Double(x2), Double(y2))))
+    }
+    
+    public static func min(_ a: CGFloat, _ b: CGFloat, _ c: CGFloat, _ d: CGFloat) -> CGFloat {
+        return Swift.min(a, b, c, d)
+    }
+    
+    public static func max(_ a: CGFloat, _ b: CGFloat, _ c: CGFloat, _ d: CGFloat) -> CGFloat {
+        return Swift.max(a, b, c, d)
+    }
+    
+}
+
+public func %(left: CGFloat, right: CGFloat) -> CGFloat {
     let division = left / right
     return (division - floor(division)) * right
 }
