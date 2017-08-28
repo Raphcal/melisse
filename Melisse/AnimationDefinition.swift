@@ -32,6 +32,13 @@ public struct AnimationDefinition : Equatable {
         self.type = AnimationDefinition.typeFor(frames.count, looping: looping)
     }
     
+    public init(name: String = "", frames: [AnimationFrame], frequency: Int = 1, type: AnimationType) {
+        self.name = name
+        self.frames = frames
+        self.frequency = frequency
+        self.type = type
+    }
+    
     public init(inputStream : InputStream) {
         self.name = Streams.readString(inputStream)
         self.frequency = Streams.readInt(inputStream)
