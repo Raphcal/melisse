@@ -11,7 +11,11 @@ import GLKit
 
 public class TouchSensitiveZone {
     
-    public var frame: Rectangle<GLfloat>
+    public var frame: Rectangle<GLfloat> {
+        didSet {
+            hitbox = StaticHitbox(frame: frame)
+        }
+    }
     public var selection: ((_ sender: TouchSensitiveZone) -> Void)?
     
     var hitbox = StaticHitbox()
@@ -31,15 +35,36 @@ public class TouchSensitiveZone {
         }
     }
     
-    public init(frame: Rectangle<GLfloat> = Rectangle()) {
+    public init(frame: Rectangle<GLfloat> = Rectangle(), touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
         self.frame = frame
+        self.hitbox = StaticHitbox(frame: frame)
+        
+        var pressing = false
+        for touch in touches.values {
+            pressing = pressing || hitbox.collides(with: touch)
+        }
+        self.state = pressing
+        self.previousState = pressing
+    }
+    
+    public convenience init(hasFrame: HasFrame, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
+        let frame = hasFrame.frame
+        let scale = View.instance.scale
+        
+        self.init(frame: Rectangle<GLfloat>(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y), touches: touches)
     }
     
     public func update(with touches: [UnsafeRawPointer : Point<GLfloat>]) {
-        // TODO: Implémenter le zoom ?
-        let zoom: GLfloat = 1
+        var state = false
         for touch in touches.values {
-            self.state = state || hitbox.collides(with: touch * zoom)
+            state = state || hitbox.collides(with: touch)
+        }
+        
+        self.previousState = self.state
+        self.state = state
+        
+        if pressed {
+            selection?(self)
         }
     }
     

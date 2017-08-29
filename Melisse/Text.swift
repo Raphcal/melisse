@@ -32,7 +32,7 @@ fileprivate let semicolon = integerFromCharacter(":")
 fileprivate let space = integerFromCharacter(" ")
 
 /// Affiche un texte aligné en haut à gauche en utilisant un sprite par lettre.
-public class Text {
+public class Text : HasFrame {
     
     public var origin: Point<GLfloat> {
         didSet {

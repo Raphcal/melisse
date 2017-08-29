@@ -24,16 +24,18 @@ public struct View {
     /// Rapport entre la largeur et la hauteur.
     public var ratio: GLfloat = 1
     
-    /// Zoom général de la vue.
-    var zoom: GLfloat = 1
+    public var scale: Point<GLfloat> {
+        let bounds = UIScreen.main.bounds
+        return Point<GLfloat>(x: size.width / GLfloat(bounds.width), y: size.height / GLfloat(bounds.height))
+    }
     
     public mutating func setSize(_ size: Size<GLfloat>) {
         self.ratio = width / size.width
         self.size = Size(width: width, height: size.height * ratio)
     }
     
-    // TODO: Faire quelque chose de cette méthode.
-    func applyZoom() {
+    /// Charge et applique une matrice effectuant une projection orthographique correspondant à `size`.
+    func loadOrthographicMatrix(zoom: GLfloat = 1) {
         glLoadIdentity()
         let zoomedSize = size * zoom
         #if os(iOS)
@@ -42,26 +44,4 @@ public struct View {
             glOrtho(0, GLdouble(zoomedSize.width), 0, GLdouble(zoomedSize.height), -1, 1)
         #endif
     }
-    
-    // TODO: Faire quelque chose de cette méthode.
-    mutating func updateViewWithBounds(_ bounds: CGRect) {
-        #if VIEW_UPDATE_WITH_ZOOM
-            let zoom = max(
-                Float(bounds.width) / (12 * 32),
-                Float(bounds.height) / (6.8 * 32))
-            
-            self.width = GLfloat(bounds.width) / zoom
-            self.height = GLfloat(bounds.height) / zoom
-            
-            let screenWidth = GLfloat(bounds.width)
-            self.ratio = width / screenWidth
-        #else
-            let screenWidth = GLfloat(bounds.width)
-            let screenHeight = GLfloat(bounds.height)
-            
-            self.ratio = width / screenWidth
-            self.size = Size(width: width, height: screenHeight * ratio)
-        #endif
-    }
-    
 }

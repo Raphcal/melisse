@@ -28,6 +28,7 @@
 		51F73C7A1D007D93007E8276 /* MelisseViewController-Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F73C781D00799C007E8276 /* MelisseViewController-Shared.swift */; };
 		56ACEBC61D1ACD3F00038CA4 /* TouchSensitiveZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */; };
 		641F29EC1CF07466000E85E3 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
+		642497511F55483E004034C1 /* HasFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642497501F55483E004034C1 /* HasFrame.swift */; };
 		6429FED31CE879010052ED4D /* Melisse Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 6429FED21CE879010052ED4D /* Melisse Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6429FED81CE87B850052ED4D /* PerspectiveEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */; };
 		6429FED91CE87B850052ED4D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9231CD7B0E40029C1E0 /* Point.swift */; };
@@ -238,6 +239,7 @@
 		51F8B95C1CD7B15B0029C1E0 /* Draws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Draws.swift; sourceTree = "<group>"; };
 		51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 		56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchSensitiveZone.swift; sourceTree = "<group>"; };
+		642497501F55483E004034C1 /* HasFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasFrame.swift; sourceTree = "<group>"; };
 		6429FED01CE879000052ED4D /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6429FED21CE879010052ED4D /* Melisse Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Melisse Mac.h"; sourceTree = "<group>"; };
 		6429FED41CE879010052ED4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -508,6 +510,7 @@
 				6496DB2E1CDF2B1700121F0A /* SpriteInfo.swift */,
 				6440EA381CDCE85500190C3D /* SpriteType.swift */,
 				64BB38B01F2B53F600CAB9FC /* TranslucentSpriteFactory.swift */,
+				642497501F55483E004034C1 /* HasFrame.swift */,
 			);
 			name = Sprite;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				642497511F55483E004034C1 /* HasFrame.swift in Sources */,
 				643817FE1CE7A1F1002C68F8 /* ReferencePool.swift in Sources */,
 				643818071CE7A1F1002C68F8 /* NoAnimation.swift in Sources */,
 				5168964A1CEC92C700B23BD8 /* NoController.swift in Sources */,

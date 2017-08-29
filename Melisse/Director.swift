@@ -41,7 +41,7 @@ public class Director {
     }
     
     public func startWith(_ scene: Scene) {
-        View.instance.applyZoom()
+        View.instance.loadOrthographicMatrix()
         
         self.scene = scene
         scene.load()
