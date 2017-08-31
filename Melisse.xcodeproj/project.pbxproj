@@ -27,6 +27,9 @@
 		51F73C791D00799C007E8276 /* MelisseViewController-Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F73C781D00799C007E8276 /* MelisseViewController-Shared.swift */; };
 		51F73C7A1D007D93007E8276 /* MelisseViewController-Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F73C781D00799C007E8276 /* MelisseViewController-Shared.swift */; };
 		56ACEBC61D1ACD3F00038CA4 /* TouchSensitiveZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */; };
+		6408F05E1F57F803005BD212 /* PanSensitiveZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6408F05D1F57F803005BD212 /* PanSensitiveZone.swift */; };
+		6408F0611F57F88B005BD212 /* TouchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6408F0601F57F88B005BD212 /* TouchState.swift */; };
+		6408F0631F57F933005BD212 /* SensitiveZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6408F0621F57F933005BD212 /* SensitiveZone.swift */; };
 		641F29EC1CF07466000E85E3 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
 		642497511F55483E004034C1 /* HasFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642497501F55483E004034C1 /* HasFrame.swift */; };
 		6429FED31CE879010052ED4D /* Melisse Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 6429FED21CE879010052ED4D /* Melisse Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -239,6 +242,9 @@
 		51F8B95C1CD7B15B0029C1E0 /* Draws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Draws.swift; sourceTree = "<group>"; };
 		51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardListener.swift; sourceTree = "<group>"; };
 		56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchSensitiveZone.swift; sourceTree = "<group>"; };
+		6408F05D1F57F803005BD212 /* PanSensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanSensitiveZone.swift; sourceTree = "<group>"; };
+		6408F0601F57F88B005BD212 /* TouchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchState.swift; sourceTree = "<group>"; };
+		6408F0621F57F933005BD212 /* SensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensitiveZone.swift; sourceTree = "<group>"; };
 		642497501F55483E004034C1 /* HasFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasFrame.swift; sourceTree = "<group>"; };
 		6429FED01CE879000052ED4D /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6429FED21CE879010052ED4D /* Melisse Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Melisse Mac.h"; sourceTree = "<group>"; };
@@ -400,6 +406,7 @@
 		51D9F5791CD9E3FD000AB096 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6408F05F1F57F86F005BD212 /* Zone */,
 				64BB3C271CE9F2630063958F /* Controller.swift */,
 				51F8B9181CD7B0E40029C1E0 /* Input.swift */,
 				51F8B9151CD7B0E40029C1E0 /* GamepadController.swift */,
@@ -407,7 +414,6 @@
 				519F80F31CECD14200211E4C /* KeyboardController.swift */,
 				51F8B95D1CD7B15B0029C1E0 /* KeyboardListener.swift */,
 				51F8B91E1CD7B0E40029C1E0 /* NoController.swift */,
-				56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -455,6 +461,17 @@
 				6429FED01CE879000052ED4D /* Melisse.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6408F05F1F57F86F005BD212 /* Zone */ = {
+			isa = PBXGroup;
+			children = (
+				56ACEBC51D1ACD3F00038CA4 /* TouchSensitiveZone.swift */,
+				6408F05D1F57F803005BD212 /* PanSensitiveZone.swift */,
+				6408F0601F57F88B005BD212 /* TouchState.swift */,
+				6408F0621F57F933005BD212 /* SensitiveZone.swift */,
+			);
+			name = Zone;
 			sourceTree = "<group>";
 		};
 		6429FED11CE879010052ED4D /* Melisse Mac */ = {
@@ -773,6 +790,7 @@
 				643817F31CE7A1F1002C68F8 /* Operation.swift in Sources */,
 				643817E11CE7A1F1002C68F8 /* NoAudio.swift in Sources */,
 				6438180C1CE7A1F1002C68F8 /* BlinkingAnimation.swift in Sources */,
+				6408F05E1F57F803005BD212 /* PanSensitiveZone.swift in Sources */,
 				64BB3C281CE9F2630063958F /* Controller.swift in Sources */,
 				6438181A1CE7A1F1002C68F8 /* SpriteFactory.swift in Sources */,
 				5161412A1CEDD4630037C6E9 /* Textures.swift in Sources */,
@@ -792,6 +810,7 @@
 				6438180A1CE7A1F1002C68F8 /* SynchronizedLoopingAnimation.swift in Sources */,
 				643817E21CE7A1F1002C68F8 /* OpenALAudio.swift in Sources */,
 				51B04AF41CF87D6800048E46 /* PerspectiveCalibrationScene.swift in Sources */,
+				6408F0611F57F88B005BD212 /* TouchState.swift in Sources */,
 				643818051CE7A1F1002C68F8 /* AnimationFrame.swift in Sources */,
 				643818261CE7A1F1002C68F8 /* View.swift in Sources */,
 				51F73C741D007758007E8276 /* MelisseViewController-iOS.swift in Sources */,
@@ -831,6 +850,7 @@
 				6438180D1CE7A1F1002C68F8 /* AnimationDefinition.swift in Sources */,
 				643817F01CE7A1F1002C68F8 /* Streams.swift in Sources */,
 				51C476B61CFED96D00C22A38 /* Gradient.swift in Sources */,
+				6408F0631F57F933005BD212 /* SensitiveZone.swift in Sources */,
 				643817F41CE7A1F1002C68F8 /* Random.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,61 +9,35 @@
 import Foundation
 import GLKit
 
-public class TouchSensitiveZone {
+public class TouchSensitiveZone : SensitiveZone {
     
-    public var frame: Rectangle<GLfloat> {
-        didSet {
-            hitbox = StaticHitbox(frame: frame)
-        }
-    }
     public var selection: ((_ sender: TouchSensitiveZone) -> Void)?
     
-    var hitbox = StaticHitbox()
-    
-    var state = true
-    var previousState = true
-    
-    public var pressed: Bool {
-        get {
-            return state && !previousState
-        }
-    }
-    
-    public var pressing: Bool {
-        get {
-            return state
-        }
-    }
+    public var pressed = false
+    public var pressing = false
     
     public init(frame: Rectangle<GLfloat> = Rectangle(), touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
-        self.frame = frame
-        self.hitbox = StaticHitbox(frame: frame)
-        
-        var pressing = false
-        for touch in touches.values {
-            pressing = pressing || hitbox.collides(with: touch)
-        }
-        self.state = pressing
-        self.previousState = pressing
+        super.init(hitbox: StaticHitbox(frame: frame), touches: touches)
     }
     
-    public convenience init(hasFrame: HasFrame, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
+    public init(hasFrame: HasFrame, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
         let frame = hasFrame.frame
         let scale = View.instance.scale
         
-        self.init(frame: Rectangle<GLfloat>(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y), touches: touches)
+        super.init(hitbox: StaticHitbox(frame: Rectangle<GLfloat>(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y)), touches: touches)
     }
     
-    public func update(with touches: [UnsafeRawPointer : Point<GLfloat>]) {
-        var state = false
-        for touch in touches.values {
-            state = state || hitbox.collides(with: touch)
-        }
-        
-        self.previousState = self.state
-        self.state = state
-        
-        if pressed {
+    public override func touchDown(_ touch: UnsafeRawPointer, at location: Point<GLfloat>) {
+        pressing = true
+    }
+    
+    public override func touch(_ touch: UnsafeRawPointer, movedTo location: Point<GLfloat>) {
+        super.touch(touch, movedTo: location)
+        pressing = states[touch] == .touchDownInside
+    }
+    
+    public override func touchUp(_ touch: UnsafeRawPointer, withState state: TouchState) {
+        if state == .touchUpInside {
             selection?(self)
         }
     }
