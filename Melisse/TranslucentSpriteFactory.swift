@@ -41,6 +41,11 @@ public class TranslucentSpriteFactory : SpriteFactory {
         colorPointer.surface(at: sprite.reference).setAlpha(alpha)
     }
     
+    public func tint(of sprite: Sprite) -> Color<GLubyte> {
+        let memory = colorPointer.surface(at: sprite.reference).memory
+        return Color(red: memory[0], green: memory[1], blue: memory[2], alpha: memory[3])
+    }
+    
     /// Modifie la teinte d'un sprite donné.
     /// - Parameter tint: Teinte à appliquer.
     /// - Parameter sprite: Sprite à modifier.
