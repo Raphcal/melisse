@@ -154,7 +154,7 @@ public extension Color where Component : Integer {
         return Color<Component>(white: 170)
     }
     static var white: Color<Component> {
-        return Color<Component>(white: 0)
+        return Color<Component>(white: 255)
     }
     static var red: Color<Component> {
         return Color<Component>(red: 255, green: 0, blue: 0, alpha: 255)
