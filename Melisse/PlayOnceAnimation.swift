@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PlayOnceAnimation : Animation {
+public class PlayOnceAnimation : Animation {
     
     public var definition: AnimationDefinition
     public var frameIndex: Int = 0
@@ -22,7 +22,7 @@ public struct PlayOnceAnimation : Animation {
         self.startDate = Date()
     }
     
-    mutating public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         let timeSinceStart = Date().timeIntervalSince(startDate)
         let frame = Int(timeSinceStart * framesPerSecond)
         
@@ -38,7 +38,7 @@ public struct PlayOnceAnimation : Animation {
         }
     }
     
-    mutating public func start() {
+    public func start() {
         self.frameIndex = 0
         self.startDate = Date()
     }

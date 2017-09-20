@@ -90,6 +90,8 @@
 		6429FF121CE87B850052ED4D /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9191CD7B0E40029C1E0 /* Layer.swift */; };
 		6429FF141CE87B850052ED4D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B91B1CD7B0E40029C1E0 /* Map.swift */; };
 		6429FF151CE87B850052ED4D /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9311CD7B0E40029C1E0 /* View.swift */; };
+		6435B8531F727E4A00A22468 /* HasFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642497501F55483E004034C1 /* HasFrame.swift */; };
+		6435B8551F727F4D00A22468 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435B8541F727F4D00A22468 /* UIScreen.swift */; };
 		643817DB1CE7A194002C68F8 /* Melisse.h in Headers */ = {isa = PBXBuildFile; fileRef = 643817DA1CE7A194002C68F8 /* Melisse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		643817E01CE7A1F1002C68F8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D9F5721CD9E1CE000AB096 /* Audio.swift */; };
 		643817E11CE7A1F1002C68F8 /* NoAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E79521CE0CE6B0044E22F /* NoAudio.swift */; };
@@ -249,6 +251,7 @@
 		6429FED01CE879000052ED4D /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6429FED21CE879010052ED4D /* Melisse Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Melisse Mac.h"; sourceTree = "<group>"; };
 		6429FED41CE879010052ED4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6435B8541F727F4D00A22468 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		643817D81CE7A194002C68F8 /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		643817DA1CE7A194002C68F8 /* Melisse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Melisse.h; sourceTree = "<group>"; };
 		643817DC1CE7A194002C68F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -477,6 +480,7 @@
 		6429FED11CE879010052ED4D /* Melisse Mac */ = {
 			isa = PBXGroup;
 			children = (
+				6435B8541F727F4D00A22468 /* UIScreen.swift */,
 				6429FED21CE879010052ED4D /* Melisse Mac.h */,
 				6429FED41CE879010052ED4D /* Info.plist */,
 			);
@@ -630,7 +634,7 @@
 		51F8B8F41CD78DF70029C1E0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Raphaël Calabro";
 				TargetAttributes = {
 					6429FECF1CE879000052ED4D = {
@@ -641,7 +645,7 @@
 					643817D71CE7A194002C68F8 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = E6H8T594R7;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -704,6 +708,7 @@
 				6429FEE51CE87B850052ED4D /* Director.swift in Sources */,
 				6429FEE61CE87B850052ED4D /* Scene.swift in Sources */,
 				6429FEE71CE87B850052ED4D /* EmptyScene.swift in Sources */,
+				6435B8551F727F4D00A22468 /* UIScreen.swift in Sources */,
 				6429FEE81CE87B850052ED4D /* Fade.swift in Sources */,
 				6429FEE91CE87B850052ED4D /* FadeScene.swift in Sources */,
 				6429FEEA1CE87B850052ED4D /* NoFade.swift in Sources */,
@@ -721,6 +726,7 @@
 				519F80F51CECD14800211E4C /* KeyboardController.swift in Sources */,
 				6429FEF11CE87B850052ED4D /* Plane.swift in Sources */,
 				6429FEF21CE87B850052ED4D /* ColoredQuadrilateral.swift in Sources */,
+				6435B8531F727E4A00A22468 /* HasFrame.swift in Sources */,
 				64BB3B2E1CE897860063958F /* Audio.swift in Sources */,
 				5168964B1CEC92C800B23BD8 /* NoController.swift in Sources */,
 				6429FEF31CE87B850052ED4D /* Animation.swift in Sources */,
@@ -867,14 +873,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -918,14 +930,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -973,7 +991,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -998,7 +1016,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1018,7 +1036,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.rca.Melisse;
 				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1039,7 +1057,7 @@
 				PRODUCT_NAME = Melisse;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

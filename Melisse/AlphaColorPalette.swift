@@ -10,9 +10,9 @@ import GLKit
 
 open class AlphaColorPalette : ColorPalette {
     
-    static let defaultPalette = AlphaColorPalette()
+    static public let defaultPalette = AlphaColorPalette()
     
-    static let colors = [
+    static public let colors = [
         Color<GLubyte>(red: 0, green: 0, blue: 6, alpha: 255),
         Color<GLubyte>(red: 232, green: 250, blue: 255, alpha: 255),
         Color<GLubyte>(red: 235, green: 233, blue: 248, alpha: 255),
@@ -270,7 +270,7 @@ open class AlphaColorPalette : ColorPalette {
         Color<GLubyte>(red: 74, green: 0, blue: 0, alpha: 255),
         Color<GLubyte>(red: 255, green: 255, blue: 255, alpha: 255)
     ]
-    static let alphas: [GLubyte] = [255, 224, 192, 160, 128, 96, 64, 32]
+    static public let alphas: [GLubyte] = [255, 224, 192, 160, 128, 96, 64, 32]
     static let mask = 1000
     
     public var tileSize = 8

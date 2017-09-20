@@ -23,7 +23,7 @@ public struct Streams {
         
         for (name, ext) in resources {
             if let url = Bundle.main.url(forResource: name, withExtension: ext), let inputStream = InputStream(url: url) {
-                inputStreams.append(url: url, inputStream: inputStream)
+                inputStreams.append((url: url, inputStream: inputStream))
             } else {
                 return nil
             }

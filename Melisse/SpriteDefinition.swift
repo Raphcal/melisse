@@ -10,7 +10,7 @@ import Foundation
 
 public struct SpriteDefinition : Equatable {
     
-    static let defaultExtension = "sprites"
+    static public let defaultExtension = "sprites"
     
     public var index: Int
     public var name: String?

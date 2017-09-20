@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-open class MelisseViewController : GLKViewController, MelisseViewControllerType {
+open class MelisseViewController : GLKViewController, GLKViewControllerDelegate, MelisseViewControllerType {
     
     public let director = Director()
     public var updater = Director()
@@ -25,13 +25,17 @@ open class MelisseViewController : GLKViewController, MelisseViewControllerType 
     var touches: [UnsafeRawPointer : Point<GLfloat>] = [:]
     
     public func createGLContext() {
-        self.context = EAGLContext(api: .openGLES1)
+        self.delegate = self
         self.preferredFramesPerSecond = 60
+        self.context = EAGLContext(api: .openGLES1)
         
-        EAGLContext.setCurrent(context)
+        guard let context = context, EAGLContext.setCurrent(context) else {
+            NSLog("Failed to create ES context")
+            return
+        }
         
         let view = self.view as! GLKView
-        view.context = self.context!
+        view.context = context
         view.drawableDepthFormat = .format16
     }
     
@@ -44,12 +48,12 @@ open class MelisseViewController : GLKViewController, MelisseViewControllerType 
         return EmptyScene()
     }
     
-    public func update() {
+    public func glkViewControllerUpdate(_ controller: GLKViewController) {
         TouchController.instance.updateWith(touches)
         updater.updateWith(self.timeSinceLastUpdate)
     }
     
-    override open func glkView(_ view: GLKView, drawIn rect: CGRect) {
+    open override func glkView(_ view: GLKView, drawIn rect: CGRect) {
         director.draw()
     }
     

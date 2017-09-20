@@ -55,8 +55,6 @@ public extension Rectangular {
 
 public protocol MovableRectangle : Rectangular {
     
-    associatedtype Coordinate : Numeric
-    
     var center: Point<Coordinate> { get set }
     var size: Size<Coordinate> { get }
     
@@ -102,8 +100,6 @@ public extension MovableRectangle {
 }
 
 public protocol ResizableRectangle : Rectangular {
-    
-    associatedtype Coordinate : Numeric
     
     var center: Point<Coordinate> { get }
     var size: Size<Coordinate> { get set }

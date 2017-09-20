@@ -23,11 +23,11 @@ open class MelisseViewController : NSViewController, MelisseViewControllerType {
     }
     
     public func createGLContext() {
-        if let context = gameView!.openGLContext {
-            context.makeCurrentContext()
-        } else {
+        guard let context = gameView?.openGLContext else {
             NSLog("Erreur de chargement du contexte OpenGL")
+            return
         }
+        context.makeCurrentContext()
         gameView!.controller = self
     }
     
@@ -53,7 +53,8 @@ public class GameView: NSOpenGLView {
     
     func initializeDisplayLink() {
         var swapInt: GLint = 1
-        openGLContext?.setValues(&swapInt, for: NSOpenGLContextParameter.swapInterval)
+        openGLContext?.setValues(&swapInt, for: NSOpenGLContext.Parameter.swapInterval)
+        prepareOpenGL()
         
         CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
         
@@ -73,7 +74,6 @@ public class GameView: NSOpenGLView {
     
     func frameForTime(_ outputTime: CVTimeStamp) -> CVReturn {
         openGLContext?.makeCurrentContext()
-        
         CGLLockContext(openGLContext!.cglContextObj!)
         
         controller?.updater.updateWith(timeSinceLastUpdate(outputTime))

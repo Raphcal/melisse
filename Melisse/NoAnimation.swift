@@ -20,6 +20,10 @@ public struct NoAnimation : Animation {
         self.frame = frame
     }
     
+    public func start() {
+        // Pas de traitement
+    }
+    
     public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         // Pas de traitement
     }

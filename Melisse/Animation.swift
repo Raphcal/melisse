@@ -11,11 +11,11 @@ import Foundation
 
 public protocol Animation {
     
-    mutating func updateWith(_ timeSinceLastUpdate: TimeInterval)
+    func updateWith(_ timeSinceLastUpdate: TimeInterval)
     func draw(_ sprite: Sprite)
     
-    mutating func start()
-    mutating func transitionTo(_ nextAnimation: Animation) -> Animation
+    func start()
+    func transitionTo(_ nextAnimation: Animation) -> Animation
     
     var definition: AnimationDefinition { get set }
     var frameIndex: Int { get set }
@@ -40,10 +40,6 @@ public extension Animation {
     
     func draw(_ sprite: Sprite) {
         frame.draw(sprite)
-    }
-    
-    mutating func start() {
-        self.frameIndex = 0
     }
     
     func transitionTo(_ nextAnimation: Animation) -> Animation {

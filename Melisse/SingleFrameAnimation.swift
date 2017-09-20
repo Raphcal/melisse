@@ -18,8 +18,12 @@ public struct SingleFrameAnimation : Animation {
         self.definition = definition
     }
     
-    init(animation: AnimationName, from sprite: Sprite) {
+    public init(animation: AnimationName, from sprite: Sprite) {
         self.init(definition: sprite.definition.animations[animation.name]!)
+    }
+    
+    public func start() {
+        // Pas de traitement
     }
     
     public func updateWith(_ timeSinceLastUpdate: TimeInterval) {

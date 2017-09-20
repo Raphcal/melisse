@@ -12,13 +12,13 @@ import Foundation
 public protocol Motion {
     
     /// Initialisation du mouvement pour le sprite donné.
-    mutating func load(_ sprite: Sprite)
+    func load(_ sprite: Sprite)
     
     /// Nettoyage du mouvement pour le sprite donné.
-    mutating func unload(_ sprite: Sprite)
+    func unload(_ sprite: Sprite)
     
     /// Calcul et application du mouvement pour le sprite donné.
-    mutating func updateWith(_ timeSinceLastUpdate: TimeInterval, sprite: Sprite)
+    func updateWith(_ timeSinceLastUpdate: TimeInterval, sprite: Sprite)
     
 }
 

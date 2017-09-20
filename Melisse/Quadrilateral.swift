@@ -58,13 +58,13 @@ public struct Quadrilateral<Coordinate> : Equatable where Coordinate : Numeric {
     
 }
 
-public func ==<Coordinate>(left: Quadrilateral<Coordinate>, right: Quadrilateral<Coordinate>) -> Bool where Coordinate : Numeric {
+public func ==<Coordinate>(left: Quadrilateral<Coordinate>, right: Quadrilateral<Coordinate>) -> Bool {
     return left.topLeft == right.topLeft
         && left.topRight == right.topRight
         && left.bottomLeft == right.bottomLeft
         && left.bottomRight == right.bottomRight
 }
 
-public func +<Coordinate>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> where Coordinate : Numeric {
+public func +<Coordinate>(left: Quadrilateral<Coordinate>, right: Point<Coordinate>) -> Quadrilateral<Coordinate> {
     return Quadrilateral(topLeft: left.topLeft + right, topRight: left.topRight + right, bottomLeft: left.bottomLeft + right, bottomRight: left.bottomRight + right)
 }

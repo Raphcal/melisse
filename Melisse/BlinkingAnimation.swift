@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct BlinkingAnimation : Animation {
+public class BlinkingAnimation : Animation {
     
     static let Pair = 2
     
@@ -53,7 +53,11 @@ public struct BlinkingAnimation : Animation {
         self.blinkRate = blinkRate
     }
     
-    mutating public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
+    public func start() {
+        animation.start()
+    }
+    
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         time += timeSinceLastUpdate
         visible = (Int(time / blinkRate) % BlinkingAnimation.Pair) == 0
         
@@ -72,7 +76,7 @@ public struct BlinkingAnimation : Animation {
         }
     }
     
-    mutating public func transitionTo(_ nextAnimation: Animation) -> Animation {
+    public func transitionTo(_ nextAnimation: Animation) -> Animation {
         self.animation = nextAnimation
         return self
     }

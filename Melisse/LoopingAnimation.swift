@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LoopingAnimation : Animation {
+public class LoopingAnimation : Animation {
     
     public var definition: AnimationDefinition
     public var frameIndex: Int = 0
@@ -19,7 +19,11 @@ public struct LoopingAnimation : Animation {
         self.definition = definition
     }
     
-    public mutating func updateWith(_ timeSinceLastUpdate: TimeInterval) {
+    public func start() {
+        frameIndex = 0
+    }
+    
+    public func updateWith(_ timeSinceLastUpdate: TimeInterval) {
         time += timeSinceLastUpdate
         
         let elapsedFrames = Int(time * framesPerSecond)

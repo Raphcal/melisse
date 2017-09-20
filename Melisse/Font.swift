@@ -64,4 +64,5 @@ public extension Font {
 }
 
 public struct NoFont : Font {
+    public init() {}
 }
