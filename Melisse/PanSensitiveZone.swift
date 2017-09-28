@@ -10,6 +10,7 @@ import Foundation
 
 public class PanSensitiveZone : SensitiveZone {
     
+    public let frame: Rectangle<GLfloat>
     var trackedFinger: UnsafeRawPointer? = nil
     var oldLocation = Point<GLfloat>()
     
@@ -19,6 +20,7 @@ public class PanSensitiveZone : SensitiveZone {
     }
     
     public init(frame: Rectangle<GLfloat>, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
+        self.frame = frame
         let scale = View.instance.scale
         
         super.init(hitbox: StaticHitbox(frame: Rectangle<GLfloat>(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y)), touches: touches)
