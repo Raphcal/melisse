@@ -259,6 +259,7 @@
 		6440EA351CDCC89300190C3D /* Offset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offset.swift; sourceTree = "<group>"; };
 		6440EA381CDCE85500190C3D /* SpriteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteType.swift; sourceTree = "<group>"; };
 		6457C1621CDB946D00794F1D /* Sprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
+		6490A28B1F7D28A500871AAF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6496DB2C1CDF2AE200121F0A /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		6496DB2E1CDF2B1700121F0A /* SpriteInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteInfo.swift; sourceTree = "<group>"; };
 		6496DB311CDF71F900121F0A /* NoMotion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoMotion.swift; sourceTree = "<group>"; };
@@ -450,6 +451,7 @@
 		51F8B8F31CD78DF70029C1E0 = {
 			isa = PBXGroup;
 			children = (
+				6490A28B1F7D28A500871AAF /* README.md */,
 				643817CC1CE7A131002C68F8 /* Melisse */,
 				6429FED11CE879010052ED4D /* Melisse Mac */,
 				51F8B8FE1CD78DF70029C1E0 /* Products */,
