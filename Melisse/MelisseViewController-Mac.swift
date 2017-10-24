@@ -22,10 +22,8 @@ open class MelisseViewController : NSViewController, MelisseViewControllerType {
         }
     }
     
-    var mouseLocation = Point<GLfloat>()
-    var isMouseDown = false
-    
     public func createGLContext() {
+        UIScreen.main.bounds = gameView!.frame
         guard let context = gameView?.openGLContext else {
             NSLog("Erreur de chargement du contexte OpenGL")
             return
@@ -43,19 +41,6 @@ open class MelisseViewController : NSViewController, MelisseViewControllerType {
         return EmptyScene()
     }
     
-    open override func mouseDown(with event: NSEvent) {
-        isMouseDown = true
-    }
-    
-    open override func mouseUp(with event: NSEvent) {
-        isMouseDown = false
-    }
-    
-    open override func mouseMoved(with event: NSEvent) {
-        let mouseEvent = NSEvent.mouseLocation
-        mouseLocation = Point<GLfloat>(x: GLfloat(mouseEvent.x), y: GLfloat(mouseEvent.y))
-    }
-    
 }
 
 public class GameView: NSOpenGLView {
@@ -66,6 +51,8 @@ public class GameView: NSOpenGLView {
     var previousTime: TimeInterval?
     
     var target: GameView?
+    
+    var isMouseDown = false
     
     func initializeDisplayLink() {
         var swapInt: GLint = 1
@@ -92,8 +79,12 @@ public class GameView: NSOpenGLView {
         openGLContext?.makeCurrentContext()
         CGLLockContext(openGLContext!.cglContextObj!)
         
-        controller?.updater.updateWith(timeSinceLastUpdate(outputTime))
-        controller?.director.draw()
+        updateMouseLocation()
+        
+        if let controller = controller {
+            controller.updater.updateWith(timeSinceLastUpdate(outputTime))
+            controller.director.draw()
+        }
         
         CGLFlushDrawable(openGLContext!.cglContextObj!);
         CGLUnlockContext(openGLContext!.cglContextObj!);
@@ -112,6 +103,20 @@ public class GameView: NSOpenGLView {
         } else {
             return 0
         }
+    }
+    
+    open override func mouseDown(with event: NSEvent) {
+        isMouseDown = true
+    }
+    
+    open override func mouseUp(with event: NSEvent) {
+        isMouseDown = false
+    }
+    
+    private func updateMouseLocation() {
+        let location = window!.mouseLocationOutsideOfEventStream
+        
+        MouseController.instance.update(mouseLocation: Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(window!.frame.height - location.y)), isMouseDown: isMouseDown)
     }
     
 }
