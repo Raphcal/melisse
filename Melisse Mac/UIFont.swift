@@ -13,6 +13,6 @@ public typealias UIFont = NSFont
 
 public extension UIFont {
     public func withSize(_ size: CGFloat) -> UIFont {
-        return self
+        return NSFont(name: self.fontName, size: size)!
     }
 }
