@@ -22,6 +22,9 @@ open class MelisseViewController : NSViewController, MelisseViewControllerType {
         }
     }
     
+    var mouseLocation = Point<GLfloat>()
+    var isMouseDown = false
+    
     public func createGLContext() {
         guard let context = gameView?.openGLContext else {
             NSLog("Erreur de chargement du contexte OpenGL")
@@ -38,6 +41,19 @@ open class MelisseViewController : NSViewController, MelisseViewControllerType {
     
     open func initialScene() -> Scene {
         return EmptyScene()
+    }
+    
+    open override func mouseDown(with event: NSEvent) {
+        isMouseDown = true
+    }
+    
+    open override func mouseUp(with event: NSEvent) {
+        isMouseDown = false
+    }
+    
+    open override func mouseMoved(with event: NSEvent) {
+        let mouseEvent = NSEvent.mouseLocation
+        mouseLocation = Point<GLfloat>(x: GLfloat(mouseEvent.x), y: GLfloat(mouseEvent.y))
     }
     
 }

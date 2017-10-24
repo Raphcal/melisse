@@ -12,6 +12,7 @@ public class UIScreen : NSObject {
     
     static public let main = UIScreen()
     
+    public var scale: CGFloat = 1
     public var bounds = CGRect()
     
 }

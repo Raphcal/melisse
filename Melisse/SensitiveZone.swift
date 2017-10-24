@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GLKit
 
 public class SensitiveZone {
 

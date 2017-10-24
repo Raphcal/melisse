@@ -9,6 +9,7 @@
 import Foundation
 import GLKit
 
+/// Zone détectant les taps ou les clics.
 public class TouchSensitiveZone : SensitiveZone {
     
     public var selection: ((_ sender: TouchSensitiveZone) -> Void)?

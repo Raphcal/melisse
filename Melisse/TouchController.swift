@@ -24,19 +24,11 @@ public class TouchController : Controller {
     private var previousTouchCount = 0
     
     public func pressed(_ button: GamePadButton) -> Bool {
-        if let b = buttons[button] {
-            return b.pressed()
-        } else {
-            return false
-        }
+        return buttons[button]?.pressed() ?? false
     }
     
     public func pressing(_ button: GamePadButton) -> Bool {
-        if let b = buttons[button] {
-            return b.pressing()
-        } else {
-            return false
-        }
+        return buttons[button]?.pressing() ?? false
     }
     
     public func touchedScreen() -> Bool {
