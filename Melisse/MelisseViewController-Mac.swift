@@ -114,9 +114,12 @@ public class GameView: NSOpenGLView {
     }
     
     private func updateMouseLocation() {
-        let location = window!.mouseLocationOutsideOfEventStream
-        
-        MouseController.instance.update(mouseLocation: Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(window!.frame.height - location.y)), isMouseDown: isMouseDown)
+        DispatchQueue.main.async {
+            let window = self.window!
+            let location = window.mouseLocationOutsideOfEventStream
+            
+            MouseController.instance.update(mouseLocation: Point<GLfloat>(x: GLfloat(location.x), y: GLfloat(window.frame.height - location.y)), isMouseDown: self.isMouseDown)
+        }
     }
     
 }
