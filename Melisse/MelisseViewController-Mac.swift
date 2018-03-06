@@ -76,18 +76,19 @@ public class GameView: NSOpenGLView {
     }
     
     func frameForTime(_ outputTime: CVTimeStamp) -> CVReturn {
-        openGLContext?.makeCurrentContext()
-        CGLLockContext(openGLContext!.cglContextObj!)
-        
         updateMouseLocation()
         
         if let controller = controller {
             controller.updater.updateWith(timeSinceLastUpdate(outputTime))
-            controller.director.draw()
+            
+            DispatchQueue.main.sync {
+                openGLContext?.makeCurrentContext()
+                CGLLockContext(openGLContext!.cglContextObj!)
+                controller.director.draw()
+                CGLFlushDrawable(openGLContext!.cglContextObj!)
+                CGLUnlockContext(openGLContext!.cglContextObj!)
+            }
         }
-        
-        CGLFlushDrawable(openGLContext!.cglContextObj!);
-        CGLUnlockContext(openGLContext!.cglContextObj!);
         
         return kCVReturnSuccess
     }
