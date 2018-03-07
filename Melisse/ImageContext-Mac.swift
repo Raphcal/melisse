@@ -21,8 +21,8 @@ public class ImageContext {
     public init(size: CGSize, scale: CGFloat) {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         self.colorSpace = colorSpace
-        self.context = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bytesPerRow: Int(size.width) * 4, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
-        context?.scaleBy(x: 1, y: -1)
+        self.context = CGContext(data: nil, width: Int(size.width * scale), height: Int(size.height * scale), bitsPerComponent: 8, bytesPerRow: Int(size.width * scale) * 4, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
+        context?.scaleBy(x: scale, y: -scale)
         context?.translateBy(x: 0, y: -size.height)
     }
     
