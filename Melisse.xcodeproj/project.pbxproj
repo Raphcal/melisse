@@ -31,6 +31,8 @@
 		6408F0611F57F88B005BD212 /* TouchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6408F0601F57F88B005BD212 /* TouchState.swift */; };
 		6408F0631F57F933005BD212 /* SensitiveZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6408F0621F57F933005BD212 /* SensitiveZone.swift */; };
 		641F29EC1CF07466000E85E3 /* SoundSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9281CD7B0E40029C1E0 /* SoundSet.swift */; };
+		641F397D205279E6003E5931 /* PackMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641F397C205279E6003E5931 /* PackMap.swift */; };
+		641F397E205279E6003E5931 /* PackMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641F397C205279E6003E5931 /* PackMap.swift */; };
 		642497511F55483E004034C1 /* HasFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642497501F55483E004034C1 /* HasFrame.swift */; };
 		6429FED31CE879010052ED4D /* Melisse Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 6429FED21CE879010052ED4D /* Melisse Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6429FED81CE87B850052ED4D /* PerspectiveEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8B9211CD7B0E40029C1E0 /* PerspectiveEffect.swift */; };
@@ -256,6 +258,7 @@
 		6408F05D1F57F803005BD212 /* PanSensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanSensitiveZone.swift; sourceTree = "<group>"; };
 		6408F0601F57F88B005BD212 /* TouchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchState.swift; sourceTree = "<group>"; };
 		6408F0621F57F933005BD212 /* SensitiveZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensitiveZone.swift; sourceTree = "<group>"; };
+		641F397C205279E6003E5931 /* PackMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackMap.swift; sourceTree = "<group>"; };
 		642497501F55483E004034C1 /* HasFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasFrame.swift; sourceTree = "<group>"; };
 		6429FED01CE879000052ED4D /* Melisse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Melisse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6429FED21CE879010052ED4D /* Melisse Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Melisse Mac.h"; sourceTree = "<group>"; };
@@ -388,6 +391,7 @@
 		51BD8AC11CE239FB0024A2CA /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				641F397B205279BB003E5931 /* Generation */,
 				51833DDF1CE0EE79003052C8 /* Map */,
 				51BD8AC01CE239EC0024A2CA /* Plane */,
 				6440EA371CDCE84100190C3D /* Sprite */,
@@ -494,6 +498,14 @@
 				6408F0621F57F933005BD212 /* SensitiveZone.swift */,
 			);
 			name = Zone;
+			sourceTree = "<group>";
+		};
+		641F397B205279BB003E5931 /* Generation */ = {
+			isa = PBXGroup;
+			children = (
+				641F397C205279E6003E5931 /* PackMap.swift */,
+			);
+			name = Generation;
 			sourceTree = "<group>";
 		};
 		6429FED11CE879010052ED4D /* Melisse Mac */ = {
@@ -771,6 +783,7 @@
 				6429FEFC1CE87B850052ED4D /* AnimationDefinition.swift in Sources */,
 				6429FEFD1CE87B850052ED4D /* SpriteDefinition.swift in Sources */,
 				6429FEFE1CE87B850052ED4D /* Motion.swift in Sources */,
+				641F397E205279E6003E5931 /* PackMap.swift in Sources */,
 				5161413A1CEDFB8D0037C6E9 /* SpriteAtlas.swift in Sources */,
 				6429FEFF1CE87B850052ED4D /* NoMotion.swift in Sources */,
 				6429FF021CE87B850052ED4D /* Font.swift in Sources */,
@@ -864,6 +877,7 @@
 				516141391CEDFB8D0037C6E9 /* SpriteAtlas.swift in Sources */,
 				6438181B1CE7A1F1002C68F8 /* SpriteInfo.swift in Sources */,
 				51F73C7A1D007D93007E8276 /* MelisseViewController-Shared.swift in Sources */,
+				641F397D205279E6003E5931 /* PackMap.swift in Sources */,
 				6438181E1CE7A1F1002C68F8 /* ImagePalette.swift in Sources */,
 				643818151CE7A1F1002C68F8 /* Axe.swift in Sources */,
 				643818021CE7A1F1002C68F8 /* Plane.swift in Sources */,
@@ -1015,7 +1029,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DSHOW_SPRITE_MANAGEMENT";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.rca.Melisse-Mac";
 				PRODUCT_NAME = Melisse;
 				SDKROOT = macosx;
@@ -1039,7 +1053,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DSHOW_SPRITE_MANAGEMENT";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.rca.Melisse-Mac";
 				PRODUCT_NAME = Melisse;
 				SDKROOT = macosx;
