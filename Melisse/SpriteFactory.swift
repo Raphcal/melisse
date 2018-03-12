@@ -21,6 +21,7 @@ open class SpriteFactory {
     
     public let capacity: Int
     
+    public let atlas: SpriteAtlas
     public let textureAtlas: GLKTextureInfo
     
     let pools: [ReferencePool]
@@ -37,6 +38,7 @@ open class SpriteFactory {
     public init() {
         self.capacity = 0
         self.textureAtlas = GLKTextureInfo()
+        self.atlas = SpriteAtlas()
         self.pools = []
         self.definitions = []
         self.vertexPointer = SurfaceArray()
@@ -45,6 +47,8 @@ open class SpriteFactory {
     
     public init(capacity: Int, spriteAtlas: SpriteAtlas, useMultiplePools: Bool = false) {
         self.capacity = capacity
+
+        self.atlas = spriteAtlas
         self.definitions = spriteAtlas.definitions
         self.textureAtlas = spriteAtlas.texture
         
@@ -71,6 +75,8 @@ open class SpriteFactory {
     
     public init(spriteAtlas: SpriteAtlas, pools: [ReferencePool], vertexPointer: SurfaceArray<GLfloat>? = nil, texCoordPointer: SurfaceArray<GLfloat>? = nil) {
         self.capacity = pools.reduce(0) { $0 + $1.available.count }
+
+        self.atlas = spriteAtlas
         self.definitions = spriteAtlas.definitions
         self.textureAtlas = spriteAtlas.texture
         self.pools = pools
