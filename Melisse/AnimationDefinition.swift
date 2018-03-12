@@ -25,7 +25,7 @@ public struct AnimationDefinition : Equatable {
         }
     }
     
-    public init(frames: [AnimationFrame] = [], looping: Bool = false) {
+    public init(name: String = "", frames: [AnimationFrame] = [], looping: Bool = false) {
         self.name = ""
         self.frames = frames
         self.frequency = 1

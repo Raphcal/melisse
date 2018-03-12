@@ -28,9 +28,9 @@ public struct SpriteDefinition : Equatable {
         self.distance = Distance.behind
     }
     
-    public init(type: SpriteType, width: Int, height: Int, animations: [String:AnimationDefinition]) {
+    public init(name: String = "", type: SpriteType, width: Int = 0, height: Int = 0, animations: [String:AnimationDefinition]) {
         self.index = -1
-        self.name = ""
+        self.name = name
         self.type = type
         self.animations = animations
         self.motionName = nil
@@ -113,4 +113,5 @@ public struct SpriteDefinition : Equatable {
 
 public func ==(left: SpriteDefinition, right: SpriteDefinition) -> Bool {
     return left.index == right.index
+        && left.name == right.name
 }
