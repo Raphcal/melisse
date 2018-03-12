@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GLKit
 
 public protocol Packable: Hashable {
     var packSize: Size<Int> { get }
@@ -36,6 +37,15 @@ public class PackMap<Element> where Element : Packable {
             add(element)
         }
         rows = []
+    }
+    
+    /// Creates an `AnimationFrame` from the location of the given element.
+    /// - Parameter element: Element packed in this PackMap.
+    /// - Returns: a new `AnimationFrame` for the given element.
+    public func frame(with element: Element) -> AnimationFrame {
+        let scale = Int(UIScreen.main.scale)
+        let size = element.packSize
+        return AnimationFrame(frame: Rectangle(center: locations[element]! * scale, size: size * scale), size: Size(width: GLfloat(size.width), height: GLfloat(size.height)))
     }
     
     fileprivate func add(_ element: Element) {
