@@ -1,30 +1,35 @@
 //
-//  PanSensitiveZone.swift
+//  DragSensitiveZone.swift
 //  Melisse
 //
-//  Created by Raphaël Calabro on 31/08/2017.
-//  Copyright © 2017 Raphaël Calabro. All rights reserved.
+//  Created by Raphaël Calabro on 12/03/2018.
+//  Copyright © 2018 Raphaël Calabro. All rights reserved.
 //
 
-import Foundation
 import GLKit
 
-public class PanSensitiveZone : SensitiveZone {
+/// Draggable area.
+public class DragSensitiveZone : SensitiveZone {
     
-    public let frame: Rectangle<GLfloat>
+    let sprite: Sprite
     var trackedFinger: UnsafeRawPointer? = nil
     var oldLocation = Point<GLfloat>()
     
     public var translation = Point<GLfloat>()
-    public var isPaning: Bool {
+    public var isDragging: Bool {
         return trackedFinger != nil
     }
     
-    public init(frame: Rectangle<GLfloat>, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
-        self.frame = frame
-        let scale = View.instance.scale
-        
-        super.init(hitbox: StaticHitbox(frame: Rectangle<GLfloat>(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y)), touches: touches)
+    public var dragDidEnd: (() -> Void)?
+    
+    public init() {
+        self.sprite = Sprite()
+        super.init(hitbox: StaticHitbox(), touches: [:])
+    }
+    
+    public init(sprite: Sprite, touches: [UnsafeRawPointer : Point<GLfloat>] = [:]) {
+        self.sprite = sprite
+        super.init(hitbox: ScaledSpriteHitbox(sprite: sprite, scale: View.instance.scale), touches: touches)
     }
     
     public override func touchDown(_ touch: UnsafeRawPointer, at location: Point<GLfloat>) {
@@ -49,7 +54,21 @@ public class PanSensitiveZone : SensitiveZone {
             trackedFinger = nil
             translation = Point()
             oldLocation = Point()
+            
+            dragDidEnd?()
         }
+    }
+    
+}
+
+fileprivate struct ScaledSpriteHitbox : Hitbox {
+    
+    var sprite: Sprite
+    var scale: Point<GLfloat>
+    
+    var frame: Rectangle<GLfloat> {
+        let frame = sprite.hitbox.frame
+        return Rectangle(x: frame.x / scale.x, y: frame.y / scale.y, width: frame.width / scale.x, height: frame.height / scale.y)
     }
     
 }
