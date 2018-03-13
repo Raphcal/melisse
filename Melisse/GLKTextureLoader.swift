@@ -43,18 +43,20 @@ public extension GLKTextureLoader {
         throw TextureError.imageNotGenerated
     }
     
-    fileprivate static func temporaryPNGUrl(with image: CGImage) -> URL {
-        let directories = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
-        let url = NSURL(fileURLWithPath: "\(directories[0])/out.png")
-        if let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) {
-            CGImageDestinationAddImage(destination, image, nil)
-            if !CGImageDestinationFinalize(destination) {
-                NSLog("Unable to write temporary PNG at URL \(url).")
+    #if os(macOS)
+        fileprivate static func temporaryPNGUrl(with image: CGImage) -> URL {
+            let directories = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+            let url = NSURL(fileURLWithPath: "\(directories[0])/out.png")
+            if let destination = CGImageDestinationCreateWithURL(url as CFURL, kUTTypePNG, 1, nil) {
+                CGImageDestinationAddImage(destination, image, nil)
+                if !CGImageDestinationFinalize(destination) {
+                    NSLog("Unable to write temporary PNG at URL \(url).")
+                }
+            } else {
+                NSLog("Unable to use URL \(url) to create a temporary PNG.")
             }
-        } else {
-            NSLog("Unable to use URL \(url) to create a temporary PNG.")
+            return url as URL
         }
-        return url as URL
-    }
+    #endif
     
 }
