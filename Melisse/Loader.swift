@@ -42,7 +42,7 @@ class Loader {
         self.motions = Loader.motionsWithGameScene(gameScene)
     }
     
-    init(inputStream : NSInputStream, spriteFactory : SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Point) -> ()) {
+    init(inputStream : NSInputStream, spriteFactory : SpriteFactory, gameScene: GameScene, onStartPoint: (_ startPoint: Point) -> ()) {
         self.spriteFactory = spriteFactory
         
         let motions = Loader.motionsWithGameScene(gameScene)
@@ -73,7 +73,7 @@ class Loader {
         self.motions = motions
     }
     
-    convenience init?(resource : String, spriteFactory: SpriteFactory, gameScene: GameScene, onStartPoint: (startPoint: Point) -> ()) {
+    convenience init?(resource : String, spriteFactory: SpriteFactory, gameScene: GameScene, onStartPoint: (_ startPoint: Point) -> ()) {
         if let url = NSBundle.mainBundle().URLForResource(resource, withExtension: Loader.fileExtension), let inputStream = NSInputStream(URL: url) {
             inputStream.open()
             self.init(inputStream: inputStream, spriteFactory: spriteFactory, gameScene: gameScene, onStartPoint: onStartPoint)
