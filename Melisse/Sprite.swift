@@ -25,7 +25,9 @@ public class Sprite : Equatable, HasFrame, HasHitbox {
             }
             
             definition.type = newValue
-            factory.groups[newValue.group]!.append(self)
+            var group = factory.groups[newValue.group] ?? []
+            group.append(self)
+            factory.groups[newValue.group] = group
         }
     }
     
