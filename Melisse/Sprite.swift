@@ -10,9 +10,24 @@ import GLKit
 
 public class Sprite : Equatable, HasFrame, HasHitbox {
     
-    public let definition: SpriteDefinition
+    public private(set) var definition: SpriteDefinition
     public let info: SpriteInfo?
-    public var type: SpriteType = DefaultSpriteType.decoration
+    
+    public var type: SpriteType {
+        get {
+            return definition.type
+        }
+        set {
+            var oldGroup = factory.groups[definition.type.group]!
+            if let index = oldGroup.index(of: self) {
+                oldGroup.remove(at: index)
+                factory.groups[definition.type.group] = oldGroup
+            }
+            
+            definition.type = newValue
+            factory.groups[newValue.group]!.append(self)
+        }
+    }
     
     public var frame: Rectangle<GLfloat> {
         didSet {
@@ -61,7 +76,6 @@ public class Sprite : Equatable, HasFrame, HasHitbox {
         self.definition = definition
         self.info = info
         self.factory = factory
-        self.type = definition.type
         self.reference = reference
         self.vertexSurface = factory.vertexPointer.surface(at: reference)
         self.texCoordSurface = factory.texCoordPointer.surface(at: reference)
