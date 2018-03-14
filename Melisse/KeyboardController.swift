@@ -29,12 +29,24 @@ public enum KeyCode : UInt16 {
     case x = 7
 }
 
+open class KeyboardListener {
+    
+    open func keyDown(_ keyCode: UInt16) {
+        // Empty.
+    }
+    
+    open func keyUp(_ keyCode: UInt16) {
+        // Empty.
+    }
+    
+}
+
 /// Reçoit les événements du clavier et les dispatch vers le bon contrôleur.
 public class KeyboardInputSource {
 
     static public let instance = KeyboardInputSource()
 
-    public var listeners = [UInt16 : KeyboardController]()
+    public var listeners = [UInt16 : KeyboardListener]()
     
     public func keyDown(_ keyCode: UInt16) {
         listeners[keyCode]?.keyDown(keyCode)
@@ -47,7 +59,7 @@ public class KeyboardInputSource {
 }
 
 /// Contrôle au clavier.
-public class KeyboardController : Controller {
+public class KeyboardController : KeyboardListener, Controller {
     
     var buttonForKeyCode = [UInt16:GamePadButton]()
     
@@ -65,6 +77,7 @@ public class KeyboardController : Controller {
     }
     
     public init(buttons: [KeyCode : GamePadButton]) {
+        super.init()
         for button in buttons {
             let keyCode = key(button.0)
             buttonForKeyCode[keyCode] = button.1
@@ -73,7 +86,7 @@ public class KeyboardController : Controller {
         }
     }
     
-    public convenience init() {
+    public convenience override init() {
         self.init(buttons: [
             .up: .up,
             .down: .down,
@@ -98,14 +111,14 @@ public class KeyboardController : Controller {
         return buttons.contains(button)
     }
     
-    func keyDown(_ keyCode: UInt16) {
+    public override func keyDown(_ keyCode: UInt16) {
         if let button = buttonForKeyCode[keyCode] {
             previousStates[button] = buttons.contains(button)
             buttons.insert(button)
         }
     }
     
-    func keyUp(_ keyCode: UInt16) {
+    public override func keyUp(_ keyCode: UInt16) {
         if let button = buttonForKeyCode[keyCode] {
             buttons.remove(button)
             previousStates[button] = false
@@ -150,3 +163,32 @@ class KeyState {
     }
     
 }
+
+public class KeyUpKeyboardListener : KeyboardListener {
+    
+    let keyUp: (_ keyCode: UInt16) -> Void
+    
+    public init(keyUp: @escaping (_ keyCode: UInt16) -> Void) {
+        self.keyUp = keyUp
+    }
+    
+    public override func keyUp(_ keyCode: UInt16) {
+        keyUp(keyCode)
+    }
+    
+}
+
+public class KeyDownKeyboardListener : KeyboardListener {
+    
+    let keyDown: (_ keyCode: UInt16) -> Void
+    
+    public init(keyDown: @escaping (_ keyCode: UInt16) -> Void) {
+        self.keyDown = keyDown
+    }
+    
+    public override func keyDown(_ keyCode: UInt16) {
+        keyDown(keyCode)
+    }
+    
+}
+
