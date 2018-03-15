@@ -31,6 +31,10 @@ public enum KeyCode : UInt16 {
 
 open class KeyboardListener {
     
+    public init() {
+        // Empty.
+    }
+    
     open func keyDown(_ keyCode: UInt16) {
         // Empty.
     }
