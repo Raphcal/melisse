@@ -31,7 +31,7 @@ public struct View {
     
     public mutating func setSize(_ size: Size<GLfloat>) {
         self.ratio = width / size.width
-        self.size = Size(width: width, height: size.height * ratio)
+        self.size = Size(width: width, height: (size.height * ratio).floored)
     }
     
     /// Charge et applique une matrice effectuant une projection orthographique correspondant à `size`.
