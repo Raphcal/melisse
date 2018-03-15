@@ -46,8 +46,23 @@ public func random<T>(itemFrom array: [T]) -> T {
 }
 
 public extension Array {
+    /// Returned a copy of this array shuffled using the Fisher–Yates algorithm.
+    var shuffled: [Element] {
+        var array = self
+        array.shuffle()
+        return array
+    }
+    
     /// Renvoi et supprime un élément tiré aléatoirement dans le tableau.
     mutating func removeAtRandom() -> Element {
         return self.remove(at: random(count))
+    }
+    
+    /// Shuffle the array in place using the Fisher–Yates algorithm.
+    mutating func shuffle() {
+        for pass in stride(from: self.count - 1, to: 1, by: -1) {
+            let randomIndex = random(from: 0, to: pass)
+            (self[pass], self[randomIndex]) = (self[randomIndex], self[pass])
+        }
     }
 }
