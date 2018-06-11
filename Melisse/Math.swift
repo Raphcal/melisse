@@ -33,16 +33,16 @@ public func toDegree(_ radian: GLfloat) -> GLfloat {
 }
 
 public func nearestUpperPowerOfTwoFor(_ value: Int) -> Int {
-    var pot = 0
-    while true {
-        let power = Int(pow(2, Float(pot)))
-        let surface = power * power
-        
-        if surface >= value {
-            return power
-        }
-        pot += 1
-    }
+    var powerOfTwo = value - 1
+    powerOfTwo |= powerOfTwo >> 1
+    powerOfTwo |= powerOfTwo >> 2
+    powerOfTwo |= powerOfTwo >> 4
+    powerOfTwo |= powerOfTwo >> 8
+    powerOfTwo |= powerOfTwo >> 16
+    #if CPU_TYPE_ARM64
+    powerOfTwo |= powerOfTwo >> 32
+    #endif
+    return powerOfTwo + 1
 }
 
 public func fence<N>(_ lower: N, _ value: N, _ upper: N) -> N where N : Numeric {
