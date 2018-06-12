@@ -42,7 +42,7 @@ public struct Streams {
             result = buffer[0]
         }
         
-        buffer.deinitialize()
+        buffer.deallocate()
         
         return result
     }
@@ -69,7 +69,7 @@ public struct Streams {
             result = 0
         }
         
-        buffer.deinitialize()
+        buffer.deallocate()
         
         return result
     }
@@ -79,7 +79,7 @@ public struct Streams {
         buffer[0] = Int32(int)
         
         writeBytes(buffer, count: integerSize, outputStream: outputStream)
-        buffer.deinitialize()
+        buffer.deallocate()
     }
     
     public static func writeCharacter(_ character: Character, outputStream: OutputStream) {
@@ -87,7 +87,7 @@ public struct Streams {
         buffer[0] = character
         
         writeBytes(buffer, count: characterSize, outputStream: outputStream)
-        buffer.deinitialize()
+        buffer.deallocate()
     }
     
     public static func readFloat(_ inputStream : InputStream) -> Float {
@@ -102,7 +102,7 @@ public struct Streams {
             result = 0
         }
         
-        buffer.deinitialize()
+        buffer.deallocate()
         
         return result
     }
@@ -119,7 +119,7 @@ public struct Streams {
             result = 0
         }
         
-        buffer.deinitialize()
+        buffer.deallocate()
         
         return result
     }
@@ -174,7 +174,7 @@ public struct Streams {
             string = ""
         }
         
-        buffer.deinitialize()
+        buffer.deallocate()
         
         return string
     }
@@ -210,7 +210,7 @@ public struct Streams {
         pointer[3] = bytes[start + 3]
         
         let float = pointer.withMemoryRebound(to: Float32.self, capacity: 1) { $0[0] }
-        pointer.deinitialize()
+        pointer.deallocate()
         
         return (float: float, readCount: 4)
     }
@@ -225,7 +225,7 @@ public struct Streams {
         let length = pointer.withMemoryRebound(to: Int32.self, capacity: 1) {
             Int($0[0]) * Streams.characterSize
         }
-        pointer.deinitialize()
+        pointer.deallocate()
         
         var read = start + 4
         
@@ -239,7 +239,7 @@ public struct Streams {
             read += length
             
             string = String(data: Data(bytes: buffer, count: length), encoding: String.Encoding.utf16LittleEndian)!
-            buffer.deinitialize()
+            buffer.deallocate()
             
         } else {
             string = ""

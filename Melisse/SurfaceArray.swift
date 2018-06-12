@@ -51,7 +51,7 @@ public class SurfaceArray<Element> where Element: Numeric {
     
     deinit {
         if didAllocateMemory {
-            memory.deinitialize()
+            memory.deallocate()
         }
     }
     

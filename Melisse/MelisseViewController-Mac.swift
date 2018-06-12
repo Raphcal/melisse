@@ -64,7 +64,10 @@ public class GameView: NSOpenGLView {
         target = self
         CVDisplayLinkSetOutputCallback(displayLink!, { (displayLink, now, outputTime, flagsIn, flagsOut, displayLinkContext) -> CVReturn in
             if let gameViewRef = displayLinkContext?.assumingMemoryBound(to: GameView.self) {
-                return gameViewRef[0].frameForTime(outputTime[0])
+                DispatchQueue.main.sync {
+                    gameViewRef[0].frameForTime(outputTime[0])
+                }
+                return kCVReturnSuccess
             } else {
                 return kCVReturnError
             }
@@ -75,22 +78,17 @@ public class GameView: NSOpenGLView {
         CVDisplayLinkStart(displayLink!)
     }
     
-    func frameForTime(_ outputTime: CVTimeStamp) -> CVReturn {
+    func frameForTime(_ outputTime: CVTimeStamp) {
         updateMouseLocation()
         
         if let controller = controller {
+            openGLContext?.makeCurrentContext()
+            CGLLockContext(openGLContext!.cglContextObj!)
             controller.updater.updateWith(timeSinceLastUpdate(outputTime))
-            
-            DispatchQueue.main.sync {
-                openGLContext?.makeCurrentContext()
-                CGLLockContext(openGLContext!.cglContextObj!)
-                controller.director.draw()
-                CGLFlushDrawable(openGLContext!.cglContextObj!)
-                CGLUnlockContext(openGLContext!.cglContextObj!)
-            }
+            controller.director.draw()
+            CGLFlushDrawable(openGLContext!.cglContextObj!)
+            CGLUnlockContext(openGLContext!.cglContextObj!)
         }
-        
-        return kCVReturnSuccess
     }
     
     func timeSinceLastUpdate(_ outputTime: CVTimeStamp) -> TimeInterval {

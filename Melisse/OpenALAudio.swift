@@ -159,7 +159,7 @@ public class OpenALAudio: Audio {
         
         // Lecture du son en mémoire.
         let dataSize = UInt32(fileLengthInFrames * Int64(outputFormat.mBytesPerFrame))
-        let data = UnsafeMutableRawPointer.allocate(bytes: Int(dataSize), alignedTo: 16)
+        let data = UnsafeMutableRawPointer.allocate(byteCount: Int(dataSize), alignment: 16)
         
         var dataBuffer = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: outputFormat.mChannelsPerFrame, mDataByteSize: dataSize, mData: data))
         
@@ -178,7 +178,7 @@ public class OpenALAudio: Audio {
             print("Erreur lors de l'ouverture du son à l'URL '\(URL)', ExtAudioFileRead FAILED, Error = \(status)")
         }
         
-        data.deallocate(bytes: Int(dataSize), alignedTo: 16)
+        data.deallocate()
         ExtAudioFileDispose(fileReference!)
     }
     
@@ -248,7 +248,7 @@ class AudioSources {
     
     deinit {
         alDeleteSources(self.numberOfSources, sources)
-        sources.deinitialize()
+        sources.deallocate()
     }
     
 }
@@ -273,7 +273,7 @@ class AudioBuffers {
     
     deinit {
         alDeleteBuffers(numberOfBuffers, buffers)
-        buffers.deinitialize()
+        buffers.deallocate()
     }
     
 }
