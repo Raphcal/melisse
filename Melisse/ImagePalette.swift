@@ -33,7 +33,7 @@ open class ImagePalette : Palette {
     public var tileSize: Int
     public var padding: Int
     
-    public let functions: [[UInt8]?]
+    public let functions: [Melisse.Operation?]
     
     public let parentPath: String?
     

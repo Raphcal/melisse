@@ -19,7 +19,7 @@ enum TileType {
 class Tile {
     
     let type : TileType = .Bottom
-    let operation : [UInt8]? = nil
+    let operation : Melisse.Operation? = nil
     
     func top(x: GLfloat) -> GLfloat {
         return Operation.execute(operation, x: x)

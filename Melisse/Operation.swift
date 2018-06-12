@@ -30,122 +30,17 @@ enum ByteCode : UInt8 {
     case spriteHitboxTop = 0x68
 }
 
-public struct Operation {
+public typealias Operation = [UInt8]
+
+public extension Array where Element == UInt8 {
     
-    public static func execute(_ operation: [UInt8]?, x: GLfloat, or defaultValue: GLfloat = 0) -> GLfloat {
-        if let bytes = operation {
-            var stack = execute(bytes, x: x, sprite: nil)
-            return stack.removeLast()
-        } else {
-            return defaultValue
-        }
-    }
-    
-    public static func execute(_ operation: [UInt8]?, sprite: Sprite) {
-        if let bytes = operation {
-            _ = execute(bytes, x: 0, sprite: sprite)
-        }
-    }
-    
-    private static func execute(_ bytes: [UInt8], x: GLfloat, sprite: Sprite?) -> [GLfloat] {
-        var index = 0
-        var stack = [GLfloat]()
-        stack.reserveCapacity(bytes.count)
-        
-        while index < bytes.count {
-            if let b = ByteCode(rawValue: bytes[index]) {
-                index += 1
-                switch b  {
-                case .add:
-                    stack.append(stack.removeLast() + stack.removeLast())
-                    
-                case .substract:
-                    let substracted = stack.removeLast()
-                    stack.append(stack.removeLast() - substracted)
-                    
-                case .multiply:
-                    stack.append(stack.removeLast() * stack.removeLast())
-                    
-                case .divide:
-                    let divisor = stack.removeLast()
-                    stack.append(stack.removeLast() / divisor)
-                    
-                case .pow:
-                    let exponent = stack.removeLast()
-                    stack.append(pow(stack.removeLast(), exponent))
-                    
-                case .negative:
-                    stack.append(-stack.removeLast())
-                    
-                case .constant:
-                    let value = Streams.readFloatFromByteArray(bytes, atIndex: index)
-                    stack.append(value.float)
-                    index += value.readCount
-                    
-                case .x:
-                    stack.append(x)
-                    
-                case .pi:
-                    stack.append(GLfloat.pi)
-                    
-                case .e:
-                    stack.append(GLfloat(M_E))
-                    
-                case .minimum:
-                    stack.append(min(stack.removeLast(), stack.removeLast()))
-                    
-                case .maximum:
-                    stack.append(max(stack.removeLast(), stack.removeLast()))
-                    
-                case .cosinus:
-                    stack.append(cos(stack.removeLast()))
-                    
-                case .sinus:
-                    stack.append(sin(stack.removeLast()))
-                    
-                case .squareRoot:
-                    let last = stack.removeLast()
-                    if last >= 0 {
-                        stack.append(sqrt(last))
-                    } else {
-                        stack.append(-1)
-                    }
-                     
-                case .zoom:
-                    break
-                    
-                case .spriteVariable:
-                    let value = Streams.readStringFromByteArray(bytes, atIndex: index)
-                    sprite!.variables[value.string] = stack.removeLast()
-                    index += value.readCount
-                    
-                case .spriteDirection:
-                    sprite!.direction = Direction(rawValue: Int(stack.removeLast()))!
-                    
-                case .spriteHitboxTop:
-                    /*
-                    let hitboxTop = stack.removeLast()
-                    
-                    if let hitbox = sprite!.hitbox as? SimpleHitbox {
-                        hitbox.height -= hitboxTop
-                        hitbox.offset.y = hitboxTop
-                    }
-                     */
-                    print("SpriteHitboxTop is not supported yet.")
-                }
-            }
-        }
-        
-        return stack
-    }
-    
-    public static func description(_ operation: [UInt8]?) -> String {
-        if let bytes = operation {
+    public var operationDescription: String {
+        get {
             var index = 0
             var stack = [String]()
             
-            while index < bytes.count {
-                if let b = ByteCode(rawValue: bytes[index]) {
+            while index < count {
+                if let b = ByteCode(rawValue: self[index]) {
                     index += 1
                     switch b  {
                     case .add:
@@ -172,7 +67,7 @@ public struct Operation {
                         stack.append("-\(stack.removeLast())")
                         
                     case .constant:
-                        let value = Streams.readFloatFromByteArray(bytes, atIndex: index)
+                        let value = Streams.readFloatFromByteArray(self, atIndex: index)
                         stack.append("\(value.float)")
                         index += value.readCount
                         
@@ -206,7 +101,7 @@ public struct Operation {
                         stack.append("zoom(\(stack.removeLast()))")
                         
                     case .spriteVariable:
-                        let value = Streams.readStringFromByteArray(bytes, atIndex: index)
+                        let value = Streams.readStringFromByteArray(self, atIndex: index)
                         stack.append("sprite.variables[\(value.string)] = \(stack.removeLast())")
                         index += value.readCount
                         
@@ -228,9 +123,99 @@ public struct Operation {
             }
             
             return result
-        } else {
-            return ""
         }
     }
     
+    public func execute(x: GLfloat) -> GLfloat {
+        return execute(x: x, sprite: nil).last!
+    }
+    
+    public func execute(sprite: Sprite) {
+        _ = execute(x: 0, sprite: sprite)
+    }
+    
+    private func execute(x: GLfloat, sprite: Sprite?) -> [GLfloat] {
+        var index = 0
+        var stack = [GLfloat]()
+        stack.reserveCapacity(count)
+        
+        while index < count {
+            if let b = ByteCode(rawValue: self[index]) {
+                index += 1
+                switch b  {
+                case .add:
+                    stack.append(stack.removeLast() + stack.removeLast())
+                    
+                case .substract:
+                    let substracted = stack.removeLast()
+                    stack.append(stack.removeLast() - substracted)
+                    
+                case .multiply:
+                    stack.append(stack.removeLast() * stack.removeLast())
+                    
+                case .divide:
+                    let divisor = stack.removeLast()
+                    stack.append(stack.removeLast() / divisor)
+                    
+                case .pow:
+                    let exponent = stack.removeLast()
+                    stack.append(pow(stack.removeLast(), exponent))
+                    
+                case .negative:
+                    stack.append(-stack.removeLast())
+                    
+                case .constant:
+                    let value = Streams.readFloatFromByteArray(self, atIndex: index)
+                    stack.append(value.float)
+                    index += value.readCount
+                    
+                case .x:
+                    stack.append(x)
+                    
+                case .pi:
+                    stack.append(GLfloat.pi)
+                    
+                case .e:
+                    stack.append(GLfloat(M_E))
+                    
+                case .minimum:
+                    stack.append(Swift.min(stack.removeLast(), stack.removeLast()))
+                    
+                case .maximum:
+                    stack.append(Swift.max(stack.removeLast(), stack.removeLast()))
+                    
+                case .cosinus:
+                    stack.append(cos(stack.removeLast()))
+                    
+                case .sinus:
+                    stack.append(sin(stack.removeLast()))
+                    
+                case .squareRoot:
+                    let last = stack.removeLast()
+                    if last >= 0 {
+                        stack.append(sqrt(last))
+                    } else {
+                        stack.append(-1)
+                    }
+                    
+                case .zoom:
+                    break
+                    
+                case .spriteVariable:
+                    let value = Streams.readStringFromByteArray(self, atIndex: index)
+                    sprite!.variables[value.string] = stack.removeLast()
+                    index += value.readCount
+                    
+                case .spriteDirection:
+                    sprite!.direction = Direction(rawValue: Int(stack.removeLast()))!
+                    
+                case .spriteHitboxTop:
+                    print("SpriteHitboxTop is not supported yet.")
+                }
+            }
+        }
+        
+        return stack
+    }
+
 }

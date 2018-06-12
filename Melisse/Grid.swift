@@ -60,8 +60,8 @@ open class Grid {
         if let tile = layer.tileAt(point), let tileHitbox = palette.functions[tile] {
             let pixel = Layer.pointInTileAt(point)
             
-            let backY = Operation.execute(tileHitbox, x: pixel.x)
-            let frontY = Operation.execute(tileHitbox, x: pixel.x + direction.value)
+            let backY = tileHitbox.execute(x: pixel.x)
+            let frontY = tileHitbox.execute(x: pixel.x + direction.value)
             
             return atan2(frontY - backY, direction.value)
         } else {
@@ -85,7 +85,7 @@ open class Grid {
                 let x = point.x + GLfloat(index) * direction.value
                 let pixel = Layer.pointInTileAt(Point(x: x, y: point.y))
                 
-                let y = Operation.execute(tileHitbox, x: pixel.x)
+                let y = tileHitbox.execute(x: pixel.x)
                 if (pixel.y > y) {
                     return x
                 }

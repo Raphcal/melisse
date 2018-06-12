@@ -277,7 +277,7 @@ open class AlphaColorPalette : ColorPalette {
     var size = 4
     
     public var colors: [Color<GLubyte>]
-    public let functions = [[UInt8]?]()
+    public let functions = [Melisse.Operation?]()
     
     public init(colors: [Color<GLubyte>] = AlphaColorPalette.colors) {
         self.colors = colors
