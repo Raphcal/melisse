@@ -9,11 +9,11 @@
 import GLKit
 
 public func smoothStep(_ from: GLfloat, to: GLfloat, value: GLfloat) -> GLfloat {
-	return pow(sin(GLfloat.pi / 2 * min(max(value - from, 0) / to, 1)), 2)
+	return pow(sin(GLfloat.pi / 2 * min(max(value - from, 0) / (to - from), 1)), 2)
 }
     
 public func smoothStep(_ from: TimeInterval, to: TimeInterval, value: TimeInterval) -> GLfloat {
-    return GLfloat(pow(sin(TimeInterval(TimeInterval.pi / 2) * min(max(value - from, 0) / to, 1)), 2))
+    return GLfloat(pow(sin(TimeInterval(TimeInterval.pi / 2) * min(max(value - from, 0) / (to - from), 1)), 2))
 }
     
 public func square(_ value: GLfloat) -> GLfloat {
