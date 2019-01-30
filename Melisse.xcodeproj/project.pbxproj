@@ -685,7 +685,7 @@
 					6429FECF1CE879000052ED4D = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = E6H8T594R7;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					643817D71CE7A194002C68F8 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1057,7 +1057,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1082,7 +1082,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
