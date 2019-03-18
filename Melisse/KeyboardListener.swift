@@ -19,7 +19,7 @@ class KeyboardListener: NSWindowController {
     
     override func keyDown(theEvent: NSEvent) {
         KeyboardInputSource.instance.keyDown(theEvent.keyCode)
-    }
+    } 
     
     override func keyUp(theEvent: NSEvent) {
         KeyboardInputSource.instance.keyUp(theEvent.keyCode)

@@ -172,10 +172,9 @@ public extension Rectangular where Coordinate : FloatingPoint {
     
     func rotate(_ rotation: Coordinate, withPivot pivot: Point<Coordinate>) -> Quadrilateral<Coordinate> {
         var vertices = [Point<Coordinate>]()
-        let reference = Point<Coordinate>(x: pivot.x, y: pivot.y)
         for vertex in [Point<Coordinate>(x: left, y: top), Point<Coordinate>(x: right, y: top), Point<Coordinate>(x: left, y: bottom), Point<Coordinate>(x: right, y: bottom)] {
-            let length = vertex.distanceTo(reference)
-            let angle = vertex.angleTo(reference)
+            let length = vertex.distanceTo(pivot)
+            let angle = vertex.angleTo(pivot)
             vertices.append(Point(x: pivot.x + (angle + rotation).cosinus * length, y: pivot.y + (angle + rotation).sinus * length))
         }
         return Quadrilateral<Coordinate>(vertices: vertices)
