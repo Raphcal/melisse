@@ -19,7 +19,7 @@ public class Sprite : Equatable, HasFrame, HasHitbox {
         }
         set {
             var oldGroup = factory.groups[definition.type.group]!
-            if let index = oldGroup.index(of: self) {
+            if let index = oldGroup.firstIndex(of: self) {
                 oldGroup.remove(at: index)
                 factory.groups[definition.type.group] = oldGroup
             }

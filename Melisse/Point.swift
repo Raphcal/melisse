@@ -19,10 +19,6 @@ public struct Point<Coordinate> : Equatable, Hashable where Coordinate : Numeric
         }
     }
     
-    public var hashValue: Int {
-        return x.hashValue &* 43 &+ y.hashValue &* 17
-    }
-    
     public init() {
         self.x = Coordinate(0)
         self.y = Coordinate(0)
@@ -42,7 +38,12 @@ public struct Point<Coordinate> : Equatable, Hashable where Coordinate : Numeric
         self.x = rectangle.x
         self.y = rectangle.bottom
     }
-    
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+    }
+
 }
 
 public extension Point where Coordinate : FloatingPoint {

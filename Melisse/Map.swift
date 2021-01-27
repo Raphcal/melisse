@@ -78,9 +78,7 @@ public struct Map : Equatable {
     }
     
     public func indexOfLayer(named name: String) -> Int? {
-        return layers.index(where: { (layer) -> Bool in
-            layer.name == name
-        })
+        return layers.firstIndex(where: { $0.name == name })
     }
     
     public func layerNamed(_ name: String) -> Layer? {

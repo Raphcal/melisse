@@ -12,7 +12,7 @@ import Cocoa
 public typealias UIFont = NSFont
 
 public extension UIFont {
-    public func withSize(_ size: CGFloat) -> UIFont {
+    func withSize(_ size: CGFloat) -> UIFont {
         return NSFont(name: self.fontName, size: size)!
     }
 }

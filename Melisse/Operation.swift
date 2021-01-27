@@ -34,7 +34,7 @@ public typealias Operation = [UInt8]
 
 public extension Array where Element == UInt8 {
     
-    public var operationDescription: String {
+    var operationDescription: String {
         get {
             var index = 0
             var stack = [String]()
@@ -126,11 +126,11 @@ public extension Array where Element == UInt8 {
         }
     }
     
-    public func execute(x: GLfloat) -> GLfloat {
+    func execute(x: GLfloat) -> GLfloat {
         return execute(x: x, sprite: nil).last!
     }
     
-    public func execute(sprite: Sprite) {
+    func execute(sprite: Sprite) {
         _ = execute(x: 0, sprite: sprite)
     }
     

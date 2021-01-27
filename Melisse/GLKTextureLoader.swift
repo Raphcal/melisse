@@ -19,7 +19,7 @@ public enum TextureError : Error {
 public extension GLKTextureLoader {
     
     /// Creates a GLKTexture from the given pack map.
-    public static func texture<P>(with packMap: PackMap<P>) throws -> GLKTextureInfo where P : Paintable {
+    static func texture<P>(with packMap: PackMap<P>) throws -> GLKTextureInfo where P : Paintable {
         let imageContext = ImageContext(size: CGSize(width: packMap.size.width, height: packMap.size.height), scale: UIScreen.main.scale)
         
         if let context = imageContext.context {

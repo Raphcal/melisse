@@ -12,7 +12,7 @@ import GLKit
 public extension CGColor {
 
     /// Creates a `CGColor` instance from a Melisse color.
-    public static func with(color: Color<GLfloat>) -> CGColor {
+    static func with(color: Color<GLfloat>) -> CGColor {
         #if os(iOS)
             return UIColor(red: CGFloat(color.red), green: CGFloat(color.green), blue: CGFloat(color.blue), alpha: CGFloat(color.alpha)).cgColor
         #elseif os(macOS)
@@ -21,7 +21,7 @@ public extension CGColor {
     }
     
     /// Creates a `CGColor` instance from a Melisse color.
-    public static func with(color: Color<GLubyte>) -> CGColor {
+    static func with(color: Color<GLubyte>) -> CGColor {
         #if os(iOS)
             return UIColor(red: CGFloat(color.red) / 255, green: CGFloat(color.green) / 255, blue: CGFloat(color.blue) / 255, alpha: CGFloat(color.alpha) / 255).cgColor
         #elseif os(macOS)

@@ -39,7 +39,7 @@ public typealias TouchController = MouseController
 
 public extension TouchController {
     
-    public var touches: [UnsafeRawPointer : Point<GLfloat>] {
+    var touches: [UnsafeRawPointer : Point<GLfloat>] {
         if isMouseDown {
             var touches: [UnsafeRawPointer : Point<GLfloat>] = [:]
             touches[Unmanaged.passUnretained(self).toOpaque()] = mouseLocation

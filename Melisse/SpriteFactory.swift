@@ -177,14 +177,14 @@ open class SpriteFactory {
         sprite.isRemoved = true
         sprite.hitbox = StaticHitbox()
         
-        if let index = sprites.index(where: { sprite === $0 }) {
+        if let index = sprites.firstIndex(of: sprite) {
             sprites.remove(at: index)
             removalPending.append(sprite)
         }
         
         let typeGroup = sprite.definition.type.group
         var group = groups[typeGroup]!
-        if let index = group.index(where: { sprite === $0 }) {
+        if let index = group.firstIndex(of: sprite) {
             group.remove(at: index)
             groups[typeGroup] = group
         }

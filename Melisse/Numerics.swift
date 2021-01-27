@@ -86,7 +86,7 @@ extension GLfloat : Numeric, Signed, FloatingPoint {
     }
     
     public static func distance(_ x1: GLfloat, y1: GLfloat, x2: GLfloat, y2: GLfloat) -> GLfloat {
-        return simd.distance(float2(x1, y1), float2(x2, y2))
+        return simd.distance(SIMD2<Float>(x1, y1), SIMD2<Float>(x2, y2))
     }
     
     public static func min(_ a: GLfloat, _ b: GLfloat, _ c: GLfloat, _ d: GLfloat) -> GLfloat {
@@ -135,7 +135,7 @@ extension CGFloat : Numeric, Signed, FloatingPoint {
     }
     
     public static func distance(_ x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat {
-        return CGFloat(simd.distance(double2(Double(x1), Double(y1)), double2(Double(x2), Double(y2))))
+        return CGFloat(simd.distance(SIMD2<Double>(Double(x1), Double(y1)), SIMD2<Double>(Double(x2), Double(y2))))
     }
     
     public static func min(_ a: CGFloat, _ b: CGFloat, _ c: CGFloat, _ d: CGFloat) -> CGFloat {

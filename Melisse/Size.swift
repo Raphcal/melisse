@@ -9,35 +9,36 @@
 import Foundation
 
 public struct Size<Coordinate> : Equatable, Hashable where Coordinate : Numeric {
-    
+
     public var width: Coordinate
     public var height: Coordinate
-    
+
     public var description: String {
         get {
             return "size[\(width)x\(height)]"
         }
     }
-    
-    public var hashValue: Int {
-        return width.hashValue &* 47 &+ height.hashValue &* 23
-    }
-    
+
     public init() {
         self.width = Coordinate(0)
         self.height = Coordinate(0)
     }
-    
+
     public init(size: Coordinate) {
         self.width = size
         self.height = size
     }
-    
+
     public init(width: Coordinate, height: Coordinate) {
         self.width = width
         self.height = height
     }
     
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(width)
+        hasher.combine(height)
+    }
+
 }
 
 public extension Size where Coordinate : FloatingPoint {

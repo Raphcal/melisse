@@ -13,7 +13,9 @@ public func smoothStep(_ from: GLfloat, to: GLfloat, value: GLfloat) -> GLfloat 
 }
     
 public func smoothStep(_ from: TimeInterval, to: TimeInterval, value: TimeInterval) -> GLfloat {
-    return GLfloat(pow(sin(TimeInterval(TimeInterval.pi / 2) * min(max(value - from, 0) / (to - from), 1)), 2))
+    let progress = min(max(value - from, 0) / (to - from), 1)
+    let value = sin(TimeInterval(TimeInterval.pi / 2) * progress)
+    return GLfloat(pow(value, 2))
 }
     
 public func square(_ value: GLfloat) -> GLfloat {

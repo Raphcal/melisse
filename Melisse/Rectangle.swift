@@ -19,11 +19,11 @@ public protocol Rectangular {
 
 public extension Rectangular {
     
-    public var x: Coordinate {
+    var x: Coordinate {
         get { return center.x }
     }
     
-    public var y: Coordinate {
+    var y: Coordinate {
         get { return center.y }
     }
     
@@ -67,12 +67,12 @@ public extension MovableRectangle {
         set { center = Point(x: newValue.x + size.width.half, y: newValue.y + size.height.half) }
     }
     
-    public var x: Coordinate {
+    var x: Coordinate {
         get { return center.x }
         set { center.x = newValue }
     }
     
-    public var y: Coordinate {
+    var y: Coordinate {
         get { return center.y }
         set { center.y = newValue }
     }
@@ -121,37 +121,38 @@ public extension ResizableRectangle {
 }
 
 public struct Rectangle<Coordinate> : MovableRectangle, ResizableRectangle, Equatable, Hashable where Coordinate : Numeric {
-    
+
     public var center: Point<Coordinate>
     public var size: Size<Coordinate>
-    
-    public var hashValue: Int {
-        return center.hashValue &* 11 &+ size.hashValue &* 13
-    }
-    
+
     public init(center: Point<Coordinate> = Point(), size: Size<Coordinate> = Size()) {
         self.center = center
         self.size = size
     }
-    
+
     public init(other: Rectangle<Coordinate>) {
         self.center = other.center
         self.size = other.size
     }
-    
+
     public init(x: Coordinate, y: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: x, y: y)
         self.size = Size(width: width, height: height)
     }
-    
+
     public init(left: Coordinate, top: Coordinate, width: Coordinate, height: Coordinate) {
         self.center = Point(x: left + width.half, y: top + height.half)
         self.size = Size(width: width, height: height)
     }
-    
+
     public init(top: Coordinate, bottom: Coordinate, left: Coordinate, right: Coordinate) {
         self.center = Point(x: (left + right).half, y: (top + bottom).half)
         self.size = Size(width: right - left, height: bottom - top)
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(center)
+        hasher.combine(size)
     }
 
 }
@@ -180,7 +181,7 @@ public extension Rectangular where Coordinate : FloatingPoint {
         return Quadrilateral<Coordinate>(vertices: vertices)
     }
     
-    public func floored() -> Rectangle<Coordinate> {
+    func floored() -> Rectangle<Coordinate> {
         return Rectangle(center: center.floored(), size: size.floored())
     }
     

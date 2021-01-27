@@ -15,18 +15,18 @@ public struct Color<Component> : Equatable, Hashable where Component : Numeric {
     public var blue: Component
     public var alpha: Component
     
-    public var hashValue: Int {
-        return red.hashValue &* 5
-            &+ green.hashValue &* 193
-            &+ blue.hashValue &* 73
-            &+ alpha.hashValue &* 59
-    }
-    
     public init(red: Component, green: Component, blue: Component, alpha: Component) {
         self.red = red
         self.green = green
         self.blue = blue
         self.alpha = alpha
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(red)
+        hasher.combine(green)
+        hasher.combine(blue)
+        hasher.combine(alpha)
     }
     
 }
@@ -101,7 +101,7 @@ public extension Color where Component : FloatingPoint {
         self.alpha = alpha
     }
     
-    public init(white: Component, alpha: Component = Component(1)) {
+    init(white: Component, alpha: Component = Component(1)) {
         self.red = white
         self.green = white
         self.blue = white
@@ -205,7 +205,7 @@ public extension Color where Component : Integer {
         self.alpha = alpha
     }
     
-    public init(white: Component, alpha: Component = Component(255)) {
+    init(white: Component, alpha: Component = Component(255)) {
         self.red = white
         self.green = white
         self.blue = white
