@@ -39,6 +39,12 @@ public struct Point<Coordinate> : Equatable, Hashable where Coordinate : Numeric
         self.y = rectangle.bottom
     }
 
+    public init(bottomOfRectangle rectangle: Rectangle<Coordinate>, withAngle angle: GLfloat) {
+        let halfHeight = rectangle.height.half
+        self.x = rectangle.x + halfHeight * Coordinate(cos(angle))
+        self.y = rectangle.y + halfHeight * Coordinate(sin(angle))
+    }
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(x)
         hasher.combine(y)
