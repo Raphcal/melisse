@@ -90,12 +90,12 @@ public struct AnimationDefinition : Equatable {
     }
     
     private static func typeFor(_ frameCount: Int, looping: Bool) -> AnimationType {
-        if looping {
+        if frameCount == 1 {
+            return .singleFrame
+        } else if looping {
             return .looping
         } else if frameCount > 1 {
             return .playOnce
-        } else if frameCount == 1 {
-            return .singleFrame
         } else {
             return .none
         }
