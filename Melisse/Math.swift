@@ -75,5 +75,5 @@ extension GLfloat {
 }
 
 public func %(left: GLfloat, right: Int) -> GLfloat {
-    return left + GLfloat(Int(-left) + Int(left) % right)
+    return right > 0 ? (left + GLfloat(Int(-left) + Int(left) % right)) : 0
 }

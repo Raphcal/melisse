@@ -28,7 +28,11 @@ public extension Animation {
     
     var frame: AnimationFrame {
         get {
-            return definition.frames[frameIndex]
+            if frameIndex >= 0 && frameIndex < definition.frames.count {
+                return definition.frames[frameIndex]
+            } else {
+                return AnimationFrame(frame: Rectangle(), size: Size())
+            }
         }
     }
     
