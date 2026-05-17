@@ -88,7 +88,11 @@ public class Menu {
     
     public init(factory: SpriteFactory, layout: Layout? = nil, font: Font) {
         self.factory = factory
-        self.cursor = factory.sprite(font.cursorDefintion)
+        if let cursorDefinition = font.cursorDefinition {
+            self.cursor = factory.sprite(cursorDefinition)
+        } else {
+            self.cursor = nil
+        }
         self.layout = layout
         self.font = font
     }

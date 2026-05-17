@@ -120,9 +120,8 @@ public class Text : HasFrame {
         for character in value.utf16 {
             if character == space {
                 width += font.spaceWidth
-            } else {
+            } else if let sprite = spriteFor(index) {
                 // Création d'un sprite par lettre pour afficher le texte donné.
-                let sprite = spriteFor(index)
                 setFrameOf(sprite, toCharacter: character)
                 sprite.frame.topLeft = Point(x: left + width, y: top)
                 
@@ -143,14 +142,16 @@ public class Text : HasFrame {
         self.sprites = sprites
     }
     
-    private func spriteFor(_ index: Int) -> Sprite {
-        let sprite : Sprite
+    private func spriteFor(_ index: Int) -> Sprite? {
+        let sprite: Sprite?
         
         if index < sprites.count {
             sprite = sprites[index]
+        } else if let aSprite = factory.sprite(font.definition) {
+            sprite = aSprite
+            sprites.append(aSprite)
         } else {
-            sprite = factory.sprite(font.definition)
-            sprites.append(sprite)
+            sprite = nil
         }
         
         return sprite

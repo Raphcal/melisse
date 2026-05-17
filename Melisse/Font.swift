@@ -10,7 +10,7 @@ import GLKit
 
 public protocol Font {
     
-    var definition: Int { get }
+    var definition: String { get }
     var spaceWidth: GLfloat { get }
     var digitAnimation: AnimationName { get }
     var upperCaseAnimation: AnimationName { get }
@@ -19,14 +19,14 @@ public protocol Font {
     var hiraganaAnimation: AnimationName { get }
     var katakanaAnimation: AnimationName { get }
     
-    var cursorDefintion: Int? { get }
+    var cursorDefinition: String? { get }
     
 }
 
 public extension Font {
     
-    var definition: Int {
-        return 0
+    var definition: String {
+        return ""
     }
     
     var spaceWidth: GLfloat {
@@ -57,7 +57,7 @@ public extension Font {
         return DefaultAnimationName.normal
     }
     
-    var cursorDefintion: Int? {
+    var cursorDefinition: String? {
         return nil
     }
     

@@ -21,6 +21,7 @@ public class Counter {
             displayValue()
         }
     }
+    private let fontDefinition: SpriteDefinition
     
     private var digits = [Int]()
     private var sprites = [Sprite]()
@@ -29,12 +30,14 @@ public class Counter {
         self.topLeft = Point()
         self.factory = SpriteFactory()
         self.font = NoFont()
+        self.fontDefinition = SpriteDefinition()
     }
     
     public init(factory: SpriteFactory, font: Font, topLeft: Point<GLfloat> = Point()) {
         self.factory = factory
         self.font = font
         self.topLeft = topLeft
+        self.fontDefinition = factory.definitions.first(where: { $0.name == font.definition }) ?? SpriteDefinition()
         
         displayValue()
     }
@@ -66,7 +69,7 @@ public class Counter {
     }
     
     private func digit() -> Sprite {
-        let sprite = factory.sprite(font.definition)
+        let sprite = factory.sprite(fontDefinition)
         
         let definition = sprite.definition.animations[font.digitAnimation.name]
         let animation = SingleFrameAnimation(definition: definition!)

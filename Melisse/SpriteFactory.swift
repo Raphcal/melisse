@@ -116,6 +116,13 @@ open class SpriteFactory {
     public func sprite(_ definition: Int) -> Sprite {
         return sprite(definitions[definition])
     }
+    public func sprite(_ definitionName: String) -> Sprite? {
+        guard let definition = definitions.first(where: { $0.name == definitionName })
+        else {
+            return nil
+        }
+        return sprite(definition)
+    }
     
     public func sprite(_ definition: Int?) -> Sprite? {
         if let definition = definition {
@@ -129,6 +136,14 @@ open class SpriteFactory {
         let sprite = self.sprite(definition)
         sprite.frame.topLeft = topLeft
         return sprite
+    }
+    public func sprite(_ definitionName: String, topLeft: Point<GLfloat>) -> Sprite? {
+        if let sprite = self.sprite(definitionName) {
+            sprite.frame.topLeft = topLeft
+            return sprite
+        } else {
+            return nil
+        }
     }
     
     /// Créé un sprite non animé à partir des informations données.

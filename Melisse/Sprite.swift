@@ -130,7 +130,17 @@ public class Sprite : Equatable, HasFrame, HasHitbox {
         }
     }
     
-    public func explode(_ definition: Int) {
+    public func explode(_ definitionIndex: Int) {
+        explode(factory.definitions[definitionIndex])
+    }
+
+    public func explode(_ definitionName: String) {
+        if let definition = factory.definitions.first(where: { $0.name == definitionName }) {
+            explode(definition)
+        }
+    }
+
+    public func explode(_ definition: SpriteDefinition) {
         self.isRemoved = true
         
         let explosion = factory.sprite(definition)
