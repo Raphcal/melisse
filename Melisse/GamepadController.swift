@@ -14,14 +14,21 @@ public class GamepadController : Controller {
     public let controller: GCController
     public var direction: GLfloat {
         get {
-            if let xAxisValue = controller.gamepad?.dpad.xAxis.value {
-                if xAxisValue < 0 {
-                    return -1
-                } else if xAxisValue > 0 {
-                    return 1
-                }
+            let xAxisValue: Float
+            if let value = controller.extendedGamepad?.dpad.xAxis.value {
+                xAxisValue = value
+            } else if let value = controller.microGamepad?.dpad.xAxis.value {
+                xAxisValue = value
+            } else {
+                return 0
             }
-            return 0
+            if xAxisValue < 0 {
+                return -1
+            } else if xAxisValue > 0 {
+                return 1
+            } else {
+                return 0
+            }
         }
     }
     
@@ -41,7 +48,7 @@ public class GamepadController : Controller {
     }
     
     public func pressing(_ button: GamePadButton) -> Bool {
-        if let gamepad = controller.gamepad {
+        if let gamepad = controller.extendedGamepad {
             switch button {
             case .up:
                 return gamepad.dpad.up.isPressed
@@ -60,6 +67,24 @@ public class GamepadController : Controller {
             case .start:
                 // TODO: Utiliser controller.controllerPausedHandler pour la pause
                 return gamepad.buttonY.isPressed
+            }
+        } else if let gamepad = controller.microGamepad {
+            gamepad.allowsRotation = true
+            switch button {
+            case .up:
+                return gamepad.dpad.up.isPressed
+            case .down:
+                return gamepad.dpad.down.isPressed
+            case .left:
+                return gamepad.dpad.left.isPressed
+            case .right:
+                return gamepad.dpad.right.isPressed
+            case .jump:
+                return gamepad.buttonA.isPressed
+            case .start:
+                return gamepad.buttonX.isPressed
+            default:
+                return false
             }
         } else {
             return false
